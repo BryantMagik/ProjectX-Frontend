@@ -1,0 +1,26 @@
+<div class="login-container">
+    <form [formGroup]="validatorForm" (ngSubmit)="login()">
+        <div class="p-float-label">
+            <input pInputText id="email" formControlName="emailValidator" />
+            <label for="email">Email</label>
+        </div>
+        <div *ngIf="validatorForm.get('emailValidator')?.touched && validatorForm.get('emailValidator')?.invalid">
+            <small *ngIf="validatorForm.get('emailValidator')?.errors?.['required']">Email es requerido</small>
+            <small *ngIf="validatorForm.get('emailValidator')?.errors?.['email']">Email no es válido</small>
+        </div>
+
+        <div class="p-float-label">
+            <input pInputText type="password" id="password" formControlName="passwordValidator" />
+            <label for="password">Contraseña</label>
+        </div>
+        <div *ngIf="validatorForm.get('passwordValidator')?.touched && validatorForm.get('passwordValidator')?.invalid">
+            <small *ngIf="validatorForm.get('passwordValidator')?.errors?.['required']">Contraseña es requerida</small>
+        </div>
+
+        <button pButton type="submit" label="Login"></button>
+
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+    </form>
+</div>
