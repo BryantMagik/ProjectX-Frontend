@@ -1,0 +1,120 @@
+<div class="min-h-screen bg-slate-700">
+  <app-sidebar></app-sidebar>
+  <div class="p-4 xl:ml-80">
+    <nav class="block w-full max-w-full bg-transparent text-white shadow-none rounded-xl transition-all px-0 py-1">
+      <app-navbar></app-navbar>
+    </nav>
+    <div class="mt-12">
+      <div *ngIf="mostrar === 1">
+        <div class="min-h-screen">
+          <div class="container mx-auto">
+            <app-profiles></app-profiles>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="mostrar === 2">
+        <div class="min-h-screen">
+          <div class="container mx-auto">
+            <div *ngIf="mirando === 0 || mirando === 2 || mirando === 3 || mirando === 4 || mirando === 5">
+              <div *ngIf="formu === 0 || formu === 2 || formu === 3 || formu === 4 || formu === 5">
+                <app-projects></app-projects>
+              </div>
+              <div *ngIf="formu === 1">
+                <app-project-form></app-project-form>
+              </div>
+            </div>
+            <div *ngIf="mirando === 1">
+              <app-projects-details></app-projects-details>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="mostrar === 3">
+        <div class="min-h-screen">
+          <div class="container mx-auto">
+            <div *ngIf="mirando === 0 || mirando === 1 || mirando === 3 || mirando === 4 || mirando === 5">
+              <!-- <div *ngIf="formu === 0 || formu === 1 || formu === 3 || formu === 4 || formu === 5">
+                <app-tasks></app-tasks>
+              </div> -->
+              <div *ngIf="formu === 2">
+                <app-tasks-form></app-tasks-form>
+              </div>
+            </div>
+            <div *ngIf="mirando === 2">
+              <app-tasks-details></app-tasks-details>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="mostrar === 4">
+        <div class="min-h-screen">
+          <div class="container mx-auto">
+            <div *ngIf="mirando === 0 || mirando === 1 || mirando === 2 || mirando === 4 || mirando === 5">
+              <div *ngIf="formu === 0 || formu === 1 || formu === 2 || formu === 4 || formu === 5">
+                <app-subtasks></app-subtasks>
+              </div>
+              <div *ngIf="formu === 3">
+                <app-subtasks-form></app-subtasks-form>
+              </div>
+            </div>
+            <div *ngIf="mirando === 3">
+              <app-subtasks-details></app-subtasks-details>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="mostrar === 5">
+        <div class="min-h-screen">
+          <div class="container mx-auto">
+            <div *ngIf="mirando === 0 || mirando === 1 || mirando === 2 || mirando === 3 || mirando === 5">
+              <div *ngIf="formu === 0 || formu === 1 || formu === 2 || formu === 3 || formu === 5">
+                <app-issues></app-issues>
+              </div>
+              <div *ngIf="formu === 4">
+                <app-issues-form></app-issues-form>
+              </div>
+            </div>
+            <div *ngIf="mirando === 4">
+              <app-issuesdetails></app-issuesdetails>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="mostrar === 6">
+        <div class="min-h-screen">
+          <div class="container mx-auto">
+            <div *ngIf="mirando === 0 || mirando === 1 || mirando === 2 || mirando === 3 || mirando === 4">
+              <div *ngIf="formu === 0 || formu === 1 || formu === 2 || formu === 3 || formu === 4">
+                <app-comments></app-comments>
+              </div>
+              <div *ngIf="formu === 5">
+                <app-comments-form></app-comments-form>
+              </div>
+            </div>
+            <div *ngIf="mirando === 5">
+              <app-comments-details></app-comments-details>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="mostrar === 0">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+    <div class="text-blue-gray-600">
+      <footer class="py-2">
+        <div class="flex w-full flex-wrap items-center justify-center gap-6 px-2 md:justify-between">
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>

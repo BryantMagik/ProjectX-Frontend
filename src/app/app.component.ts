@@ -14,7 +14,7 @@ export class AppComponent {
 
   constructor(private primengConfig: PrimeNGConfig) { }
   
-  ngOnit(){
+  ngOnInit(){
     this.primengConfig.ripple = true
   }
 }

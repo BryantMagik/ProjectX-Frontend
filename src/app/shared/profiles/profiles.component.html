@@ -1,0 +1,54 @@
+<main class="flex-1">
+  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <!-- Profile Section -->
+    <div class="bg-white shadow sm:rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <h2 class="text-2xl leading-6 font-medium text-gray-900">Perfil</h2>
+        <div class="mt-5">
+          <div *ngIf="user" class="mt-5">
+            <form action="#" method="POST">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label for="user-id" class="block text-sm font-medium text-gray-700">ID</label>
+                  <input type="text" name="user-id" id="user-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.id" disabled>
+                </div>
+                <div>
+                  <label for="firstname" class="block text-sm font-medium text-gray-700">Nombre</label>
+                  <input type="text" name="firstname" id="firstname" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.first_name">
+                </div>
+                <div>
+                  <label for="lastname" class="block text-sm font-medium text-gray-700">Apellido</label>
+                  <input type="text" name="lastname" id="lastname" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.last_name">
+                </div>
+                <div>
+                  <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                  <input type="email" name="email" id="email" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.email">
+                </div>
+                <div>
+                  <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+                  <input type="password" name="password" id="password" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="*********">
+                </div>
+                <div>
+                  <label for="role" class="block text-sm font-medium text-gray-700">Rol</label>
+                  <input type="text" name="role" id="role" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.role" disabled>
+                </div>
+                <div>
+                  <label for="creation-date" class="block text-sm font-medium text-gray-700">Fecha de Creación</label>
+                  <input type="text" name="creation-date" id="creation-date" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.createdAt" disabled>
+                </div>
+                <div>
+                  <label for="update-date" class="block text-sm font-medium text-gray-700">Fecha de Actualización</label>
+                  <input type="text" name="update-date" id="update-date" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.updatedAt" disabled>
+                </div>
+              </div>
+              <div class="mt-6">
+                <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Actualizar Perfil</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+

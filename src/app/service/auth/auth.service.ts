@@ -10,43 +10,58 @@ export class AuthService {
 
   constructor(private apiService: ApiService, private router: Router) { }
   private tokenKey = 'tokeykey';
+  private userId = 'userId'
 
   login(email: string, password: string): Observable<any> {
-    console.log('Attempting login with:', email, password);
     return this.apiService.post<any>(`${environment.apirurl}`, { email, password }).pipe(
       tap(response => {
         if (response.token) {
-          localStorage.setItem('token', response.token);
+          sessionStorage.setItem(this.tokenKey, response.token)
+          sessionStorage.setItem('userId', response.id)
         }
       })
-    );
+    )
   }
 
   private setToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
+    sessionStorage.setItem(this.tokenKey, token);
   }
 
-  private getToken(): string | null {
+  getToken(): string | null {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem(this.tokenKey);
+      return sessionStorage.getItem(this.tokenKey);
     } else {
       return null;
     }
   }
 
+  getId(): string | null {
+    if (typeof window !== 'undefined') {
+        return sessionStorage.getItem(this.userId)
+    } else {
+      return null
+    }
+  }
+
   isAuthenticated(): boolean {
-    const token = this.getToken();
+    const token = sessionStorage.getItem(this.tokenKey);
     if (!token) {
       return false;
     }
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    const exp = payload.exp * 1000;
-    return Date.now() < exp;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const exp = payload.exp * 1000;
+      return Date.now() < exp;
+    } catch (error) {
+      console.error('Error al parsear el token:', error);
+      return false;
+    }
   }
 
+  
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem('userId');
     this.router.navigate(['/login']);
   }
-
 }

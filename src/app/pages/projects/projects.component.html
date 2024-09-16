@@ -1,0 +1,91 @@
+<main class="flex-1">
+  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <!-- Search and Filter Section -->
+    <div class="mb-6 bg-white shadow sm:rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label for="search" class="block text-sm font-medium text-gray-700">Buscar Proyectos</label>
+            <input type="text" name="search" id="search" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Buscar por nombre o descripción">
+          </div>
+          <div>
+            <label for="filter-type" class="block text-sm font-medium text-gray-700">Filtrar por Tipo</label>
+            <select id="filter-type" name="filter-type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <option>Todos</option>
+              <option>software</option>
+              <option>research</option>
+              <option>dev ops</option>
+            </select>
+          </div>
+          <div>
+            <label for="filter-status" class="block text-sm font-medium text-gray-700">Filtrar por Estado</label>
+            <select id="filter-status" name="filter-status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <option>Todos</option>
+              <option>Activo</option>
+              <option>Inactivo</option>
+              <option>En Progreso</option>
+              <option>Finalizado</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="bg-white shadow sm:rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <h2 class="text-2xl leading-6 font-medium text-gray-900">Projects</h2>
+        <div class="mt-5 overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-100 border-b-2 border-gray-200">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">ID</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Name</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Description</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Code Key</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Type</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Status</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Creation Date</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Update Date</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Created By</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Participants</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr *ngFor="let project of project" (click)="navigateToProject(project.id)" class="cursor-pointer hover:bg-gray-100">
+                <td class="px-6 py-4 whitespace-nowrap">{{ project.id }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ project.name }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ project.description }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ project.code }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span [ngClass]="{
+                    'text-blue-900 bg-blue-300': project.type === 'SOFTWARE',
+                    'text-red-900 bg-red-300': project.type === 'research'
+                  }" class="px-3 py-1 inline-flex text-xs leading-tight font-semibold rounded-full">
+                    {{ project.type }}
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span [ngClass]="{
+                    'text-green-900 bg-green-300': project.status === 'Active',
+                    'text-red-900 bg-red-300': project.status === 'Inactivo',
+                    'text-purple-900 bg-purple-300': project.status === 'ONGOING'
+                  }" class="px-3 py-1 inline-flex text-xs leading-tight font-semibold rounded-full">
+                    {{ project.status }}
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ project.createdAt }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ project.updatedAt }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ project.author.first_name }}</td>
+                <!-- <td class="px-6 py-4 whitespace-nowrap">{{ project.participants.join(', ') }}</td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+  

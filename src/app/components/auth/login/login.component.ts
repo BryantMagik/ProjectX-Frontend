@@ -1,54 +1,70 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../service/auth/auth.service';
 import { Router } from '@angular/router';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CommonModule } from '@angular/common';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroLockClosed, heroUsers } from '@ng-icons/heroicons/outline';
+import { featherAirplay } from '@ng-icons/feather-icons';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
-    FloatLabelModule,
     InputTextModule,
     ButtonModule,
-    CalendarModule
+    CalendarModule,
+    NgIconComponent,
+    InputGroupModule,
+    InputGroupAddonModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  viewProviders: [provideIcons({ featherAirplay, heroUsers, heroLockClosed })]
+
 })
-export default class LoginComponent {
-
-  constructor(private authService: AuthService, private router: Router) { }
-
-  email: string = '';
-  password: string = '';
+export class LoginComponent {
+  validatorForm: FormGroup;
   errorMessage: string | undefined = '';
 
-  validatorForm = new FormGroup({
-    emailValidator: new FormControl('', [Validators.required]),
-    passwordValidator: new FormControl('', [Validators.required])
-  })
+  constructor(private authService: AuthService, private router: Router) {
+    this.validatorForm = new FormGroup({
+      emailValidator: new FormControl('', [Validators.required, Validators.email]),
+      passwordValidator: new FormControl('', [Validators.required])
+    })
+  }
 
   login(): void {
+    console.log('Intentando iniciar sesión');
     if (this.validatorForm.valid) {
       const { emailValidator, passwordValidator } = this.validatorForm.value;
       this.authService.login(emailValidator!, passwordValidator!).subscribe({
-        next: () => {
-          this.router.navigate(['/dashboard']);
+        next: (response) => {
+          console.log('Login exitoso', response);
+          this.router.navigate(['pages/dashboard']);
         },
-        error: () => {
+        error: (err) => {
+          console.error('Error en el login', err);
           this.errorMessage = 'Credenciales inválidas. Por favor, inténtalo de nuevo.';
         }
       });
     } else {
       this.errorMessage = 'Por favor, completa todos los campos.';
     }
+  }
+
+  get emailControl() {
+    return this.validatorForm.get('emailValidator');
+  }
+
+  get passwordControl() {
+    return this.validatorForm.get('passwordValidator');
   }
 }
