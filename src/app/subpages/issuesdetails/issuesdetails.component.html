@@ -1,0 +1,43 @@
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="bg-white shadow sm:rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <h2 class="text-2xl leading-6 font-medium text-gray-900">Issues details</h2>
+        <div class="mt-5">
+          <dl *ngFor="let issue of issues" class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Tipo</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{issue.tipo }}</dd>
+            </div>
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Clave</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ issue.id }}</dd>
+            </div>
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Resumen</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ issue.resumen }}</dd>
+            </div>
+            <div class="sm:col-span-2">
+              <dt class="text-sm font-medium text-gray-500">Descripción</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ issue.descripcion }}</dd>
+            </div>
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Asignado a</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ issue.asignado }}</dd>
+            </div>
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Reportado por</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ issue.reportadoPor }}</dd>
+            </div>
+            <div class="sm:col-span-1">
+              <dt class="text-sm font-medium text-gray-500">Estado</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ issue.estado }}</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="mt-6">
+          <a class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Volver a la lista</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  

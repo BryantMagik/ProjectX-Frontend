@@ -1,0 +1,79 @@
+<main class="flex-1">
+  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <!-- Search and Filter Section -->
+    <div class="mb-6 bg-white shadow sm:rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label for="search" class="block text-sm font-medium text-gray-700">Buscar Comentarios</label>
+            <input type="text" name="search" id="search" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Buscar por ID o contenido">
+          </div>
+          <div>
+            <label for="filter-issue" class="block text-sm font-medium text-gray-700">Filtrar por Issue</label>
+            <select id="filter-issue" name="filter-issue" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <option>Todos</option>
+              <!-- Más opciones de Issues -->
+            </select>
+          </div>
+          <div>
+            <label for="filter-author" class="block text-sm font-medium text-gray-700">Filtrar por Autor</label>
+            <select id="filter-author" name="filter-author" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <option>Todos</option>
+              <!-- Más opciones de autores -->
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="bg-white shadow sm:rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <h2 class="text-2xl leading-6 font-medium text-gray-900">Comentarios</h2>
+        <div class="mt-5 overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contenido</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Issue ID</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Autor ID</th>
+                <th scope="col" class="relative px-6 py-3">
+                  <span class="sr-only">Ver</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <!-- Comment Item -->
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">COMMENT-001</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Este es un comentario de prueba.</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-07-22</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ISSUE-001</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">USER-001</td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
+                </td>
+              </tr>
+              <!-- Más comentarios... -->
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">COMMENT-002</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Este es otro comentario de prueba.</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-07-23</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ISSUE-002</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">USER-002</td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
+                </td>
+              </tr>
+              <!-- Más comentarios... -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+  

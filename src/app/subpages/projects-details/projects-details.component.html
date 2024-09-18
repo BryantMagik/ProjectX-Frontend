@@ -1,0 +1,51 @@
+<main class="flex-1">
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div class="bg-white shadow sm:rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <h2 class="text-2xl leading-6 font-medium text-gray-900">Detalles del Proyecto</h2>
+          <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="project-id" class="block text-sm font-medium text-gray-700">ID</label>
+              <p id="project-id" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 bg-gray-50">{{ project?.id }}</p>
+            </div>
+            <div>
+              <label for="project-name" class="block text-sm font-medium text-gray-700">Nombre</label>
+              <p id="project-name" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 bg-gray-50">{{ project?.name }}</p>
+            </div>
+            <div class="md:col-span-2">
+              <label for="project-description" class="block text-sm font-medium text-gray-700">Descripción</label>
+              <p id="project-description" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 bg-gray-50">{{ project?.description }}</p>
+            </div>
+            <div>
+              <label for="project-code-key" class="block text-sm font-medium text-gray-700">Código</label>
+              <p id="project-code-key" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 bg-gray-50">{{ project?.code }}</p>
+            </div>
+            <div>
+              <label for="project-type" class="block text-sm font-medium text-gray-700">Tipo</label>
+              <p id="project-type" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 bg-gray-50">{{ project?.type }}</p>
+            </div>
+            <div>
+              <label for="project-status" class="block text-sm font-medium text-gray-700">Estado</label>
+              <p id="project-status" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 bg-gray-50">{{ project?.status }}</p>
+            </div>
+            <div>
+              <label for="project-creation-date" class="block text-sm font-medium text-gray-700">Fecha de Creación</label>
+              <p id="project-creation-date" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 bg-gray-50">{{ project?.createdAt }}</p>
+            </div>
+            <div>
+              <label for="project-update-date" class="block text-sm font-medium text-gray-700">Fecha de Actualización</label>
+              <p id="project-update-date" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 bg-gray-50">{{ project?.updatedAt }}</p>
+            </div>
+            <div>
+              <label for="project-created-by" class="block text-sm font-medium text-gray-700">Creado por</label>
+              <p id="project-created-by" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 bg-gray-50">{{ project?.author?.first_name }}</p>
+            </div>
+            <div class="md:col-span-2">
+              <label for="project-participants" class="block text-sm font-medium text-gray-700">Participantes</label>
+              <!-- <p id="project-participants" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 bg-gray-50">{{ project?.participants?.join(', ') }}</p> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>

@@ -1,0 +1,51 @@
+<main class="flex-1">
+    <div class="max-w-7xl mx-auto py-6 sm:px-5 lg:px-8">
+      <!-- Comments Section -->
+      <div class="bg-white shadow sm:rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <h2 class="text-2xl leading-6 font-medium text-gray-900">Comentarios</h2>
+          <div class="mt-5 overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                  <th scope="col" class="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contenido</th>
+                  <th scope="col" class="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                  <th scope="col" class="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Issue ID</th>
+                  <th scope="col" class="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Autor ID</th>
+                  <th scope="col" class="relative px-5 py-3">
+                    <span class="sr-only">Ver</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <!-- Comment Item -->
+                <tr>
+                  <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-500">COMMENT-001</td>
+                  <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-900">Este es un comentario de prueba.</td>
+                  <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-500">2023-07-22</td>
+                  <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-500">ISSUE-001</td>
+                  <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-500">USER-001</td>
+                  <td class="px-5 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <a class="text-indigo-600 hover:text-indigo-900" (click)="setMirando(5); setMostrar(6)">Ver</a>
+                  </td>
+                </tr>
+                <!-- Más comentarios... -->
+                <tr>
+                  <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-500">COMMENT-002</td>
+                  <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-900">Este es otro comentario de prueba.</td>
+                  <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-500">2023-07-23</td>
+                  <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-500">ISSUE-002</td>
+                  <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-500">USER-002</td>
+                  <td class="px-5 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <a class="text-indigo-600 hover:text-indigo-900" (click)="setMirando(5); setMostrar(6)">Ver</a>
+                  </td>
+                </tr>
+                <!-- Más comentarios... -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>

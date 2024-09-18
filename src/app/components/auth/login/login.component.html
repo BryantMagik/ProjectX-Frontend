@@ -1,0 +1,43 @@
+<div class="h-screen flex items-center justify-center bg-gradient-to-b from-slate-600 to-indigo-900">
+    <form [formGroup]="validatorForm" (ngSubmit)="login()" class="p-6 rounded-lg shadow-md w-full max-w-sm">
+        <div class="mb-4">
+            <p-inputGroup>
+                <p-inputGroupAddon>
+                    <i class="pi pi-user"></i>
+                </p-inputGroupAddon>
+                <input id="email" type="email" pInputText formControlName="emailValidator" placeholder="Email"
+                    class="w-full px-3 py-2 border border-gray-300 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <label for="email" class="block text-gray-600 text-sm font-bold mb-2"></label>
+            </p-inputGroup>
+
+            <div *ngIf="emailControl?.touched && emailControl?.invalid" class="text-red-600 text-sm">
+                <div *ngIf="emailControl?.errors?.['required']">Email es requerido</div>
+                <div *ngIf="emailControl?.errors?.['email']">Email no es válido</div>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <p-inputGroup>
+                <p-inputGroupAddon>
+                    <i class="pi pi-lock"></i>
+                </p-inputGroupAddon>
+                <input id="password" type="password" pInputText placeholder="********"
+                    formControlName="passwordValidator"
+                    class="w-full px-3 py-2 border border-gray-300 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <label for="password" class="block text-gray-700 text-sm font-bold mb-2"></label>
+            </p-inputGroup>
+
+            <div *ngIf="passwordControl?.touched && passwordControl?.invalid" class="text-red-600 text-sm">
+                <div *ngIf="passwordControl?.errors?.['required']">Contraseña es requerida</div>
+            </div>
+        </div>
+
+        <button type="submit" pButton label="Login"
+            class="w-full py-2 px-4 bg-indigo-600 text-white font-bold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        </button>
+
+        <div *ngIf="errorMessage" class="mt-4 text-red-500">
+            {{ errorMessage }}
+        </div>
+    </form>
+</div>
