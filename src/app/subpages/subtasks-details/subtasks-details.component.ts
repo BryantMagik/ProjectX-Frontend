@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface SubtaskDetail {
   subtask_id: number;
@@ -14,7 +15,7 @@ export interface SubtaskDetail {
 @Component({
   selector: 'app-subtasks-details',
   standalone: true,
-  imports: [CommonModule,],
+  imports: [CommonModule],
   templateUrl: './subtasks-details.component.html',
   styleUrl: './subtasks-details.component.css'
 })
