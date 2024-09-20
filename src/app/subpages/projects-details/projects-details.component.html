@@ -3,7 +3,7 @@
       <div class="bg-white shadow sm:rounded-lg">
         <div class="px-4 py-5 sm:p-6">
           <h2 class="text-2xl leading-6 font-medium text-gray-900">Detalles del Proyecto</h2>
-          <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label for="project-id" class="block text-sm font-medium text-gray-700">ID</label>
               <p id="project-id" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 bg-gray-50">{{ project?.id }}</p>
@@ -44,6 +44,16 @@
               <label for="project-participants" class="block text-sm font-medium text-gray-700">Participantes</label>
               <!-- <p id="project-participants" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 bg-gray-50">{{ project?.participants?.join(', ') }}</p> -->
             </div>
+        <!-- Action Buttons -->
+            <div>
+              <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">apply</button>
+            </div>
+            <div>
+              <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">edit</button>
+            </div>
+          </div>
+            <div class="mt-6 flex justify-end">
+                <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">volver</button>
           </div>
         </div>
       </div>

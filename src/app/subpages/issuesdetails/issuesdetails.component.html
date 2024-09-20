@@ -2,8 +2,8 @@
     <div class="bg-white shadow sm:rounded-lg">
       <div class="px-4 py-5 sm:p-6">
         <h2 class="text-2xl leading-6 font-medium text-gray-900">Issues details</h2>
-        <div class="mt-5">
-          <dl *ngFor="let issue of issues" class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+        <div class="mt-5 grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-2">
+          <dl *ngFor="let issue of issues" >
             <div class="sm:col-span-1">
               <dt class="text-sm font-medium text-gray-500">Tipo</dt>
               <dd class="mt-1 text-sm text-gray-900">{{issue.tipo }}</dd>
@@ -33,9 +33,16 @@
               <dd class="mt-1 text-sm text-gray-900">{{ issue.estado }}</dd>
             </div>
           </dl>
+      <!-- Action Buttons -->
+        <div>
+          <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">apply</button>
         </div>
-        <div class="mt-6">
-          <a class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Volver a la lista</a>
+        <div>
+          <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">edit</button>
+        </div>
+        </div>
+        <div class="mt-6 flex justify-end">
+          <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">volver</button>
         </div>
       </div>
     </div>
