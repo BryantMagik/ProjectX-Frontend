@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project } from '../../model/project.interface';
 import { ProjectService } from '../../service/project/project.service';
-import { tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-projects-details',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './projects-details.component.html',
   styleUrl: './projects-details.component.css'
 })
@@ -24,25 +25,31 @@ export class ProjectsDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('ProjectsDetailsComponent initialized');
     this.route.paramMap.subscribe(params => {
       this.projectId = params.get('id');
+      console.log('Project ID:', this.projectId);
 
       if (this.projectId) {
         this.getProjectById(this.projectId)
       }
-    });
+    })
   }
 
   private getProjectById(id: string) {
     this.projectService.getProjectById(id).pipe(
       tap({
         next: (project: Project | null) => {
-          this.project = project
+          this.project = project;
+          console.log('Project:', this.project);
         },
-        error: () => this.error = 'Failed to load project',
-        complete: () => this.loading = false
-      })
-    ).subscribe()
+        error: (err) => {
+          this.error = 'Failed to load project';
+          console.error('Error fetching project:', err)
+        }
+      }),
+      finalize(() => this.loading = false) 
+    ).subscribe();
   }
 
 }
