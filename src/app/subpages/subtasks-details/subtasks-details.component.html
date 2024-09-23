@@ -3,46 +3,48 @@
       <div class="bg-white shadow sm:rounded-lg">
         <div class="px-4 py-4 sm:p-6">
           <h2 class="text-2xl leading-6 font-medium text-gray-900 mt-10">Subtasks Details</h2>
-          <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4" *ngFor="let subtaskdetail of subtaskdetails">
-            <div>
-              <label for="subtask-id" class="block text-sm font-medium text-gray-700">Subtask ID</label>
-              <input type="text" id="subtask-id" name="subtask-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.subtask_id" disabled>
+          <form>
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4" *ngFor="let subtaskdetail of subtaskdetails">
+              <div>
+                <label for="subtask-id" class="block text-sm font-medium text-gray-700">Subtask ID</label>
+                <input type="text" id="subtask-id" name="subtask-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.subtask_id" [readonly]="true">
+              </div>
+              <div>
+                <label for="subtask-name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" id="subtask-name" name="subtask-name" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.name" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+              </div>
+              <div>
+                <label for="subtask-description" class="block text-sm font-medium text-gray-700">Description</label>
+                <textarea id="subtask-description" name="subtask-description" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" rows="4" [value]="subtaskdetail.description" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"></textarea>
+              </div>
+              <div>
+                <label for="subtask-status" class="block text-sm font-medium text-gray-700">Status</label>
+                <input type="text" id="subtask-status" name="subtask-status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.status" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+              </div>
+              <div>
+                <label for="subtask-task-id" class="block text-sm font-medium text-gray-700">Task ID</label>
+                <input type="text" id="subtask-task-id" name="subtask-task-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.task_id" [readonly]="true">
+              </div>
+              <div>
+                <label for="subtask-creation-date" class="block text-sm font-medium text-gray-700">Creation Date</label>
+                <input type="text" id="subtask-creation-date" name="subtask-creation-date" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.creation_date" [readonly]="true">
+              </div>
+              <div>
+                <label for="subtask-update-date" class="block text-sm font-medium text-gray-700">Update Date</label>
+                <input type="text" id="subtask-update-date" name="subtask-update-date" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.update_date" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+              </div>
+    <!-- Action Buttons -->
+              <div>
+                <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">edit</button>
+              </div>
+              <div>
+                <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">apply</button>
+              </div>
             </div>
+          </form>
             <div>
-              <label for="subtask-name" class="block text-sm font-medium text-gray-700">Name</label>
-              <input type="text" id="subtask-name" name="subtask-name" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.name" disabled>
+              <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">volver</button>
             </div>
-            <div>
-              <label for="subtask-description" class="block text-sm font-medium text-gray-700">Description</label>
-              <textarea id="subtask-description" name="subtask-description" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" rows="4" [value]="subtaskdetail.description" disabled></textarea>
-            </div>
-            <div>
-              <label for="subtask-status" class="block text-sm font-medium text-gray-700">Status</label>
-              <input type="text" id="subtask-status" name="subtask-status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.status" disabled>
-            </div>
-            <div>
-              <label for="subtask-task-id" class="block text-sm font-medium text-gray-700">Task ID</label>
-              <input type="text" id="subtask-task-id" name="subtask-task-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.task_id" disabled>
-            </div>
-            <div>
-              <label for="subtask-creation-date" class="block text-sm font-medium text-gray-700">Creation Date</label>
-              <input type="text" id="subtask-creation-date" name="subtask-creation-date" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.creation_date" disabled>
-            </div>
-            <div>
-              <label for="subtask-update-date" class="block text-sm font-medium text-gray-700">Update Date</label>
-              <input type="text" id="subtask-update-date" name="subtask-update-date" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.update_date" disabled>
-            </div>
-   <!-- Action Buttons -->
-          <div>
-            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">edit</button>
-          </div>
-          <div>
-            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">apply</button>
-          </div>
-          <div>
-            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">volver</button>
-          </div>
-          </div>
         </div>
       </div>
     </div>

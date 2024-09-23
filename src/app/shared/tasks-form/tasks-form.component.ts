@@ -20,7 +20,7 @@ export class TasksFormComponent {
       task_type: ['', Validators.required],
       status: ['', Validators.required],
       project_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      assigned_user_id: [''],
+      assigned_user_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       estimation: ['', Validators.pattern('^[0-9]*$')],
       due_date: ['']
     });

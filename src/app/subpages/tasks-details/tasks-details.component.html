@@ -3,62 +3,68 @@
     <div class="bg-white shadow sm:rounded-lg">
       <div class="px-4 py-4 sm:p-6">
           <h2 class="text-2xl leading-6 font-medium text-gray-900">Tasks details</h2>
-        <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4" *ngFor="let taskdetail of taskdetails">
-          <div>
-            <label for="task-id" class="block text-sm font-medium text-gray-700">ID</label>
-            <input type="text" id="task-id" name="task-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.id" disabled>
-          </div>
-          <div>
-            <label for="task-code" class="block text-sm font-medium text-gray-700">Código</label>
-            <input type="text" id="task-code" name="task-code" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.code" disabled>
-          </div>
-          <div>
-            <label for="task-summary" class="block text-sm font-medium text-gray-700">Resumen</label>
-            <input type="text" id="task-summary" name="task-summary" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.summary" disabled>
-          </div>
-          <div>
-            <label for="task-description" class="block text-sm font-medium text-gray-700">Descripción</label>
-            <textarea id="task-description" name="task-description" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" rows="4" [value]="taskdetail.description" disabled></textarea>
-          </div>
-          <div>
-            <label for="task-priority" class="block text-sm font-medium text-gray-700">Prioridad</label>
-            <input type="text" id="task-priority" name="task-priority" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.priority" disabled>
-          </div>
-          <div>
-            <label for="task-type" class="block text-sm font-medium text-gray-700">Tipo</label>
-            <input type="text" id="task-type" name="task-type" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.type" disabled>
-          </div>
-          <div>
-            <label for="task-status" class="block text-sm font-medium text-gray-700">Estado</label>
-            <input type="text" id="task-status" name="task-status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.status" disabled>
-          </div>
-          <div>
-            <label for="task-project-id" class="block text-sm font-medium text-gray-700">ID del Proyecto</label>
-            <input type="text" id="task-project-id" name="task-project-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.projectid" disabled>
-          </div>
-          <div>
-            <label for="task-assigned-user-id" class="block text-sm font-medium text-gray-700">ID del Usuario Asignado</label>
-            <input type="text" id="task-assigned-user-id" name="task-assigned-user-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.asigneruserid" disabled>
-          </div>
-          <div>
-            <label for="task-estimation" class="block text-sm font-medium text-gray-700">Estimación</label>
-            <input type="text" id="task-estimation" name="task-estimation" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.estimation" disabled>
-          </div>
-          <div>
-            <label for="task-due-date" class="block text-sm font-medium text-gray-700">Fecha de Vencimiento</label>
-            <input type="text" id="task-due-date" name="task-due-date" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.duedate" disabled>
-          </div>
-          <!-- Action Buttons -->
-          <div>
-            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">edit</button>
-          </div>
-          <div>
-            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">apply</button>
+        <form>
+          <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4" *ngFor="let taskdetail of taskdetails">
+            <div>
+              <label for="task-id" class="block text-sm font-medium text-gray-700">ID</label>
+              <input type="text" id="task-id" name="task-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.id" [readonly]="true">
+            </div>
+            <div>
+              <label for="task-code" class="block text-sm font-medium text-gray-700">Código</label>
+              <input type="text" id="task-code" name="task-code" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.code" [readonly]="true">
+            </div>
+            <div>
+              <label for="task-summary" class="block text-sm font-medium text-gray-700">Resumen</label>
+              <input type="text" id="task-summary" name="task-summary" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.summary" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+            </div>
+            <div>
+              <label for="task-description" class="block text-sm font-medium text-gray-700">Descripción</label>
+              <textarea id="task-description" name="task-description" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" rows="4" [value]="taskdetail.description" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"></textarea>
+            </div>
+            <div>
+              <label for="task-priority" class="block text-sm font-medium text-gray-700">Prioridad</label>
+              <input type="text" id="task-priority" name="task-priority" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.priority" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+            </div>
+            <div>
+              <label for="task-type" class="block text-sm font-medium text-gray-700">Tipo</label>
+              <input type="text" id="task-type" name="task-type" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.type"[readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+            </div>
+            <div>
+              <label for="task-status" class="block text-sm font-medium text-gray-700">Estado</label>
+              <input type="text" id="task-status" name="task-status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.status" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+            </div>
+            <div>
+              <label for="task-project-id" class="block text-sm font-medium text-gray-700">ID del Proyecto</label>
+              <input type="text" id="task-project-id" name="task-project-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.projectid" [readonly]="true">
+            </div>
+            <div>
+              <label for="task-assigned-user-id" class="block text-sm font-medium text-gray-700">ID del Usuario Asignado</label>
+              <input type="text" id="task-assigned-user-id" name="task-assigned-user-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.asigneruserid" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+            </div>
+            <div>
+              <label for="task-estimation" class="block text-sm font-medium text-gray-700">Estimación</label>
+              <input type="text" id="task-estimation" name="task-estimation" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.estimation" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+            </div>
+            <div>
+              <label for="task-due-date" class="block text-sm font-medium text-gray-700">Fecha de Vencimiento</label>
+              <input type="text" id="task-due-date" name="task-due-date" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.duedate" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+            </div>
+            <!-- Action Buttons -->
+            <div>
+              <button type="button" (click)="toggleEdit()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                {{ isEditing ? 'Cancel' : 'Edit' }}
+              </button>
+            </div>
+            <div *ngIf="isEditing">
+              <button type="submit" (click)="onSubmit()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Apply
+              </button>
+            </div>
           </div>
           <div class="mt-6 flex justify-end">
             <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">volver</button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

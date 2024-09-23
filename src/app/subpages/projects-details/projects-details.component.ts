@@ -3,11 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Project } from '../../model/project.interface';
 import { ProjectService } from '../../service/project/project.service';
 import { tap } from 'rxjs';
+import { FormBuilder,FormGroup,Validators } from '@angular/forms';
+import { NgClass,NgFor,CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-projects-details',
   standalone: true,
-  imports: [],
+  imports: [NgClass,NgFor,CommonModule],
   templateUrl: './projects-details.component.html',
   styleUrl: './projects-details.component.css'
 })
@@ -17,11 +19,25 @@ export class ProjectsDetailsComponent implements OnInit {
   loading = true;
   error: string | null = null;
 
+  isEditing = false;
+  projectsFormular: FormGroup;
+
 
   constructor(
     private route: ActivatedRoute,
-    private projectService: ProjectService
-  ) { }
+    private projectService: ProjectService,
+    private fb: FormBuilder
+  ) { 
+    this.projectsFormular = this.fb.group({
+      id: [{ value: '', disabled: true }],
+      name: ['', [Validators.required, Validators.maxLength(50)]],
+      description: [''],
+      code: ['', [Validators.required, Validators.maxLength(10)]],
+      type: ['', Validators.required],
+      status: ['', Validators.required],
+      userId: ['', Validators.required],
+    });
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -43,6 +59,26 @@ export class ProjectsDetailsComponent implements OnInit {
         complete: () => this.loading = false
       })
     ).subscribe()
+  }
+
+  toggleEdit() {
+    if (this.isEditing) {
+      this.isEditing = false;
+      this.projectsFormular.disable();  // Deshabilitar los campos
+    } else {
+      this.isEditing = true;
+      this.projectsFormular.enable();   // Habilitar los campos
+    }
+  }
+
+  onSubmit() {
+    if (this.projectsFormular.valid) {
+      console.log('Formulario enviado:', this.projectsFormular.value);
+    } else {
+      console.log('Formulario inválido, por favor revisa los campos.');
+    }
+    this.isEditing = false;  // Deshabilitar edición tras enviar
+    this.projectsFormular.disable();  // Volver a deshabilitar los campos
   }
 
 }

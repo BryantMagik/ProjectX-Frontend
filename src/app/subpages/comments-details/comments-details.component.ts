@@ -47,7 +47,7 @@ export class CommentsDetailsComponent implements OnInit{
   }
 
 
-  // Método para habilitar o deshabilitar la edición
+  // habilitar o deshabilitar la edición
   toggleEdit() {
     if (this.isEditing) {
       this.isEditing = false;
@@ -58,10 +58,12 @@ export class CommentsDetailsComponent implements OnInit{
     }
   }
 
-  // Método para aplicar los cambios y enviar el formulario
+  // aplicar los cambios y enviar el formulario
   onSubmit() {
     if (this.commentFormular.valid) {
       console.log('Formulario enviado:', this.commentFormular.value);
+    } else {
+      console.log('Formulario inválido, por favor revisa los campos.');
     }
     this.isEditing = false;  // Deshabilitar edición tras enviar
     this.commentFormular.disable();  // Volver a deshabilitar los campos

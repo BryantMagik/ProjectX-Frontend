@@ -1,6 +1,6 @@
 import { Component,OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { CommonModule, NgClass, NgFor } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export interface SubtaskDetail {
   subtask_id: number;
@@ -15,7 +15,7 @@ export interface SubtaskDetail {
 @Component({
   selector: 'app-subtasks-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,NgFor,NgClass],
   templateUrl: './subtasks-details.component.html',
   styleUrl: './subtasks-details.component.css'
 })
@@ -33,9 +33,38 @@ export class SubtasksDetailsComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  isEditing = false;
+  subtasksFormular: FormGroup;
+  constructor(private fb: FormBuilder) { 
+    this.subtasksFormular = this.fb.group({
+      name: ['', [Validators.required, Validators.maxLength(100)]],
+      description: [''],
+      status: ['', Validators.required],
+      task_id: ['', [Validators.required, Validators.min(1)]],
+    });
+  }
 
   ngOnInit(): void {
+  }
+
+  toggleEdit() {
+    if (this.isEditing) {
+      this.isEditing = false;
+      this.subtasksFormular.disable();  // Deshabilitar los campos
+    } else {
+      this.isEditing = true;
+      this.subtasksFormular.enable();   // Habilitar los campos
+    }
+  }
+
+  onSubmit() {
+    if (this.subtasksFormular.valid) {
+      console.log('Formulario enviado:', this.subtasksFormular.value);
+    } else {
+      console.log('Formulario inválido, por favor revisa los campos.');
+    }
+    this.isEditing = false;  // Deshabilitar edición tras enviar
+    this.subtasksFormular.disable();  // Volver a deshabilitar los campos
   }
 
 }
