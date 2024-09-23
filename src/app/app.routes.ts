@@ -11,6 +11,7 @@ import { ProjectsComponent } from './pages/projects/projects.component';
 import { SubtasksComponent } from './pages/subtasks/subtasks.component';
 import { IssuesComponent } from './pages/issues/issues.component';
 import { CommentsComponent } from './pages/comments/comments.component';
+import { ProfilesComponent } from './pages/profiles/profiles.component';
 
 export const routes: Routes = [
     {
@@ -33,6 +34,11 @@ export const routes: Routes = [
                 path: 'pages/dashboard',
                 title: 'Dashboard',
                 component: DashboardComponent,
+            },
+            {
+                path: 'pages/profile',
+                title: 'Profile',
+                component: ProfilesComponent,
             },
             {
                 path: 'pages/tasks',
@@ -58,14 +64,12 @@ export const routes: Routes = [
                 path: 'pages/projects',
                 title: 'Projects',
                 component: ProjectsComponent,
-                children: [
-                    {
-                        path: 'subpages/project-details/:id',
-                        title: 'Project Details',
-                        component: ProjectsDetailsComponent
-                    }
-                ]
             },
+            {
+                path: 'pages/projects/:id',
+                title: 'Project Details',
+                component: ProjectsDetailsComponent
+            }
         ]
     },
     {

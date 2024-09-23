@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './projects-details.component.html',
-  styleUrl: './projects-details.component.css'
+  styleUrls: ['./projects-details.component.css']
 })
 export class ProjectsDetailsComponent implements OnInit {
   project: Project | null = null;
@@ -48,7 +48,7 @@ export class ProjectsDetailsComponent implements OnInit {
           console.error('Error fetching project:', err)
         }
       }),
-      finalize(() => this.loading = false) 
+      finalize(() => this.loading = false)
     ).subscribe();
   }
 

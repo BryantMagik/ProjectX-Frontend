@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { MatListModule } from '@angular/material/list'
 import { MatIconModule } from '@angular/material/icon'
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 
 export type MenuItem = {
   icon: string,
@@ -14,7 +14,7 @@ export type MenuItem = {
 @Component({
   selector: 'app-custom-sidebar',
   standalone: true,
-  imports: [CommonModule,MatListModule,MatIconModule, RouterLink],
+  imports: [CommonModule, MatListModule, MatIconModule, RouterLink, RouterModule],
   templateUrl: './custom-sidebar.component.html',
   styleUrl: './custom-sidebar.component.css'
 })
@@ -27,27 +27,27 @@ export class CustomSidebarComponent {
       route: 'pages/dashboard',
     },
     {
-      icon: 'projects',
-      label: 'projects',
+      icon: 'folder_open',
+      label: 'Projects',
       route: 'pages/projects',
     },
     {
-      icon: 'task',
+      icon: 'assignment',
       label: 'Task',
       route: 'pages/tasks',
     },
     {
-      icon: 'subTasks',
+      icon: 'subdirectory_arrow_right',
       label: 'SubTasks',
       route: 'pages/subtasks',
     },
     {
-      icon: 'issues',
+      icon: 'bug_report',
       label: 'Issues',
       route: 'pages/issues',
     },
     {
-      icon: 'comments',
+      icon: 'comment',
       label: 'Comments',
       route: 'pages/comments',
     }
