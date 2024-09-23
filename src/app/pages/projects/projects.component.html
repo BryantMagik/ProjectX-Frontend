@@ -47,8 +47,6 @@
             <thead class="bg-gray-100 border-b-2 border-gray-200">
               <tr>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                  ID</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                   Name</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                   Description</th>
@@ -71,7 +69,6 @@
             <tbody class="bg-white divide-y divide-gray-200">
               <tr *ngFor="let project of project" (click)="navigateToProject(project.id)"
                 class="cursor-pointer hover:bg-gray-100">
-                <td class="px-6 py-4 whitespace-nowrap">{{ project.id }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ project.name }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ project.description }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ project.code }}</td>

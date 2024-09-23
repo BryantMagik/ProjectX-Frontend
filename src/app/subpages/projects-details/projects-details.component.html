@@ -23,11 +23,18 @@
               </div>
               <div>
                 <label for="project-type" class="block text-sm font-medium text-gray-700">Tipo</label>
-                <input id="project-type" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 " value="{{ project?.type }}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"/>
+                <select id="project-type" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                        formControlName="type" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+                  <option *ngFor="let type of projectTypes" [value]="type">{{ type }}</option>
+                </select>
               </div>
+              
               <div>
                 <label for="project-status" class="block text-sm font-medium text-gray-700">Estado</label>
-                <input id="project-status" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 " value="{{ project?.status }}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"/>
+                <select id="project-status" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                        formControlName="status" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+                  <option *ngFor="let status of projectStatuses" [value]="status">{{ status }}</option>
+                </select>
               </div>
               <div>
                 <label for="project-creation-date" class="block text-sm font-medium text-gray-700">Fecha de Creación</label>

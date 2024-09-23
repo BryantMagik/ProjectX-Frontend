@@ -6,6 +6,20 @@ import { tap } from 'rxjs';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { NgClass,NgFor,CommonModule } from '@angular/common';
 
+enum ProjectType {
+  Internal = 'Internal',
+  External = 'External',
+  Research = 'Research',
+  Software = 'Software'
+}
+
+enum ProjectStatus {
+  Active = 'Active',
+  Inactive = 'Inactive',
+  Ongoing = 'Ongoing',
+  Completed = 'Completed'
+}
+
 @Component({
   selector: 'app-projects-details',
   standalone: true,
@@ -21,6 +35,9 @@ export class ProjectsDetailsComponent implements OnInit {
 
   isEditing = false;
   projectsFormular: FormGroup;
+
+  projectTypes = Object.values(ProjectType);
+  projectStatuses = Object.values(ProjectStatus);
 
 
   constructor(
@@ -57,6 +74,15 @@ export class ProjectsDetailsComponent implements OnInit {
         next: (project: Project | null) => {
           this.project = project;
           console.log('Project:', this.project);
+          this.projectsFormular.patchValue({
+            id: project?.id,
+            name: project?.name,
+            description: project?.description,
+            code: project?.code,
+            type: project?.type,
+            status: project?.status,
+            userId: project?.author?.first_name,
+          });
         },
         error: () => this.error = 'Failed to load project',
         complete: () => this.loading = false
