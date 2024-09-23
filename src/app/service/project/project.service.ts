@@ -16,15 +16,15 @@ export class ProjectService {
     private authService: AuthService
   ) { }
 
-  private getAuthHeaders(): HttpHeaders | null {
+  private getAuthHeaders(): HttpHeaders {
+    let headers = new HttpHeaders();
     if (this.authService.isAuthenticated()) {
-      const token = this.authService.getToken()
+      const token = this.authService.getToken();
       if (token) {
-        return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        headers = headers.set('Authorization', `Bearer ${token}`);
       }
     }
-    return null;
-
+    return headers;
   }
 
   getProjectsRequest(): Observable<Project[]> {

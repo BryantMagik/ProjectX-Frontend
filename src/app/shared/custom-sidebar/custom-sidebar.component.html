@@ -1,0 +1,24 @@
+<aside
+    class="bg-slate-950 -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0">
+    <div class="relative border-b border-white/20">
+        <a class="flex items-center gap-4 py-6 px-8" href="#/">
+            <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-white">
+                Jiro Dashboard</h6>
+        </a>
+        <button
+            class="middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[32px] h-8 max-h-[32px] rounded-lg text-xs text-white hover:bg-white/10 active:bg-white/30 absolute right-0 top-0 grid rounded-br-none rounded-tl-none xl:hidden"
+            type="button">
+        </button>
+    </div>
+    <div class="m-4 ">
+        <a class="flex items-center gap-4 py-6 px-8 text-white hover:bg-blue-700 rounded-md hover:text-white transition-transform duration-300 hover:rotate-y-180"
+            mat-list-item 
+            *ngFor="let item of menuItems()" 
+            [routerLink]="item.route"
+            routerLinkActive="bg-blue-900"
+            [routerLinkActiveOptions]="{ exact: true }">
+            <mat-icon matListItemIcon>{{item.icon}}</mat-icon>
+            <span matListItemTitle>{{item.label}}</span>
+        </a>
+    </div>
+</aside>

@@ -12,12 +12,12 @@ export class TasksBoardComponent {
 
   constructor(private LayoutComponent:LayoutComponent) {}
 
-  setMostrar(value: number) {
-    this.LayoutComponent.setMostrar(value);
-  }
+  // setMostrar(value: number) {
+  //   this.LayoutComponent.setMostrar(value);
+  // }
 
-  setMirando(value: number) {
-    this.LayoutComponent.setMirando(value);
-  }
+  // setMirando(value: number) {
+  //   this.LayoutComponent.setMirando(value);
+  // }
 
 }

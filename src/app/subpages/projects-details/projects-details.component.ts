@@ -11,7 +11,7 @@ import { NgClass,NgFor,CommonModule } from '@angular/common';
   standalone: true,
   imports: [NgClass,NgFor,CommonModule],
   templateUrl: './projects-details.component.html',
-  styleUrl: './projects-details.component.css'
+  styleUrls: ['./projects-details.component.css']
 })
 export class ProjectsDetailsComponent implements OnInit {
   project: Project | null = null;
@@ -40,20 +40,23 @@ export class ProjectsDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('ProjectsDetailsComponent initialized');
     this.route.paramMap.subscribe(params => {
       this.projectId = params.get('id');
+      console.log('Project ID:', this.projectId);
 
       if (this.projectId) {
         this.getProjectById(this.projectId)
       }
-    });
+    })
   }
 
   private getProjectById(id: string) {
     this.projectService.getProjectById(id).pipe(
       tap({
         next: (project: Project | null) => {
-          this.project = project
+          this.project = project;
+          console.log('Project:', this.project);
         },
         error: () => this.error = 'Failed to load project',
         complete: () => this.loading = false

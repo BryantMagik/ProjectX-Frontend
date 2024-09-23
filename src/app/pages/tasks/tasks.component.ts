@@ -1,29 +1,16 @@
 import { Component } from '@angular/core';
-import { LayoutComponent } from '../../pages/layout/layout.component';
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [LayoutComponent],
+  imports: [],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
 })
 export class TasksComponent {
 
-  constructor(private LayoutComponent: LayoutComponent) { 
+  constructor() { 
 
-  }
-  
-  setFormular(value: number) {
-    this.LayoutComponent.setFormular(value);
-  }
-
-  setMostrar(value: number) {
-    this.LayoutComponent.setMostrar(value);
-  }
-
-  setMirando(value: number) {
-    this.LayoutComponent.setMirando(value);
   }
 
 

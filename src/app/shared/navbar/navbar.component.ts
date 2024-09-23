@@ -36,6 +36,10 @@ export class NavbarComponent implements OnInit {
     this.isNotificationOpen = !this.isNotificationOpen;
   }
 
+  navigateToProfile() {
+    
+  }
+
   toggleUsernameDropdown() {
     this.isUsernameDropdownOpen = !this.isUsernameDropdownOpen;
   }
@@ -44,24 +48,24 @@ export class NavbarComponent implements OnInit {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  setMostrar(value: number) {
-    this.LayoutComponent.setMostrar(value);
-  }
+  // setMostrar(value: number) {
+  //   this.LayoutComponent.setMostrar(value);
+  // }
 
-  setMirando(value: number) {
-    this.LayoutComponent.setMirando(value);
-  }
+  // setMirando(value: number) {
+  //   this.LayoutComponent.setMirando(value);
+  // }
 
   ngOnInit() {
     this.loadUserProfile()
-    this.LayoutComponent.mostrar$.subscribe(valor => {
-      this.mostrar = valor;
-    });
+    // this.LayoutComponent.mostrar$.subscribe(valor => {
+    //   this.mostrar = valor;
+    // });
 
 
-    this.LayoutComponent.mirando$.subscribe(valor => {
-      this.mirando = valor;
-    });
+    // this.LayoutComponent.mirando$.subscribe(valor => {
+    //   this.mirando = valor;
+    // });
 
   }
 

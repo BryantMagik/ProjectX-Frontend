@@ -16,14 +16,13 @@ import { Router } from '@angular/router';
 })
 
 export class ProjectsComponent implements OnInit {
-  project: Project[] | null = null;
+  project: Project[] = [];
   loading = true;
   error: string | null = null;
 
   constructor(
     private projectsService: ProjectService,
     private router: Router
-
   ) { }
 
   ngOnInit(): void {
@@ -32,14 +31,16 @@ export class ProjectsComponent implements OnInit {
 
   navigateToProject(projectId: string) {
     console.log(`Navigating to project with ID: ${projectId}`);
-    this.router.navigate(['/projects', projectId]);
-  }
+    this.router.navigate(['/pages/projects', projectId]);
+    }
 
   private getProject(): void {
     this.projectsService.getProjectsRequest().pipe(
       tap({
         next: (project: Project[] | null) => {
-          this.project = project
+          if (project) {
+            this.project = project
+          }
         },
         error: () => this.error = 'Failed to load projects',
         complete: () => this.loading = false

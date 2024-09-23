@@ -8,9 +8,9 @@ import { MessageService } from 'primeng/api';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
-    provideRouter(routes), 
     provideHttpClient(withFetch()),
-    MessageService,
-    provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync(),
+    provideAnimationsAsync(),
+    provideRouter(routes), 
+    MessageService, provideAnimationsAsync(),
   ],
 };
