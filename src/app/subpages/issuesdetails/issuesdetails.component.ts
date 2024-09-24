@@ -4,12 +4,17 @@ import { FormGroup,Validators,FormBuilder } from '@angular/forms';
 
 interface Issue {
   id: string;
-  tipo: string;
-  resumen: string;
+  code: string;
+  type: string;
+  summary: string;
   description: string;
-  asignado: string;
-  reportadoPor: string;
-  estado: string;
+  priority: string;
+  project_id: string;
+  reporterUserId: string;
+  status: string;
+  creation_date: string;
+  update_date: string;
+  asigned:string;
 }
 
 @Component({
@@ -22,13 +27,18 @@ interface Issue {
 export class IssuesdetailsComponent implements OnInit{
   issues: Issue[] = [
     {
-      id: 'ISSUE-001',
-      tipo: 'Bug',
-      resumen: 'Error en la página de login',
+      id:'112233374',
+      code: 'ISSUE-001',
+      type: 'Bug',
+      summary: 'Error en la página de login',
       description: 'Hay un error que impide que los usuarios puedan iniciar sesión en la página de login. El error ocurre cuando se ingresan credenciales incorrectas.',
-      asignado: 'Juan Pérez',
-      reportadoPor: 'María Juana',
-      estado: 'pending'
+      priority:'medium',
+      project_id:'1224e4a55a',
+      reporterUserId: '7854477474',
+      status: 'pending',
+      creation_date:'16/07/2024',
+      update_date:'21/09/2024',
+      asigned:'María Juana',
     }
   ];
 
@@ -36,9 +46,9 @@ export class IssuesdetailsComponent implements OnInit{
   issuesFormular: FormGroup;
   constructor(private fb: FormBuilder) {
     this.issuesFormular = this.fb.group({
-      code: ['', [Validators.required, Validators.maxLength(10)]],
+      id: ['', [Validators.required, Validators.maxLength(255)]],
       type: ['bug', Validators.required],
-      summary: ['', [Validators.required, Validators.maxLength(255)]],
+      summary: ['', [Validators.required, Validators.maxLength(1024)]],
       description: [''],
       priority: ['medium', Validators.required],
       projectId: ['', Validators.required],

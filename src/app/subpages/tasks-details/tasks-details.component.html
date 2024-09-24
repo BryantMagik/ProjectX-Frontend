@@ -23,23 +23,47 @@
             </div>
             <div>
               <label for="task-priority" class="block text-sm font-medium text-gray-700">Prioridad</label>
-              <input type="text" id="task-priority" name="task-priority" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.priority" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+              <!--<input type="text" id="task-priority" name="task-priority" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.priority" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">-->
+              <select id="task-priority" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                        formControlName="priority" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" *ngIf="!isEditing">
+                  <option *ngFor="let priority of tasksPriority" [value]="taskdetail?.priority">{{ taskdetail?.priority }}</option>
+                </select>
+                <select id="task-priority" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                        formControlName="priority" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" *ngIf="isEditing">
+                  <option *ngFor="let priority of tasksPriority" [value]="priority">{{ priority }}</option>
+                </select>
             </div>
             <div>
               <label for="task-type" class="block text-sm font-medium text-gray-700">Tipo</label>
-              <input type="text" id="task-type" name="task-type" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.type"[readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+              <!--<input type="text" id="task-type" name="task-type" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.type"[readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">-->
+              <select id="task-type" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                        formControlName="type" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" *ngIf="!isEditing">
+                  <option *ngFor="let type of tasksType" [value]="taskdetail?.type">{{ taskdetail?.type }}</option>
+                </select>
+                <select id="task-type" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                        formControlName="type" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" *ngIf="isEditing">
+                  <option *ngFor="let type of tasksType" [value]="type">{{ type }}</option>
+                </select>
             </div>
             <div>
               <label for="task-status" class="block text-sm font-medium text-gray-700">Estado</label>
-              <input type="text" id="task-status" name="task-status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.status" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+              <!--<input type="text" id="task-status" name="task-status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.status" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">-->
+              <select id="task-status" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                        formControlName="status" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" *ngIf="!isEditing">
+                  <option *ngFor="let status of tasksStatus" [value]="taskdetail?.status">{{ taskdetail?.status }}</option>
+                </select>
+                <select id="task-status" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                        formControlName="status" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" *ngIf="isEditing">
+                  <option *ngFor="let status of tasksStatus" [value]="status">{{ status }}</option>
+                </select>
             </div>
             <div>
               <label for="task-project-id" class="block text-sm font-medium text-gray-700">ID del Proyecto</label>
-              <input type="text" id="task-project-id" name="task-project-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.projectid" [readonly]="true">
+              <input type="text" id="task-project-id" name="task-project-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.project_id" [readonly]="true">
             </div>
             <div>
               <label for="task-assigned-user-id" class="block text-sm font-medium text-gray-700">ID del Usuario Asignado</label>
-              <input type="text" id="task-assigned-user-id" name="task-assigned-user-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.asigneruserid" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+              <input type="text" id="task-assigned-user-id" name="task-assigned-user-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.assigned_user_id" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
             </div>
             <div>
               <label for="task-estimation" class="block text-sm font-medium text-gray-700">Estimación</label>

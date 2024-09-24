@@ -13,11 +13,10 @@ export class IssuesFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.issueForm = this.fb.group({
-      code: ['', [Validators.required, Validators.maxLength(10)]],
+      id: ['', [Validators.required, Validators.maxLength(255)]],
       type: ['bug', Validators.required],
-      summary: ['', [Validators.required, Validators.maxLength(255)]],
+      summary: ['', [Validators.required, Validators.maxLength(1024)]],
       description: [''],
-      priority: ['medium', Validators.required],
       projectId: ['', Validators.required],
       reporterUserId: ['', Validators.required],
       status: ['pending', Validators.required],

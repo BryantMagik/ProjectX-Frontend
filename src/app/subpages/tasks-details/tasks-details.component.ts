@@ -2,6 +2,26 @@ import { Component,OnInit } from '@angular/core';
 import { CommonModule, NgFor, NgClass } from '@angular/common';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 
+enum tasks_priority{
+  high = 'high', 
+  medium = 'medium', 
+  low = 'low'
+}
+enum tasks_type {
+  Bug = 'Bug',
+  Internal = 'Internal',
+  External = 'External',
+  Research = 'Research',
+  Software = 'Software',
+  user_story = 'user_story'
+}
+
+enum tasks_status {
+  Active = 'Active',
+  Inactive = 'Inactive',
+  Ongoing = 'Ongoing',
+  Completed = 'Completed'
+}
 export interface Taskdetail{
   id:number;
   code:string;
@@ -10,8 +30,8 @@ export interface Taskdetail{
   priority:string;
   type:string;
   status:string;
-  projectid:number;
-  asigneruserid:number;
+  project_id:number;
+  assigned_user_id:number;
   estimation:string;
   duedate:string;
 }
@@ -24,17 +44,23 @@ export interface Taskdetail{
   styleUrl: './tasks-details.component.css'
 })
 export class TasksDetailsComponent implements OnInit{
+
+  tasksPriority = Object.values(tasks_priority);
+  tasksType = Object.values (tasks_type);
+  tasksStatus = Object.values(tasks_status);
+
+
   taskdetails: Taskdetail[] =[
     {
       id: 1,
       code: 'PRJ001',
       summary: 'Project Summary',
       description: 'Description of the project',
-      priority: 'High',
+      priority: 'high',
       type: 'Bug',
       status: 'Ongoing',
-      projectid: 10,
-      asigneruserid: 1001,
+      project_id: 10,
+      assigned_user_id: 1001,
       estimation: '5 days',
       duedate: '2024-12-31'
     }
@@ -49,7 +75,7 @@ export class TasksDetailsComponent implements OnInit{
       summary: ['', [Validators.required, Validators.maxLength(255)]],
       description: ['',[Validators.required, Validators.maxLength(10024)]],
       priority: ['', Validators.required],
-      task_type: ['', Validators.required],
+      type: ['', Validators.required],
       status: ['', Validators.required],
       project_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       assigned_user_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],

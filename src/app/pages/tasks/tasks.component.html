@@ -65,34 +65,34 @@
                           </th>
                       </tr>
                   </thead>
-                  <tbody>
-                      <tr>
-                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">1</td>
-                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">PRJ001</td>
-                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">Project Summary</td>
-                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">Description of the project</td>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                      <tr *ngFor="let tasksData of tasks">
+                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">{{ tasksData.id }}</td>
+                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">{{ tasksData.code }}</td>
+                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">{{ tasksData.summary }}</td>
+                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">{{ tasksData.description }}</td>
                           <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">
                               <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                   <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                  <span class="relative">High</span>
+                                  <span class="relative">{{ tasksData.priority }}</span>
                               </span>
                           </td>
                           <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">
                             <span class="relative inline-block px-3 py-1 font-semibold text-blue-600 leading-tight">
                                 <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
-                                <span class="relative">Bug</span>
+                                <span class="relative">{{ tasksData.type }}</span>
                             </span>
                           </td>
                           <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">
                               <span class="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
                                   <span aria-hidden class="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"></span>
-                                  <span class="relative">Ongoing</span>
+                                  <span class="relative">{{ tasksData.status }}</span>
                               </span>
                           </td>
-                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">10</td>
-                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">1001</td>
-                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">5 days</td>
-                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">2024-12-31</td>
+                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">{{ tasksData.project_id }}</td>
+                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">{{ tasksData.assigned_user_id }}</td>
+                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">{{ tasksData.estimation }}</td>
+                          <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">{{ tasksData.duedate }}</td>
                           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a class="text-indigo-600 hover:text-indigo-900"  >Ver</a>
                           </td>
