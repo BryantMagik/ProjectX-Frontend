@@ -29,6 +29,10 @@ export class ProjectsComponent implements OnInit {
     this.getProject()
   }
 
+  navigateToProjectForm() {
+    this.router.navigate(['/pages/projects/shared/project-form']);
+  }
+
   navigateToProject(projectId: string) {
     console.log(`Navigating to project with ID: ${projectId}`);
     this.router.navigate(['/pages/projects', projectId]);

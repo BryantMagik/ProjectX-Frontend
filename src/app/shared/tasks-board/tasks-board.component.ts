@@ -31,7 +31,7 @@ export class TasksBoardComponent {
       summary: 'Project Summary',
       description: 'Description of the project 1',
       priority: 'high',
-      type: 'Bug',
+      type: 'Software',
       status: 'Ongoing',
       project_id: 10,
       assigned_user_id: 1001,

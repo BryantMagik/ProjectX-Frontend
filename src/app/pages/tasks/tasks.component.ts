@@ -1,5 +1,6 @@
 import { CommonModule, NgClass, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 export interface tasksData{
   id:number;
@@ -30,7 +31,7 @@ export class TasksComponent {
       summary: 'Project Summary',
       description: 'Description of the project 1',
       priority: 'high',
-      type: 'Bug',
+      type: 'Software',
       status: 'Ongoing',
       project_id: 10,
       assigned_user_id: 1001,
@@ -39,8 +40,10 @@ export class TasksComponent {
     }
   ]
 
-  constructor() { 
+  constructor(private router:Router){}
 
+  navigateToTaskForm() {
+    this.router.navigate(['/pages/tasks/shared/tasks-form']);
   }
 
 

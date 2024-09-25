@@ -23,7 +23,6 @@
                   <textarea
                     id="description"
                     formControlName="description"
-                    rows="4"
                     class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   ></textarea>
                 </div>
@@ -46,8 +45,10 @@
                     class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   >
                     <option value="" disabled selected>Seleccione un tipo</option>
-                    <option value="personal">Personal</option>
-                    <option value="empresa">Empresa</option>
+                    <option value="Internal">Internal</option>
+                    <option value="External">External</option>
+                    <option value="Research">Research</option>
+                    <option value="Software">Software</option> 
                   </select>
                 </div>
                 <!-- Status -->
@@ -59,8 +60,10 @@
                     class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   >
                     <option value="" disabled selected>Seleccione un estado</option>
-                    <option value="activo">Activo</option>
-                    <option value="inactivo">Inactivo</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="Ongoing">Ongoing</option>
+                    <option value="Completed">Completed</option>
                   </select>
                 </div>
                 <!-- User ID -->

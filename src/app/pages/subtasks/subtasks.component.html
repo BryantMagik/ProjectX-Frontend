@@ -18,7 +18,7 @@
             </select>
           </div>
           <div>
-            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Create substask</button>
+            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToSubTaskForm()">Create substask</button>
           </div>
         </div>
       </div>
@@ -45,35 +45,16 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <!-- Subtask Item -->
-              <tr>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Subtarea A</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Descripción de la subtarea A</td>
+              <tr *ngFor="let subTasksData of subTasks">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTasksData.id }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTasksData.name }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTasksData.description }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pendiente</span>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">{{ subTasksData.status }}</span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">TAREA-001</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-07-20</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-07-21</td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
-                </td>
-              </tr>
-              <!-- More subtasks... -->
-              <tr>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Subtarea B</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Descripción de la subtarea B</td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">En Progreso</span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">TAREA-002</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-07-19</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-07-22</td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
-                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTasksData.task_id }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTasksData.creation_date }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTasksData.update_date }}</td>
               </tr>
               <!-- More subtasks... -->
             </tbody>

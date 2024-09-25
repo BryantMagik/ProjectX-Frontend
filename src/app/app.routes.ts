@@ -12,6 +12,11 @@ import { SubtasksComponent } from './pages/subtasks/subtasks.component';
 import { IssuesComponent } from './pages/issues/issues.component';
 import { CommentsComponent } from './pages/comments/comments.component';
 import { ProfilesComponent } from './pages/profiles/profiles.component';
+import { ProjectFormComponent} from './shared/project-form/project-form.component';
+import { TasksFormComponent } from './shared/tasks-form/tasks-form.component';
+import { SubtasksFormComponent } from './shared/subtasks-form/subtasks-form.component';
+import { IssuesFormComponent } from './shared/issues-form/issues-form.component';
+import { CommentsFormComponent } from './shared/comments-form/comments-form.component';
 
 export const routes: Routes = [
     {
@@ -69,6 +74,31 @@ export const routes: Routes = [
                 path: 'pages/projects/:id',
                 title: 'Project Details',
                 component: ProjectsDetailsComponent
+            },
+            {
+                path: 'pages/projects/shared/project-form',
+                title: 'Project Form',
+                component: ProjectFormComponent
+            },
+            {
+                path: 'pages/tasks/shared/tasks-form',
+                title: 'Task Form',
+                component: TasksFormComponent
+            },
+            {
+                path: 'pages/subtasks/shared/subtasks-form',
+                title: 'Subtasks Form',
+                component: SubtasksFormComponent
+            },
+            {
+                path: 'pages/issues/shared/issues-form',
+                title: 'Issues Form',
+                component: IssuesFormComponent
+            },
+            {
+                path: 'pages/comments/shared/comments-form',
+                title: 'Comments Form',
+                component: CommentsFormComponent
             }
         ]
     },
