@@ -39,66 +39,79 @@ export const routes: Routes = [
                 path: 'pages/dashboard',
                 title: 'Dashboard',
                 component: DashboardComponent,
+                data: { breadcrumb: 'HOME' }
             },
             {
                 path: 'pages/profile',
                 title: 'Profile',
                 component: ProfilesComponent,
+                data: { breadcrumb: 'Profile' }
             },
             {
                 path: 'pages/tasks',
                 title: 'Task',
                 component: TasksComponent,
+                data: { breadcrumb: 'Tasks' }
             },
             {
                 path: 'pages/subtasks',
                 title: 'SubTasks',
-                component: SubtasksComponent
+                component: SubtasksComponent,
+                data: { breadcrumb: 'SubTasks' }
             },
             {
                 path: 'pages/issues',
                 title: 'Issues',
-                component: IssuesComponent
+                component: IssuesComponent,
+                data: { breadcrumb: 'Issues' }
             },
             {
                 path: 'pages/comments',
                 title: 'Comments',
-                component: CommentsComponent
+                component: CommentsComponent,
+                data: { breadcrumb: 'Comments' }
             },
             {
                 path: 'pages/projects',
                 title: 'Projects',
                 component: ProjectsComponent,
+                data: { breadcrumb: 'Projects' }
             },
             {
                 path: 'pages/projects/:id',
                 title: 'Project Details',
-                component: ProjectsDetailsComponent
+                component: ProjectsDetailsComponent,
+                data: { breadcrumb: 'Projects Details' }
             },
             {
                 path: 'pages/projects/shared/project-form',
                 title: 'Project Form',
-                component: ProjectFormComponent
+                component: ProjectFormComponent,
+                data: { breadcrumb: 'Project Form' }
             },
             {
                 path: 'pages/tasks/shared/tasks-form',
                 title: 'Task Form',
-                component: TasksFormComponent
+                component: TasksFormComponent,
+                data: { breadcrumb: 'Task Form' }
             },
             {
                 path: 'pages/subtasks/shared/subtasks-form',
                 title: 'Subtasks Form',
-                component: SubtasksFormComponent
+                component: SubtasksFormComponent,
+                data: { breadcrumb: 'Subtasks Form' }
             },
             {
                 path: 'pages/issues/shared/issues-form',
                 title: 'Issues Form',
-                component: IssuesFormComponent
+                component: IssuesFormComponent,
+                data: { breadcrumb: 'Issues Form' }
             },
             {
                 path: 'pages/comments/shared/comments-form',
                 title: 'Comments Form',
-                component: CommentsFormComponent
+                component: CommentsFormComponent,
+                data: { breadcrumb: 'Comments Form' }
             }
         ]
     },
