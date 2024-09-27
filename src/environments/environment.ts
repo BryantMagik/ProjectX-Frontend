@@ -12,5 +12,6 @@ export const userApi = {
 export const projectApi = {
     production: true,
     getAll: 'https://project-x-backend-lyart.vercel.app/api/v1/project/',
-    getById: 'https://project-x-backend-lyart.vercel.app/api/v1/project'
+    getById: 'https://project-x-backend-lyart.vercel.app/api/v1/project',
+    create: 'https://project-x-backend-lyart.vercel.app/api/v1/project'
 }

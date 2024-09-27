@@ -42,4 +42,12 @@ export class ProjectService {
     }
     return of(null);
   }
+
+  postProject(newProject: Project): Observable<Project | null> {
+    const headers = this.getAuthHeaders()
+    if (headers) {
+      return this.apiService.post<Project>(`${projectApi.create}`,newProject,{ headers })
+    }
+    return of(null)
+  }
 }

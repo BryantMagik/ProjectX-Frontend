@@ -11,5 +11,5 @@ export const projectApi = {
     production: false,
     getAll: 'http://localhost:3000/api/v1/project/',
     getById: 'http://localhost:3000/api/v1/project',
-
+    create: 'http://localhost:3000/api/v1/project'
 }
