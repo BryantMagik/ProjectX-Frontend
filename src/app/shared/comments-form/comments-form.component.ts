@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comments-form',
@@ -11,7 +12,7 @@ import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 export class CommentsFormComponent implements OnInit{
   commentForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router:Router) {
     this.commentForm = this.fb.group({
       body: ['', [Validators.required]],
       issue_id: [null, [Validators.required]],
@@ -20,6 +21,10 @@ export class CommentsFormComponent implements OnInit{
   }
 
   ngOnInit(): void {}
+
+  navigateToComments(){
+    this.router.navigate(['/pages/comments']);
+  }
 
   onSubmit(): void {
     if (this.commentForm.valid) {

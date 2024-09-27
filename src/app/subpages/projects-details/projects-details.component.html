@@ -23,10 +23,9 @@
               </div>
               <div>
                 <label for="project-type" class="block text-sm font-medium text-gray-700">Tipo</label>
-                <select id="project-type" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                        formControlName="type" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" *ngIf="!isEditing">
-                  <option *ngFor="let type of projectTypes" [value]="type">{{ project?.type }}</option>
-                </select>
+                <p *ngIf="!isEditing" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2" >
+                  {{ project?.type}}
+                </p>
                 <select id="project-type" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
                         formControlName="type" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" *ngIf="isEditing">
                   <option *ngFor="let type of projectTypes" [value]="type">{{ type }}</option>
@@ -35,10 +34,9 @@
               
               <div>
                 <label for="project-status" class="block text-sm font-medium text-gray-700">Estado</label>
-                <select id="project-status" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                        formControlName="status" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" *ngIf="!isEditing">
-                  <option *ngFor="let status of projectStatuses" [value]="status">{{ project?.status }}</option>
-                </select>
+                <p *ngIf="!isEditing" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2" >
+                    {{ project?.status }}
+                </p>
                 <select id="project-status" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
                         formControlName="status" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" *ngIf="isEditing">
                   <option *ngFor="let status of projectStatuses" [value]="status">{{ status }}</option>
@@ -73,7 +71,7 @@
           </div>
             </div>
             <div class="mt-6 flex justify-end">
-              <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">volver</button>
+              <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToProjects()">volver</button>
             </div>
           </form>
         </div>

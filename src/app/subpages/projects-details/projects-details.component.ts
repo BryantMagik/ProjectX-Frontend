@@ -5,6 +5,7 @@ import { ProjectService } from '../../service/project/project.service';
 import { tap } from 'rxjs';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { NgClass,NgFor,CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 enum ProjectType {
   Internal = 'Internal',
@@ -43,7 +44,8 @@ export class ProjectsDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) { 
     this.projectsFormular = this.fb.group({
       id: [{ value: '', disabled: true }],
@@ -66,6 +68,10 @@ export class ProjectsDetailsComponent implements OnInit {
         this.getProjectById(this.projectId)
       }
     })
+  }
+
+  navigateToProjects() {
+    this.router.navigate(['/pages/projects']);
   }
 
   private getProjectById(id: string) {

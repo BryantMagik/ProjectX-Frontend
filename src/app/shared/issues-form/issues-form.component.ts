@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-issues-form',
@@ -11,7 +12,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class IssuesFormComponent implements OnInit {
   issueForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private router:Router) {
     this.issueForm = this.fb.group({
       id: ['', [Validators.required, Validators.maxLength(255)]],
       type: ['bug', Validators.required],
@@ -24,6 +25,10 @@ export class IssuesFormComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  navigateToIssues(){
+    this.router.navigate(['/pages/issues']);
+  }
 
   onSubmit(): void {
     if (this.issueForm.valid) {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-subtasks-form',
@@ -13,7 +14,7 @@ export class SubtasksFormComponent implements OnInit {
   subtaskForm: FormGroup;
   currentDate = new Date().toISOString();  // Para las fechas de creación y actualización
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private router:Router) {
     this.subtaskForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
       description: [''],
@@ -23,6 +24,10 @@ export class SubtasksFormComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  navigateToSubTasks() {
+    this.router.navigate(['/pages/subtasks']);
+  }
 
   onSubmit(): void {
     if (this.subtaskForm.valid) {

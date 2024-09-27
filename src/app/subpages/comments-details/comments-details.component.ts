@@ -1,6 +1,7 @@
 import { NgIf,NgClass, NgFor} from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 export interface commentsDetail{
   id:string;
@@ -33,7 +34,7 @@ export class CommentsDetailsComponent implements OnInit{
 
   commentFormular: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private router:Router) {
     this.commentFormular = this.fb.group({
       id: [{ value: '', disabled: true }],
       content: [{ value: '', disabled: true }],
@@ -44,6 +45,10 @@ export class CommentsDetailsComponent implements OnInit{
   }
 
   ngOnInit(): void {
+  }
+  
+  navigateToComments(){
+    this.router.navigate(['/pages/comments']);
   }
 
 

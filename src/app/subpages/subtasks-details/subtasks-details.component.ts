@@ -1,6 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { CommonModule, NgClass, NgFor } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 export interface SubtaskDetail {
   subtask_id: number;
@@ -35,7 +36,7 @@ export class SubtasksDetailsComponent implements OnInit {
 
   isEditing = false;
   subtasksFormular: FormGroup;
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder,private router:Router) { 
     this.subtasksFormular = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
       description: [''],
@@ -45,6 +46,10 @@ export class SubtasksDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  navigateToSubTasks() {
+    this.router.navigate(['/pages/subtasks']);
   }
 
   toggleEdit() {

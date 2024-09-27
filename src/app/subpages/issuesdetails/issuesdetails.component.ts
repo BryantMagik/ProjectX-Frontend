@@ -1,6 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { CommonModule, NgFor, NgClass } from '@angular/common';
 import { FormGroup,Validators,FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 interface Issue {
   id: string;
@@ -44,7 +45,7 @@ export class IssuesdetailsComponent implements OnInit{
 
   isEditing = false;
   issuesFormular: FormGroup;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private router:Router) {
     this.issuesFormular = this.fb.group({
       id: ['', [Validators.required, Validators.maxLength(255)]],
       type: ['bug', Validators.required],
@@ -59,6 +60,10 @@ export class IssuesdetailsComponent implements OnInit{
   }
 
   ngOnInit(): void {
+  }
+
+  navigateToIssues(){
+    this.router.navigate(['/pages/issues']);
   }
 
   toggleEdit() {

@@ -1,6 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { CommonModule, NgFor, NgClass } from '@angular/common';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 enum tasks_priority{
   high = 'high', 
@@ -68,7 +69,8 @@ export class TasksDetailsComponent implements OnInit{
 
   isEditing = false;
   tasksFormular: FormGroup;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private router: Router) {
     this.tasksFormular = this.fb.group({
       id: [{ value: '', disabled: true }],
       code: ['', [Validators.required, Validators.maxLength(10)]],
@@ -86,6 +88,10 @@ export class TasksDetailsComponent implements OnInit{
   }
 
   ngOnInit(): void {
+  }
+
+  navigateToTasks() {
+    this.router.navigate(['/pages/tasks']);
   }
 
   toggleEdit() {
