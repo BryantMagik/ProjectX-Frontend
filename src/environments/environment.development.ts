@@ -9,6 +9,7 @@ export const userApi = {
 
 export const projectApi = {
     production: false,
+    getOnlyOwn:'http://localhost:3000/api/v1/project/user/projects',
     getAll: 'http://localhost:3000/api/v1/project/',
     getById: 'http://localhost:3000/api/v1/project',
     create: 'http://localhost:3000/api/v1/project'

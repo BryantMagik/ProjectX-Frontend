@@ -34,12 +34,14 @@ export class ProjectsComponent implements OnInit {
   }
 
   navigateToProject(projectId: string) {
-    console.log(`Navigating to project with ID: ${projectId}`);
     this.router.navigate(['/pages/projects', projectId]);
     }
 
   private getProject(): void {
-    this.projectsService.getProjectsRequest().pipe(
+
+
+
+    this.projectsService.getProjectByIdWhereId().pipe(
       tap({
         next: (project: Project[] | null) => {
           if (project) {

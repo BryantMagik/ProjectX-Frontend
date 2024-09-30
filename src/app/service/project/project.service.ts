@@ -50,4 +50,11 @@ export class ProjectService {
     }
     return of(null)
   }
+  getProjectByIdWhereId(): Observable<Project[]> {
+    const headers = this.getAuthHeaders();
+    if (headers) {
+      return this.apiService.get<Project[]>(`${projectApi.getOnlyOwn}`, { headers });
+    }
+    return of([]);
+  }
 }
