@@ -58,17 +58,17 @@ export class NavbarComponent implements OnInit {
   }
 
 
-  // toggleNotificationDropdown() {
-  //   this.isNotificationOpen = !this.isNotificationOpen;
-  // }
+   toggleNotificationDropdown() {
+     this.isNotificationOpen = !this.isNotificationOpen;
+   }
 
-  // navigateToProfile() {
+   navigateToProfile() {
+    this.router.navigate(['/pages/profile']);
+   }
 
-  // }
-
-  // toggleUsernameDropdown() {
-  //   this.isUsernameDropdownOpen = !this.isUsernameDropdownOpen;
-  // }
+   toggleUsernameDropdown() {
+     this.isUsernameDropdownOpen = !this.isUsernameDropdownOpen;
+   }
 
   // toggleDropdown(): void {
   //   this.isDropdownOpen = !this.isDropdownOpen;

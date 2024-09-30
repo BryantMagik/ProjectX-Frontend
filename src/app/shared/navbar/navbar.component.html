@@ -42,8 +42,8 @@
     <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-white" *ngIf="breadcrumbs.length === 0">HOME</h6>
     <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-white" *ngFor="let breadcrumb of breadcrumbs; let last = last">{{ breadcrumb.label }}</h6>
   </div>
-  <!-- <div class="flex items-center">
-    <div class="mr-auto md:mr-4 md:w-56">
+  <div class="flex items-center">
+    <!--<div class="mr-auto md:mr-4 md:w-56">
       <div class="relative w-full min-w-[200px] h-10">
         <input
           class="peer w-full h-full bg-transparent text-white font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-white placeholder-shown:border-t-white border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-black focus:border-black"
@@ -52,7 +52,7 @@
           class="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal peer-placeholder-shown:text-white leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-black transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-blue-gray-400 peer-focus:text-black before:border-black peer-focus:before:border-black after:border-black peer-focus:after:border-black">Type
           here</label>
       </div>
-    </div> -->
+    </div>-->
   <!-- <button
       class="relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-white hover:bg-white active:bg-white grid xl:hidden"
       type="button" (click)="toggleDropdown()">
@@ -65,7 +65,7 @@
         </svg>
       </span>
     </button> -->
-  <!-- <div class="relative inline-block text-left">
+  <div class="relative inline-block text-left">
       <button
         class="middle none font-sans font-bold center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white active:bg-white hidden items-center gap-1 px-4 xl:flex"
         type="button" (click)="toggleUsernameDropdown()">
@@ -91,12 +91,12 @@
         class="absolute right-0 mt-1 w-24 bg-white border border-gray-200 rounded-md shadow-lg z-50">
         <ul class="py-1">
           <li>
-              <a class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100" (click)='navigateToProfile()'>Edit Profile</a>
+              <a class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100" (click)='navigateToProfile();toggleUsernameDropdown()'>Edit Profile</a>
             </li>
         </ul>
       </div>
     </div>
-    <button
+    <!-- <button
       class="relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30"
       type="button">
       <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
@@ -126,7 +126,7 @@
         <app-notifications></app-notifications>
       </div>
     </div>
-  </div> -->
+  </div>-->
   <!-- <div *ngIf="isDropdownOpen" class="absolute top-12 left-0 w-full bg-white shadow-lg rounded-lg z-50 xl:hidden"> -->
     <!-- <ul class="flex flex-col">
       <li><a  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" (click)="setMostrar(0)">Dashboard</a></li>

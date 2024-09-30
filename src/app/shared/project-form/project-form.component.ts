@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LayoutComponent } from '../../pages/layout/layout.component';
 import { ProjectService } from '../../service/project/project.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-form',
@@ -15,9 +16,14 @@ export class ProjectFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private router:Router
 
   ) { }
+
+  navigateToProjects() {
+    this.router.navigate(['/pages/projects']);
+  }
 
   ngOnInit(): void {
     this.projectForm = this.fb.group({
