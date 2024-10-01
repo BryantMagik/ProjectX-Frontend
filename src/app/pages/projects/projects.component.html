@@ -77,16 +77,19 @@
                 <td class="px-6 py-4 whitespace-nowrap">
                   <span [ngClass]="{
                     'text-blue-900 bg-blue-300': project.type === 'SOFTWARE',
-                    'text-red-900 bg-red-300': project.type === 'research'
+                    'text-red-900 bg-red-300': project.type === 'RESEARSH',
+                    'text-indigo-900 bg-indigo-300': project.type === 'EXTERNAL',
+                    'text-pink-900 bg-pink-300': project.type === 'INTERNAL'
                   }" class="px-3 py-1 inline-flex text-xs leading-tight font-semibold rounded-full">
                     {{ project.type }}
                   </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <span [ngClass]="{
-                    'text-green-900 bg-green-300': project.status === 'Active',
-                    'text-red-900 bg-red-300': project.status === 'Inactivo',
-                    'text-purple-900 bg-purple-300': project.status === 'ONGOING'
+                    'text-green-900 bg-green-300': project.status === 'ACTIVE',
+                    'text-red-900 bg-red-300': project.status === 'INACTIVE',
+                    'text-purple-900 bg-purple-300': project.status === 'ONGOING',
+                    'text-gray-900 bg-gray-300': project.status === 'ONWAIT'
                   }" class="px-3 py-1 inline-flex text-xs leading-tight font-semibold rounded-full">
                     {{ project.status }}
                   </span>
