@@ -53,7 +53,7 @@
           here</label>
       </div>
     </div>-->
-  <!-- <button
+   <button
       class="relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-white hover:bg-white active:bg-white grid xl:hidden"
       type="button" (click)="toggleDropdown()">
       <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
@@ -64,7 +64,7 @@
             clip-rule="evenodd"></path>
         </svg>
       </span>
-    </button> -->
+    </button>
   <div class="relative inline-block text-left">
       <button
         class="middle none font-sans font-bold center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white active:bg-white hidden items-center gap-1 px-4 xl:flex"
@@ -96,7 +96,7 @@
         </ul>
       </div>
     </div>
-    <!-- <button
+   <button
       class="relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30"
       type="button">
       <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
@@ -126,15 +126,19 @@
         <app-notifications></app-notifications>
       </div>
     </div>
-  </div>-->
-  <!-- <div *ngIf="isDropdownOpen" class="absolute top-12 left-0 w-full bg-white shadow-lg rounded-lg z-50 xl:hidden"> -->
-    <!-- <ul class="flex flex-col">
-      <li><a  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" (click)="setMostrar(0)">Dashboard</a></li>
-      <li><a  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" (click)="setMostrar(2)">Projects</a></li>
-      <li><a  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" (click)="setMostrar(3)">Tasks</a></li>
-      <li><a  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" (click)="setMostrar(4)">Subtasks</a></li>
-      <li><a  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" (click)="setMostrar(5)">Issues</a></li>
-      <li><a  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" (click)="setMostrar(6)">Comments</a></li>
-    </ul> -->
-  <!-- </div> -->
+  </div>
+  <div *ngIf="isDropdownOpen" class="absolute top-12 left-0 w-full bg-white shadow-lg rounded-lg z-50 xl:hidden">
+     <ul class="flex flex-col">
+      <li>
+        <a class="block px-4 py-2 text-sm text-black hover:bg-gray-100"
+        mat-list-item 
+        *ngFor="let item of menuItems()" 
+        [routerLink]="item['route']"
+        routerLinkActive="bg-blue-900"
+        [routerLinkActiveOptions]="{ exact: true }" (click)="toggleDropdown()">
+          <span matListItemTitle>{{item.label}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>

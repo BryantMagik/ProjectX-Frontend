@@ -41,10 +41,6 @@ export class NavbarComponent implements OnInit {
   mirando: number = 0;
   textos2: string[] = [' ', 'Projects-Details', 'Tasks-Details', 'Subtasks-Details', 'Issues-Details', 'Comments-Details'];
 
-  // items: any[] = []
-
-  //items: MenuItem[] | undefined
-
   home: MenuItem | undefined
   breadcrumbs: Array<{ label: string; url: string }> = [];
 
@@ -57,6 +53,38 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  menuItems = signal<MenuItem[]>([
+    {
+      icon: 'dashboard',
+      label: 'Dashboard',
+      route: 'pages/dashboard',
+    },
+    {
+      icon: 'folder_open',
+      label: 'Projects',
+      route: 'pages/projects',
+    },
+    {
+      icon: 'assignment',
+      label: 'Task',
+      route: 'pages/tasks',
+    },
+    {
+      icon: 'subdirectory_arrow_right',
+      label: 'SubTasks',
+      route: 'pages/subtasks',
+    },
+    {
+      icon: 'bug_report',
+      label: 'Issues',
+      route: 'pages/issues',
+    },
+    {
+      icon: 'comment',
+      label: 'Comments',
+      route: 'pages/comments',
+    }
+  ])
 
    toggleNotificationDropdown() {
      this.isNotificationOpen = !this.isNotificationOpen;
@@ -70,17 +98,10 @@ export class NavbarComponent implements OnInit {
      this.isUsernameDropdownOpen = !this.isUsernameDropdownOpen;
    }
 
-  // toggleDropdown(): void {
-  //   this.isDropdownOpen = !this.isDropdownOpen;
-  // }
+   toggleDropdown(): void {
+     this.isDropdownOpen = !this.isDropdownOpen;
+   }
 
-  // setMostrar(value: number) {
-  //   this.LayoutComponent.setMostrar(value);
-  // }
-
-  // setMirando(value: number) {
-  //   this.LayoutComponent.setMirando(value);
-  // }
 
   ngOnInit():void {
     this.router.events
@@ -91,6 +112,7 @@ export class NavbarComponent implements OnInit {
       .subscribe((breadcrumbs) => {
         this.breadcrumbs = breadcrumbs;
       });
+
     // this.loadUserProfile();
 
 
