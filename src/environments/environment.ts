@@ -5,7 +5,8 @@ export const environment = {
 
 export const userApi = {
     production: true,
-    apirurl: 'https://project-x-backend-lyart.vercel.app/api/v1/auth/profile'
+    apirurl: 'https://project-x-backend-lyart.vercel.app/api/v1/auth/profile',
+    baseUrl: 'https://project-x-backend-lyart.vercel.app/api/v1/users'
 
 }
 

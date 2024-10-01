@@ -32,7 +32,9 @@
             </select>
           </div>
           <div>
-            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToProjectForm()">Create project</button>
+            <button
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              (click)="navigateToProjectForm()">Create project</button>
           </div>
         </div>
       </div>
@@ -92,7 +94,9 @@
                 <td class="px-6 py-4 whitespace-nowrap">{{ project.createdAt }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ project.updatedAt }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ project.author.first_name }}</td>
-                <!-- <td class="px-6 py-4 whitespace-nowrap">{{ project.participants.join(', ') }}</td> -->
+                <td class="px-6 py-4 whitespace-nowrap" *ngFor="let participant of project.participants">
+                  {{ participant.first_name }}
+                </td>
               </tr>
             </tbody>
           </table>

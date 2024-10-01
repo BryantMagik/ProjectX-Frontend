@@ -4,7 +4,8 @@ export const environment = {
 };
 export const userApi = {
     production: false,
-    apirurl: 'http://localhost:3000/api/v1/auth/profile'
+    apirurl: 'http://localhost:3000/api/v1/auth/profile',
+    baseUrl: 'http://localhost:3000/api/v1/users'
 }
 
 export const projectApi = {
