@@ -16,7 +16,7 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-project-form',
   standalone: true,
-  imports: [LayoutComponent, ReactiveFormsModule, CommonModule, MultiSelectModule, DropdownModule,InputTextModule,ToastModule],
+  imports: [LayoutComponent, ReactiveFormsModule, CommonModule, MultiSelectModule, DropdownModule, InputTextModule, ToastModule],
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.css'
 })
@@ -26,6 +26,7 @@ export class ProjectFormComponent implements OnInit {
   users: User[] = []
   proyectoType: ProyectDropdown[] = []
   proyectoStatus: ProyectDropdown[] = []
+  authorId: string | null = null
 
   constructor(
     private fb: FormBuilder,
@@ -44,6 +45,8 @@ export class ProjectFormComponent implements OnInit {
     this.proyectoType = PROYECTOTYPE
     this.proyectoStatus = PROYECTOSTATUS
 
+    this.authorId = sessionStorage.getItem('userId');
+    console.log(this.authorId)
     this.userService.getAllUsers().subscribe({
       next: (data: User[] | null) => {
         if (data) {
@@ -58,7 +61,7 @@ export class ProjectFormComponent implements OnInit {
         console.error('Error al obtener los usuarios:', err);
         this.users = [];
       }
-    });
+    })
 
     this.projectForm = this.fb.group({
       code: ['', [Validators.required, Validators.maxLength(10)]],
@@ -69,14 +72,17 @@ export class ProjectFormComponent implements OnInit {
       participants: [[]],
     })
     console.log('Formulario:', this.projectForm.value);
-
-
   }
 
   onSubmit(): void {
 
     if (this.projectForm.valid) {
-      this.projectService.postProject(this.projectForm.value)
+
+      const projectData = {
+        ...this.projectForm.value,
+      };
+
+      this.projectService.postProject(projectData)
         .subscribe({
           next: (response) => {
             this.showSuccess()
@@ -87,10 +93,13 @@ export class ProjectFormComponent implements OnInit {
         })
     } else {
       console.log('Formulario inválido');
+        console.log('Formulario:', this.projectForm.value);
+        console.log('Errores del formulario:', this.projectForm.errors);
+        console.log('Estado de los controles:', this.projectForm.controls);
     }
   }
 
   showSuccess() {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
-}
+  }
 }
