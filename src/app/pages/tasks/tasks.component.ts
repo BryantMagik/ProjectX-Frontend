@@ -24,6 +24,7 @@ export interface tasksData{
   styleUrl: './tasks.component.css'
 })
 export class TasksComponent {
+
   tasks: tasksData[] =[
     {
       id: 1,

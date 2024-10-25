@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Project } from '../../model/project.interface';
 import { ProjectService } from '../../service/project/project.service';
 import { tap } from 'rxjs';
-import { FormBuilder,FormGroup,Validators } from '@angular/forms';
+import { FormBuilder,FormGroup,FormsModule,ReactiveFormsModule,Validators } from '@angular/forms';
 import { NgClass,NgFor,CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -24,7 +24,7 @@ enum ProjectStatus {
 @Component({
   selector: 'app-projects-details',
   standalone: true,
-  imports: [NgClass,NgFor,CommonModule],
+  imports: [NgClass,NgFor,CommonModule,FormsModule,ReactiveFormsModule],
   templateUrl: './projects-details.component.html',
   styleUrls: ['./projects-details.component.css']
 })
@@ -34,7 +34,7 @@ export class ProjectsDetailsComponent implements OnInit {
   loading = true;
   error: string | null = null;
 
-  isEditing = false;
+  isEditing: boolean = false;
   projectsFormular: FormGroup;
 
   projectTypes = Object.values(ProjectType);
@@ -49,21 +49,19 @@ export class ProjectsDetailsComponent implements OnInit {
   ) { 
     this.projectsFormular = this.fb.group({
       id: [{ value: '', disabled: true }],
-      name: ['', [Validators.required, Validators.maxLength(50)]],
-      description: [''],
-      code: ['', [Validators.required, Validators.maxLength(10)]],
-      type: ['', Validators.required],
-      status: ['', Validators.required],
-      userId: ['', Validators.required],
+      name: [{value: ''}, [Validators.required, Validators.maxLength(50)]],
+      description: [{value: ''}],
+      code: [{value: ''}, [Validators.required, Validators.maxLength(10)]],
+      type: [{value: ''}, Validators.required],
+      status: [{value: ''}, Validators.required],
+      userId: [{value: ''}, Validators.required],
     });
   }
 
+
   ngOnInit() {
-    console.log('ProjectsDetailsComponent initialized');
     this.route.paramMap.subscribe(params => {
       this.projectId = params.get('id');
-      console.log('Project ID:', this.projectId);
-
       if (this.projectId) {
         this.getProjectById(this.projectId)
       }
@@ -79,30 +77,33 @@ export class ProjectsDetailsComponent implements OnInit {
       tap({
         next: (project: Project | null) => {
           this.project = project;
-          console.log('Project:', this.project);
-          this.projectsFormular.patchValue({
-            id: project?.id,
-            name: project?.name,
-            description: project?.description,
-            code: project?.code,
-            type: project?.type,
-            status: project?.status,
-            userId: project?.author?.first_name,
-          });
+          if (project) {
+            this.projectsFormular.patchValue({
+              id: project.id,
+              name: project.name,
+              description: project.description,
+              code: project.code,
+              type: project.type,
+              status: project.status,
+              userId: project.author?.first_name,
+            });
+          }
         },
-        error: () => this.error = 'Failed to load project',
+        error: () => {
+          this.error = 'Failed to load project';
+          this.loading = false
+        },
         complete: () => this.loading = false
       })
     ).subscribe()
   }
 
   toggleEdit() {
+    this.isEditing = !this.isEditing;
     if (this.isEditing) {
-      this.isEditing = false;
-      this.projectsFormular.disable();  // Deshabilitar los campos
+      this.projectsFormular.enable(); // Habilita todos los controles
     } else {
-      this.isEditing = true;
-      this.projectsFormular.enable();   // Habilitar los campos
+      this.projectsFormular.disable(); // Deshabilita todos los controles
     }
   }
 

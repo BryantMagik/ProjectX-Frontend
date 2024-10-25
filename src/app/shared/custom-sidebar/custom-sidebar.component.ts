@@ -3,6 +3,7 @@ import { Component, signal } from '@angular/core';
 import { MatListModule } from '@angular/material/list'
 import { MatIconModule } from '@angular/material/icon'
 import { RouterLink, RouterModule } from '@angular/router';
+import { AuthService } from '../../service/auth/auth.service';
 
 export type MenuItem = {
   icon: string,
@@ -19,6 +20,8 @@ export type MenuItem = {
   styleUrl: './custom-sidebar.component.css'
 })
 export class CustomSidebarComponent {
+
+  constructor(private authService: AuthService) { }
 
   menuItems = signal<MenuItem[]>([
     {
@@ -52,5 +55,9 @@ export class CustomSidebarComponent {
       route: 'pages/comments',
     }
   ])
+
+  onLogout(): void {
+    this.authService.logout();
+  }
 
 }

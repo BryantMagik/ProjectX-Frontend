@@ -3,15 +3,15 @@
     <h2 class="text-2xl leading-6 font-medium text-gray-900">Projects</h2>
     <div class="mt-5 overflow-x-auto">
       <p-toolbar styleClass="mb-4 gap-2">
-        <ng-template pTemplate="left">
-          <p-button severity="success" label="New project" icon="pi pi-plus"
-            class="mr-2 bg-green-500 text-white rounded-md" styleClass="p-2" (onClick)="navigateToProjectForm()" />
-          <p-button severity="danger" label="Delete" icon="pi pi-trash" styleClass="p-2"
-            class="mr-2 bg-red-300 text-white rounded-md" />
-        </ng-template>
+        <p-button severity="success" label="New project" icon="pi pi-plus"
+          class="mr-2 bg-green-500 text-white rounded-md" styleClass="p-2" (onClick)="navigateToProjectForm()" />
+        <div class="relative">
+          <i class="pi pi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <input type="text" placeholder="Search..." (input)="filterGlobal($event)"
+            class="pl-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+        </div>
 
       </p-toolbar>
-
       <p-table #dt [value]="project" dataKey="id" [rows]="5" [rowHover]="true" [paginator]="true"
         [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
         [tableStyle]="{ 'min-width': '75rem' }" [filterDelay]="0"
@@ -19,20 +19,11 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
           <div class="flex items-center justify-between">
-            <h5 class="m-0">Manage projects</h5>
-            <div class="relative">
-              <i class="pi pi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-              <input type="text" placeholder="Search..." (input)="filterGlobal($event)"
-                class="pl-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-            </div>
           </div>
         </ng-template>
 
         <ng-template pTemplate="header">
           <tr>
-            <th style="width: 4rem;">
-              <p-tableHeaderCheckbox />
-            </th>
             <th pSortableColumn="name" style="min-width: 15rem;">
               <div class="flex items-center justify-between">
                 Name <p-sortIcon field="name" />
@@ -70,21 +61,29 @@
               </div>
             </th>
             <th pSortableColumn="code" style="min-width: 15rem;">
-              Code<p-sortIcon field="code" />
+              <div class="flex items-center justify-between">
+
+                Code<p-sortIcon field="code" />
+                <p-columnFilter type="text" field="description" display="menu" class="ml-auto" />
+              </div>
             </th>
+
             <th pSortableColumn="type" style="min-width: 15rem;">
-              Type<p-sortIcon field="type" />
+              <div class="flex items-center justify-between">
+                Type<p-sortIcon field="type" />
+                <p-columnFilter type="text" field="type" display="menu" class="ml-auto" />
+              </div>
             </th>
             <th pSortableColumn="status" style="min-width: 15rem;">
-              Status<p-sortIcon field="status" />
+              <div class="flex items-center justify-between">
+                Status<p-sortIcon field="status" />
+                <p-columnFilter type="text" field="status" display="menu" class="ml-auto" />
+              </div>
             </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-project>
           <tr (click)="navigateToProject(project.id)">
-            <td>
-              <p-tableCheckbox [value]="project" />
-            </td>
             <td>
               {{ project.name }}
             </td>
@@ -107,10 +106,9 @@
         </ng-template>
         <ng-template pTemplate="summary">
           <div class="flex align-items-center justify-content-between">
-              In total there are {{ project ? project.length : 0 }} project.
+            In total there are {{ project ? project.length : 0 }} project.
           </div>
-      </ng-template>
-
+        </ng-template>
       </p-table>
     </div>
   </div>
