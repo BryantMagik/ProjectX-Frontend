@@ -64,7 +64,7 @@ export class ProjectFormComponent implements OnInit {
     })
 
     this.projectForm = this.fb.group({
-      code: ['', [Validators.required, Validators.maxLength(10)]],
+      code: ['', [Validators.required, Validators.maxLength(30)]],
       name: ['', [Validators.required, Validators.maxLength(50)]],
       description: [''],
       type: ['', Validators.required],
@@ -86,6 +86,7 @@ export class ProjectFormComponent implements OnInit {
         .subscribe({
           next: (response) => {
             this.showSuccess()
+            this.navigateToProjects()
           },
           error: (err) => {
             console.error('Error al crear el proyecto', err);
