@@ -1,29 +1,50 @@
+import { CommonModule, NgClass, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
-import { LayoutComponent } from '../../pages/layout/layout.component';
+import { Router } from '@angular/router';
+
+export interface tasksData{
+  id:number;
+  code:string;
+  summary:string;
+  description:string;
+  priority:string;
+  type:string;
+  status:string;
+  project_id:number;
+  assigned_user_id:number;
+  estimation:string;
+  duedate:string;
+}
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [LayoutComponent],
+  imports: [NgFor,CommonModule,NgClass],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
 })
 export class TasksComponent {
 
-  constructor(private LayoutComponent: LayoutComponent) { 
+  tasks: tasksData[] =[
+    {
+      id: 1,
+      code: 'PRJ001',
+      summary: 'Project Summary',
+      description: 'Description of the project 1',
+      priority: 'high',
+      type: 'Software',
+      status: 'Ongoing',
+      project_id: 10,
+      assigned_user_id: 1001,
+      estimation: '5 days',
+      duedate: '2024-12-31'
+    }
+  ]
 
-  }
-  
-  setFormular(value: number) {
-    this.LayoutComponent.setFormular(value);
-  }
+  constructor(private router:Router){}
 
-  setMostrar(value: number) {
-    this.LayoutComponent.setMostrar(value);
-  }
-
-  setMirando(value: number) {
-    this.LayoutComponent.setMirando(value);
+  navigateToTaskForm() {
+    this.router.navigate(['/pages/tasks/shared/tasks-form']);
   }
 
 

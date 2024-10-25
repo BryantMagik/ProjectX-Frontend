@@ -1,6 +1,7 @@
 <div class="h-screen flex items-center justify-center bg-gradient-to-b from-slate-600 to-indigo-900">
     <form [formGroup]="validatorForm" (ngSubmit)="login()" class="p-6 rounded-lg shadow-md w-full max-w-sm">
-        <div class="mb-4">
+        <div class="mb-4 text-center">
+            <h1 class="text-white font-mono">JIRO</h1>
             <p-inputGroup>
                 <p-inputGroupAddon>
                     <i class="pi pi-user"></i>
@@ -32,7 +33,8 @@
             </div>
         </div>
 
-        <button type="submit" pButton label="Login"
+        <button type="submit" pButton label="Login" [disabled]="isLoading"
+            [label]="isLoading ? 'Iniciando sesión...' : 'Login'"
             class="w-full py-2 px-4 bg-indigo-600 text-white font-bold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </button>
 

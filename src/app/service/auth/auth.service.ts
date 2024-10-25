@@ -23,10 +23,6 @@ export class AuthService {
     )
   }
 
-  private setToken(token: string): void {
-    sessionStorage.setItem(this.tokenKey, token);
-  }
-
   getToken(): string | null {
     if (typeof window !== 'undefined') {
       return sessionStorage.getItem(this.tokenKey);

@@ -7,27 +7,45 @@ import { AuthService } from "../auth/auth.service";
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class UserService {
 
-    constructor(
-        private apiService: ApiService,
-        private authService: AuthService
-    ) { }
+  constructor(
+    private apiService: ApiService,
+    private authService: AuthService
+  ) { }
 
-    profile(token: string): Observable<User> {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return this.apiService.get<User>(`${userApi.apirurl}`, { headers });
-    }
+  profile(token: string): Observable<User> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.apiService.get<User>(`${userApi.apirurl}`, { headers });
+  }
 
-    loadUserProfile(): Observable<User | null> {
-        if (this.authService.isAuthenticated()) {
-          const token = this.authService.getToken();
-          if (token) {
-            return this.profile(token);
-          }
-        }
-        return of(null)
+  private getAuthHeaders(): HttpHeaders {
+    let headers = new HttpHeaders();
+    if (this.authService.isAuthenticated()) {
+      const token = this.authService.getToken();
+      if (token) {
+        headers = headers.set('Authorization', `Bearer ${token}`);
       }
+    }
+    return headers;
+  }
+
+  loadUserProfile(): Observable<User | null> {
+    if (this.authService.isAuthenticated()) {
+      const token = this.authService.getToken();
+      if (token) {
+        return this.profile(token);
+      }
+    }
+    return of(null)
+  }
+  getAllUsers(): Observable<User[] | null> {
+    const headers = this.getAuthHeaders();
+    if (headers) {
+      return this.apiService.get<User[]>(`${userApi.baseUrl}`, { headers });
+    }
+    return of([]);
+  }
 }

@@ -4,12 +4,14 @@ export const environment = {
 };
 export const userApi = {
     production: false,
-    apirurl: 'http://localhost:3000/api/v1/auth/profile'
+    apirurl: 'http://localhost:3000/api/v1/auth/profile',
+    baseUrl: 'http://localhost:3000/api/v1/users'
 }
 
 export const projectApi = {
     production: false,
+    getOnlyOwn:'http://localhost:3000/api/v1/project/user/projects',
     getAll: 'http://localhost:3000/api/v1/project/',
     getById: 'http://localhost:3000/api/v1/project',
-
+    create: 'http://localhost:3000/api/v1/project'
 }

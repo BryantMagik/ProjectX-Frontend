@@ -1,5 +1,15 @@
 import { User } from "./user.interface"
 
+export interface Participant {
+    id: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+  }
+  export interface Author {
+    id: string;
+    name: string; 
+  }
 export interface Project {
     id: string
     code: string
@@ -9,6 +19,8 @@ export interface Project {
     type: string
     userId: string
     author: User
-    createdAt: string
+    participants: Participant[];
+    authors: Author[];
+    createdAt: string,
     updatedAt: string
 }

@@ -8,8 +8,8 @@
             <form (ngSubmit)="onSubmit()">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label for="code" class="block text-sm font-medium text-gray-700">Código</label>
-                  <input type="text" id="code" formControlName="code" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                  <label for="id" class="block text-sm font-medium text-gray-700">Código</label>
+                  <input type="text" id="id" formControlName="id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
                 <div>
                   <label for="type" class="block text-sm font-medium text-gray-700">Tipo</label>
@@ -26,14 +26,14 @@
                   <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
                   <textarea id="description" formControlName="description" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
                 </div>
-                <div>
+                <!--<div>
                   <label for="priority" class="block text-sm font-medium text-gray-700">Prioridad</label>
                   <select id="priority" formControlName="priority" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
                   </select>
-                </div>
+                </div>-->
                 <div>
                   <label for="project-id" class="block text-sm font-medium text-gray-700">ID de Proyecto</label>
                   <input type="number" id="project-id" formControlName="projectId" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
@@ -55,6 +55,9 @@
                 <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Crear Issue</button>
               </div>
             </form>
+            <div class="mt-6 flex justify-end">
+              <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToIssues()">volver</button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
 import { CommonModule, NgClass, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
-export interface subTasksDataBoard{
+export interface subTasksData{
   id:number;
   name:string;
   description:string;
@@ -12,14 +13,14 @@ export interface subTasksDataBoard{
 }
 
 @Component({
-  selector: 'app-subtasks-board',
+  selector: 'app-subtasks',
   standalone: true,
-  imports: [NgFor,CommonModule,NgClass],
-  templateUrl: './subtasks-board.component.html',
-  styleUrl: './subtasks-board.component.css'
+  imports: [NgFor,NgClass,CommonModule],
+  templateUrl: './subtasks.component.html',
+  styleUrl: './subtasks.component.css'
 })
-export class SubtasksBoardComponent {
-  subTasks: subTasksDataBoard[] =[
+export class SubtasksComponent {
+  subTasks: subTasksData[] =[
     {
       id:1,
       name:'Subtarea A',
@@ -30,5 +31,11 @@ export class SubtasksBoardComponent {
       update_date:'2024-07-21',
     }
   ]
+  constructor(private router:Router){}
+
+  navigateToSubTaskForm() {
+    this.router.navigate(['/pages/subtasks/shared/subtasks-form']);
+  }
+
 
 }

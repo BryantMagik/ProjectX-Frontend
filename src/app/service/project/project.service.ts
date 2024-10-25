@@ -16,15 +16,15 @@ export class ProjectService {
     private authService: AuthService
   ) { }
 
-  private getAuthHeaders(): HttpHeaders | null {
+  private getAuthHeaders(): HttpHeaders {
+    let headers = new HttpHeaders();
     if (this.authService.isAuthenticated()) {
-      const token = this.authService.getToken()
+      const token = this.authService.getToken();
       if (token) {
-        return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        headers = headers.set('Authorization', `Bearer ${token}`);
       }
     }
-    return null;
-
+    return headers;
   }
 
   getProjectsRequest(): Observable<Project[]> {
@@ -41,5 +41,20 @@ export class ProjectService {
       return this.apiService.get<Project>(`${projectApi.getById}/${id}`, { headers });
     }
     return of(null);
+  }
+
+  postProject(newProject: Project): Observable<Project | null> {
+    const headers = this.getAuthHeaders()
+    if (headers) {
+      return this.apiService.post<Project>(`${projectApi.create}`,newProject,{ headers })
+    }
+    return of(null)
+  }
+  getProjectByIdWhereId(): Observable<Project[]> {
+    const headers = this.getAuthHeaders();
+    if (headers) {
+      return this.apiService.get<Project[]>(`${projectApi.getOnlyOwn}`, { headers });
+    }
+    return of([]);
   }
 }

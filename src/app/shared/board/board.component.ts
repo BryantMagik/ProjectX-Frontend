@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TicketComponent } from '../ticket/ticket.component';
-import { CommentsComponent } from '../comments/comments.component';
-import { IssuesComponent } from '../issues/issues.component';
+import { CommentsComponent } from '../../pages/comments/comments.component';
+import { IssuesComponent } from '../../pages/issues/issues.component';
 import { ProjectsComponent } from '../../pages/projects/projects.component';
-import { SubtasksComponent } from '../subtasks/subtasks.component';
-import { ProfilesComponent } from '../profiles/profiles.component';
+import { SubtasksComponent } from '../../pages/subtasks/subtasks.component';
+import { ProfilesComponent } from '../../pages/profiles/profiles.component';
 import { IssuesdetailsComponent } from '../../subpages/issuesdetails/issuesdetails.component';
 import { ProjectsDetailsComponent } from '../../subpages/projects-details/projects-details.component';
 import { CommentsDetailsComponent } from '../../subpages/comments-details/comments-details.component';

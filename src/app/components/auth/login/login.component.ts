@@ -31,6 +31,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 })
 export class LoginComponent {
+  isLoading = false;
   validatorForm: FormGroup;
   errorMessage: string | undefined = '';
 
@@ -42,19 +43,21 @@ export class LoginComponent {
   }
 
   login(): void {
-    console.log('Intentando iniciar sesión');
     if (this.validatorForm.valid) {
+      this.isLoading = true
       const { emailValidator, passwordValidator } = this.validatorForm.value;
-      this.authService.login(emailValidator!, passwordValidator!).subscribe({
-        next: (response) => {
-          console.log('Login exitoso', response);
-          this.router.navigate(['pages/dashboard']);
-        },
-        error: (err) => {
-          console.error('Error en el login', err);
-          this.errorMessage = 'Credenciales inválidas. Por favor, inténtalo de nuevo.';
-        }
-      });
+      setTimeout(() => {
+        this.isLoading = false;
+        this.authService.login(emailValidator!, passwordValidator!).subscribe({
+          next: (response) => {
+            this.router.navigate(['pages/dashboard']);
+          },
+          error: (err) => {
+
+            this.errorMessage = 'Credenciales inválidas. Por favor, inténtalo de nuevo.';
+          }
+        });
+      }, 2000)
     } else {
       this.errorMessage = 'Por favor, completa todos los campos.';
     }

@@ -1,43 +1,50 @@
 <main class="flex-1">
-    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-      <!-- Comment Details Section -->
-      <div class="bg-white shadow sm:rounded-lg">
-        <div class="px-4 py-5 sm:p-6">
-          <h2 class="text-2xl leading-6 font-medium text-gray-900">Comments details</h2>
-          <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-1">
-            <!-- Comment ID -->
+  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="bg-white shadow sm:rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <h2 class="text-2xl leading-6 font-medium text-gray-900">Comments details</h2>
+        <form >
+          <div *ngFor="let commentsDetail of comentDetails" class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700">ID del Comentario</label>
-              <p class="mt-1 text-sm text-gray-900">COMMENT-001</p>
+              <input formControlName="id" type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true" [value]="commentsDetail.id">
             </div>
-            <!-- Comment Content -->
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-gray-700">Contenido</label>
-              <p class="mt-1 text-sm text-gray-900">Este es un comentario de prueba.</p>
+              <textarea formControlName="content" class="mt-1 text-sm text-gray-900 p-2 rounded-md w-full" [readonly]="!isEditing" [value]="commentsDetail.content" [ngClass]="{'bg-gray-200': isEditing}"></textarea>
             </div>
-            <!-- Comment Date -->
             <div>
               <label class="block text-sm font-medium text-gray-700">Fecha</label>
-              <p class="mt-1 text-sm text-gray-900">2023-07-22</p>
+              <input formControlName="date" type="date" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="!isEditing" [value]="commentsDetail.date" [ngClass]="{'bg-gray-200': isEditing}">
             </div>
-            <!-- Issue ID -->
             <div>
               <label class="block text-sm font-medium text-gray-700">ID del Issue</label>
-              <p class="mt-1 text-sm text-gray-900">ISSUE-001</p>
+              <input formControlName="issueId" type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true" [value]="commentsDetail.issueId">
             </div>
-            <!-- Author ID -->
             <div>
               <label class="block text-sm font-medium text-gray-700">ID del Autor</label>
-              <p class="mt-1 text-sm text-gray-900">USER-001</p>
+              <input formControlName="authorId" type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true" [value]="commentsDetail.authorId">
+            </div>
+            <div>
+              <button type="button" (click)="toggleEdit()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                {{ isEditing ? 'Cancel' : 'Edit' }}
+              </button>
+            </div>
+            <div *ngIf="isEditing">
+              <button type="submit" (click)="onSubmit()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Apply
+              </button>
             </div>
           </div>
-          <!-- Action Buttons -->
-          <div class="mt-6 flex justify-end">
-            <button class="mr-2 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">Volver</button>
-            <button class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">Editar</button>
-          </div>
+        </form>
+        <div class="flex justify-between mt-6">
+          <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none   
+          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Eliminar</button>
+          <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToComments()">Volver</button>
         </div>
       </div>
     </div>
-  </main>
+  </div>
+</main>
+
   
