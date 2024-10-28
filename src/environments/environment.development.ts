@@ -15,3 +15,10 @@ export const projectApi = {
     getById: 'http://localhost:3000/api/v1/project',
     create: 'http://localhost:3000/api/v1/project'
 }
+
+export const taskApi = {
+    production: false,
+    getOnlyOwn:'http://localhost:3000/api/v1/project/user/tasks',
+    getById: 'https://project-x-backend-lyart.vercel.app/api/v1/user/tasks/',
+
+}

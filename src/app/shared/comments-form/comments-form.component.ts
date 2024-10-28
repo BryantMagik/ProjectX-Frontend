@@ -30,7 +30,8 @@ export class CommentsFormComponent implements OnInit{
     if (this.commentForm.valid) {
       const commentData = this.commentForm.value;
       console.log('Formulario enviado:', commentData);
-      // Aquí puedes implementar la lógica para enviar el comentario al servidor
+
+      //TODO::
     } else {
       console.log('Formulario no válido');
     }
