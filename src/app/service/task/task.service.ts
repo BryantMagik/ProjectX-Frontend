@@ -36,7 +36,7 @@ export class TaskService {
     return of([]);
   }
 
-  getTasksById(id: string): Observable<Task | null > { 
+  getTasksById(id: string): Observable<Task | null> {
     const headers = this.getAuthHeaders()
     if (headers) {
       return this.apiService.get<Task>(`${taskApi.getById}/${id}`, { headers })
@@ -44,7 +44,14 @@ export class TaskService {
     return of(null);
   }
 
- //TODO
+  //TODO
   postTask() { }
-  getTasksByIdWhereId() { }
+  getTasksByIdWhereId(): Observable<Task[]> {
+    const headers = this.getAuthHeaders()
+    if (headers) {
+      return this.apiService.get<Task[]>(`${taskApi.getOnlyOwn}`, { headers })
+    }
+    return of([]);
+
+  }
 }

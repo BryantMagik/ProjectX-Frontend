@@ -1,7 +1,10 @@
 import { Project } from "./project.interface"
 import { User } from "./user.interface"
 
-//TODO::!! 
+export interface Author {
+    id: string
+    name: string 
+  }
 export interface Task {
     id: string
     code: string
@@ -13,6 +16,8 @@ export interface Task {
     projectId: string
     project: Project
     creator: User
+    creators: User[]
+    users: User[]
     createdAt: string
     updatedAt: string
 }

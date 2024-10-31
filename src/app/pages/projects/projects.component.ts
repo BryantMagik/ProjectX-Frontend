@@ -30,16 +30,11 @@ export class ProjectsComponent implements OnInit {
   @ViewChild('dt') dt!: Table;
 
   projectDialog: boolean = false
-
   submitted: boolean = false
-
   project: Project[] = []
   authors: User[] = []
-
   selectedProjects!: Project[] | null
-
   loading: boolean = true;
-
   error: string | null = null
   
   
@@ -74,6 +69,7 @@ export class ProjectsComponent implements OnInit {
         next: (project: Project[] | null) => {
           if (project) {
             this.project = project
+            console.log(this.project)
           }
         },
         error: () => this.error = 'Failed to load projects',

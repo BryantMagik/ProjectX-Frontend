@@ -20,7 +20,7 @@ export const projectApi = {
 
 export const taskApi = {
     production: true,
-    getOnlyOwn: 'https://project-x-backend-lyart.vercel.app/api/v1/project/user/tasks/',
+    getOnlyOwn: 'https://project-x-backend-lyart.vercel.app/api/v1/tasks/user/tasks/',
     getById: 'https://project-x-backend-lyart.vercel.app/api/v1/user/tasks/',
 
 }
