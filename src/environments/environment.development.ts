@@ -22,3 +22,12 @@ export const taskApi = {
     getById: 'http://localhost:3000/api/v1/task',
 
 }
+
+export const commentApi = {
+    production: false,
+    apiUrl: 'http://localhost:3000/api/v1/comments',
+    findOne: 'http://localhost:3000/api/v1/comments',
+    findAll: 'http://localhost:3000/api/v1/comments',
+    create: 'http://localhost:3000/api/v1/comments'
+}
+  
