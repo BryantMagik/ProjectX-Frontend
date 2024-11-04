@@ -23,6 +23,11 @@ export const taskApi = {
 
 }
 
+export const issueApi ={
+    production: false,
+    apiUrl: 'http://localhost:3000/api/v1/issues'
+}
+
 export const commentApi = {
     production: false,
     apiUrl: 'http://localhost:3000/api/v1/comments',
