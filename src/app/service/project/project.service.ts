@@ -50,6 +50,15 @@ export class ProjectService {
     }
     return of(null)
   }
+  
+  updateProject(newProject: Project,id: string): Observable<Project> {
+    const headers = this.getAuthHeaders()
+    if (headers) {
+      return this.apiService.post<Project>(`${projectApi.update}/${id}`,newProject,{ headers })
+    }
+    return of()
+  }
+
   getProjectByIdWhereId(): Observable<Project[]> {
     const headers = this.getAuthHeaders();
     if (headers) {

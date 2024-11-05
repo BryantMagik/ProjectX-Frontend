@@ -4,10 +4,10 @@ export interface ProyectDropdown {
 }
 
 export const PROYECTOTYPE = [
-    { name: 'INTERNAL', value: 'INTERNAL' },
-    { name: 'EXTERNAL', value: 'EXTERNAL' },
-    { name: 'RESEARCH', value: 'RESEARCH' },
-    { name: 'SOFTWARE', value: 'SOFTWARE' },
+    { name: 'Internal', value: 'INTERNAL' },
+    { name: 'External', value: 'EXTERNAL' },
+    { name: 'Research', value: 'RESEARCH' },
+    { name: 'Software', value: 'SOFTWARE' },
 ];
 
 export const PROYECTOSTATUS = [

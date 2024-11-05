@@ -6,20 +6,8 @@ import { tap } from 'rxjs';
 import { FormBuilder,FormGroup,FormsModule,ReactiveFormsModule,Validators } from '@angular/forms';
 import { NgClass,NgFor,CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { PROYECTOSTATUS, PROYECTOTYPE } from '../../types/models';
 
-enum ProjectType {
-  Internal = 'Internal',
-  External = 'External',
-  Research = 'Research',
-  Software = 'Software'
-}
-
-enum ProjectStatus {
-  Active = 'Active',
-  Inactive = 'Inactive',
-  Ongoing = 'Ongoing',
-  Completed = 'Completed'
-}
 
 @Component({
   selector: 'app-projects-details',
@@ -34,12 +22,11 @@ export class ProjectsDetailsComponent implements OnInit {
   loading = true;
   error: string | null = null;
 
-  isEditing: boolean = false;
   projectsFormular: FormGroup;
 
-  projectTypes = Object.values(ProjectType);
-  projectStatuses = Object.values(ProjectStatus);
-
+  projectTypes = Object.values(PROYECTOTYPE)
+  projectStatuses = Object.values(PROYECTOSTATUS)
+  availableParticipants: string[] = []
 
   constructor(
     private route: ActivatedRoute,
@@ -55,6 +42,7 @@ export class ProjectsDetailsComponent implements OnInit {
       type: [{value: ''}, Validators.required],
       status: [{value: ''}, Validators.required],
       userId: [{value: ''}, Validators.required],
+      participants: [[]]
     });
   }
 
@@ -77,6 +65,7 @@ export class ProjectsDetailsComponent implements OnInit {
       tap({
         next: (project: Project | null) => {
           this.project = project;
+          console.log("Subiendo",this.project)
           if (project) {
             this.projectsFormular.patchValue({
               id: project.id,
@@ -86,6 +75,7 @@ export class ProjectsDetailsComponent implements OnInit {
               type: project.type,
               status: project.status,
               userId: project.author?.first_name,
+              participants: project.participants || []
             });
           }
         },
@@ -98,23 +88,14 @@ export class ProjectsDetailsComponent implements OnInit {
     ).subscribe()
   }
 
-  toggleEdit() {
-    this.isEditing = !this.isEditing;
-    if (this.isEditing) {
-      this.projectsFormular.enable(); // Habilita todos los controles
-    } else {
-      this.projectsFormular.disable(); // Deshabilita todos los controles
-    }
-  }
 
   onSubmit() {
     if (this.projectsFormular.valid) {
       console.log('Formulario enviado:', this.projectsFormular.value);
+      console.log("correcto!")
     } else {
       console.log('Formulario inválido, por favor revisa los campos.');
     }
-    this.isEditing = false;  // Deshabilitar edición tras enviar
-    this.projectsFormular.disable();  // Volver a deshabilitar los campos
   }
 
 }

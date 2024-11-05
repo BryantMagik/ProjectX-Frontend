@@ -39,6 +39,7 @@ export class TasksComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTask()
+    this.getUsers()
   }
 
   navigateToTaskForm() {

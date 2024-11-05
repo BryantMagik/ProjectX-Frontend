@@ -15,7 +15,8 @@ export const projectApi = {
     getOnlyOwn: 'https://project-x-backend-lyart.vercel.app/api/v1/project/user/projects/',
     getAll: 'https://project-x-backend-lyart.vercel.app/api/v1/project/',
     getById: 'https://project-x-backend-lyart.vercel.app/api/v1/project',
-    create: 'https://project-x-backend-lyart.vercel.app/api/v1/project'
+    create: 'https://project-x-backend-lyart.vercel.app/api/v1/project',
+    update: 'https://project-x-backend-lyart.vercel.app/api/v1/project'
 }
 
 export const taskApi = {
