@@ -59,14 +59,12 @@
                 value="{{ project?.author?.first_name }}" [disabled]="true" />
             </div>
             <div class="md:col-span-2">
-              <label for="project-participants" class="block text-sm font-medium text-gray-700">Participantes</label>
-              <input id="project-participants" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 "
-                value="{{ project?.participants?.join(', ') }}" />
-              <select id="project-participants" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                formControlName="participants" multiple>
-                <option *ngFor="let participant of availableParticipants" [value]="participant">{{ participant }}
-                </option>
-              </select>
+              <label for="project-created-by" class="block text-sm font-medium text-gray-700">Participantes</label>
+
+              <p-floatLabel>
+                <p-multiSelect inputId="float-label" [options]="availableParticipants" formControlName="participants"
+                  optionLabel="first_name" optionValue="id" />
+              </p-floatLabel>
             </div>
             <div>
               <button type="submit" (click)="onSubmit()"
