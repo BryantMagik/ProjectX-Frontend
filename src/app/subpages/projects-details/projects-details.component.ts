@@ -14,7 +14,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 @Component({
   selector: 'app-projects-details',
   standalone: true,
-  imports: [NgClass, NgFor, CommonModule, FormsModule, ReactiveFormsModule,MultiSelectModule,FloatLabelModule],
+  imports: [NgClass, NgFor, CommonModule, FormsModule, ReactiveFormsModule, MultiSelectModule, FloatLabelModule],
   templateUrl: './projects-details.component.html',
   styleUrls: ['./projects-details.component.css']
 })
@@ -43,7 +43,6 @@ export class ProjectsDetailsComponent implements OnInit {
       code: [{ value: '' }, [Validators.required, Validators.maxLength(10)]],
       type: [{ value: '' }, Validators.required],
       status: [{ value: '' }, Validators.required],
-      userId: [{ value: '' }, Validators.required],
       participants: [[]]
     });
   }
@@ -68,7 +67,7 @@ export class ProjectsDetailsComponent implements OnInit {
       tap({
         next: (project: Project | null) => {
           this.project = project;
-          console.log("Subiendo", this.project)
+          console.log("Recibiendo proyecto", this.project)
           if (project) {
             this.projectsFormular.patchValue({
               id: project.id,
@@ -77,7 +76,7 @@ export class ProjectsDetailsComponent implements OnInit {
               code: project.code,
               type: project.type,
               status: project.status,
-              userId: project.author?.first_name,
+              userId: project.author?.id,
               participants: project.participants.map(participant => participant.id)
             });
             this.availableParticipants = project.participants.map(participant => ({ id: participant.id, first_name: participant.first_name }));
@@ -96,7 +95,22 @@ export class ProjectsDetailsComponent implements OnInit {
   onSubmit() {
     if (this.projectsFormular.valid) {
       console.log('Formulario enviado:', this.projectsFormular.value);
-      console.log("correcto!")
+      const updatedProject: Project = this.projectsFormular.value
+      console.log('Proyecto actualizado:', updatedProject);
+
+      if (this.projectId) {
+        this.projectService.updateProject(updatedProject, this.projectId).subscribe({
+          next: (updated) => {
+            console.log('Proyecto actualizado: ', updated);
+            this.router.navigate(['/pages/projects']);
+          },
+          error: (err) => {
+            console.error('Error al actualizar el proyecto:', err);
+            this.error = "Error al actualizar el proyecto";
+          }
+        });
+      }
+
     } else {
       console.log('Formulario inválido, por favor revisa los campos.');
     }
