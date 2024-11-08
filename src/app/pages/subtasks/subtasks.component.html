@@ -45,18 +45,28 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr *ngFor="let subTasksData of subTasks">
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTasksData.id }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTasksData.name }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTasksData.description }}</td>
+              <tr *ngFor="let subTask of filteredSubTasks">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTask.id }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTask.name }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTask.description || '-' }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">{{ subTasksData.status }}</span>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                    [ngClass]="{
+                      'bg-yellow-100 text-yellow-800': subTask.status === 'PENDING',
+                      'bg-blue-100 text-blue-800': subTask.status === 'IN_PROGRESS',
+                      'bg-green-100 text-green-800': subTask.status === 'COMPLETED'
+                    }">
+                    {{ subTask.status }}
+                  </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTasksData.task_id }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTasksData.creation_date }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTasksData.update_date }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTask.taskId }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTask.creation_date}}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTask.update_date}}</td>
               </tr>
-              <!-- More subtasks... -->
+              <!-- Mostrar mensaje si no hay issues -->
+              <tr *ngIf="subTasks.length === 0">
+                <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No hay subtareas disponibles</td>
+              </tr>
             </tbody>
           </table>
         </div>
