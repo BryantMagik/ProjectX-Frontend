@@ -32,7 +32,7 @@ export class CommentsService {
   create(comment: Comment): Observable<Comment | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.post<Comment>(`${commentApi.create}`, comment, { headers });
+      return this.apiService.post<Comment>(`${commentApi.apiUrl}`, comment, { headers });
     }
     return of(null);
   }
@@ -40,7 +40,7 @@ export class CommentsService {
   findAll(): Observable<Comment[]> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Comment[]>(`${commentApi.findAll}`, { headers });
+      return this.apiService.get<Comment[]>(`${commentApi.apiUrl}`, { headers });
     }
     return of([]);
   }
@@ -48,7 +48,7 @@ export class CommentsService {
   findOne(id: string): Observable<Comment | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Comment>(`${commentApi.findOne}/${id}`, { headers });
+      return this.apiService.get<Comment>(`${commentApi.apiUrl}/${id}`, { headers });
     }
     return of(null);
   }

@@ -26,19 +26,19 @@ export const taskApi = {
 
 export const subtaskApi = {
     production: false,
-    apiUrl: 'http://localhost:3000/api/v1/subtasks'
+    apiUrl: 'http://localhost:3000/api/v1/subtasks',
+    getOnlyOwn:'http://localhost:3000/api/v1/subtasks/user/subtasks',
 }
 
 export const issueApi ={
     production: false,
-    apiUrl: 'http://localhost:3000/api/v1/issues'
+    apiUrl: 'http://localhost:3000/api/v1/issues',
+    getOnlyOwn:'http://localhost:3000/api/v1/issues/user/issues',
 }
 
 export const commentApi = {
     production: false,
     apiUrl: 'http://localhost:3000/api/v1/comments',
-    findOne: 'http://localhost:3000/api/v1/comments',
-    findAll: 'http://localhost:3000/api/v1/comments',
-    create: 'http://localhost:3000/api/v1/comments'
+    getOnlyOwn:'http://localhost:3000/api/v1/comments/user/comments',
 }
   

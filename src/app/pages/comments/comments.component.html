@@ -40,7 +40,7 @@
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contenido</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Issue ID</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Issue ID or Task ID</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Autor ID</th>
                 <th scope="col" class="relative px-6 py-3">
                   <span class="sr-only">Ver</span>
@@ -49,28 +49,19 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <!-- Comment Item -->
-              <tr>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">COMMENT-001</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Este es un comentario de prueba.</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-07-22</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ISSUE-001</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">USER-001</td>
+              <tr *ngFor="let comment of comments">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comment.id }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ comment.body }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comment.date }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comment.issueId || comment.taskId }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comment.authorId }}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
                 </td>
               </tr>
-              <!-- Más comentarios... -->
-              <tr>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">COMMENT-002</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Este es otro comentario de prueba.</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2023-07-23</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ISSUE-002</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">USER-002</td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
-                </td>
+              <tr *ngIf="comments.length === 0">
+                <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No se encontraron comentarios</td>
               </tr>
-              <!-- Más comentarios... -->
             </tbody>
           </table>
         </div>
