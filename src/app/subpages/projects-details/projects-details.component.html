@@ -8,7 +8,7 @@
             <div>
               <label for="project-id" class="block text-sm font-medium text-gray-700">ID</label>
               <input id="project-id" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                formControlName="id"  />
+                formControlName="id" />
             </div>
             <div>
               <label for="project-name" class="block text-sm font-medium text-gray-700">Nombre</label>
@@ -17,8 +17,7 @@
             </div>
             <div class="md:col-span-2">
               <label for="project-description" class="block text-sm font-medium text-gray-700">Descripción</label>
-              <textarea id="project-description"
-                class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+              <textarea id="project-description" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
                 formControlName="description"></textarea>
             </div>
             <div>
@@ -65,16 +64,19 @@
               </p-floatLabel>
             </div>
             <div>
-              <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <button type="submit"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Apply
               </button>
             </div>
           </div>
           <div class="flex justify-between mt-6">
-            <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+            <button type="button"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
               Delete
             </button>
-            <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            <button type="button"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               (click)="navigateToProjects()">Back to projects</button>
           </div>
         </form>

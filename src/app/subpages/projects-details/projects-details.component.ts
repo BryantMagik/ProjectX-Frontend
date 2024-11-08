@@ -14,7 +14,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 @Component({
   selector: 'app-projects-details',
   standalone: true,
-  imports: [NgClass, NgFor, CommonModule, FormsModule, ReactiveFormsModule, MultiSelectModule, FloatLabelModule],
+  imports: [NgFor, CommonModule, FormsModule, ReactiveFormsModule, MultiSelectModule, FloatLabelModule],
   templateUrl: './projects-details.component.html',
   styleUrls: ['./projects-details.component.css']
 })
@@ -96,16 +96,13 @@ export class ProjectsDetailsComponent implements OnInit {
     if (this.projectsFormular.valid) {
       console.log('Formulario enviado:', this.projectsFormular.value);
       const updatedProject: Project = this.projectsFormular.value
-      console.log('Proyecto actualizado:', updatedProject);
 
       if (this.projectId) {
         this.projectService.updateProject(updatedProject, this.projectId).subscribe({
           next: (updated) => {
-            console.log('Proyecto actualizado: ', updated);
             this.router.navigate(['/pages/projects']);
           },
           error: (err) => {
-            console.error('Error al actualizar el proyecto:', err);
             this.error = "Error al actualizar el proyecto";
           }
         });
