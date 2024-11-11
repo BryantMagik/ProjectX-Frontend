@@ -50,4 +50,14 @@ export class IssueService {
     return this.apiService.post<Issue>(`${issueApi.apiUrl}`, issue, { headers });
   }
 
+  updateIssue(id: string, updatedIssue: Partial<Issue>): Observable<Issue> {
+    const headers = this.getAuthHeaders();
+    return this.apiService.patch<Issue>(`${issueApi.apiUrl}/${id}`, updatedIssue, { headers });
+  }
+
+  deleteIssue(id: string): Observable<void> {
+    const headers = this.getAuthHeaders();
+    return this.apiService.delete<void>(`${issueApi.apiUrl}/${id}`, { headers });
+  }
+
 }

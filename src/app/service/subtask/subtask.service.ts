@@ -47,4 +47,14 @@ export class SubtaskService {
     const headers = this.getAuthHeaders();
     return this.apiService.post<Subtask>(`${subtaskApi.apiUrl}`, subtask, { headers });
   }
+
+  updateSubtask(id: string, subtask: Partial<Subtask>): Observable<Subtask> {
+    const headers = this.getAuthHeaders();
+    return this.apiService.patch<Subtask>(`${subtaskApi.apiUrl}/${id}`, subtask, { headers });
+  }
+
+  deleteSubtask(id: string): Observable<void> {
+    const headers = this.getAuthHeaders();
+    return this.apiService.delete<void>(`${subtaskApi.apiUrl}/${id}`, { headers });
+  }
 }

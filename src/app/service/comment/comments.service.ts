@@ -53,5 +53,21 @@ export class CommentsService {
     return of(null);
   }
 
+  update(id: string, comment: Partial<Comment>): Observable<Comment | null> {
+    const headers = this.getAuthHeaders();
+    if (headers) {
+      return this.apiService.patch<Comment>(`${commentApi.apiUrl}/${id}`, comment, { headers });
+    }
+    return of(null);
+  }
+
+  deleteCommentById(id: string): Observable<void> {
+    const headers = this.getAuthHeaders();
+    if (headers) {
+      return this.apiService.delete<void>(`${commentApi.apiUrl}/${id}`, { headers });
+    }
+    return of();
+  }
+
 
 }
