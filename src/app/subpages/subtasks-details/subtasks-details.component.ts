@@ -1,7 +1,9 @@
 import { Component,OnInit } from '@angular/core';
 import { CommonModule, NgClass, NgFor } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
+import { SubtaskService } from '../../service/subtask/subtask.service';
+import { Subtask } from '../../model/subtask.interface';
 
 export interface SubtaskDetail {
   subtask_id: number;
@@ -36,12 +38,17 @@ export class SubtasksDetailsComponent implements OnInit {
 
   isEditing = false;
   subtasksFormular: FormGroup;
-  constructor(private fb: FormBuilder,private router:Router) { 
+  constructor(
+    private fb: FormBuilder,
+    private router:Router,
+    private subtaskService: SubtaskService
+  ) { 
     this.subtasksFormular = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(100)]],
-      description: [''],
-      status: ['', Validators.required],
-      task_id: ['', [Validators.required, Validators.min(1)]],
+      name: [{value:''}, [Validators.required, Validators.maxLength(50)]],
+      description: [{value:''}],
+      status: [{value:''}, Validators.required],
+      task_id: [{value:''}, [Validators.required, Validators.min(8)]],
+      authorId: [{value:''},[Validators.required, Validators.min(8)]]
     });
   }
 
