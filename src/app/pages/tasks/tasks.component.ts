@@ -14,11 +14,12 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { Task } from '../../model/task.interface';
 import { tap } from 'rxjs';
 import { User } from '../../model/user.interface';
+import { SeverityTagComponent } from "../../service/severity/severety,project";
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [NgFor, CommonModule, NgClass, TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule],
+  imports: [CommonModule, TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
 })

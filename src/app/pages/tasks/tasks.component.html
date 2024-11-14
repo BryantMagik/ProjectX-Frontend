@@ -4,7 +4,7 @@
     <div class="mt-5 overflow-x-auto">
       <p-toolbar styleClass="mb-4 gap-2">
         <p-button severity="success" label="New Task" icon="pi pi-plus" class="mr-2 bg-green-500 text-white rounded-md"
-          styleClass="p-2" />
+          styleClass="p-2" (onClick)="navigateToTaskForm()"/>
         <div class="relative">
           <i class="pi pi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
           <input type="text" placeholder="Search..." (input)="filterGlobal($event)"
@@ -15,7 +15,7 @@
       <p-table #dt [value]="task" dataKey="id" [rows]="5" [rowHover]="true" [paginator]="true"
         [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
         [tableStyle]="{ 'min-width': '75rem' }" [filterDelay]="0"
-        [globalFilterFields]="['code', '.name', 'project.author.first_name', 'status']" [(selection)]="selectedTask"
+        [globalFilterFields]="['code', '.code', 'author.first_name', 'status']" [(selection)]="selectedTask"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
           <div class="flex items-center justify-between">
@@ -73,9 +73,10 @@
             </th>
           </tr>
         </ng-template>
+
         <ng-template pTemplate="body" let-task>
           <tr>
-            <td pSortableColumn="code">
+            <td>
               {{task.code}}
             </td>
             <td>
@@ -86,10 +87,11 @@
               <span class="ml-1 vertical-align-middle">{{ task.creator.first_name }}</span>
             </td>
             <td>
-              {{task.status}}
+              <app-severity-tag [value]="task.status" type="status"></app-severity-tag>
+              
             </td>
             <td>
-              {{task.priority}}
+              <app-severity-tag [value]="task.priority" type="priority"></app-severity-tag>
             </td>
           </tr>
         </ng-template>

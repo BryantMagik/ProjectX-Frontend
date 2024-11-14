@@ -16,11 +16,12 @@ import { TagModule } from 'primeng/tag';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { User } from '../../model/user.interface';
 import { UserService } from '../../service/user/user.service';
+import { SeverityTagComponent } from '../../service/severity/severety,project';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [NgFor, CommonModule, NgClass, TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule,MultiSelectModule],
+  imports: [CommonModule, TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css'
 })
@@ -36,12 +37,13 @@ export class ProjectsComponent implements OnInit {
   selectedProjects!: Project[] | null
   loading: boolean = true;
   error: string | null = null
-  
-  
+
+
   constructor(
     private userService: UserService,
     private projectsService: ProjectService,
     private router: Router
+
   ) { }
 
   ngOnInit(): void {
@@ -82,9 +84,9 @@ export class ProjectsComponent implements OnInit {
     this.userService.getAllUsers().pipe(
       tap({
         next: (authors: User[] | null) => {
-          if(authors){
+          if (authors) {
             this.authors = authors
-            console.log("Authores",authors)
+            console.log("Authores", authors)
           }
         },
         error: () => this.error = 'Failed to load projects',
@@ -99,30 +101,4 @@ export class ProjectsComponent implements OnInit {
     this.dt.filterGlobal(value, 'contains')
   }
 
-  getSeverityType(type: string) {
-    switch (type) {
-      case 'SOFTWARE':
-        return 'success'
-      case 'EXTERNAL':
-        return 'warning'
-      case 'RESEARCH':
-        return 'danger'
-      case 'INTERNAL':
-        return 'info'
-      default:
-        return undefined
-    }
-  }
-  getSeverityStatus(status: string){
-    switch (status) {
-      case 'ONGOING':
-        return 'warning'
-      case 'ONWAIT':
-        return 'danger'
-      case 'COMPLETED':
-        return 'success'
-      default:
-        return undefined
-    }
-  }
 }

@@ -98,10 +98,10 @@
               {{ project.code }}
             </td>
             <td>
-              <p-tag [value]="project.type" [severity]="getSeverityType(project.type)" />
+              <app-severity-tag [value]="project.type" type="type"></app-severity-tag>
             </td>
             <td>
-              <p-tag [value]="project.status" [severity]="getSeverityStatus(project.status)" />
+              <app-severity-tag [value]="project.status" type="status"></app-severity-tag>
             </td>
         </ng-template>
         <ng-template pTemplate="summary">
