@@ -4,34 +4,34 @@
         <div class="px-4 py-5 sm:p-6">
           <h2 class="text-2xl leading-6 font-medium text-gray-900">Issues details</h2>
           <form>
-            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4" *ngFor="let issue of issues">
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4" *ngFor="let issuedeta of issues">
                 <div>
                   <label class="block text-sm font-medium text-gray-700">Clave</label>
-                  <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issue.id}}" [readonly]="true" />
+                  <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issuedeta.id}}" [readonly]="true" />
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700">Tipo</label>
-                  <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issue.type}}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"/>
+                  <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issuedeta.type}}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"/>
                 </div>
                 <div class="sm:col-span-2">
                   <label class="block text-sm font-medium text-gray-700">Resumen</label>
-                  <textarea class="mt-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issue.summary}}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"></textarea>
+                  <textarea class="mt-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issuedeta.summary}}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"></textarea>
                 </div>
                 <div class="sm:col-span-2">
                   <label class="block text-sm font-medium text-gray-700">Descripción</label>
-                  <textarea class="mt-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">{{issue.description}}</textarea>
+                  <textarea class="mt-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">{{issuedeta.description}}</textarea>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700">Asignado a</label>
-                  <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issue.asigned}}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"/>
+                  <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issuedeta.asigned}}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"/>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700">Reportado por</label>
-                  <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issue.reporterUserId}}" [readonly]="true"/>
+                  <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issuedeta.reporterUserId}}" [readonly]="true"/>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700">Estado</label>
-                  <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issue.status}}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" />
+                  <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issuedeta.status}}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" />
                 </div>
           <!-- Action Buttons -->
               <div>

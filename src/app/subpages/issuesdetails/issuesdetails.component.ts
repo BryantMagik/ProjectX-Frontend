@@ -1,9 +1,13 @@
 import { Component,OnInit } from '@angular/core';
 import { CommonModule, NgFor, NgClass } from '@angular/common';
-import { FormGroup,Validators,FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup,Validators,FormBuilder,FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { Router,ActivatedRoute } from '@angular/router';
+import { IssueService } from '../../service/issue/issue.service';
+import { Issue,IssueStatus,IssueType,TaskPriority } from '../../model/issue.interface';
+import { tap } from 'rxjs';
 
-interface Issue {
+
+interface Issuedetail {
   id: string;
   code: string;
   type: string;
@@ -26,7 +30,7 @@ interface Issue {
   styleUrl: './issuesdetails.component.css'
 })
 export class IssuesdetailsComponent implements OnInit{
-  issues: Issue[] = [
+  issues: Issuedetail[] = [
     {
       id:'112233374',
       code: 'ISSUE-001',
@@ -43,23 +47,46 @@ export class IssuesdetailsComponent implements OnInit{
     }
   ];
 
+  issue: Issue | null = null;
+  issueId: string | null = null;
+  loading = true;
+  error: string | null = null;
+
   isEditing = false;
   issuesFormular: FormGroup;
-  constructor(private fb: FormBuilder,private router:Router) {
+
+  issueTypes = Object.values(IssueType);
+  taskPriorities = Object.values(TaskPriority);
+  issueStatuses = Object.values(IssueStatus);
+
+  constructor(
+    private fb: FormBuilder,
+    private router:Router,
+    private route: ActivatedRoute,
+    private issueService:IssueService
+
+  ) {
     this.issuesFormular = this.fb.group({
-      id: ['', [Validators.required, Validators.maxLength(255)]],
-      type: ['bug', Validators.required],
-      summary: ['', [Validators.required, Validators.maxLength(1024)]],
-      description: [''],
-      priority: ['medium', Validators.required],
-      projectId: ['', Validators.required],
-      reporterUserId: ['', Validators.required],
-      status: ['pending', Validators.required],
+      id: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(255)]],
+      code: [{ value: '', disabled: true },[Validators.required, Validators.maxLength(255)]],
+      type: [{value:''}, Validators.required],
+      summary: [{value:''}, [Validators.required, Validators.maxLength(10024)]],
+      description: [{value:''}, [Validators.required, Validators.maxLength(10024)]],
+      priority: [{value:''}, Validators.required],
+      projectId: [{value:''}, Validators.required],
+      reporterUserId: [{value:'', disabled: true}, Validators.required],
+      status: [{value:''}, Validators.required],
     });
 
   }
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.issueId = params.get('id');
+      if (this.issueId) {
+        this.getIssueById(this.issueId);
+      }
+    });
   }
 
   navigateToIssues(){
@@ -76,14 +103,57 @@ export class IssuesdetailsComponent implements OnInit{
     }
   }
 
+  private getIssueById(id: string): void {
+    this.issueService.getIssueById(id).pipe(
+      tap({
+        next: (issue: Issue | null) => {
+          this.issue = issue;
+          console.log('Recibiendo issue:', this.issue);
+          if (issue) {
+            this.issuesFormular.patchValue({
+              id: issue.id,
+              code: issue.code,
+              type: issue.type,
+              summary: issue.summary,
+              description: issue.description,
+              priority: issue.priority,
+              projectId: issue.projectId,
+              reporterId: issue.reporterId,
+              status: issue.status
+            });
+          }
+        },
+        error: () => {
+          this.error = 'Failed to load issue';
+          this.loading = false;
+        },
+        complete: () => (this.loading = false)
+      })
+    ).subscribe();
+  }
+
+  
+
   onSubmit() {
     if (this.issuesFormular .valid) {
       console.log('Formulario enviado:', this.issuesFormular .value);
+      const updateIssue: Issue = this.issuesFormular.getRawValue();
+
+      if (this.issueId) {
+        this.issueService.updateIssue(this.issueId, updateIssue).subscribe({
+          next: () => {
+            this.router.navigate(['/pages/issues']);
+          },
+          error: () => {
+            this.error = 'Error al actualizar el issue';
+          }
+        });
+      }
     } else {
       console.log('Formulario inválido, por favor revisa los campos.');
     }
-    this.isEditing = false;  // Deshabilitar edición tras enviar
-    this.issuesFormular .disable();  // Volver a deshabilitar los campos
+    this.isEditing = false; 
+    this.issuesFormular .disable(); 
   }
 
 
