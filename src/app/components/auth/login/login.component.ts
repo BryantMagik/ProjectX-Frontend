@@ -27,9 +27,7 @@ import { DividerModule } from 'primeng/divider';
     DividerModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
   viewProviders: [provideIcons({ featherAirplay, heroUsers, heroLockClosed })]
-
 })
 export class LoginComponent {
   isLoading = false;
