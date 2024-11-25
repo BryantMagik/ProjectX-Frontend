@@ -4,7 +4,7 @@ import { MatListModule } from '@angular/material/list'
 import { MatIconModule } from '@angular/material/icon'
 import { RouterLink, RouterModule } from '@angular/router'
 import { AuthService } from '../../service/auth/auth.service'
-import { MENU_ITEMS } from '../menu-items/menu-items'
+import { MENU_ITEMS } from '../../constants/menu-items'
 import { MenuItem } from '../../model/menu.interface'
 
 @Component({

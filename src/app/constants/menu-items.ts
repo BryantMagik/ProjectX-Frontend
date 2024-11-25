@@ -1,4 +1,5 @@
-import { MenuItem } from "../../model/menu.interface";
+import { MenuItem } from "../model/menu.interface"
+
 export const MENU_ITEMS: MenuItem[] = [
     {
         icon: 'dashboard',
@@ -30,4 +31,27 @@ export const MENU_ITEMS: MenuItem[] = [
         label: 'Comments',
         route: 'pages/comments',
     },
+]
+
+export const MENU_PROFILE: MenuItem[] = [
+    {
+        label: 'Profile',
+        icon: 'pi pi-user',
+        route: 'pages/profile'
+    },
+    {
+        label: 'Inbox',
+        icon: 'pi-inbox',
+        route: ''
+    },
+    {
+        label: 'Settings',
+        icon: 'pi-cog',
+        route: ''
+    },
+    {
+        label: 'Sign Out',
+        icon: 'pi-power-off',
+        route: ''
+    }
 ]

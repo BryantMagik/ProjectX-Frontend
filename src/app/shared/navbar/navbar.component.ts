@@ -2,49 +2,49 @@ import { Component, OnInit, signal } from '@angular/core'
 import { CommonModule, NgIf } from '@angular/common'
 import { User } from '../../model/user.interface'
 import { BreadcrumbModule } from 'primeng/breadcrumb'
-import { Router, RouterLink, RouterModule } from '@angular/router'
+import { RouterModule } from '@angular/router'
 import { MenuItem } from 'primeng/api'
-import { MENU_ITEMS } from '../menu-items/menu-items'
+import { MENU_ITEMS } from '../../constants/menu-items'
 import { AvatarModule } from 'primeng/avatar';
-
+import { FormsModule } from '@angular/forms'
+import { AvatarDropdownComponent } from "../avatar-dropdown/avatar-dropdown.component";
+import { UserService } from '../../service/user/user.service'
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [AvatarModule, CommonModule,  RouterModule, BreadcrumbModule],
+  imports: [AvatarModule, CommonModule, RouterModule, BreadcrumbModule, FormsModule, AvatarDropdownComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
-
-  isNotificationOpen = false;
-
-  isUsernameDropdownOpen = false;
-
-  isDropdownOpen: boolean = false;
+  loading = true;
+  error: string | null = null;
   user: User | null = null;
 
-  breadcrumbs: Array<{ label: string; url: string }> = [];
   constructor(
-    private router: Router,
+    private userService: UserService
   ) {
   }
-
   menuItems = signal<MenuItem[]>(MENU_ITEMS)
 
-
-  toggleNotificationDropdown() {
-    this.isNotificationOpen = !this.isNotificationOpen;
-  }
-  navigateToProfile() {
-    this.router.navigate(['/pages/profile']);
-  }
-  toggleUsernameDropdown() {
-    this.isUsernameDropdownOpen = !this.isUsernameDropdownOpen;
-  }
-  toggleDropdown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
   ngOnInit(): void {
+    this.loadUserProfile();
+  }
+
+  private loadUserProfile(): void {
+    this.userService.loadUserProfile().pipe(
+      tap({
+        next: (user: User | null) => {
+          this.user = user;
+          if (!user) {
+            this.error = 'Failed to load user profile';
+          }
+        },
+        error: () => this.error = 'Failed to load user profile',
+        complete: () => this.loading = false,
+      })
+    ).subscribe();
   }
 }

@@ -25,3 +25,21 @@ export const taskApi = {
     getById: 'https://project-x-backend-lyart.vercel.app/api/v1/user/tasks/',
 
 }
+
+export const subtaskApi = {
+    production: false,
+    apiUrl: 'https://project-x-backend-lyart.vercel.app/api/v1/subtasks',
+    getOnlyOwn:'https://project-x-backend-lyart.vercel.app/api/v1/subtasks/user/subtasks',
+}
+
+export const issueApi ={
+    production: false,
+    apiUrl: 'https://project-x-backend-lyart.vercel.app/api/v1/issues',
+    getOnlyOwn:'https://project-x-backend-lyart.vercel.app/api/v1/issues/user/issues',
+}
+
+export const commentApi = {
+    production: false,
+    apiUrl: 'https://project-x-backend-lyart.vercel.app/api/v1/comments',
+    getOnlyOwn:'https://project-x-backend-lyart.vercel.app/api/v1/comments/user/comments',
+}
