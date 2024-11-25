@@ -8,6 +8,7 @@ import { CustomSidebarComponent } from '../../shared/custom-sidebar/custom-sideb
   standalone: true,
   imports: [RouterOutlet, NavbarComponent, CustomSidebarComponent,],
   templateUrl: './layout.component.html',
+  styleUrl: './layout.component.css'
 })
 export class LayoutComponent implements OnInit {
 
