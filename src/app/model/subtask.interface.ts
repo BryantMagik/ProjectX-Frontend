@@ -7,6 +7,6 @@ export interface Subtask {
     status: typeof TASKSSTATUS[number]['value'];
     taskId: string;
     authorId: string;
-    creation_date: string;
-    update_date: string;
+    creation_date?: string;
+    update_date?: string;
   }
