@@ -1,40 +1,48 @@
-import { CommonModule, NgClass, NgFor } from '@angular/common';
+import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SubtaskService } from '../../service/subtask/subtask.service';
+import { Subtask } from '../../model/subtask.interface';
 
-export interface subTasksData{
-  id:number;
-  name:string;
-  description:string;
-  status:string;
-  task_id:string;
-  creation_date:string;
-  update_date:string;
-}
 
 @Component({
   selector: 'app-subtasks',
   standalone: true,
-  imports: [NgFor,NgClass,CommonModule],
+  imports: [NgFor,NgIf,NgClass],
   templateUrl: './subtasks.component.html',
   styleUrl: './subtasks.component.css'
 })
 export class SubtasksComponent {
-  subTasks: subTasksData[] =[
-    {
-      id:1,
-      name:'Subtarea A',
-      description:'Descripción de la subtarea A',
-      status:'Ongoing',
-      task_id:'TAREA-001',
-      creation_date:'2024-07-20',
-      update_date:'2024-07-21',
-    }
-  ]
-  constructor(private router:Router){}
+
+  subTasks: Subtask[] = [];
+  filteredSubTasks: Subtask[] = [];
+  searchTerm: string = '';
+  selectedStatus: string = '';
+
+  constructor(private router:Router,private subtaskService: SubtaskService){}
 
   navigateToSubTaskForm() {
     this.router.navigate(['/pages/subtasks/shared/subtasks-form']);
+  }
+
+  ngOnInit(): void {
+    this.loadSubTasks();
+  }
+
+  loadSubTasks(): void {
+    this.subtaskService.getAllSubtasks().subscribe((data: Subtask[]) => {
+      this.subTasks = data;
+      this.applyFilters();
+    });
+  }
+
+  applyFilters(): void {
+    this.filteredSubTasks = this.subTasks.filter(subTask => {
+      const matchesSearch = this.searchTerm ? 
+        subTask.id.includes(this.searchTerm) || subTask.name.toLowerCase().includes(this.searchTerm.toLowerCase()) : true;
+      const matchesStatus = this.selectedStatus ? subTask.status === this.selectedStatus : true;
+      return matchesSearch && matchesStatus;
+    });
   }
 
 

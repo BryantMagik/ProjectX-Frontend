@@ -1,6 +1,7 @@
 import { User } from "./user.interface"
 
 export interface Participant {
+    name: any;
     id: string;
     email: string;
     first_name: string;

@@ -1,4 +1,4 @@
-import { Observable, of } from "rxjs";
+import { catchError, Observable, of } from "rxjs";
 import { ApiService } from "../api.service";
 import { AuthService } from "../auth/auth.service";
 import { Project } from "../../model/project.interface";
@@ -50,6 +50,23 @@ export class ProjectService {
     }
     return of(null)
   }
+  
+  updateProject(newProject: Project, id: string): Observable<Project> {
+    const headers = this.getAuthHeaders();
+    if (headers) {
+      return this.apiService.put<Project>(`${projectApi.update}/${id}`, newProject, { headers }).pipe(
+        catchError(error => {
+          console.error('Error al actualizar el proyecto:', error);
+          // Retornar un proyecto vacío o predeterminado en lugar de null
+          return of({} as Project); // Retornar un objeto vacío como fallback
+        })
+      );
+    }
+    // Retornar un proyecto vacío en caso de no haber headers
+    return of({} as Project);
+  }
+  
+
   getProjectByIdWhereId(): Observable<Project[]> {
     const headers = this.getAuthHeaders();
     if (headers) {

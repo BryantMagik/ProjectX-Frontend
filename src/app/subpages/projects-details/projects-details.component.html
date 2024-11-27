@@ -7,88 +7,77 @@
           <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label for="project-id" class="block text-sm font-medium text-gray-700">ID</label>
-              <input id="project-id" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 "
-                value="{{ project?.id }}" [readonly]="true" formControlName="id" />
+              <input id="project-id" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                formControlName="id" />
             </div>
             <div>
               <label for="project-name" class="block text-sm font-medium text-gray-700">Nombre</label>
-              <input id="project-name" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 "
-                value="{{ project?.name }}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" />
+              <input id="project-name" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                formControlName="name" />
             </div>
             <div class="md:col-span-2">
               <label for="project-description" class="block text-sm font-medium text-gray-700">Descripción</label>
               <textarea id="project-description" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">{{ project?.description }}</textarea>
+                formControlName="description"></textarea>
             </div>
             <div>
               <label for="project-code-key" class="block text-sm font-medium text-gray-700">Código</label>
               <input id="project-code-key" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                value="{{ project?.code }}" [readonly]="true" />
+                formControlName="code" readonly />
             </div>
             <div>
               <label for="project-type" class="block text-sm font-medium text-gray-700">Tipo</label>
-              <p *ngIf="!isEditing" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2">
-                {{ project?.type}}
-              </p>
               <select id="project-type" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                formControlName="type" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" *ngIf="isEditing">
-                <option *ngFor="let type of projectTypes" [value]="type" [selected]="project?.type">{{ type }}</option>
+                formControlName="type">
+                <option *ngFor="let type of projectTypes" [value]="type.value">{{ type.name }}</option>
               </select>
             </div>
-
-
             <div>
               <label for="project-status" class="block text-sm font-medium text-gray-700">Estado</label>
-              <p *ngIf="!isEditing" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2">
-                {{ project?.status }}
-              </p>
               <select id="project-status" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                formControlName="status" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"
-                *ngIf="isEditing">
-                <option *ngFor="let status of projectStatuses" [value]="status">{{ status }}</option>
+                formControlName="status">
+                <option *ngFor="let status of projectStatuses" [value]="status.value">{{ status.name }}</option>
               </select>
-
             </div>
             <div>
               <label for="project-creation-date" class="block text-sm font-medium text-gray-700">Fecha de
                 Creación</label>
-              <input id="project-creation-date" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 "
-                value="{{ project?.createdAt }}" [readonly]="true" />
+              <input id="project-creation-date" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                value="{{ project?.createdAt }}" disabled />
             </div>
             <div>
               <label for="project-update-date" class="block text-sm font-medium text-gray-700">Fecha de
                 Actualización</label>
-              <input id="project-update-date" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 "
-                value="{{ project?.updatedAt }}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}" />
+              <input id="project-update-date" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                value="{{ project?.updatedAt }}" disabled />
             </div>
             <div>
               <label for="project-created-by" class="block text-sm font-medium text-gray-700">Creado por</label>
-              <input id="project-created-by" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 "
-                value="{{ project?.author?.first_name }}" [readonly]="true" />
+              <input id="project-created-by" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                value="{{ project?.author?.first_name }}" disabled />
             </div>
             <div class="md:col-span-2">
-              <label for="project-participants" class="block text-sm font-medium text-gray-700">Participantes</label>
-              <!-- <input id="project-participants" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2 " value="{{ project?.participants?.join(', ') }}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"/> -->
+              <label for="project-created-by" class="block text-sm font-medium text-gray-700">Participantes</label>
+              <p-floatLabel>
+                <p-multiSelect inputId="float-label" [options]="availableParticipants" formControlName="participants"
+                  optionLabel="first_name" optionValue="id" />
+              </p-floatLabel>
             </div>
             <div>
-              <button type="button" (click)="toggleEdit()"
-                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                {{ isEditing ? 'Cancel' : 'Edit' }}
-              </button>
-            </div>
-            <div *ngIf="isEditing">
-              <button type="submit" (click)="onSubmit()"
+              <button type="submit"
                 class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Apply
               </button>
             </div>
           </div>
           <div class="flex justify-between mt-6">
-            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none   
-             focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Eliminar</button>
-            <button
+            <button type="button"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+              Delete
+            </button>
+            <button type="button"
               class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              (click)="navigateToProjects()">volver</button>
+              (click)="navigateToProjects()">Back to projects</button>
           </div>
         </form>
       </div>

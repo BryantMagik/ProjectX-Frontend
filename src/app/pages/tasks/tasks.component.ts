@@ -1,51 +1,83 @@
 import { CommonModule, NgClass, NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
-export interface tasksData{
-  id:number;
-  code:string;
-  summary:string;
-  description:string;
-  priority:string;
-  type:string;
-  status:string;
-  project_id:number;
-  assigned_user_id:number;
-  estimation:string;
-  duedate:string;
-}
+import { TaskService } from '../../service/task/task.service';
+import { AuthService } from '../../service/auth/auth.service';
+import { UserService } from '../../service/user/user.service';
+import { ToolbarModule } from 'primeng/toolbar';
+import { Table, TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
+import { TagModule } from 'primeng/tag';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { Task } from '../../model/task.interface';
+import { tap } from 'rxjs';
+import { User } from '../../model/user.interface';
+import { SeverityTagComponent } from "../../service/severity/severety,project";
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [NgFor,CommonModule,NgClass],
+  imports: [CommonModule, TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
 })
-export class TasksComponent {
+export class TasksComponent implements OnInit {
 
-  tasks: tasksData[] =[
-    {
-      id: 1,
-      code: 'PRJ001',
-      summary: 'Project Summary',
-      description: 'Description of the project 1',
-      priority: 'high',
-      type: 'Software',
-      status: 'Ongoing',
-      project_id: 10,
-      assigned_user_id: 1001,
-      estimation: '5 days',
-      duedate: '2024-12-31'
-    }
-  ]
+  @ViewChild('dt') dt!: Table;
+  task: Task[] = []
+  authors: User[] = []
+  error: string | null = null
+  loading: boolean = true;
+  selectedTask!: Task[] | null
 
-  constructor(private router:Router){}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private taskService: TaskService,
+  ) { }
+
+  ngOnInit(): void {
+    this.getTask()
+    this.getUsers()
+  }
 
   navigateToTaskForm() {
     this.router.navigate(['/pages/tasks/shared/tasks-form']);
   }
 
-
+  private getTask(): void {
+    this.taskService.getTasksByIdWhereId().pipe(
+      tap({
+        next: (task: Task[] | null) => {
+          if (task) {
+            this.task = task;
+            console.log(this.task)
+          }
+        },
+        error: () => this.error = 'Failed to load tasks',
+        complete: () => this.loading = false
+      })
+    ).subscribe();
+  }
+  private getUsers(): void {
+    this.userService.getAllUsers().pipe(
+      tap({
+        next: (authors: User[] | null) => {
+          if(authors){
+            this.authors = authors
+            console.log("Authores",authors)
+          }
+        },
+        error: () => this.error = 'Failed to load projects',
+        complete: () => this.loading = false
+      })
+    ).subscribe()
+  }
+  filterGlobal(event: Event): void {
+    const input = event.target as HTMLInputElement
+    const value = input ? input.value : ''
+    this.dt.filterGlobal(value, 'contains')
+  }
 }

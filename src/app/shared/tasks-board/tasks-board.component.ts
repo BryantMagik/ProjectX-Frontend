@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LayoutComponent } from '../../pages/layout/layout.component';
 import { CommonModule, NgClass, NgFor } from '@angular/common';
 
 export interface tasksDataBoard{
@@ -19,7 +18,7 @@ export interface tasksDataBoard{
 @Component({
   selector: 'app-tasks-board',
   standalone: true,
-  imports: [LayoutComponent,NgFor,CommonModule,NgClass],
+  imports: [NgFor,CommonModule,NgClass],
   templateUrl: './tasks-board.component.html',
   styleUrl: './tasks-board.component.css'
 })
@@ -40,14 +39,8 @@ export class TasksBoardComponent {
     }
   ]
 
-  constructor(private LayoutComponent:LayoutComponent) {}
+  constructor() {}
 
-  // setMostrar(value: number) {
-  //   this.LayoutComponent.setMostrar(value);
-  // }
 
-  // setMirando(value: number) {
-  //   this.LayoutComponent.setMirando(value);
-  // }
 
 }

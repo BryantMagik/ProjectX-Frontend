@@ -3,6 +3,7 @@ export interface User {
     email: string;
     first_name: string
     last_name: string
+    type_user: 'TRAINEE' | 'DEVELOPER' | 'MANAGER' | 'DESIGNER' | 'QA' | 'PRODUCT_OWNER';
     role?: string
     createdAt: string
     updatedAt: string

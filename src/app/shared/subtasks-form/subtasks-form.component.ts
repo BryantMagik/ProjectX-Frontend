@@ -1,41 +1,75 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { TASKSSTATUS } from '../../types/models';
+import { Subtask } from '../../model/subtask.interface';
+import { SubtaskService } from '../../service/subtask/subtask.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-subtasks-form',
   standalone: true,
-  imports: [],
+  imports: [CommonModule,DropdownModule,InputTextModule,ToastModule],
   templateUrl: './subtasks-form.component.html',
-  styleUrl: './subtasks-form.component.css'
+  styleUrl: './subtasks-form.component.css',
+  providers:[MessageService]
 })
 export class SubtasksFormComponent implements OnInit {
 
-  subtaskForm: FormGroup;
-  currentDate = new Date().toISOString();  // Para las fechas de creación y actualización
+  subtaskForm!: FormGroup;
+  taskStatuses = TASKSSTATUS;
 
-  constructor(private fb: FormBuilder,private router:Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router:Router,
+    private subtaskService: SubtaskService,
+    private messageService: MessageService
+  ) {}
+
+  ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  private initializeForm(): void {
     this.subtaskForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
       description: [''],
       status: ['', Validators.required],
-      task_id: ['', [Validators.required, Validators.min(1)]],
+      taskId: ['', [Validators.required, Validators.minLength(8)]],
+      authorId: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
-  ngOnInit(): void {}
-
   navigateToSubTasks() {
-    this.router.navigate(['/pages/subtasks']);
+    if (this.subtaskForm.valid) {
+      const subtaskData: Partial<Subtask> = {
+        ...this.subtaskForm.value,
+      };
+
+      this.subtaskService.createSubtask(subtaskData).subscribe({
+        next: () => {
+          this.showSuccess();
+          this.navigateToSubTasks();
+        },
+        error: (err) => {
+          console.error('Error al crear la subtarea:', err);
+        }
+      });
+    } else {
+      console.warn('Formulario no válido:', this.subtaskForm.value);
+    }
   }
 
-  onSubmit(): void {
-    if (this.subtaskForm.valid) {
-      console.log('Formulario válido:', this.subtaskForm.value);
-      // Aquí puedes realizar la acción para enviar los datos al backend.
-    } else {
-      console.log('Formulario no válido');
-    }
+  showSuccess(): void {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Éxito',
+      detail: 'La subtarea se creó correctamente'
+    });
   }
 
 }

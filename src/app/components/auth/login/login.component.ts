@@ -6,11 +6,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CommonModule } from '@angular/common';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { provideIcons } from '@ng-icons/core';
 import { heroLockClosed, heroUsers } from '@ng-icons/heroicons/outline';
 import { featherAirplay } from '@ng-icons/feather-icons';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-login',
@@ -21,14 +22,13 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
     InputTextModule,
     ButtonModule,
     CalendarModule,
-    NgIconComponent,
     InputGroupModule,
-    InputGroupAddonModule
+    InputGroupAddonModule,
+    DividerModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  viewProviders: [provideIcons({ featherAirplay, heroUsers, heroLockClosed })]
-
+  viewProviders: [provideIcons({ featherAirplay, heroUsers, heroLockClosed })],
 })
 export class LoginComponent {
   isLoading = false;
@@ -47,19 +47,18 @@ export class LoginComponent {
       this.isLoading = true
       const { emailValidator, passwordValidator } = this.validatorForm.value;
       setTimeout(() => {
-        this.isLoading = false;
+        this.isLoading = false
         this.authService.login(emailValidator!, passwordValidator!).subscribe({
           next: (response) => {
             this.router.navigate(['pages/dashboard']);
           },
           error: (err) => {
-
-            this.errorMessage = 'Credenciales inválidas. Por favor, inténtalo de nuevo.';
+            this.errorMessage = 'Invalid credentials. Please try again.';
           }
         });
       }, 2000)
     } else {
-      this.errorMessage = 'Por favor, completa todos los campos.';
+      this.errorMessage = 'Please fill in all required fields!';
     }
   }
 

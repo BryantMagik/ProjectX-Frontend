@@ -16,7 +16,7 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-project-form',
   standalone: true,
-  imports: [LayoutComponent, ReactiveFormsModule, CommonModule, MultiSelectModule, DropdownModule, InputTextModule, ToastModule],
+  imports: [ ReactiveFormsModule, CommonModule, MultiSelectModule, DropdownModule, InputTextModule, ToastModule],
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.css'
 })
