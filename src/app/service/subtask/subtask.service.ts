@@ -4,7 +4,7 @@ import { Observable,of } from 'rxjs';
 import { ApiService } from '../api.service';
 import { AuthService } from '../auth/auth.service';
 import { Subtask } from '../../model/subtask.interface';
-import { subtaskApi } from '../../../environments/environment.development';
+import { subtaskApi } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

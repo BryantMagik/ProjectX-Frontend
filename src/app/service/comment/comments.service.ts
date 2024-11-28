@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable,of } from 'rxjs';
-import { commentApi } from '../../../environments/environment.development';
+import { commentApi } from '../../../environments/environment';
 import { Comment } from '../../model/comment.interface';
 import { ApiService } from '../api.service';
 import { AuthService } from '../auth/auth.service';
