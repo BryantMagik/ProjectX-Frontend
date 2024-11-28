@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Issue } from '../../model/issue.interface';
-import { issueApi } from '../../../environments/environment.development';
+import { issueApi } from '../../../environments/environment';
 import { ApiService } from '../api.service';
 import { AuthService } from '../auth/auth.service';
 
