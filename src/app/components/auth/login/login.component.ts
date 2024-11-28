@@ -46,17 +46,17 @@ export class LoginComponent {
     if (this.validatorForm.valid) {
       this.isLoading = true
       const { emailValidator, passwordValidator } = this.validatorForm.value;
-      setTimeout(() => {
-        this.isLoading = false
-        this.authService.login(emailValidator!, passwordValidator!).subscribe({
-          next: (response) => {
-            this.router.navigate(['pages/dashboard']);
-          },
-          error: (err) => {
-            this.errorMessage = 'Invalid credentials. Please try again.';
-          }
-        });
-      }, 2000)
+
+      this.authService.login(emailValidator!, passwordValidator!).subscribe({
+        next: (response) => {
+          this.isLoading = false
+          this.router.navigate(['pages/dashboard']);
+        },
+        error: (err) => {
+          this.isLoading = false
+          this.errorMessage = 'Invalid credentials. Please try again.';
+        }
+      });
     } else {
       this.errorMessage = 'Please fill in all required fields!';
     }
