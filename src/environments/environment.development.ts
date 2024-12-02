@@ -8,6 +8,11 @@ export const userApi = {
     baseUrl: 'http://localhost:3000/api/v1/users'
 }
 
+export const workspaceApi = {
+    production: false,
+    create: 'http://localhost:3000/api/v1/workspace',
+}
+
 export const projectApi = {
     production: false,
     getOnlyOwn:'http://localhost:3000/api/v1/project/user/projects',

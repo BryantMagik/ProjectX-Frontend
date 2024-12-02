@@ -7,13 +7,8 @@ export const MENU_ITEMS: MenuItem[] = [
         route: 'pages/dashboard',
     },
     {
-        icon: 'folder_open',
-        label: 'Projects',
-        route: 'pages/projects',
-    },
-    {
         icon: 'assignment',
-        label: 'Task',
+        label: 'My Tasks',
         route: 'pages/tasks',
     },
     {

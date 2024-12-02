@@ -10,6 +10,11 @@ export const userApi = {
 
 }
 
+export const workspaceApi = {
+    production: true,
+    create: 'https://project-x-backend-lyart.vercel.app/api/v1/workspace',
+}
+
 export const projectApi = {
     production: true,
     getOnlyOwn: 'https://project-x-backend-lyart.vercel.app/api/v1/project/user/projects/',

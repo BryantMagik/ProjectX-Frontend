@@ -24,33 +24,33 @@ export class ProjectService {
         headers = headers.set('Authorization', `Bearer ${token}`);
       }
     }
-    return headers;
+    return headers
   }
 
   getProjectsRequest(): Observable<Project[]> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Project[]>(`${projectApi.getAll}`, { headers });
+      return this.apiService.get<Project[]>(`${projectApi.getAll}`, { headers })
     }
-    return of([]);
+    return of([])
   }
 
   getProjectById(id: string): Observable<Project | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Project>(`${projectApi.getById}/${id}`, { headers });
+      return this.apiService.get<Project>(`${projectApi.getById}/${id}`, { headers })
     }
-    return of(null);
+    return of(null)
   }
 
   postProject(newProject: Project): Observable<Project | null> {
     const headers = this.getAuthHeaders()
     if (headers) {
-      return this.apiService.post<Project>(`${projectApi.create}`,newProject,{ headers })
+      return this.apiService.post<Project>(`${projectApi.create}`, newProject, { headers })
     }
     return of(null)
   }
-  
+
   updateProject(newProject: Project, id: string): Observable<Project> {
     const headers = this.getAuthHeaders();
     if (headers) {
@@ -65,13 +65,13 @@ export class ProjectService {
     // Retornar un proyecto vacío en caso de no haber headers
     return of({} as Project);
   }
-  
+
 
   getProjectByIdWhereId(): Observable<Project[]> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Project[]>(`${projectApi.getOnlyOwn}`, { headers });
+      return this.apiService.get<Project[]>(`${projectApi.getOnlyOwn}`, { headers })
     }
-    return of([]);
+    return of([])
   }
 }
