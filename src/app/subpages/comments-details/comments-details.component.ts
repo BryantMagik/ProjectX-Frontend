@@ -90,12 +90,9 @@ export class CommentsDetailsComponent implements OnInit{
           this.comment = comment;
           if (comment) {
             this.commentFormular.patchValue({
-              id: comment.id,
               content: comment.body,
-              date: comment.date,
               issueId: comment.issueId || '',
               taskId: comment.taskId || '',
-              authorId: comment.authorId
             });
           }
         },
