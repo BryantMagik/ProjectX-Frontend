@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SubtaskService } from '../../service/subtask/subtask.service';
 import { Subtask } from '../../model/subtask.interface';
+import { TASKSSTATUS } from '../../types/models';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class SubtasksComponent {
   filteredSubTasks: Subtask[] = [];
   searchTerm: string = '';
   selectedStatus: string = '';
+  taskStatuses = TASKSSTATUS;
 
   constructor(private router:Router,private subtaskService: SubtaskService){}
 
@@ -39,7 +41,7 @@ export class SubtasksComponent {
   applyFilters(): void {
     this.filteredSubTasks = this.subTasks.filter(subTask => {
       const matchesSearch = this.searchTerm ? 
-        subTask.id.includes(this.searchTerm) || subTask.name.toLowerCase().includes(this.searchTerm.toLowerCase()) : true;
+        subTask.name.toLowerCase().includes(this.searchTerm.toLowerCase()) : true;
       const matchesStatus = this.selectedStatus ? subTask.status === this.selectedStatus : true;
       return matchesSearch && matchesStatus;
     });

@@ -1,11 +1,10 @@
 <main class="flex-1">
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-      <!-- Subtask Creation Section -->
       <div class="bg-white shadow sm:rounded-lg">
         <div class="px-4 py-5 sm:p-6">
           <h2 class="text-2xl leading-6 font-medium text-gray-900">Crear Subtarea</h2>
           <div class="mt-5">
-            <form >
+            <form [formGroup]="subtaskForm" (ngSubmit)="onSubmit()">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
   
                 <!-- Subtask Name -->
@@ -24,28 +23,16 @@
                 <div>
                   <label for="status" class="block text-sm font-medium text-gray-700">Estado</label>
                   <select id="status" formControlName="status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    <option value="TO_DO">Por hacer</option>
-                    <option value="IN_PROGRESS">En progreso</option>
-                    <option value="DONE">Hecho</option>
+                    <option *ngFor="let status of taskStatuses" [value]="status.value">
+                      {{ status.name }}
+                    </option>
                   </select>
                 </div>
   
                 <!-- Task ID -->
                 <div>
                   <label for="task-id" class="block text-sm font-medium text-gray-700">ID de Tarea</label>
-                  <input type="number" id="task-id" formControlName="task_id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="ID de la tarea">
-                </div>
-  
-                <!-- Creation Date (Disabled) -->
-                <div>
-                  <label for="creation-date" class="block text-sm font-medium text-gray-700">Fecha de Creación</label>
-                  <input type="text" id="creation-date" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"  disabled>
-                </div>
-  
-                <!-- Update Date (Disabled) -->
-                <div>
-                  <label for="update-date" class="block text-sm font-medium text-gray-700">Fecha de Actualización</label>
-                  <input type="text" id="update-date" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"  disabled>
+                  <input type="text" id="taskId" formControlName="taskId" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="ID de la tarea">
                 </div>
   
               </div>
@@ -58,7 +45,7 @@
               </div>
             </form>
             <div class="mt-6 flex justify-end">
-              <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToSubTasks()">volver</button>
+              <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToSubTasks()">Volver</button>
             </div>
           </div>
         </div>
