@@ -9,7 +9,7 @@ import { workspaceApi } from "../../../environments/environment";
 @Injectable({
     providedIn: 'root'
 })
-export class ProjectService {
+export class WorkspaceService {
     constructor(
         private apiService: ApiService,
         private authService: AuthService

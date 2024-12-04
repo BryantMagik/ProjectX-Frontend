@@ -70,7 +70,6 @@ export class ProjectFormComponent implements OnInit {
       status: ['', Validators.required],
       participants: [[]],
     })
-    console.log('Formulario:', this.projectForm.value);
   }
 
   onSubmit(): void {
