@@ -1,6 +1,6 @@
 import { NgIf,NgClass, NgFor} from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder,FormGroup,Validators,AbstractControl } from '@angular/forms';
+import { FormBuilder,FormGroup,Validators,AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { CommentsService } from '../../service/comment/comments.service';
 import { Comment } from '../../model/comment.interface';
@@ -17,7 +17,7 @@ export interface commentsDetail{
 @Component({
   selector: 'app-comments-details',
   standalone: true,
-  imports: [NgIf,NgClass,NgFor],
+  imports: [NgIf,NgClass,NgFor,ReactiveFormsModule],
   templateUrl: './comments-details.component.html',
   styleUrl: './comments-details.component.css'
 })

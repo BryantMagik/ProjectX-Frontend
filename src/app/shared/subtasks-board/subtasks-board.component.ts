@@ -14,7 +14,7 @@ export interface subTasksDataBoard{
 @Component({
   selector: 'app-subtasks-board',
   standalone: true,
-  imports: [NgFor,CommonModule,NgClass],
+  imports: [NgFor,CommonModule],
   templateUrl: './subtasks-board.component.html',
   styleUrl: './subtasks-board.component.css'
 })
