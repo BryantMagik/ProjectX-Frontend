@@ -7,7 +7,7 @@
           <div *ngFor="let commentsDetail of comentDetails" class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700">ID del Comentario</label>
-              <input formControlName="id" type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true" [value]="commentsDetail.id">
+              <input type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true" [value]="commentsDetail.id">
             </div>
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-gray-700">Contenido</label>
@@ -15,15 +15,15 @@
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700">Fecha</label>
-              <input formControlName="date" type="date" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="!isEditing" [value]="commentsDetail.date" [ngClass]="{'bg-gray-200': isEditing}">
+              <input type="date" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="!isEditing" [value]="commentsDetail.date" [ngClass]="{'bg-gray-200': isEditing}">
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700">ID del Issue</label>
+              <label class="block text-sm font-medium text-gray-700">ID del Issue o de la Tarea</label>
               <input formControlName="issueId" type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true" [value]="commentsDetail.issueId">
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700">ID del Autor</label>
-              <input formControlName="authorId" type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true" [value]="commentsDetail.authorId">
+              <input type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true" [value]="commentsDetail.authorId">
             </div>
             <div>
               <button type="button" (click)="toggleEdit()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

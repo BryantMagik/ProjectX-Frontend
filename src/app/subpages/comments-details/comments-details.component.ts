@@ -49,9 +49,7 @@ export class CommentsDetailsComponent implements OnInit{
     private router:Router
   ) {
     this.commentFormular = this.fb.group({
-      id: [{ value: '', disabled: true }],
       content: [{ value: '', disabled: true, Validators: [Validators.required, Validators.maxLength(200)] }],
-      date: [{ value: '', disabled: true }],
       issueId: [
         { value: '', disabled: true },
         [
@@ -65,8 +63,7 @@ export class CommentsDetailsComponent implements OnInit{
           Validators.pattern(/^[a-zA-Z0-9-]+$/),
           this.oneOfTwoRequiredValidator('issueId')
         ]
-      ],
-      authorId: [{ value: '', disabled: true }]
+      ]
     });
   }
 

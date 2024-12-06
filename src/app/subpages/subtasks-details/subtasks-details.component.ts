@@ -1,6 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { CommonModule, NgClass, NgFor } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { SubtaskService } from '../../service/subtask/subtask.service';
 import { Subtask } from '../../model/subtask.interface';
@@ -19,7 +19,7 @@ export interface SubtaskDetail {
 @Component({
   selector: 'app-subtasks-details',
   standalone: true,
-  imports: [CommonModule,NgFor,NgClass],
+  imports: [CommonModule,NgFor,NgClass,ReactiveFormsModule],
   templateUrl: './subtasks-details.component.html',
   styleUrl: './subtasks-details.component.css'
 })
@@ -54,8 +54,6 @@ export class SubtasksDetailsComponent implements OnInit {
       name: [{value:'', disabled: true}, [Validators.required, Validators.maxLength(50)]],
       description: [{value:'', disabled: true}],
       status: [{value:'', disabled: true}, Validators.required],
-      task_id: [{value:'', disabled: true}, [Validators.required, Validators.min(8)]],
-      authorId: [{value:'', disabled: true},[Validators.required, Validators.min(8)]]
     });
   }
 

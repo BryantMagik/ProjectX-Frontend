@@ -3,23 +3,23 @@
       <div class="bg-white shadow sm:rounded-lg">
         <div class="px-4 py-5 sm:p-6">
           <h2 class="text-2xl leading-6 font-medium text-gray-900">Issues details</h2>
-          <form>
+          <form [formGroup]="issuesFormular" (ngSubmit)="onSubmit()">
             <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4" *ngFor="let issuedeta of issues">
                 <div>
-                  <label class="block text-sm font-medium text-gray-700">Clave</label>
-                  <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issuedeta.id}}" [readonly]="true" />
+                  <label for="code" class="block text-sm font-medium text-gray-700">Clave</label>
+                  <input id="code" formControlName="code" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issuedeta.code}}" [readonly]="true" />
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700">Tipo</label>
-                  <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issuedeta.type}}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"/>
+                  <input formControlName="type" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issuedeta.type}}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"/>
                 </div>
                 <div class="sm:col-span-2">
                   <label class="block text-sm font-medium text-gray-700">Resumen</label>
-                  <textarea class="mt-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issuedeta.summary}}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"></textarea>
+                  <textarea formControlName="summary" class="mt-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{issuedeta.summary}}" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"></textarea>
                 </div>
                 <div class="sm:col-span-2">
                   <label class="block text-sm font-medium text-gray-700">Descripción</label>
-                  <textarea class="mt-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">{{issuedeta.description}}</textarea>
+                  <textarea id="description" formControlName="description" class="mt-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">{{issuedeta.description}}</textarea>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700">Asignado a</label>
@@ -40,7 +40,7 @@
                 </button>
               </div>
               <div *ngIf="isEditing">
-                <button type="submit" (click)="onSubmit()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   Apply
                 </button>
               </div>

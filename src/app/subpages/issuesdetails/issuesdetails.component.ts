@@ -25,7 +25,7 @@ interface Issuedetail {
 @Component({
   selector: 'app-issuesdetails',
   standalone: true,
-  imports: [NgFor,CommonModule,NgClass],
+  imports: [NgFor,CommonModule,NgClass,ReactiveFormsModule],
   templateUrl: './issuesdetails.component.html',
   styleUrl: './issuesdetails.component.css'
 })
@@ -67,14 +67,11 @@ export class IssuesdetailsComponent implements OnInit{
 
   ) {
     this.issuesFormular = this.fb.group({
-      id: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(255)]],
       code: [{ value: '', disabled: true },[Validators.required, Validators.maxLength(255)]],
       type: [{value:''}, Validators.required],
       summary: [{value:''}, [Validators.required, Validators.maxLength(10024)]],
       description: [{value:''}, [Validators.required, Validators.maxLength(10024)]],
       priority: [{value:''}, Validators.required],
-      projectId: [{value:''}, Validators.required],
-      reporterUserId: [{value:'', disabled: true}, Validators.required],
       status: [{value:''}, Validators.required],
     });
 
