@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { User } from '../../model/user.interface';
-import { WorkspaceService } from '../../service/workspace/workspace.service';
-import { CommonModule } from '@angular/common';
-import { CloudinaryService } from '../../service/cloudinary/cloudinary.service';
+import { Component, OnInit } from '@angular/core'
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import { User } from '../../model/user.interface'
+import { WorkspaceService } from '../../service/workspace/workspace.service'
+import { CommonModule } from '@angular/common'
+import { CloudinaryService } from '../../service/cloudinary/cloudinary.service'
 
 @Component({
   selector: 'app-workspace-form',
@@ -17,7 +17,7 @@ export class WorkspaceFormComponent implements OnInit {
   workspaceForm!: FormGroup
   users: User[] = []
   authorId: string | null = null
-  isUploading = false;
+  isUploading = false
 
   constructor(
     private fb: FormBuilder,
@@ -61,7 +61,7 @@ export class WorkspaceFormComponent implements OnInit {
           }
         ).finally(() => {
           this.isUploading = false;
-        });
+        })
     }
   }
 

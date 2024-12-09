@@ -4,7 +4,7 @@ import { Observable,of } from 'rxjs';
 import { ApiService } from '../api.service';
 import { AuthService } from '../auth/auth.service';
 import { Subtask } from '../../model/subtask.interface';
-import { subtaskApi } from '../../../environments/environment';
+import { apiRoutes } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class SubtaskService {
   getAllSubtasks(): Observable<Subtask[]> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Subtask[]>(`${subtaskApi.apiUrl}`, { headers });
+      return this.apiService.get<Subtask[]>(`${apiRoutes.subtask.apiUrl}`, { headers });
     }
     return of([]);
   }
@@ -38,23 +38,23 @@ export class SubtaskService {
   getSubtaskById(id: string): Observable<Subtask | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Subtask>(`${subtaskApi.apiUrl}/${id}`, { headers });
+      return this.apiService.get<Subtask>(`${apiRoutes.subtask.apiUrl}/${id}`, { headers });
     }
     return of(null);
   }
 
   createSubtask(subtask: Partial<Subtask>): Observable<Subtask> {
     const headers = this.getAuthHeaders();
-    return this.apiService.post<Subtask>(`${subtaskApi.apiUrl}`, subtask, { headers });
+    return this.apiService.post<Subtask>(`${apiRoutes.subtask.apiUrl}`, subtask, { headers });
   }
 
   updateSubtask(id: string, subtask: Partial<Subtask>): Observable<Subtask> {
     const headers = this.getAuthHeaders();
-    return this.apiService.patch<Subtask>(`${subtaskApi.apiUrl}/${id}`, subtask, { headers });
+    return this.apiService.patch<Subtask>(`${apiRoutes.subtask.apiUrl}/${id}`, subtask, { headers });
   }
 
   deleteSubtask(id: string): Observable<void> {
     const headers = this.getAuthHeaders();
-    return this.apiService.delete<void>(`${subtaskApi.apiUrl}/${id}`, { headers });
+    return this.apiService.delete<void>(`${apiRoutes.subtask.apiUrl}/${id}`, { headers });
   }
 }

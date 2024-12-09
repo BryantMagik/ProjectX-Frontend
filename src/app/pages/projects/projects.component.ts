@@ -60,7 +60,6 @@ export class ProjectsComponent implements OnInit {
   }
 
   openNew() {
-    // this.project = []
     this.submitted = false
     this.projectDialog = true;
   }

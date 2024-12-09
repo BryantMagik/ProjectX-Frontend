@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "../api.service";
-import { map, Observable, of, tap } from "rxjs";
+import { Observable, of, } from "rxjs";
 import { User } from "../../model/user.interface";
-import { userApi } from "../../../environments/environment";
+import { apiRoutes } from '../../../environments/environment.development';
 import { AuthService } from "../auth/auth.service";
 import { HttpHeaders } from '@angular/common/http';
 
@@ -18,7 +18,7 @@ export class UserService {
 
   profile(token: string): Observable<User> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.apiService.get<User>(`${userApi.apirurl}`, { headers });
+    return this.apiService.get<User>(`${apiRoutes.auth.profile}`, { headers });
   }
 
   private getAuthHeaders(): HttpHeaders {
@@ -44,7 +44,7 @@ export class UserService {
   getAllUsers(): Observable<User[] | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<User[]>(`${userApi.baseUrl}`, { headers });
+      return this.apiService.get<User[]>(`${apiRoutes.users.getAll}`, { headers });
     }
     return of([]);
   }

@@ -1,12 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Workspace } from '../../model/workspace.interface';
+import { WorkspaceService } from '../../service/workspace/workspace.service';
+import { tap } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-workspace-switcher',
   standalone: true,
-  imports: [],
+  imports: [FormsModule,CommonModule],
   templateUrl: './workspace-switcher.component.html',
   styleUrl: './workspace-switcher.component.css'
 })
-export class WorkspaceSwitcherComponent {
+export class WorkspaceSwitcherComponent implements OnInit {
 
+  workspaces: Workspace[] = []
+  error: string | null = null
+  loading: boolean = true
+  selectedWorkspaceId: string | null = null
+  selectedWorkspace: Workspace | null = null
+  dropdownOpen: boolean = false
+
+  constructor(
+    private workspaceService: WorkspaceService
+
+  ) { }
+
+  ngOnInit(): void {
+    this.getWorkspaces()
+
+  }
+
+  selectWorkspace(workspace: Workspace): void {
+    this.selectedWorkspace = workspace
+    this.selectedWorkspaceId = workspace.id;
+    this.dropdownOpen = false
+  }
+
+  private getWorkspaces(): void {
+    this.workspaceService.getAllWorkspace().pipe(
+      tap({
+        next: (workspace: Workspace[] | null) => {
+          if (workspace) {
+            this.workspaces = workspace
+            console.log(workspace)
+          }
+        },
+        error: () => this.error = 'Failed to load workspaces',
+        complete: () => this.loading = false
+      })
+    ).subscribe()
+  }
 }

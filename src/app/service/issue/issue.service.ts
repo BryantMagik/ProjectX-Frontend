@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Issue } from '../../model/issue.interface';
-import { issueApi } from '../../../environments/environment';
 import { ApiService } from '../api.service';
 import { AuthService } from '../auth/auth.service';
+import { apiRoutes } from "../../../environments/environment.development";
 
 
 
@@ -32,7 +32,7 @@ export class IssueService {
   getAllIssues(): Observable<Issue[]> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Issue[]>(`${issueApi.apiUrl}`, { headers });
+      return this.apiService.get<Issue[]>(`${apiRoutes.issue.apiUrl}`, { headers });
     }
     return of([]);
   }
@@ -40,24 +40,24 @@ export class IssueService {
   getIssueById(id: string): Observable<Issue | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Issue>(`${issueApi.apiUrl}/${id}`, { headers });
+      return this.apiService.get<Issue>(`${apiRoutes.issue.apiUrl}/${id}`, { headers });
     }
     return of(null);
   }
 
   createIssue(issue: Issue): Observable<Issue> {
     const headers = this.getAuthHeaders();
-    return this.apiService.post<Issue>(`${issueApi.apiUrl}`, issue, { headers });
+    return this.apiService.post<Issue>(`${apiRoutes.issue.apiUrl}`, issue, { headers });
   }
 
   updateIssue(id: string, updatedIssue: Partial<Issue>): Observable<Issue> {
     const headers = this.getAuthHeaders();
-    return this.apiService.patch<Issue>(`${issueApi.apiUrl}/${id}`, updatedIssue, { headers });
+    return this.apiService.patch<Issue>(`${apiRoutes.issue.apiUrl}/${id}`, updatedIssue, { headers });
   }
 
   deleteIssue(id: string): Observable<void> {
     const headers = this.getAuthHeaders();
-    return this.apiService.delete<void>(`${issueApi.apiUrl}/${id}`, { headers });
+    return this.apiService.delete<void>(`${apiRoutes.issue.apiUrl}/${id}`, { headers });
   }
 
 }

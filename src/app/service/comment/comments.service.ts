@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable,of } from 'rxjs';
-import { commentApi } from '../../../environments/environment';
 import { Comment } from '../../model/comment.interface';
 import { ApiService } from '../api.service';
 import { AuthService } from '../auth/auth.service';
+import { apiRoutes } from "../../../environments/environment.development";
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class CommentsService {
   create(comment: Comment): Observable<Comment | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.post<Comment>(`${commentApi.apiUrl}`, comment, { headers });
+      return this.apiService.post<Comment>(`${apiRoutes.comment.apiUrl}`, comment, { headers });
     }
     return of(null);
   }
@@ -40,7 +40,7 @@ export class CommentsService {
   findAll(): Observable<Comment[]> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Comment[]>(`${commentApi.apiUrl}`, { headers });
+      return this.apiService.get<Comment[]>(`${apiRoutes.comment.apiUrl}`, { headers });
     }
     return of([]);
   }
@@ -48,7 +48,7 @@ export class CommentsService {
   findOne(id: string): Observable<Comment | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Comment>(`${commentApi.apiUrl}/${id}`, { headers });
+      return this.apiService.get<Comment>(`${apiRoutes.comment.apiUrl}/${id}`, { headers });
     }
     return of(null);
   }
@@ -56,7 +56,7 @@ export class CommentsService {
   update(id: string, comment: Partial<Comment>): Observable<Comment | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.patch<Comment>(`${commentApi.apiUrl}/${id}`, comment, { headers });
+      return this.apiService.patch<Comment>(`${apiRoutes.comment.apiUrl}/${id}`, comment, { headers });
     }
     return of(null);
   }
@@ -64,7 +64,7 @@ export class CommentsService {
   deleteCommentById(id: string): Observable<void> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.delete<void>(`${commentApi.apiUrl}/${id}`, { headers });
+      return this.apiService.delete<void>(`${apiRoutes.comment.apiUrl}/${id}`, { headers });
     }
     return of();
   }

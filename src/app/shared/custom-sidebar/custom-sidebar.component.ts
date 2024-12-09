@@ -6,11 +6,12 @@ import { RouterLink, RouterModule } from '@angular/router'
 import { MENU_ITEMS } from '../../constants/menu-items'
 import { MenuItem } from '../../model/menu.interface'
 import { ProjectSwitcherComponent } from "../project-switcher/project-switcher.component";
+import { WorkspaceSwitcherComponent } from '../workspace-switcher/workspace-switcher.component';
 
 @Component({
   selector: 'app-custom-sidebar',
   standalone: true,
-  imports: [CommonModule, MatListModule, MatIconModule, RouterLink, RouterModule, ProjectSwitcherComponent],
+  imports: [CommonModule, MatListModule, MatIconModule, RouterLink, RouterModule, ProjectSwitcherComponent, WorkspaceSwitcherComponent],
   templateUrl: './custom-sidebar.component.html',
   styleUrl: './custom-sidebar.component.css'
 })

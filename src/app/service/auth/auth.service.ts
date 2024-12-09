@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
 import { Observable, tap } from 'rxjs';
+import { apiRoutes } from "../../../environments/environment.development";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +14,7 @@ export class AuthService {
   private userId = 'userId'
 
   login(email: string, password: string): Observable<any> {
-    return this.apiService.post<any>(`${environment.apirurl}`, { email, password }).pipe(
+    return this.apiService.post<any>(`${apiRoutes.auth.login}`, { email, password }).pipe(
       tap(response => {
         if (response.token) {
           sessionStorage.setItem(this.tokenKey, response.token)
