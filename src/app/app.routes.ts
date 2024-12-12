@@ -19,6 +19,7 @@ import { IssuesFormComponent } from './shared/issues-form/issues-form.component'
 import { CommentsFormComponent } from './shared/comments-form/comments-form.component';
 import { WorkspaceFormComponent } from './shared/workspace-form/workspace-form.component';
 import { CommentsDetailsComponent } from './subpages/comments-details/comments-details.component';
+import { SubtasksDetailsComponent } from './subpages/subtasks-details/subtasks-details.component';
 
 export const routes: Routes = [
     {
@@ -132,6 +133,12 @@ export const routes: Routes = [
                 title: 'Comments Details',
                 component: CommentsDetailsComponent,
                 data: { breadcrumb: 'Comments Details' }
+            },
+            { 
+                path: 'pages/subtasks/subpages/subtasks-details/:id',
+                title: 'Subtasks Details',
+                component: SubtasksDetailsComponent,
+                data: { breadcrumb: 'Subtasks Details' }
             }
         ]
     },
