@@ -18,6 +18,7 @@ import { SubtasksFormComponent } from './shared/subtasks-form/subtasks-form.comp
 import { IssuesFormComponent } from './shared/issues-form/issues-form.component';
 import { CommentsFormComponent } from './shared/comments-form/comments-form.component';
 import { WorkspaceFormComponent } from './shared/workspace-form/workspace-form.component';
+import { CommentsDetailsComponent } from './subpages/comments-details/comments-details.component';
 
 export const routes: Routes = [
     {
@@ -125,6 +126,12 @@ export const routes: Routes = [
                 title: 'Workspace Form',
                 component: WorkspaceFormComponent,
                 data: { breadcrumb: 'Workspace Form' }
+            },
+            { 
+                path: 'pages/comments/subpages/comments-details/:id',
+                title: 'Comments Details',
+                component: CommentsDetailsComponent,
+                data: { breadcrumb: 'Comments Details' }
             }
         ]
     },

@@ -4,34 +4,38 @@
         <div class="px-4 py-4 sm:p-6">
           <h2 class="text-2xl leading-6 font-medium text-gray-900 mt-10">Subtasks Details</h2>
           <form [formGroup]="subtasksFormular" (ngSubmit)="onSubmit()">
-            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4" *ngFor="let subtaskdetail of subtaskdetails">
+            <div *ngIf="subtask; else noData" class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700">Subtask ID</label>
-                <input type="text" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.subtask_id" [readonly]="true">
+                <input type="text" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [readonly]="true">{{ subtask.id }}
               </div>
               <div>
-                <label for="subtask-name" class="block text-sm font-medium text-gray-700">Name</label>
-                <input type="text" id="subtask-name" name="subtask-name" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.name" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" formControlName="name" id="name" name="name" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"  [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">{{ subtask.name }}
               </div>
               <div>
-                <label for="subtask-description" class="block text-sm font-medium text-gray-700">Description</label>
-                <textarea id="subtask-description" name="subtask-description" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" rows="4" [value]="subtaskdetail.description" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"></textarea>
+                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                <textarea formControlName="description"  id="description" name="description" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" rows="4" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">{{ subtask.description || 'Sin descripción' }}</textarea>
               </div>
               <div>
                 <label for="subtask-status" class="block text-sm font-medium text-gray-700">Status</label>
-                <input type="text" id="subtask-status" name="subtask-status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.status" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
+                <select id="status" formControlName="status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [ngClass]="{'bg-gray-200': isEditing}">
+                  <option *ngFor="let status of taskStatuses" [value]="status.value">
+                    {{ status.name }}
+                  </option>
+                </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700">Task ID</label>
-                <input type="text" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.task_id" [readonly]="true">
+                <label class="block text-sm font-medium text-gray-700">Task Name</label>
+                <input type="text" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [readonly]="true">{{subtask.task?.name}}
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700">Creation Date</label>
-                <input type="text" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.creation_date" [readonly]="true">
+                <input type="text" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [readonly]="true">{{ subtask.creation_date }}
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700">Update Date</label>
-                <input type="text" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="subtaskdetail.update_date" [readonly]="true">
+                <input type="text" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [readonly]="true">{{ subtask.update_date }}
               </div>
     <!-- Action Buttons -->
               <div>
@@ -41,6 +45,9 @@
                 <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Apply</button>
               </div>
             </div>
+            <ng-template #noData>
+              <p>No se encontró información para esta subtarea.</p>
+            </ng-template>
           </form>
             <div class="flex justify-between mt-6">
               <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none   

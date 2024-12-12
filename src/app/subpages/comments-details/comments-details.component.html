@@ -4,26 +4,31 @@
       <div class="px-4 py-5 sm:p-6">
         <h2 class="text-2xl leading-6 font-medium text-gray-900">Comments details</h2>
         <form [formGroup]="commentFormular" (ngSubmit)="onSubmit()">
-          <div *ngFor="let commentsDetail of comentDetails" class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div *ngIf="comment; else noComment" class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700">ID del Comentario</label>
-              <input type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true" [value]="commentsDetail.id">
+              <input type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true">{{ comment.id }}
             </div>
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-gray-700">Contenido</label>
-              <textarea formControlName="content" class="mt-1 text-sm text-gray-900 p-2 rounded-md w-full" [readonly]="!isEditing" [value]="commentsDetail.content" [ngClass]="{'bg-gray-200': isEditing}"></textarea>
+              <textarea formControlName="body" class="mt-1 text-sm text-gray-900 p-2 rounded-md w-full" [ngClass]="{'bg-gray-200': isEditing}">{{ comment.body }}</textarea>
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700">Fecha</label>
-              <input type="date" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="!isEditing" [value]="commentsDetail.date" [ngClass]="{'bg-gray-200': isEditing}">
+              <input type="date" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true">{{ comment.date || 'No disponible' }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Fecha de ultima actualización</label>
+              <input type="date" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true"> {{ comment.updateAt || 'No disponible' }}
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700">ID del Issue o de la Tarea</label>
-              <input formControlName="issueId" type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true" [value]="commentsDetail.issueId">
+              <input type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true">{{ comment.taskId || comment.issueId || 'No especificado' }}
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700">ID del Autor</label>
-              <input type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true" [value]="commentsDetail.authorId">
+              <label class="block text-sm font-medium text-gray-700">Datos del Autor</label>
+              <input type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true">Nombre: {{comment.author?.first_name}}
+              ID: {{comment.authorId}}
             </div>
             <div>
               <button type="button" (click)="toggleEdit()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -36,6 +41,9 @@
               </button>
             </div>
           </div>
+          <ng-template #noComment>
+            <p class="text-red-500">No se encontró el comentario.</p>
+          </ng-template>
         </form>
         <div class="flex justify-between mt-6">
           <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none   
