@@ -16,6 +16,14 @@ export enum IssueType {
     MEDIUM = 'MEDIUM',
     HIGH = 'HIGH'
   }
+
+  export interface Assigneds {
+    name: any;
+    id: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+  }
   
   export interface Issue {
     id?: string;
@@ -30,5 +38,6 @@ export enum IssueType {
     status: IssueStatus;
     createdAt?: Date;
     updatedAt?: Date;
+    assignedTo?:Assigneds[];
   }
   
