@@ -1,5 +1,13 @@
-<div class="">
+<div class="p-2 hover:bg-gray-200 flex items-center rounded-sm">
     <ng-container *ngFor="let project of projects">
-        <h3>{{ project.name }}</h3>
+        <ng-container *ngIf="project.image; else noImage">
+            <img [src]="project.image" alt="Poroject Icon" class="image-icon w-6 h-6 rounded-md mr-2"/>
+        </ng-container>
+        <ng-template #noImage>
+            <div class="w-6 h-6 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
+                <span class="font-semibold">{{ project.name[0] }}</span>
+            </div>
+        </ng-template>
+        <span>{{ project.name }}</span>
     </ng-container>
 </div>
