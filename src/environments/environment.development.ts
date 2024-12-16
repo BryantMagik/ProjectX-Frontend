@@ -1,7 +1,7 @@
 // environment.ts
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:3000/api/v1/'
+    apiUrl: process.env["API_URL"] || 'https://project-x-backend-lyart.vercel.app/api/v1/'
   };
   
   export const apiRoutes = {
