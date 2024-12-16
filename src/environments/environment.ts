@@ -5,6 +5,7 @@ export const environment = {
 }
 
 export const apiRoutes = {
+  production: true,
     auth: {
       login: `${environment.apiUrl}auth/login`,
       profile: `${environment.apiUrl}auth/profile`,
