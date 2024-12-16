@@ -37,9 +37,8 @@ export class CommentsFormComponent implements OnInit{
   private initializeForm(): void {
     this.commentForm = this.fb.group({
       body: ['', [Validators.required, Validators.maxLength(500)]],
-      issueId: [null], // Opcional
-      taskId: [null],  // Opcional
-      authorUserId: [null, [Validators.required]],
+      issueId: [null, [Validators.required]], // Opcional
+      taskId: [null, [Validators.required]],  // Opcional
     }, {
       validators: [this.oneFieldRequiredValidator('issueId', 'taskId')]
     });

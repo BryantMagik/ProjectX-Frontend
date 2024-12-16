@@ -4,7 +4,7 @@ import { AuthService } from "../auth/auth.service";
 import { Observable, of } from "rxjs";
 import { Task } from "../../model/task.interface";
 import { HttpHeaders } from "@angular/common/http";
-import { taskApi } from "../../../environments/environment";
+import { apiRoutes } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class TaskService {
   getTasksRequest(): Observable<Task[]> {
     const headers = this.getAuthHeaders()
     if (headers) {
-      return this.apiService.get<Task[]>(`${taskApi.getOnlyOwn}`, { headers })
+      return this.apiService.get<Task[]>(`${apiRoutes.task.getOnlyOwn}`, { headers })
     }
     return of([]);
   }
@@ -39,7 +39,7 @@ export class TaskService {
   getTasksById(id: string): Observable<Task | null> {
     const headers = this.getAuthHeaders()
     if (headers) {
-      return this.apiService.get<Task>(`${taskApi.getById}/${id}`, { headers })
+      return this.apiService.get<Task>(`${apiRoutes.task.getById}/${id}`, { headers })
     }
     return of(null);
   }
@@ -49,7 +49,7 @@ export class TaskService {
   getTasksByIdWhereId(): Observable<Task[]> {
     const headers = this.getAuthHeaders()
     if (headers) {
-      return this.apiService.get<Task[]>(`${taskApi.getOnlyOwn}`, { headers })
+      return this.apiService.get<Task[]>(`${apiRoutes.task.getOnlyOwn}`, { headers })
     }
     return of([]);
 

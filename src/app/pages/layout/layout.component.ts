@@ -5,11 +5,13 @@ import { CustomSidebarComponent } from '../../shared/custom-sidebar/custom-sideb
 import { UserService } from '../../service/user/user.service';
 import { User } from '../../model/user.interface';
 import { tap } from 'rxjs';
+import { ModalCreateProjectComponent } from "../../shared/modal-create-project/modal-create-project.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, CustomSidebarComponent,],
+  imports: [RouterOutlet, NavbarComponent, CustomSidebarComponent, ModalCreateProjectComponent, CommonModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
 })
@@ -20,11 +22,19 @@ export class LayoutComponent implements OnInit {
   loading = true;
   error: string | null = null;
   user: User | null = null;
+  showModal = false;
 
   constructor(
     private userService: UserService
   ) { }
 
+  openModal() {
+    this.showModal = true;
+  }
+  closeModal() {
+    this.showModal = false;
+  }
+  
   ngOnInit() {
     this.loadUserProfile();
   }
@@ -43,4 +53,8 @@ export class LayoutComponent implements OnInit {
       })
     ).subscribe();
   }
+
+
+
+  
 }

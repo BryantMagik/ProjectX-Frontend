@@ -1,0 +1,25 @@
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 select-none">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full">
+        <p class="text-2xl font-medium text-gray-900">Create a new project</p>
+        <hr class="mt-4 p-2 border-dashed">
+        <div class="mt-5">
+            <form>
+                <div class="space-y-2">
+                    <label for="name" class="block font-bold text-sm text-gray-700">Project Name</label>
+                    <input type="text" id="name" pInputText formControlName="name" placeholder="Enter project name"
+                        class="w-full  border rounded-md h-12 p-3" />
+                </div>
+            </form>
+        </div>
+        <hr class="mt-4 p-2 border-dashed">
+        <div class="flex justify-between">
+            <button
+                class="mt-4 p-4 text-sm font-extrabold w-auto border rounded-md text-gray-700 hover:bg-gray-400 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                (click)="onClose()">Cancel</button>
+            <button
+                class="mt-4 p-4 text-sm font-extrabold w-auto border rounded-md bg-blue-700 text-white shadow-md hover:bg-blue-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Create Project
+            </button>
+        </div>
+    </div>
+</div>

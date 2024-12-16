@@ -17,6 +17,10 @@ import { TasksFormComponent } from './shared/tasks-form/tasks-form.component';
 import { SubtasksFormComponent } from './shared/subtasks-form/subtasks-form.component';
 import { IssuesFormComponent } from './shared/issues-form/issues-form.component';
 import { CommentsFormComponent } from './shared/comments-form/comments-form.component';
+import { WorkspaceFormComponent } from './shared/workspace-form/workspace-form.component';
+import { CommentsDetailsComponent } from './subpages/comments-details/comments-details.component';
+import { SubtasksDetailsComponent } from './subpages/subtasks-details/subtasks-details.component';
+import { IssuesdetailsComponent } from './subpages/issuesdetails/issuesdetails.component';
 
 export const routes: Routes = [
     {
@@ -37,6 +41,12 @@ export const routes: Routes = [
         children: [
             {
                 path: 'pages/dashboard',
+                title: 'Dashboard',
+                component: DashboardComponent,
+                data: { breadcrumb: 'HOME' }
+            },
+            {
+                path: 'pages/settings/:id',
                 title: 'Dashboard',
                 component: DashboardComponent,
                 data: { breadcrumb: 'HOME' }
@@ -112,6 +122,30 @@ export const routes: Routes = [
                 title: 'Comments Form',
                 component: CommentsFormComponent,
                 data: { breadcrumb: 'Comments Form' }
+            },
+            {
+                path: 'pages/shared/workspace-form',
+                title: 'Workspace Form',
+                component: WorkspaceFormComponent,
+                data: { breadcrumb: 'Workspace Form' }
+            },
+            { 
+                path: 'pages/comments/subpages/comments-details/:id',
+                title: 'Comments Details',
+                component: CommentsDetailsComponent,
+                data: { breadcrumb: 'Comments Details' }
+            },
+            { 
+                path: 'pages/subtasks/subpages/subtasks-details/:id',
+                title: 'Subtasks Details',
+                component: SubtasksDetailsComponent,
+                data: { breadcrumb: 'Subtasks Details' }
+            },
+            { 
+                path: 'pages/issues/subpages/issues-details/:id',
+                title: 'Issues Details',
+                component: IssuesdetailsComponent,
+                data: { breadcrumb: 'Issues Details' }
             }
         ]
     },

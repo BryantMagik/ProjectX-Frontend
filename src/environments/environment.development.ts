@@ -1,44 +1,40 @@
-export const environment = {
+export const baseUrl = 'http://localhost:3000/api/v1/'
+export const apiRoutes = {
     production: false,
-    apirurl: 'http://localhost:3000/api/v1/auth/login'
+    auth: {
+        login: `${baseUrl}auth/login`,
+        profile: `${baseUrl}auth/profile`,
+    },
+    project: {
+        create: `${baseUrl}project`,
+        getOnlyOwn: `${baseUrl}project/user/projects/`,
+        getAll: `${baseUrl}project/`,
+        getAllProjectsByWorkspaceId: `${baseUrl}project`,
+        getById: `${baseUrl}project`,
+        update: `${baseUrl}project`
+    },
+    task: {
+        getOnlyOwn: `${baseUrl}tasks/user/tasks/`,
+        getById: `${baseUrl}user/tasks/`
+    },
+    subtask: {
+        apiUrl: `${baseUrl}subtasks`,
+        getOnlyOwn: `${baseUrl}subtasks/user/subtasks`
+    },
+    issue: {
+        apiUrl: `${baseUrl}issues`,
+        getOnlyOwn: `${baseUrl}issues/user/issues`
+    },
+    comment: {
+        apiUrl: `${baseUrl}comments`,
+        getOnlyOwn: `${baseUrl}comments/user/comments`
+    },
+    workspace: {
+        create: `${baseUrl}workspace`,
+        getAll: `${baseUrl}workspace/`
+    },
+    users: {
+        getAll :`${baseUrl}users/`,
+        
+    }
 };
-export const userApi = {
-    production: false,
-    apirurl: 'http://localhost:3000/api/v1/auth/profile',
-    baseUrl: 'http://localhost:3000/api/v1/users'
-}
-
-export const projectApi = {
-    production: false,
-    getOnlyOwn:'http://localhost:3000/api/v1/project/user/projects',
-    getAll: 'http://localhost:3000/api/v1/project/',
-    getById: 'http://localhost:3000/api/v1/project',
-    create: 'http://localhost:3000/api/v1/project',
-    update: 'http://localhost:3000/api/v1/project',
-}
-
-export const taskApi = {
-    production: false,
-    getOnlyOwn:'http://localhost:3000/api/v1/tasks/user/tasks',
-    getById: 'http://localhost:3000/api/v1/task',
-
-}
-
-export const subtaskApi = {
-    production: false,
-    apiUrl: 'http://localhost:3000/api/v1/subtasks',
-    getOnlyOwn:'http://localhost:3000/api/v1/subtasks/user/subtasks',
-}
-
-export const issueApi ={
-    production: false,
-    apiUrl: 'http://localhost:3000/api/v1/issues',
-    getOnlyOwn:'http://localhost:3000/api/v1/issues/user/issues',
-}
-
-export const commentApi = {
-    production: false,
-    apiUrl: 'http://localhost:3000/api/v1/comments',
-    getOnlyOwn:'http://localhost:3000/api/v1/comments/user/comments',
-}
-  

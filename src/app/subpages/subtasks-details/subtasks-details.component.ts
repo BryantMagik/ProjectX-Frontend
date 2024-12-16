@@ -1,46 +1,25 @@
 import { Component,OnInit } from '@angular/core';
-import { CommonModule, NgClass, NgFor } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule, NgClass, NgFor,NgIf } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { SubtaskService } from '../../service/subtask/subtask.service';
 import { Subtask } from '../../model/subtask.interface';
 import { tap } from 'rxjs';
+import { TASKSSTATUS } from '../../types/models';
 
-export interface SubtaskDetail {
-  subtask_id: number;
-  name: string;
-  description: string;
-  status: string;
-  task_id: number;
-  creation_date: string;
-  update_date: string;
-}
+
 
 @Component({
   selector: 'app-subtasks-details',
   standalone: true,
-  imports: [CommonModule,NgFor,NgClass],
+  imports: [CommonModule,NgClass,ReactiveFormsModule,NgIf,NgFor],
   templateUrl: './subtasks-details.component.html',
   styleUrl: './subtasks-details.component.css'
 })
 
 export class SubtasksDetailsComponent implements OnInit {
-  subtaskdetails: SubtaskDetail[] = [
-    {
-      subtask_id: 1,
-      name: 'Subtask 1',
-      description: 'Description of subtask 1',
-      status: 'Pending',
-      task_id: 1,
-      creation_date: '2024-07-01',
-      update_date: '2024-07-15'
-    }
-  ];
-
   subtask: Subtask | null = null;
-  subtaskId: string | null = null;
-  loading = true;
-  error: string | null = null;
+  taskStatuses = TASKSSTATUS;
 
   isEditing = false;
   subtasksFormular: FormGroup;
@@ -54,44 +33,13 @@ export class SubtasksDetailsComponent implements OnInit {
       name: [{value:'', disabled: true}, [Validators.required, Validators.maxLength(50)]],
       description: [{value:'', disabled: true}],
       status: [{value:'', disabled: true}, Validators.required],
-      task_id: [{value:'', disabled: true}, [Validators.required, Validators.min(8)]],
-      authorId: [{value:'', disabled: true},[Validators.required, Validators.min(8)]]
     });
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.subtaskId = params.get('id');
-      if (this.subtaskId) {
-        this.getSubtaskById(this.subtaskId);
-      }
-    });
+    this.loadSubtask();
   }
 
-  private getSubtaskById(id: string) {
-    this.subtaskService.getSubtaskById(id).pipe(
-      tap({
-        next: (subtask: Subtask | null) => {
-          this.subtask = subtask;
-          console.log("Recibiendo subtarea", this.subtask);
-          if (subtask) {
-            this.subtasksFormular.patchValue({
-              name: subtask.name,
-              description: subtask.description,
-              status: subtask.status,
-              taskId: subtask.taskId,
-              authorId: subtask.authorId
-            });
-          }
-        },
-        error: () => {
-          this.error = 'Error al cargar la subtarea';
-          this.loading = false;
-        },
-        complete: () => this.loading = false
-      })
-    ).subscribe();
-  }
 
   navigateToSubTasks() {
     this.router.navigate(['/pages/subtasks']);
@@ -108,23 +56,52 @@ export class SubtasksDetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.subtasksFormular.valid && this.subtaskId) {
-      console.log('Formulario enviado:', this.subtasksFormular.value);
-      const updateSubtask: Partial<Subtask> = this.subtasksFormular.value;
-      this.subtaskService.updateSubtask(this.subtaskId, updateSubtask).subscribe({
-        next: () => {
-          console.log('Subtarea actualizada con éxito');
-          this.navigateToSubTasks();
+    if (this.subtasksFormular.invalid || !this.subtask) {
+      return;
+    }
+  
+    const updatedSubtask: Partial<Subtask> = {
+      name: this.subtasksFormular.get('name')?.value,
+      description: this.subtasksFormular.get('description')?.value,
+      status: this.subtasksFormular.get('status')?.value,
+    };
+  
+    this.subtaskService.updateSubtask(this.subtask.id!, updatedSubtask).subscribe({
+      next: (updated) => {
+        console.log('Subtask updated:', updated);
+        this.subtask = { ...this.subtask, ...updated };
+        this.isEditing = false;
+        this.subtasksFormular.disable();
+      },
+      error: (err) => {
+        console.error('Error updating subtask:', err);
+      },
+    });
+    
+  }
+
+  private loadSubtask(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.subtaskService.getSubtaskById(id).subscribe({
+        next: (data) => {
+          if (data) {
+            this.subtask = data;
+            this.subtasksFormular.patchValue({
+              name: data.name,
+              description: data.description,
+              status: data.status,
+            });
+            console.log('Subtask loaded:', this.subtask);
+          } else {
+            console.warn('Subtask not found');
+          }
         },
-        error: () => {
-          this.error = 'Error al actualizar la subtarea';
+        error: (err) => {
+          console.error('Error loading subtask:', err);
         }
       });
-    } else {
-      console.log('Formulario inválido, por favor revisa los campos.');
     }
-    this.isEditing = false;
-    this.subtasksFormular.disable();
   }
 
 }

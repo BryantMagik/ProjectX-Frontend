@@ -46,7 +46,6 @@ export class ProjectFormComponent implements OnInit {
     this.proyectoStatus = PROYECTOSTATUS
 
     this.authorId = sessionStorage.getItem('userId');
-    console.log(this.authorId)
     this.userService.getAllUsers().subscribe({
       next: (data: User[] | null) => {
         if (data) {
@@ -71,7 +70,6 @@ export class ProjectFormComponent implements OnInit {
       status: ['', Validators.required],
       participants: [[]],
     })
-    console.log('Formulario:', this.projectForm.value);
   }
 
   onSubmit(): void {

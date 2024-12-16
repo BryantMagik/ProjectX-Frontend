@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup} from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -13,7 +13,7 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-subtasks-form',
   standalone: true,
-  imports: [CommonModule,DropdownModule,InputTextModule,ToastModule],
+  imports: [CommonModule,DropdownModule,InputTextModule,ToastModule,ReactiveFormsModule],
   templateUrl: './subtasks-form.component.html',
   styleUrl: './subtasks-form.component.css',
   providers:[MessageService]
@@ -39,12 +39,15 @@ export class SubtasksFormComponent implements OnInit {
       name: ['', [Validators.required, Validators.maxLength(100)]],
       description: [''],
       status: ['', Validators.required],
-      taskId: ['', [Validators.required, Validators.minLength(8)]],
-      authorId: ['', [Validators.required, Validators.minLength(8)]]
+      taskId: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
   navigateToSubTasks() {
+    this.router.navigate(['/pages/subtasks']);
+  }
+
+  onSubmit():void{
     if (this.subtaskForm.valid) {
       const subtaskData: Partial<Subtask> = {
         ...this.subtaskForm.value,
@@ -62,6 +65,7 @@ export class SubtasksFormComponent implements OnInit {
     } else {
       console.warn('Formulario no válido:', this.subtaskForm.value);
     }
+
   }
 
   showSuccess(): void {

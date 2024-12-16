@@ -5,17 +5,16 @@
         <div class="px-4 py-5 sm:p-6">
           <h2 class="text-2xl leading-6 font-medium text-gray-900">Crear Issue</h2>
           <div class="mt-5">
-            <form (ngSubmit)="onSubmit()">
+            <form [formGroup]="issueForm" (ngSubmit)="onSubmit()">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label for="id" class="block text-sm font-medium text-gray-700">Código</label>
-                  <input type="text" id="id" formControlName="id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                  <label for="code" class="block text-sm font-medium text-gray-700">Código</label>
+                  <input type="text" id="code" formControlName="code" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
                 <div>
                   <label for="type" class="block text-sm font-medium text-gray-700">Tipo</label>
                   <select id="type" formControlName="type" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    <option value="bug">Bug</option>
-                    <option value="feature_request">Feature Request</option>
+                    <option *ngFor="let type of issueTypes" [value]="type">{{ type }}</option>
                   </select>
                 </div>
                 <div>
@@ -26,28 +25,26 @@
                   <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
                   <textarea id="description" formControlName="description" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
                 </div>
-                <!--<div>
+                <div>
                   <label for="priority" class="block text-sm font-medium text-gray-700">Prioridad</label>
                   <select id="priority" formControlName="priority" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
+                    <option *ngFor="let priority of issuePriorities" [value]="priority">{{ priority }}</option>
                   </select>
-                </div>-->
-                <div>
-                  <label for="project-id" class="block text-sm font-medium text-gray-700">ID de Proyecto</label>
-                  <input type="number" id="project-id" formControlName="projectId" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
                 <div>
-                  <label for="reporter-user-id" class="block text-sm font-medium text-gray-700">ID del Reportero</label>
-                  <input type="number" id="reporter-user-id" formControlName="reporterUserId" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                  <label for="projectId" class="block text-sm font-medium text-gray-700">ID de Proyecto</label>
+                  <select
+                  id="projectId"
+                  formControlName="projectId"
+                  class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                >
+                  <option *ngFor="let project of projects" [value]="project.id">{{ project.name }}</option>
+                </select>
                 </div>
                 <div>
                   <label for="status" class="block text-sm font-medium text-gray-700">Estado</label>
                   <select id="status" formControlName="status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    <option value="pending">Pending</option>
-                    <option value="ongoing">Ongoing</option>
-                    <option value="completed">Completed</option>
+                    <option *ngFor="let status of issueStatues" [value]="status">{{ status }}</option>
                   </select>
                 </div>
               </div>
