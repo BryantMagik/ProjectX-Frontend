@@ -4,7 +4,7 @@ import { Observable,of } from 'rxjs';
 import { Comment } from '../../model/comment.interface';
 import { ApiService } from '../api.service';
 import { AuthService } from '../auth/auth.service';
-import { apiRoutes } from "../../../environments/environment.development";
+import { apiRoutes } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'

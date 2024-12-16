@@ -4,7 +4,7 @@ import { AuthService } from "../auth/auth.service";
 import { Project } from "../../model/project.interface";
 import { HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { apiRoutes } from "../../../environments/environment.development";
+import { apiRoutes } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'

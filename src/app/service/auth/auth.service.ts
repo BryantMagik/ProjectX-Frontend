@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { apiRoutes } from "../../../environments/environment.development";
+import { apiRoutes } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

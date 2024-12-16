@@ -1,11 +1,11 @@
-// environment.ts
+// environment.prod.ts
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:3000/api/v1/'
-};
+  production: true,
+  apiUrl: 'https://project-x-backend-lyart.vercel.app/api/v1/'
+}
 
 export const apiRoutes = {
-  production: false,
+  production: true,
   auth: {
     login: `${environment.apiUrl}auth/login`,
     profile: `${environment.apiUrl}auth/profile`,
