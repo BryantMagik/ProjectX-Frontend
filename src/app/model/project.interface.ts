@@ -23,5 +23,6 @@ export interface Project {
     participants: Participant[];
     authors: Author[];
     createdAt: string,
-    updatedAt: string
+    updatedAt: string,
+    image?: string
 }

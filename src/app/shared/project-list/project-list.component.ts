@@ -2,12 +2,12 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ProjectService } from '../../service/project/project.service';
 import { tap } from 'rxjs';
 import { Project } from '../../model/project.interface';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule,NgFor],
+  imports: [CommonModule,NgFor,NgIf],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.css'
 })
