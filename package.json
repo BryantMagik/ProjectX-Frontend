@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "lint": "ng lint",
-    "test": "ng test"
+    "test": "ng test",
+    "vercel-build": "npm ci && npm run build"
   },
   "private": true,
   "dependencies": {
