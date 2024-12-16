@@ -9,6 +9,7 @@ export const apiRoutes = {
         create: `${baseUrl}project`,
         getOnlyOwn: `${baseUrl}project/user/projects/`,
         getAll: `${baseUrl}project/`,
+        getAllProjectsByWorkspaceId: `${baseUrl}project`,
         getById: `${baseUrl}project`,
         update: `${baseUrl}project`
     },

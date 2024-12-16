@@ -35,6 +35,14 @@ export class ProjectService {
     return of([])
   }
 
+  getProjectByWorkspaceId(workspaceId: string): Observable<Project[]>{
+    const headers = this.getAuthHeaders();
+    if (headers) {
+      return this.apiService.get<Project[]>(`${apiRoutes.project.getAllProjectsByWorkspaceId}/${workspaceId}`, { headers })
+    }
+    return of([])
+  }
+
   getProjectById(id: string): Observable<Project | null> {
     const headers = this.getAuthHeaders();
     if (headers) {

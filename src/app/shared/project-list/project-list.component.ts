@@ -1,0 +1,61 @@
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ProjectService } from '../../service/project/project.service';
+import { tap } from 'rxjs';
+import { Project } from '../../model/project.interface';
+import { CommonModule, NgFor } from '@angular/common';
+
+@Component({
+  selector: 'app-project-list',
+  standalone: true,
+  imports: [CommonModule,NgFor],
+  templateUrl: './project-list.component.html',
+  styleUrl: './project-list.component.css'
+})
+export class ProjectListComponent implements OnInit {
+
+  @Input() workspace: string | null = null
+
+  projects: Project[] = []
+  loading: boolean = true
+  error: string | null = null
+
+  constructor(
+    private projectService: ProjectService
+  ) {
+
+  }
+
+  ngOnInit(): void {
+    console.log("project-list: Workspaceid "+this.workspace)
+    if (this.workspace) {
+      this.getProjectByWorkspaceId(this.workspace);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Detectar cambios en el valor de workspace
+    if (changes['workspace']) {
+      console.log("workspace changed: ", changes['workspace'].currentValue);
+      this.loadProjects();
+    }
+  }
+  private loadProjects(): void {
+    if (this.workspace) {
+      this.getProjectByWorkspaceId(this.workspace);
+    }
+  }
+  private getProjectByWorkspaceId(workspaceId: string): void {
+    this.projectService.getProjectByWorkspaceId(workspaceId).pipe(
+      tap({
+        next: (projects: Project[] | null) => {
+          if (projects) {
+            this.projects = projects
+            console.log("PROYECTOS DEL WORKSPACE: "+this.projects)
+          }
+        },
+        error: () => this.error = 'Failed to load projects',
+        complete: () => this.loading = false
+      })
+    ).subscribe()
+  }
+}

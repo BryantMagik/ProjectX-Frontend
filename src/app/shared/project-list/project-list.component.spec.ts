@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProjectSwitcherComponent } from './project-switcher.component';
+import { ProjectListComponent } from './project-list.component';
 
-describe('ProjectSwitcherComponent', () => {
-  let component: ProjectSwitcherComponent;
-  let fixture: ComponentFixture<ProjectSwitcherComponent>;
+describe('ProjectListComponent', () => {
+  let component: ProjectListComponent;
+  let fixture: ComponentFixture<ProjectListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProjectSwitcherComponent]
+      imports: [ProjectListComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ProjectSwitcherComponent);
+    fixture = TestBed.createComponent(ProjectListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

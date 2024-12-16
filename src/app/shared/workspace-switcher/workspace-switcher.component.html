@@ -21,13 +21,13 @@
             <ng-container *ngIf="workspace.image; else noImage">
                 <img [src]="workspace.image" alt="Workspace Icon" class="image-icon w-12 h-12 rounded-md mr-2" />
             </ng-container>
-            
+
             <ng-template #noImage>
                 <div class="w-12 h-12 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
                     <span class="font-semibold">{{ workspace.name[0] }}</span>
                 </div>
             </ng-template>
-            
+
             <span>{{ workspace.name }}</span>
             <i *ngIf="workspace === selectedWorkspace" class="pi pi-check ml-auto"></i>
         </div>

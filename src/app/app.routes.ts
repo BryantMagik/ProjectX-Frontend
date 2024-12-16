@@ -46,7 +46,7 @@ export const routes: Routes = [
                 data: { breadcrumb: 'HOME' }
             },
             {
-                path: 'pages/dashboard/:id',
+                path: 'pages/settings/:id',
                 title: 'Dashboard',
                 component: DashboardComponent,
                 data: { breadcrumb: 'HOME' }

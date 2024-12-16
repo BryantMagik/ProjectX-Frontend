@@ -70,7 +70,6 @@ export class ProjectsComponent implements OnInit {
         next: (project: Project[] | null) => {
           if (project) {
             this.project = project
-            console.log(this.project)
           }
         },
         error: () => this.error = 'Failed to load projects',

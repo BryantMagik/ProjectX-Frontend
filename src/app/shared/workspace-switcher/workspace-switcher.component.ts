@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { Workspace } from '../../model/workspace.interface';
-import { WorkspaceService } from '../../service/workspace/workspace.service';
-import { tap } from 'rxjs';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Workspace } from '../../model/workspace.interface'
+import { WorkspaceService } from '../../service/workspace/workspace.service'
+import { tap } from 'rxjs'
+import { FormsModule } from '@angular/forms'
+import { CommonModule } from '@angular/common'
+import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
   selector: 'app-workspace-switcher',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './workspace-switcher.component.html',
   styleUrl: './workspace-switcher.component.css'
 })
 export class WorkspaceSwitcherComponent implements OnInit {
+  @Output() workspaceSelected = new EventEmitter<string>();
 
   workspaces: Workspace[] = []
   error: string | null = null
@@ -22,19 +24,20 @@ export class WorkspaceSwitcherComponent implements OnInit {
   dropdownOpen: boolean = false
 
   constructor(
-    private workspaceService: WorkspaceService
-
+    private workspaceService: WorkspaceService,
   ) { }
 
-  ngOnInit(): void {
-    this.getWorkspaces()
-
-  }
 
   selectWorkspace(workspace: Workspace): void {
     this.selectedWorkspace = workspace
-    this.selectedWorkspaceId = workspace.id;
+    this.selectedWorkspaceId = workspace.id
     this.dropdownOpen = false
+    console.log('Workspace seleccionado:', this.selectedWorkspaceId)
+    this.workspaceSelected.emit(this.selectedWorkspaceId!)
+  }
+
+  ngOnInit(): void {
+    this.getWorkspaces()
   }
 
   private getWorkspaces(): void {
@@ -43,7 +46,9 @@ export class WorkspaceSwitcherComponent implements OnInit {
         next: (workspace: Workspace[] | null) => {
           if (workspace) {
             this.workspaces = workspace
-            console.log(workspace)
+            if (this.selectedWorkspaceId) {
+              this.selectedWorkspace = workspace.find(ws => ws.id === this.selectedWorkspaceId) || null
+            }
           }
         },
         error: () => this.error = 'Failed to load workspaces',
