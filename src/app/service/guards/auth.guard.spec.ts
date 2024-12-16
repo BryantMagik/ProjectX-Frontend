@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from '../auth/auth.service';
 

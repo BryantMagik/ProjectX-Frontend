@@ -4,7 +4,7 @@ import { AuthService } from "../auth/auth.service";
 import { HttpHeaders } from "@angular/common/http";
 import { Workspace } from "../../model/workspace.interface";
 import { Observable, of } from "rxjs";
-import { apiRoutes } from "../../../environments/environment.development";
+import { apiRoutes } from "../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
