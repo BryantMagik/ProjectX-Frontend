@@ -6,11 +6,12 @@ import { RouterModule } from '@angular/router'
 import { AvatarModule } from 'primeng/avatar';
 import { FormsModule } from '@angular/forms'
 import { AvatarDropdownComponent } from "../avatar-dropdown/avatar-dropdown.component";
+import { MobilDropdownComponent } from '../mobil-dropdown/mobil-dropdown.component'
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [AvatarModule, CommonModule, RouterModule, BreadcrumbModule, FormsModule, AvatarDropdownComponent],
+  imports: [AvatarModule, CommonModule, RouterModule, BreadcrumbModule, FormsModule, AvatarDropdownComponent,MobilDropdownComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
