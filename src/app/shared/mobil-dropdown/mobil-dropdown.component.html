@@ -36,6 +36,14 @@
           <span matListItemTitle>{{ item.label }}</span>
         </a>
       </div>
+      <div class="m-4">
+        <hr class="mt-4 p-2 border-dashed">
+        <div class="flex items-center justify-between text-neutral-500">
+            <a class="text-xs uppercase">projects </a>
+            <i class="pi pi-plus-circle text-xs uppercase rounded-full" (click)="openModal()"></i>
+        </div>
+        <app-project-list [workspace]="selectedWorkspaceId"></app-project-list>
+    </div>
     </aside>
   
     <!-- Overlay para cerrar el menú -->

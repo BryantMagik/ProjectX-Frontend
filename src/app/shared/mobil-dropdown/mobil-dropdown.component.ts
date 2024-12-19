@@ -12,7 +12,7 @@ import { MenuItem } from '../../model/menu.interface';
 @Component({
   selector: 'app-mobil-dropdown',
   standalone: true,
-  imports: [MatListModule, MatIconModule, RouterModule, CommonModule, WorkspaceSwitcherComponent],
+  imports: [MatListModule, MatIconModule, RouterModule, CommonModule, WorkspaceSwitcherComponent, ProjectListComponent],
   templateUrl: './mobil-dropdown.component.html',
   styleUrl: './mobil-dropdown.component.css'
 })
