@@ -4,7 +4,7 @@ import { AuthService } from "../auth/auth.service";
 import { HttpHeaders } from "@angular/common/http";
 import { Workspace } from "../../model/workspace.interface";
 import { Observable, of } from "rxjs";
-import { apiRoutes } from "../../../environments/environment";
+import { apiRoutes } from "../../../environments/environment.development";
 
 @Injectable({
     providedIn: 'root'
@@ -34,11 +34,27 @@ export class WorkspaceService {
         return of(null)
     }
 
+    updateWorkspace(newWorkspace: Workspace, id: string): Observable<Workspace | null> {
+        const headers = this.getAuthHeaders()
+        if (headers) {
+            return this.apiService.put<Workspace>(`${apiRoutes.workspace.update}/${id}`, newWorkspace, { headers })
+        }
+        return of(null)
+    }
+
     getAllWorkspace(): Observable<Workspace[]> {
         const headers = this.getAuthHeaders()
         if (headers) {
             return this.apiService.get<Workspace[]>(`${apiRoutes.workspace.getAll}`, { headers })
         }
         return of([])
+    }
+
+    getWorkspaceById(workspaceId: string): Observable<Workspace | null> {
+        const headers = this.getAuthHeaders()
+        if (headers) {
+            return this.apiService.get<Workspace>(`${apiRoutes.workspace.getById}/${workspaceId}`, { headers })
+        }
+        return of(null)
     }
 }

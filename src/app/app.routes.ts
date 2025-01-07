@@ -21,6 +21,7 @@ import { WorkspaceFormComponent } from './shared/workspace-form/workspace-form.c
 import { CommentsDetailsComponent } from './subpages/comments-details/comments-details.component';
 import { SubtasksDetailsComponent } from './subpages/subtasks-details/subtasks-details.component';
 import { IssuesdetailsComponent } from './subpages/issuesdetails/issuesdetails.component';
+import { SettingsComponent } from './pages/settings-workspaces/settings-workspaces.component';
 
 export const routes: Routes = [
     {
@@ -48,7 +49,7 @@ export const routes: Routes = [
             {
                 path: 'pages/settings/:id',
                 title: 'Dashboard',
-                component: DashboardComponent,
+                component: SettingsComponent,
                 data: { breadcrumb: 'HOME' }
             },
             {

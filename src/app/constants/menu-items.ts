@@ -8,14 +8,14 @@ export function createMenuItems(id: string): MenuItem[] {
             route: 'pages/dashboard',
         },
         {
-            icon: 'settings',
-            label: 'Setting',
-            route: `pages/settings/${id ?? 'default'}`
-        },
-        {
             icon: 'assignment',
             label: 'My Tasks',
             route: 'pages/tasks',
+        },
+        {
+            icon: 'settings',
+            label: 'Setting',
+            route: `pages/settings/${id ?? 'default'}`
         },
         {
             icon: 'subdirectory_arrow_right',
@@ -26,11 +26,6 @@ export function createMenuItems(id: string): MenuItem[] {
             icon: 'bug_report',
             label: 'Issues',
             route: 'pages/issues',
-        },
-        {
-            icon: 'comment',
-            label: 'Comments',
-            route: 'pages/comments',
         },
     ]
 }

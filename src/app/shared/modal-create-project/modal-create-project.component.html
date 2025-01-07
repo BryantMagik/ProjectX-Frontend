@@ -3,11 +3,16 @@
         <p class="text-2xl font-medium text-gray-900">Create a new project</p>
         <hr class="mt-4 p-2 border-dashed">
         <div class="mt-5">
-            <form>
+            <form (ngSubmit)="onSubmit()" [formGroup]="projectForm">
                 <div class="space-y-2">
                     <label for="name" class="block font-bold text-sm text-gray-700">Project Name</label>
                     <input type="text" id="name" pInputText formControlName="name" placeholder="Enter project name"
                         class="w-full  border rounded-md h-12 p-3" />
+                    <label for="code" class="block font-bold text-sm text-gray-700">Code</label>
+                    <input type="text" id="code" pInputText formControlName="name" placeholder="Enter project code"
+                        class="w-full  border rounded-md h-12 p-3" />
+                    <label for="type" class="block font-bold text-sm text-gray-700">Type</label>
+                    
                 </div>
             </form>
         </div>

@@ -36,7 +36,8 @@ export const apiRoutes = {
   },
   workspace: {
     create: `${environment.apiUrl}workspace`,
-    getAll: `${environment.apiUrl}workspace/`
+    getAll: `${environment.apiUrl}workspace/`,
+    getById: `${environment.apiUrl}workspace`,
   },
   users: {
     getAll: `${environment.apiUrl}users/`,

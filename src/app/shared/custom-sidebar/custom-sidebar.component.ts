@@ -35,7 +35,7 @@ export class CustomSidebarComponent implements OnInit {
       if (workspaceId) {
         this.menuItems = createMenuItems(workspaceId);
       }
-    });
+    })
   }
 
   
@@ -47,7 +47,7 @@ export class CustomSidebarComponent implements OnInit {
   }
   onWorkspaceSelected(workspaceId: string): void {
     this.selectedWorkspaceId = workspaceId
-    this.selectedWorkspaceSubject.next(workspaceId);
+    this.selectedWorkspaceSubject.next(workspaceId)
 
     console.log('Workspace ID en Sidebar:', workspaceId)
   }

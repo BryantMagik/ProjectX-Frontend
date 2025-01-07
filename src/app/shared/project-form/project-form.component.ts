@@ -80,16 +80,17 @@ export class ProjectFormComponent implements OnInit {
         ...this.projectForm.value,
       };
 
-      this.projectService.postProject(projectData)
-        .subscribe({
-          next: (response) => {
-            this.showSuccess()
-            this.navigateToProjects()
-          },
-          error: (err) => {
-            console.error('Error al crear el proyecto', err);
-          }
-        })
+      //this.projectService.postProject(projectData)
+      //  .subscribe({
+      //    next: (response) => {
+      //      this.showSuccess()
+      //      this.navigateToProjects()
+      //    },
+      //    error: (err) => {
+      //      console.error('Error al crear el proyecto', err);
+      //    }
+      //  })  
+
     } else {
       console.log('Formulario inválido');
         console.log('Formulario:', this.projectForm.value);

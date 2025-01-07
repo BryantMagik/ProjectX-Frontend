@@ -94,7 +94,6 @@ export class ProjectsDetailsComponent implements OnInit {
 
   onSubmit() {
     if (this.projectsFormular.valid) {
-      console.log('Formulario enviado:', this.projectsFormular.value);
       const updatedProject: Project = this.projectsFormular.value
 
       if (this.projectId) {
