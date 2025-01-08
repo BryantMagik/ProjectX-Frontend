@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription, tap } from 'rxjs'
 import { Workspace } from '../../model/workspace.interface'
@@ -6,11 +6,12 @@ import { WorkspaceService } from '../../service/workspace/workspace.service'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { CommonModule } from '@angular/common'
 import { CloudinaryService } from '../../service/cloudinary/cloudinary.service'
+import { ModalDeleteWorkspaceComponent } from "../../shared/modal-delete-workspace/modal-delete-workspace.component";
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, ModalDeleteWorkspaceComponent],
   templateUrl: './settings-workspaces.component.html',
   styleUrl: './settings-workspaces.component.css'
 })
@@ -24,6 +25,7 @@ export class SettingsComponent implements OnInit {
   routeSub: Subscription | null = null
   isUploading = false
   authorId: string | null = null
+  showModal: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -46,6 +48,7 @@ export class SettingsComponent implements OnInit {
       image: [''],
     })
   }
+
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0]
     if (file) {
@@ -76,6 +79,15 @@ export class SettingsComponent implements OnInit {
     }
   }
 
+  toggleModal(): void {
+    this.showModal = !this.showModal
+  }
+
+  handleDelete(): void {
+    console.log("Workspace Eliminado " + this.workspaceId)
+    this.toggleModal()
+  }
+
   ngOnDestroy(): void {
     if (this.routeSub) {
       this.routeSub.unsubscribe()
@@ -96,7 +108,6 @@ export class SettingsComponent implements OnInit {
         })
       }
     }
-
   }
 
   private getWorkspaceById(workspaceId: string): void {
