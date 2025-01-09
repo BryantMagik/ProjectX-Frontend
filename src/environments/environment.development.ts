@@ -32,7 +32,9 @@ export const apiRoutes = {
   },
   comment: {
     apiUrl: `${environment.apiUrl}comments`,
-    getOnlyOwn: `${environment.apiUrl}comments/user/comments`
+    getOnlyOwn: `${environment.apiUrl}comments/user/comments`,
+    getByTask: (taskId: string) => `${environment.apiUrl}comments/tasks/${taskId}`,
+    getByIssue: (issueId: string) => `${environment.apiUrl}comments/issues/${issueId}`
   },
   workspace: {
     create: `${environment.apiUrl}workspace`,

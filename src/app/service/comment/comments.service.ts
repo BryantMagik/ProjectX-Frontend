@@ -69,5 +69,21 @@ export class CommentsService {
     return of();
   }
 
+  getCommentsByTask(taskId: string): Observable<Comment[]> {
+    const headers = this.getAuthHeaders();
+    if (headers) {
+      return this.apiService.get<Comment[]>(`${apiRoutes.comment.getByTask(taskId)}`, { headers });
+    }
+    return of([]);
+  }
+
+  getCommentsByIssue(issueId: string): Observable<Comment[]> {
+    const headers = this.getAuthHeaders();
+    if (headers) {
+      return this.apiService.get<Comment[]>(`${apiRoutes.comment.getByIssue(issueId)}`, { headers });
+    }
+    return of([]);
+  }
+
 
 }
