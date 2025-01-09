@@ -12,10 +12,15 @@ export function createMenuItems(id: string): MenuItem[] {
             label: 'My Tasks',
             route: 'pages/tasks',
         },
+        // {
+        //     icon: 'settings',
+        //     label: 'Setting',
+        //     route: `pages/settings/${id ?? 'default'}`
+        // },
         {
             icon: 'settings',
             label: 'Setting',
-            route: `pages/settings/${id ?? 'default'}`
+            route: `pages/${id ?? 'default'}/settings`
         },
         {
             icon: 'subdirectory_arrow_right',

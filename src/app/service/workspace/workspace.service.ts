@@ -57,4 +57,12 @@ export class WorkspaceService {
         }
         return of(null)
     }
+
+    deleteWorkspace(workspaceId: string): Observable<Workspace | null> {
+        const headers = this.getAuthHeaders()
+        if (headers) {
+            return this.apiService.delete<Workspace>(`${apiRoutes.workspace.delete}/${workspaceId}`, { headers })
+        }
+        return of(null)
+    }
 }

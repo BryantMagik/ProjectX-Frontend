@@ -40,6 +40,8 @@ export const apiRoutes = {
     create: `${environment.apiUrl}workspace`,
     getAll: `${environment.apiUrl}workspace/`,
     getById: `${environment.apiUrl}workspace`,
+    update: `${environment.apiUrl}workspace`,
+    delete: `${environment.apiUrl}workspace`,
   },
   users: {
     getAll: `${environment.apiUrl}users/`,

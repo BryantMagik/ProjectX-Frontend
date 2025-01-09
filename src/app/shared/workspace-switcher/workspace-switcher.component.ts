@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router'
   styleUrl: './workspace-switcher.component.css'
 })
 export class WorkspaceSwitcherComponent implements OnInit {
-  @Output() workspaceSelected = new EventEmitter<string>();
+  @Output() workspaceSelected = new EventEmitter<string>()
 
   workspaces: Workspace[] = []
   error: string | null = null

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { Subscription, tap } from 'rxjs'
+import { finalize, Subscription, tap } from 'rxjs'
 import { Workspace } from '../../model/workspace.interface'
 import { WorkspaceService } from '../../service/workspace/workspace.service'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
@@ -85,6 +85,9 @@ export class SettingsComponent implements OnInit {
 
   handleDelete(): void {
     console.log("Workspace Eliminado " + this.workspaceId)
+    if (this.workspaceId) {
+      this.deleteWorkspace(this.workspaceId)
+    }
     this.toggleModal()
   }
 
@@ -126,6 +129,16 @@ export class SettingsComponent implements OnInit {
         error: () => this.error = 'Failed to load workspace',
         complete: () => this.loading = false
       })
+    ).subscribe()
+  }
+
+  private deleteWorkspace(workspaceId: string): void {
+    this.workspaceService.deleteWorkspace(workspaceId).pipe(
+      tap({
+        next: (response) => { },
+        error: (error) => { }
+      },
+      ),
     ).subscribe()
   }
 }

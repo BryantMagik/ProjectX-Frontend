@@ -11,23 +11,14 @@ import { MobilDropdownComponent } from '../mobil-dropdown/mobil-dropdown.compone
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [AvatarModule, CommonModule, RouterModule, BreadcrumbModule, FormsModule, AvatarDropdownComponent,MobilDropdownComponent],
+  imports: [AvatarModule, CommonModule, RouterModule, BreadcrumbModule, FormsModule, AvatarDropdownComponent, MobilDropdownComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
   loading = true
   error: string | null = null
-  
+
   @Input() user: User | null = null
-  
-  constructor(
-  ) {
-  }
-
-  ngOnInit(): void {
-
-  }
-
 
 }
