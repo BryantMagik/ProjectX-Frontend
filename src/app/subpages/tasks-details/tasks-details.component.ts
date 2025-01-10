@@ -2,6 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { CommonModule, NgFor, NgClass } from '@angular/common';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommentsListComponentComponent } from '../../shared/comments-list-component/comments-list-component.component';
 
 enum tasks_priority{
   high = 'high', 
@@ -40,7 +41,7 @@ export interface Taskdetail{
 @Component({
   selector: 'app-tasks-details',
   standalone: true,
-  imports: [CommonModule,NgFor,NgClass],
+  imports: [CommonModule, NgFor, NgClass, CommentsListComponentComponent],
   templateUrl: './tasks-details.component.html',
   styleUrl: './tasks-details.component.css'
 })
@@ -49,6 +50,7 @@ export class TasksDetailsComponent implements OnInit{
   tasksPriority = Object.values(tasks_priority);
   tasksType = Object.values (tasks_type);
   tasksStatus = Object.values(tasks_status);
+  taskId: string = '';
 
 
   taskdetails: Taskdetail[] =[

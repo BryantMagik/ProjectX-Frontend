@@ -8,11 +8,12 @@ import { tap } from 'rxjs';
 import { User } from '../../model/user.interface';
 import { UserService } from '../../service/user/user.service';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { CommentsListComponentComponent } from '../../shared/comments-list-component/comments-list-component.component';
 
 @Component({
   selector: 'app-issuesdetails',
   standalone: true,
-  imports: [CommonModule,NgClass,ReactiveFormsModule,NgIf,NgFor,MultiSelectModule],
+  imports: [CommonModule, NgClass, ReactiveFormsModule, NgIf, NgFor, MultiSelectModule, CommentsListComponentComponent],
   templateUrl: './issuesdetails.component.html',
   styleUrl: './issuesdetails.component.css'
 })
