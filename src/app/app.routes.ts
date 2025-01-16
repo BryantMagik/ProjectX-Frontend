@@ -49,6 +49,7 @@ export const routes: Routes = [
             {
                 path: 'pages/:id',
                 title: 'Workspace',
+                component: WorkspaceComponent,
                 children: [
                     {
                         path: 'settings',
@@ -57,96 +58,18 @@ export const routes: Routes = [
                     },
                 ]
             },
-            // {
-            //     path: 'pages/tasks',
-            //     title: 'Task',
-            //     component: TasksComponent,
-            //     data: { breadcrumb: 'Tasks' }
-            // },
-            // {
-            //     path: 'pages/subtasks',
-            //     title: 'SubTasks',
-            //     component: SubtasksComponent,
-            //     data: { breadcrumb: 'SubTasks' }
-            // },
             {
                 path: 'pages/issues',
                 title: 'Issues',
                 component: IssuesComponent,
                 data: { breadcrumb: 'Issues' }
             },
-            // {
-            //     path: 'pages/comments',
-            //     title: 'Comments',
-            //     component: CommentsComponent,
-            //     data: { breadcrumb: 'Comments' }
-            // },
-            // {
-            //     path: 'pages/projects',
-            //     title: 'Projects',
-            //     component: ProjectsComponent,
-            //     data: { breadcrumb: 'Projects' }
-            // },
-            // {
-            //     path: 'pages/projects/:id',
-            //     title: 'Project Details',
-            //     component: ProjectsDetailsComponent,
-            //     data: { breadcrumb: 'Projects Details' }
-            // },
-            // {
-            //     path: 'pages/projects/shared/project-form',
-            //     title: 'Project Form',
-            //     component: ProjectFormComponent,
-            //     data: { breadcrumb: 'Project Form' }
-            // },
-            // {
-            //     path: 'pages/tasks/shared/tasks-form',
-            //     title: 'Task Form',
-            //     component: TasksFormComponent,
-            //     data: { breadcrumb: 'Task Form' }
-            // },
-            // {
-            //     path: 'pages/subtasks/shared/subtasks-form',
-            //     title: 'Subtasks Form',
-            //     component: SubtasksFormComponent,
-            //     data: { breadcrumb: 'Subtasks Form' }
-            // },
-            // {
-            //     path: 'pages/issues/shared/issues-form',
-            //     title: 'Issues Form',
-            //     component: IssuesFormComponent,
-            //     data: { breadcrumb: 'Issues Form' }
-            // },
-            // {
-            //     path: 'pages/comments/shared/comments-form',
-            //     title: 'Comments Form',
-            //     component: CommentsFormComponent,
-            //     data: { breadcrumb: 'Comments Form' }
-            // },
-            // {
-            //     path: 'pages/shared/workspace-form',
-            //     title: 'Workspace Form',
-            //     component: WorkspaceFormComponent,
-            //     data: { breadcrumb: 'Workspace Form' }
-            // },
-            // {
-            //     path: 'pages/comments/subpages/comments-details/:id',
-            //     title: 'Comments Details',
-            //     component: CommentsDetailsComponent,
-            //     data: { breadcrumb: 'Comments Details' }
-            // },
-            // {
-            //     path: 'pages/subtasks/subpages/subtasks-details/:id',
-            //     title: 'Subtasks Details',
-            //     component: SubtasksDetailsComponent,
-            //     data: { breadcrumb: 'Subtasks Details' }
-            // },
-            // {
-            //     path: 'pages/issues/subpages/issues-details/:id',
-            //     title: 'Issues Details',
-            //     component: IssuesdetailsComponent,
-            //     data: { breadcrumb: 'Issues Details' }
-            // }
+            {
+                path: 'pages/shared/workspace-form',
+                title: 'Workspace Form',
+                component: WorkspaceFormComponent,
+                data: { breadcrumb: 'Workspace Form' }
+            },
         ]
     },
     {

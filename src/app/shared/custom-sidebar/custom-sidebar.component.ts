@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output, signal, SimpleChanges } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { MenuItem } from '../../model/menu.interface';
 import { WorkspaceSwitcherComponent } from '../workspace-switcher/workspace-switcher.component';
 import { createMenuItems } from '../../constants/menu-items';
@@ -26,6 +26,7 @@ export class CustomSidebarComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router
   ) {
     
   }
@@ -48,6 +49,7 @@ export class CustomSidebarComponent implements OnInit {
   onWorkspaceSelected(workspaceId: string): void {
     this.selectedWorkspaceId = workspaceId
     this.selectedWorkspaceSubject.next(workspaceId)
+    this.router.navigate([`/pages/${workspaceId}`]);
 
     console.log('Workspace ID en Sidebar:', workspaceId)
   }

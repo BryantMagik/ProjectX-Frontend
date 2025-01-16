@@ -1,12 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-workspace',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './workspace.component.html',
   styleUrl: './workspace.component.css'
 })
-export class WorkspaceComponent {
+export class WorkspaceComponent implements OnInit {
+  workspaceId: string | null = null
+  constructor(private route: ActivatedRoute) {
+
+  }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.workspaceId = params.get('id');
+      console.log('Cambiado a Workspace:', this.workspaceId);
+    });
+  }
 
 }

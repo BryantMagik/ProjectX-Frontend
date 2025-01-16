@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../model/user.interface';
 import { UserService } from '../../service/user/user.service';
 import { CommonModule } from '@angular/common';
-import { tap } from 'rxjs';
+import { first, tap } from 'rxjs';
 import { CloudinaryService } from '../../service/cloudinary/cloudinary.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -15,18 +16,27 @@ import { CloudinaryService } from '../../service/cloudinary/cloudinary.service';
 })
 
 export class ProfilesComponent implements OnInit {
+
+  profileForm!: FormGroup
   user: User | null = null
   loading = true;
   error: string | null = null
   isUploading = false
 
   constructor(
+    private fb: FormBuilder,
     private userService: UserService,
     private cloudinaryService: CloudinaryService
   ) { }
 
   ngOnInit(): void {
-    this.loadUserProfile();
+    this.loadUserProfile()
+    this.profileForm = this.fb.group({
+      first_name: [''],
+      last_name: [''],
+      email: [''],
+      
+    })
   }
 
   private loadUserProfile(): void {

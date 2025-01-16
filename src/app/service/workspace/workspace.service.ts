@@ -37,7 +37,7 @@ export class WorkspaceService {
     updateWorkspace(newWorkspace: Workspace, id: string): Observable<Workspace | null> {
         const headers = this.getAuthHeaders()
         if (headers) {
-            return this.apiService.put<Workspace>(`${apiRoutes.workspace.update}/${id}`, newWorkspace, { headers })
+            return this.apiService.patch<Workspace>(`${apiRoutes.workspace.update}/${id}`, newWorkspace, { headers })
         }
         return of(null)
     }

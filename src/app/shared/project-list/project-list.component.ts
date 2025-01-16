@@ -7,7 +7,7 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule,NgFor,NgIf],
+  imports: [CommonModule, NgFor, NgIf],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.css'
 })
@@ -26,16 +26,13 @@ export class ProjectListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("project-list: Workspaceid "+this.workspace)
     if (this.workspace) {
       this.getProjectByWorkspaceId(this.workspace);
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Detectar cambios en el valor de workspace
     if (changes['workspace']) {
-      console.log("workspace changed: ", changes['workspace'].currentValue);
       this.loadProjects();
     }
   }
@@ -50,7 +47,6 @@ export class ProjectListComponent implements OnInit {
         next: (projects: Project[] | null) => {
           if (projects) {
             this.projects = projects
-            console.log("PROYECTOS DEL WORKSPACE: "+this.projects)
           }
         },
         error: () => this.error = 'Failed to load projects',

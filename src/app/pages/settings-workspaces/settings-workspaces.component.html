@@ -16,15 +16,16 @@
                 <div class="mt-2">
                     <div class="flex flex-row items-center p-5 rounded-lg w-auto space-x-4">
                         <div class="w-24 h-24 rounded-md bg-gray-300 flex justify-center items-center overflow-hidden"
-                            *ngIf="workspaceForm.get('image')?.value; else defaultImage">
+                            *ngIf="workspaceForm.get('image')?.value; else noImage">
                             <img [src]="workspaceForm.get('image')?.value" alt="Workspace Icon" class="image-icon" />
                         </div>
-                        <ng-template #defaultImage>
+                        <ng-template #noImage>
                             <div
-                                class="flex items-center justify-center w-[100px] h-[100px] bg-slate-200 rounded-full p-4">
-                                <img [src]="workspace?.image" alt="Workspace Icon" class="object-cover w-full h-full" />
+                                class="w-14 h-14 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
+                                <span class="font-semibold text-2xl">{{ workspace?.name?.[0] }}</span>
                             </div>
                         </ng-template>
+
                         <div class="mt-3">
                             <label for="image" class="font-bold text-sm text-gray-700">Workspace Icon</label>
                             <p class="text-xs text-gray-500">JPG, PNG, SVG or JPEG, max 1mb</p>
@@ -37,10 +38,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <p class="text-2xl font-medium text-gray-900">Members from {{workspace?.name}}</p>
-            <hr class="mt-4 p-2 border-dashed">
-            <div class="mt-5">
             </div>
             <div class="mt-5 flex justify-end">
                 <button

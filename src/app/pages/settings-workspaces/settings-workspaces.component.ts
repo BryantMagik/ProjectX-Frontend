@@ -35,13 +35,15 @@ export class SettingsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.routeSub = this.route.paramMap.subscribe(params => {
-      this.workspaceId = params.get('id')
-      console.log('Workspace ID update:', this.workspaceId)
-      if (this.workspaceId) {
-        this.getWorkspaceById(this.workspaceId)
-      }
-    })
+    this.routeSub = this.route.parent?.paramMap.subscribe(params => { 
+    this.workspaceId = params.get('id');
+    console.log('Workspace ID:', this.workspaceId);
+    if (this.workspaceId) {
+      this.getWorkspaceById(this.workspaceId);
+    } else {
+      console.error('No workspace ID found');
+    }
+  }) || null;
     this.workspaceForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(30)]],
       description: [''],
