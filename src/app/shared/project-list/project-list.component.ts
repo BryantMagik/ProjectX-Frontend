@@ -3,6 +3,7 @@ import { ProjectService } from '../../service/project/project.service';
 import { tap } from 'rxjs';
 import { Project } from '../../model/project.interface';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-list',
@@ -20,7 +21,8 @@ export class ProjectListComponent implements OnInit {
   error: string | null = null
 
   constructor(
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private router: Router
   ) {
 
   }
@@ -33,7 +35,7 @@ export class ProjectListComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['workspace']) {
-      this.loadProjects();
+      this.loadProjects()
     }
   }
   private loadProjects(): void {
@@ -41,6 +43,12 @@ export class ProjectListComponent implements OnInit {
       this.getProjectByWorkspaceId(this.workspace);
     }
   }
+
+  navigateToProject(projectId: string): void {
+    this.router.navigate(['/pages', this.workspace,  projectId]);
+
+  }
+
   private getProjectByWorkspaceId(workspaceId: string): void {
     this.projectService.getProjectByWorkspaceId(workspaceId).pipe(
       tap({

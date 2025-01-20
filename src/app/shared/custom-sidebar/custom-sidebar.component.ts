@@ -43,13 +43,12 @@ export class CustomSidebarComponent implements OnInit {
   openModal() {
     this.openModalEvent.emit()
     const workspaceId = this.route.snapshot.paramMap.get('id')
-    console.log('Workspace ID:', workspaceId)
 
   }
   onWorkspaceSelected(workspaceId: string): void {
     this.selectedWorkspaceId = workspaceId
     this.selectedWorkspaceSubject.next(workspaceId)
-    this.router.navigate([`/pages/${workspaceId}`]);
+    this.router.navigate([`/pages/${workspaceId}/dashboard`]);
 
     console.log('Workspace ID en Sidebar:', workspaceId)
   }

@@ -1,29 +1,13 @@
 <div class="bg-white shadow sm:rounded-lg select-none">
     <div class="px-4 py-5 sm:p-6">
-        <p class="text-2xl font-bold text-gray-900">Dashboard</p>
+        <p class="text-2xl font-bold text-gray-900">{{project?.name}}</p>
         <p class="">Monitor all of your projects and tasks here.</p>
         <hr class="mt-4 p-2 border-dashed">
         <div class="mt-5 border rounded-md flex flex-row overflow-auto max-w-full scrollbar-hide">
-            <app-project-card [title]="'Total Projects'" [count]="projects.length"></app-project-card>
             <app-project-card [title]="'Total Tasks'" [count]="2"></app-project-card>
             <app-project-card [title]="'Assigned Tasks'" [count]="3"></app-project-card>
             <app-project-card [title]="'Completed Tasks'" [count]="4"></app-project-card>
             <app-project-card [title]="'Overdue Tasks'" [count]="2"></app-project-card>
         </div>
-        <div class="flex flex-row">
-            <div class="mt-5 border">
-                Assigned Tasks
-            </div>
-            <div class="mt-5 border bg-gray-100">
-                <div>
-                    Projects ({{projects.length}})
-                    
-                </div>
-                <div class="">
-                    <hr class="mt-4 p-2 border-dashed border-black">
-                </div>
-            </div>
-        </div>
     </div>
 </div>
-<!-- <app-board></app-board> -->

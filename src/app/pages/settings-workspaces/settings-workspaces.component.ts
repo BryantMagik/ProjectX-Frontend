@@ -35,15 +35,14 @@ export class SettingsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.routeSub = this.route.parent?.paramMap.subscribe(params => { 
-    this.workspaceId = params.get('id');
-    console.log('Workspace ID:', this.workspaceId);
-    if (this.workspaceId) {
-      this.getWorkspaceById(this.workspaceId);
-    } else {
-      console.error('No workspace ID found');
-    }
-  }) || null;
+    this.routeSub = this.route.parent?.paramMap.subscribe(params => {
+      this.workspaceId = params.get('workspaceId')
+      if (this.workspaceId) {
+        this.getWorkspaceById(this.workspaceId)
+      } else {
+      }
+    }) || null
+
     this.workspaceForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(30)]],
       description: [''],
@@ -56,24 +55,22 @@ export class SettingsComponent implements OnInit {
     if (file) {
       this.isUploading = true
 
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml']
       if (!allowedTypes.includes(file.type)) {
-        alert('Invalid file type. Please upload JPG, PNG, or SVG.');
-        return;
+        alert('Invalid file type. Please upload JPG, PNG, or SVG.')
+        return
       }
       const maxSize = 1 * 1024 * 1024
       if (file.size > maxSize) {
-        alert('File size exceeds 1MB. Please upload a smaller image.');
-        return;
+        alert('File size exceeds 1MB. Please upload a smaller image.')
+        return
       }
 
       this.cloudinaryService.uploadImage(file)
         .then((imageUrl) => {
           this.workspaceForm.patchValue({ image: imageUrl })
-          console.log('Image uploaded successfully:', imageUrl);
         },
           (error) => {
-            console.error('Error uploading image:', error);
           }
         ).finally(() => {
           this.isUploading = false;

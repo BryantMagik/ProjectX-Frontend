@@ -4,7 +4,6 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LayoutComponent } from './pages/layout/layout.component';
-import { ProjectsDetailsComponent } from './subpages/projects-details/projects-details.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
@@ -23,6 +22,7 @@ import { SubtasksDetailsComponent } from './subpages/subtasks-details/subtasks-d
 import { IssuesdetailsComponent } from './subpages/issuesdetails/issuesdetails.component';
 import { SettingsComponent } from './pages/settings-workspaces/settings-workspaces.component';
 import { WorkspaceComponent } from './pages/workspace/workspace.component';
+import { DashboardProjectComponent } from './pages/dashboard-project/dashboard-project.component';
 
 export const routes: Routes = [
     {
@@ -47,15 +47,25 @@ export const routes: Routes = [
                 component: ProfilesComponent,
             },
             {
-                path: 'pages/:id',
+                path: 'pages/:workspaceId',
                 title: 'Workspace',
                 component: WorkspaceComponent,
                 children: [
+                    {
+                        path: 'dashboard',
+                        title: 'Dashboard',
+                        component: DashboardComponent,
+                    },
                     {
                         path: 'settings',
                         title: 'Settings',
                         component: SettingsComponent,
                     },
+                    {
+                        path: ':projectId',
+                        title: 'Project',
+                        component: DashboardProjectComponent
+                    }
                 ]
             },
             {

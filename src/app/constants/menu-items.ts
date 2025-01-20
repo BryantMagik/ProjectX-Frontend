@@ -5,18 +5,13 @@ export function createMenuItems(id: string): MenuItem[] {
         {
             icon: 'dashboard',
             label: 'Dashboard',
-            route: 'pages/dashboard',
+            route: `pages/${id ?? 'default'}/dashboard`
         },
         {
             icon: 'assignment',
             label: 'My Tasks',
             route: 'pages/tasks',
         },
-        // {
-        //     icon: 'settings',
-        //     label: 'Setting',
-        //     route: `pages/settings/${id ?? 'default'}`
-        // },
         {
             icon: 'settings',
             label: 'Setting',
