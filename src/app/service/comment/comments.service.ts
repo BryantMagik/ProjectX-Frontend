@@ -48,7 +48,7 @@ export class CommentsService {
   findOne(id: string): Observable<Comment | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Comment>(`${apiRoutes.comment.apiUrl}/${id}`, { headers });
+      return this.apiService.get<Comment>(`${apiRoutes.comment.getById}/${id}`, { headers });
     }
     return of(null);
   }
@@ -56,7 +56,7 @@ export class CommentsService {
   update(id: string, comment: Partial<Comment>): Observable<Comment | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.patch<Comment>(`${apiRoutes.comment.apiUrl}/${id}`, comment, { headers });
+      return this.apiService.patch<Comment>(`${apiRoutes.comment.getById}/${id}`, comment, { headers });
     }
     return of(null);
   }
@@ -64,7 +64,7 @@ export class CommentsService {
   deleteCommentById(id: string): Observable<void> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.delete<void>(`${apiRoutes.comment.apiUrl}/${id}`, { headers });
+      return this.apiService.delete<void>(`${apiRoutes.comment.getById}/${id}`, { headers });
     }
     return of();
   }
