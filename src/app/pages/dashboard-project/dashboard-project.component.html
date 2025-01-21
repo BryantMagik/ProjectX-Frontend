@@ -1,13 +1,34 @@
 <div class="bg-white shadow sm:rounded-lg select-none">
     <div class="px-4 py-5 sm:p-6">
-        <p class="text-2xl font-bold text-gray-900">{{project?.name}}</p>
+        <div class="flex flex-row items-center">
+            <div class="flex flex-row items-center">
+                <ng-container *ngIf="project?.image else noImage">
+                    <img [src]="project?.image" alt="project Icon" class="image-icon w-6 h-6 rounded-md mr-2" />
+                    <p class="text-2xl font-bold text-gray-900">{{project?.name}}</p>
+                </ng-container>
+
+                <ng-template #noImage>
+                    <div class="w-7 h-7 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-sm">
+                        <span class="font-semibold">{{ project?.name?.[0] || 'N/A' }}</span>
+                    </div>
+                </ng-template>
+                <span class="text-2xl font-bold text-gray-900">{{project?.name}}</span>
+            </div>
+            <div class="ml-auto">
+                <button class="border p-1 rounded-md text-sm font-bold hover:bg-blue-500 hover:text-white"><i class="text-sm pi pi-pencil
+                    "></i>
+                    Edit Project
+                </button>
+            </div>
+
+        </div>
         <p class="">Monitor all of your projects and tasks here.</p>
         <hr class="mt-4 p-2 border-dashed">
-        <div class="mt-5 border rounded-md flex flex-row overflow-auto max-w-full scrollbar-hide">
+        <!-- <div class="mt-5 border rounded-md flex flex-row overflow-auto max-w-full scrollbar-hide">
             <app-project-card [title]="'Total Tasks'" [count]="2"></app-project-card>
             <app-project-card [title]="'Assigned Tasks'" [count]="3"></app-project-card>
             <app-project-card [title]="'Completed Tasks'" [count]="4"></app-project-card>
             <app-project-card [title]="'Overdue Tasks'" [count]="2"></app-project-card>
-        </div>
+        </div> -->
     </div>
 </div>

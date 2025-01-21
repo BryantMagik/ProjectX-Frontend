@@ -2,7 +2,7 @@
     <div *ngFor="let project of projects" class="flex flex-row items-center mt-1 mb-1 bg-gray-300 p-2"
         (click)="navigateToProject(project.id)">
         <ng-container *ngIf="project.image; else noImage">
-            <img [src]="project.image" alt="Poroject Icon" class="image-icon w-6 h-6 rounded-md mr-2" />
+            <img [src]="project.image" alt="project Icon" class="image-icon w-6 h-6 rounded-md mr-2" />
         </ng-container>
 
         <ng-template #noImage>

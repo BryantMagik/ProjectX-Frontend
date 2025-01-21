@@ -4,11 +4,12 @@ import { ProjectService } from '../../service/project/project.service';
 import { Subscription, tap } from 'rxjs';
 import { Project } from '../../model/project.interface';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-project',
   standalone: true,
-  imports: [ProjectCardComponent],
+  imports: [CommonModule,],
   templateUrl: './dashboard-project.component.html',
   styleUrl: './dashboard-project.component.css'
 })
@@ -30,22 +31,22 @@ export class DashboardProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe(params => {
-      this.projectId = params.get('projectId');
+      this.projectId = params.get('projectId')
       if (this.projectId) {
         console.log("Fetching", this.projectId)
-        this.getProjectById(this.projectId);
+        this.getProjectById(this.projectId)
       }
     })
   }
-  
+
 
   private getProjectById(projectId: string): void {
     this.projectService.getProjectById(projectId).pipe(
       tap({
         next: (project: Project | null) => {
           console.log(project)
-          this.project = project;
-          this.loading = false;
+          this.project = project
+          this.loading = false
         },
         error: () => this.error = 'Failed to load projects',
         complete: () => this.loading = false
