@@ -11,11 +11,10 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { CommentsListComponentComponent } from '../../shared/comments-list-component/comments-list-component.component';
 
 @Component({
-  selector: 'app-issuesdetails',
-  standalone: true,
-  imports: [CommonModule, NgClass, ReactiveFormsModule, NgIf, NgFor, MultiSelectModule, CommentsListComponentComponent],
-  templateUrl: './issuesdetails.component.html',
-  styleUrl: './issuesdetails.component.css'
+    selector: 'app-issuesdetails',
+    imports: [CommonModule, NgClass, ReactiveFormsModule, NgIf, NgFor, MultiSelectModule, CommentsListComponentComponent],
+    templateUrl: './issuesdetails.component.html',
+    styleUrl: './issuesdetails.component.css'
 })
 export class IssuesdetailsComponent implements OnInit{
 

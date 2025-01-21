@@ -5,11 +5,10 @@ import { Issue } from '../../model/issue.interface';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-issues',
-  standalone: true,
-  imports: [NgFor,NgIf],
-  templateUrl: './issues.component.html',
-  styleUrl: './issues.component.css'
+    selector: 'app-issues',
+    imports: [NgFor, NgIf],
+    templateUrl: './issues.component.html',
+    styleUrl: './issues.component.css'
 })
 export class IssuesComponent implements OnInit {
 

@@ -11,12 +11,11 @@ import { SubtaskService } from '../../service/subtask/subtask.service';
 import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-subtasks-form',
-  standalone: true,
-  imports: [CommonModule,DropdownModule,InputTextModule,ToastModule,ReactiveFormsModule],
-  templateUrl: './subtasks-form.component.html',
-  styleUrl: './subtasks-form.component.css',
-  providers:[MessageService]
+    selector: 'app-subtasks-form',
+    imports: [CommonModule, DropdownModule, InputTextModule, ToastModule, ReactiveFormsModule],
+    templateUrl: './subtasks-form.component.html',
+    styleUrl: './subtasks-form.component.css',
+    providers: [MessageService]
 })
 export class SubtasksFormComponent implements OnInit {
 

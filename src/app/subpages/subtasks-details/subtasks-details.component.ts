@@ -10,11 +10,10 @@ import { TASKSSTATUS } from '../../types/models';
 
 
 @Component({
-  selector: 'app-subtasks-details',
-  standalone: true,
-  imports: [CommonModule,NgClass,ReactiveFormsModule,NgIf,NgFor],
-  templateUrl: './subtasks-details.component.html',
-  styleUrl: './subtasks-details.component.css'
+    selector: 'app-subtasks-details',
+    imports: [CommonModule, NgClass, ReactiveFormsModule, NgIf, NgFor],
+    templateUrl: './subtasks-details.component.html',
+    styleUrl: './subtasks-details.component.css'
 })
 
 export class SubtasksDetailsComponent implements OnInit {

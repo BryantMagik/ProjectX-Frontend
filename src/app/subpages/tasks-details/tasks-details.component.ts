@@ -39,11 +39,10 @@ export interface Taskdetail{
 }
 
 @Component({
-  selector: 'app-tasks-details',
-  standalone: true,
-  imports: [CommonModule, NgFor, NgClass, CommentsListComponentComponent],
-  templateUrl: './tasks-details.component.html',
-  styleUrl: './tasks-details.component.css'
+    selector: 'app-tasks-details',
+    imports: [CommonModule, NgFor, NgClass, CommentsListComponentComponent],
+    templateUrl: './tasks-details.component.html',
+    styleUrl: './tasks-details.component.css'
 })
 export class TasksDetailsComponent implements OnInit{
 

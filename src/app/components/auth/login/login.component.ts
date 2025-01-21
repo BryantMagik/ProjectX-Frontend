@@ -14,21 +14,20 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { DividerModule } from 'primeng/divider';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    ButtonModule,
-    CalendarModule,
-    InputGroupModule,
-    InputGroupAddonModule,
-    DividerModule
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
-  viewProviders: [provideIcons({ featherAirplay, heroUsers, heroLockClosed })],
+    selector: 'app-login',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        InputTextModule,
+        ButtonModule,
+        CalendarModule,
+        InputGroupModule,
+        InputGroupAddonModule,
+        DividerModule
+    ],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.css',
+    viewProviders: [provideIcons({ featherAirplay, heroUsers, heroLockClosed })]
 })
 export class LoginComponent {
   isLoading = false;

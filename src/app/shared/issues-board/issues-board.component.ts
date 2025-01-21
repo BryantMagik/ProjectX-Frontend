@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { LayoutComponent } from '../../pages/layout/layout.component';
 
 @Component({
-  selector: 'app-issues-board',
-  standalone: true,
-  imports: [LayoutComponent],
-  templateUrl: './issues-board.component.html',
-  styleUrl: './issues-board.component.css'
+    selector: 'app-issues-board',
+    imports: [LayoutComponent],
+    templateUrl: './issues-board.component.html',
+    styleUrl: './issues-board.component.css'
 })
 export class IssuesBoardComponent {
 

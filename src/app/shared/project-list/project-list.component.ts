@@ -6,11 +6,10 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-project-list',
-  standalone: true,
-  imports: [CommonModule, NgFor, NgIf],
-  templateUrl: './project-list.component.html',
-  styleUrl: './project-list.component.css'
+    selector: 'app-project-list',
+    imports: [CommonModule, NgFor, NgIf],
+    templateUrl: './project-list.component.html',
+    styleUrl: './project-list.component.css'
 })
 export class ProjectListComponent implements OnInit {
 

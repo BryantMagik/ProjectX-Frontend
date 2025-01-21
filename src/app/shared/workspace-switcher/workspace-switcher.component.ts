@@ -7,11 +7,10 @@ import { CommonModule } from '@angular/common'
 import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
-  selector: 'app-workspace-switcher',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './workspace-switcher.component.html',
-  styleUrl: './workspace-switcher.component.css'
+    selector: 'app-workspace-switcher',
+    imports: [FormsModule, CommonModule],
+    templateUrl: './workspace-switcher.component.html',
+    styleUrl: './workspace-switcher.component.css'
 })
 export class WorkspaceSwitcherComponent implements OnInit {
   @Output() workspaceSelected = new EventEmitter<string>()

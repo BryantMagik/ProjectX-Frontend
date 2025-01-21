@@ -6,11 +6,10 @@ import { CommonModule } from '@angular/common'
 import { CloudinaryService } from '../../service/cloudinary/cloudinary.service'
 
 @Component({
-  selector: 'app-workspace-form',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './workspace-form.component.html',
-  styleUrl: './workspace-form.component.css'
+    selector: 'app-workspace-form',
+    imports: [ReactiveFormsModule, CommonModule],
+    templateUrl: './workspace-form.component.html',
+    styleUrl: './workspace-form.component.css'
 })
 export class WorkspaceFormComponent implements OnInit {
 

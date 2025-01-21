@@ -9,11 +9,10 @@ import { CloudinaryService } from '../../service/cloudinary/cloudinary.service'
 import { ModalDeleteWorkspaceComponent } from "../../shared/modal-delete-workspace/modal-delete-workspace.component";
 
 @Component({
-  selector: 'app-settings',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, ModalDeleteWorkspaceComponent],
-  templateUrl: './settings-workspaces.component.html',
-  styleUrl: './settings-workspaces.component.css'
+    selector: 'app-settings',
+    imports: [ReactiveFormsModule, CommonModule, ModalDeleteWorkspaceComponent],
+    templateUrl: './settings-workspaces.component.html',
+    styleUrl: './settings-workspaces.component.css'
 })
 export class SettingsComponent implements OnInit {
 

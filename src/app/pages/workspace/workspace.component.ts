@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-workspace',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './workspace.component.html',
-  styleUrl: './workspace.component.css'
+    selector: 'app-workspace',
+    imports: [RouterOutlet],
+    templateUrl: './workspace.component.html',
+    styleUrl: './workspace.component.css'
 })
 export class WorkspaceComponent implements OnInit {
   workspaceId: string | null = null

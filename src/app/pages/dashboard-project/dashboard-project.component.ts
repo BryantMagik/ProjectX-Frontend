@@ -7,11 +7,10 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-dashboard-project',
-  standalone: true,
-  imports: [CommonModule,],
-  templateUrl: './dashboard-project.component.html',
-  styleUrl: './dashboard-project.component.css'
+    selector: 'app-dashboard-project',
+    imports: [CommonModule,],
+    templateUrl: './dashboard-project.component.html',
+    styleUrl: './dashboard-project.component.css'
 })
 export class DashboardProjectComponent implements OnInit {
 

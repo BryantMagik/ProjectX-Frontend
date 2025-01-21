@@ -6,11 +6,10 @@ import { ProyectDropdown, PROYECTOTYPE } from '../../types/models'
 import { DropdownModule } from 'primeng/dropdown'
 
 @Component({
-  selector: 'app-modal-create-project',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,DropdownModule],
-  templateUrl: './modal-create-project.component.html',
-  styleUrl: './modal-create-project.component.css'
+    selector: 'app-modal-create-project',
+    imports: [CommonModule, ReactiveFormsModule, DropdownModule],
+    templateUrl: './modal-create-project.component.html',
+    styleUrl: './modal-create-project.component.css'
 })
 export class ModalCreateProjectComponent implements OnInit {
   @Output() close = new EventEmitter<void>()

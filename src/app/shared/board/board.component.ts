@@ -18,11 +18,10 @@ import { CommentsBoardComponent } from "../comments-board/comments-board.compone
 import { TasksComponent } from '../../pages/tasks/tasks.component';
 
 @Component({
-  selector: 'app-board',
-  standalone: true,
-  imports: [CommonModule, TicketComponent,TasksBoardComponent, CommentsComponent, IssuesComponent, ProjectsComponent, SubtasksComponent, TasksComponent, ProfilesComponent, IssuesdetailsComponent, ProjectsDetailsComponent, CommentsDetailsComponent, TasksDetailsComponent, SubtasksDetailsComponent,  SubtasksBoardComponent, IssuesBoardComponent, CommentsBoardComponent],
-  templateUrl: './board.component.html',
-  styleUrl: './board.component.css'
+    selector: 'app-board',
+    imports: [CommonModule, TicketComponent, TasksBoardComponent, CommentsComponent, IssuesComponent, ProjectsComponent, SubtasksComponent, TasksComponent, ProfilesComponent, IssuesdetailsComponent, ProjectsDetailsComponent, CommentsDetailsComponent, TasksDetailsComponent, SubtasksDetailsComponent, SubtasksBoardComponent, IssuesBoardComponent, CommentsBoardComponent],
+    templateUrl: './board.component.html',
+    styleUrl: './board.component.css'
 })
 export class BoardComponent {
 

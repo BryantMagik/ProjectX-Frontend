@@ -7,11 +7,10 @@ import { Comment } from '../../model/comment.interface';
 import { tap } from 'rxjs';
 
 @Component({
-  selector: 'app-comments-details',
-  standalone: true,
-  imports: [NgIf,NgClass,ReactiveFormsModule],
-  templateUrl: './comments-details.component.html',
-  styleUrl: './comments-details.component.css'
+    selector: 'app-comments-details',
+    imports: [NgIf, NgClass, ReactiveFormsModule],
+    templateUrl: './comments-details.component.html',
+    styleUrl: './comments-details.component.css'
 })
 export class CommentsDetailsComponent implements OnInit{
 

@@ -12,12 +12,11 @@ import { ProjectService } from '../../service/project/project.service';
 import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-issues-form',
-  standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,DropdownModule,InputTextModule,ToastModule,MultiSelectModule],
-  templateUrl: './issues-form.component.html',
-  styleUrl: './issues-form.component.css',
-  providers: [MessageService]
+    selector: 'app-issues-form',
+    imports: [CommonModule, ReactiveFormsModule, DropdownModule, InputTextModule, ToastModule, MultiSelectModule],
+    templateUrl: './issues-form.component.html',
+    styleUrl: './issues-form.component.css',
+    providers: [MessageService]
 })
 export class IssuesFormComponent implements OnInit {
   issueForm!: FormGroup;

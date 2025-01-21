@@ -14,11 +14,10 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-project-form',
-  standalone: true,
-  imports: [ ReactiveFormsModule, CommonModule, MultiSelectModule, DropdownModule, InputTextModule, ToastModule],
-  templateUrl: './project-form.component.html',
-  styleUrl: './project-form.component.css'
+    selector: 'app-project-form',
+    imports: [ReactiveFormsModule, CommonModule, MultiSelectModule, DropdownModule, InputTextModule, ToastModule],
+    templateUrl: './project-form.component.html',
+    styleUrl: './project-form.component.css'
 })
 export class ProjectFormComponent implements OnInit {
 

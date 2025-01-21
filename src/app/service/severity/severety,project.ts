@@ -6,7 +6,6 @@ import { TagModule } from 'primeng/tag';
     template: `
     <p-tag [value]="value" [severity]="getSeverity()"></p-tag>
   `,
-    standalone: true,
     imports: [TagModule],
     styles: []
 })

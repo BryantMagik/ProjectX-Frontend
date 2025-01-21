@@ -9,11 +9,10 @@ import { ModalCreateProjectComponent } from "../../shared/modal-create-project/m
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-layout',
-  standalone: true,
-  imports: [RouterOutlet, NavbarComponent, CustomSidebarComponent, ModalCreateProjectComponent, CommonModule],
-  templateUrl: './layout.component.html',
-  styleUrl: './layout.component.css'
+    selector: 'app-layout',
+    imports: [RouterOutlet, NavbarComponent, CustomSidebarComponent, ModalCreateProjectComponent, CommonModule],
+    templateUrl: './layout.component.html',
+    styleUrl: './layout.component.css'
 })
 export class LayoutComponent implements OnInit {
 

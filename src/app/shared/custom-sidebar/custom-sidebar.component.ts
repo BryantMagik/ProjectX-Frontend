@@ -10,11 +10,10 @@ import { BehaviorSubject } from 'rxjs';
 import { ProjectListComponent } from "../project-list/project-list.component";
 
 @Component({
-  selector: 'app-custom-sidebar',
-  standalone: true,
-  imports: [CommonModule, MatListModule, MatIconModule, RouterLink, RouterModule, WorkspaceSwitcherComponent, ProjectListComponent],
-  templateUrl: './custom-sidebar.component.html',
-  styleUrl: './custom-sidebar.component.css'
+    selector: 'app-custom-sidebar',
+    imports: [CommonModule, MatListModule, MatIconModule, RouterLink, RouterModule, WorkspaceSwitcherComponent, ProjectListComponent],
+    templateUrl: './custom-sidebar.component.html',
+    styleUrl: './custom-sidebar.component.css'
 })
 export class CustomSidebarComponent implements OnInit {
   @Output() openModalEvent = new EventEmitter<void>()

@@ -5,11 +5,10 @@ import { Router } from '@angular/router';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-comments-list-component',
-  standalone: true,
-  imports: [NgIf,NgFor,DatePipe],
-  templateUrl: './comments-list-component.component.html',
-  styleUrl: './comments-list-component.component.css'
+    selector: 'app-comments-list-component',
+    imports: [NgIf, NgFor, DatePipe],
+    templateUrl: './comments-list-component.component.html',
+    styleUrl: './comments-list-component.component.css'
 })
 export class CommentsListComponentComponent implements OnInit{
   @Input() taskId?: string;

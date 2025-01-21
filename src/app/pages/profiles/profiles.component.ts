@@ -8,11 +8,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-profiles',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './profiles.component.html',
-  styleUrl: './profiles.component.css'
+    selector: 'app-profiles',
+    imports: [CommonModule],
+    templateUrl: './profiles.component.html',
+    styleUrl: './profiles.component.css'
 })
 
 export class ProfilesComponent implements OnInit {
