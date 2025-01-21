@@ -5,7 +5,9 @@ import { CommonModule } from '@angular/common';
     selector: 'app-ticket',
     imports: [CommonModule],
     templateUrl: './ticket.component.html',
-    styleUrl: './ticket.component.css'
+    styleUrl: './ticket.component.css',
+    standalone:true
+
 })
 export class TicketComponent {
 

@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
     selector: 'app-tasks-form',
     imports: [],
     templateUrl: './tasks-form.component.html',
-    styleUrl: './tasks-form.component.css'
+    styleUrl: './tasks-form.component.css',
+    standalone: true,
 })
 export class TasksFormComponent {
   taskForm: FormGroup;

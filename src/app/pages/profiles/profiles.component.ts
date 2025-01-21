@@ -11,7 +11,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
     selector: 'app-profiles',
     imports: [CommonModule],
     templateUrl: './profiles.component.html',
-    styleUrl: './profiles.component.css'
+    styleUrl: './profiles.component.css',
+    standalone:true
 })
 
 export class ProfilesComponent implements OnInit {

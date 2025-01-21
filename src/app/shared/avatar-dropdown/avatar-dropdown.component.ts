@@ -14,7 +14,9 @@ import { AuthService } from '../../service/auth/auth.service';
     selector: 'app-avatar-dropdown',
     imports: [AvatarModule, FormsModule, CommonModule, MatIconModule, RouterLink, RouterModule],
     templateUrl: './avatar-dropdown.component.html',
-    styleUrl: './avatar-dropdown.component.css'
+    styleUrl: './avatar-dropdown.component.css',
+    standalone:true
+
 })
 export class AvatarDropdownComponent {
   @Input() user: User | null = null

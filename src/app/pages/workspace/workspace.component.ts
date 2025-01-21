@@ -5,7 +5,8 @@ import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
     selector: 'app-workspace',
     imports: [RouterOutlet],
     templateUrl: './workspace.component.html',
-    styleUrl: './workspace.component.css'
+    styleUrl: './workspace.component.css',
+    standalone:true
 })
 export class WorkspaceComponent implements OnInit {
   workspaceId: string | null = null

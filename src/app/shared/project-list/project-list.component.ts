@@ -9,7 +9,9 @@ import { Router } from '@angular/router';
     selector: 'app-project-list',
     imports: [CommonModule, NgFor, NgIf],
     templateUrl: './project-list.component.html',
-    styleUrl: './project-list.component.css'
+    styleUrl: './project-list.component.css',
+    standalone:true
+
 })
 export class ProjectListComponent implements OnInit {
 

@@ -10,14 +10,16 @@ import { BehaviorSubject } from 'rxjs';
 import { ProjectListComponent } from "../project-list/project-list.component";
 
 @Component({
-    selector: 'app-custom-sidebar',
-    imports: [CommonModule, MatListModule, MatIconModule, RouterLink, RouterModule, WorkspaceSwitcherComponent, ProjectListComponent],
-    templateUrl: './custom-sidebar.component.html',
-    styleUrl: './custom-sidebar.component.css'
+  selector: 'app-custom-sidebar',
+  imports: [CommonModule, MatListModule, MatIconModule, RouterLink, RouterModule, WorkspaceSwitcherComponent, ProjectListComponent],
+  templateUrl: './custom-sidebar.component.html',
+  styleUrl: './custom-sidebar.component.css',
+  standalone: true
+
 })
 export class CustomSidebarComponent implements OnInit {
   @Output() openModalEvent = new EventEmitter<void>()
-  selectedWorkspaceId: string | null = null 
+  selectedWorkspaceId: string | null = null
 
   private selectedWorkspaceSubject = new BehaviorSubject<string | null>(null)
   selectedWorkspaceId$ = this.selectedWorkspaceSubject.asObservable()
@@ -27,7 +29,7 @@ export class CustomSidebarComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    
+
   }
 
   ngOnInit(): void {
@@ -38,7 +40,7 @@ export class CustomSidebarComponent implements OnInit {
     })
   }
 
-  
+
   openModal() {
     this.openModalEvent.emit()
     const workspaceId = this.route.snapshot.paramMap.get('id')

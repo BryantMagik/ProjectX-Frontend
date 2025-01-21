@@ -10,7 +10,8 @@ import { CommentsService } from '../../service/comment/comments.service';
     selector: 'app-comments-form',
     imports: [ReactiveFormsModule, CommonModule, ToastModule],
     templateUrl: './comments-form.component.html',
-    styleUrl: './comments-form.component.css'
+    styleUrl: './comments-form.component.css',
+    standalone:true
 })
 export class CommentsFormComponent implements OnInit{
   commentForm!: FormGroup;

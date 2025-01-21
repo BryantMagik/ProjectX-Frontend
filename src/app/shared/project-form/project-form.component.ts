@@ -14,10 +14,12 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
 @Component({
-    selector: 'app-project-form',
-    imports: [ReactiveFormsModule, CommonModule, MultiSelectModule, DropdownModule, InputTextModule, ToastModule],
-    templateUrl: './project-form.component.html',
-    styleUrl: './project-form.component.css'
+  selector: 'app-project-form',
+  imports: [ReactiveFormsModule, CommonModule, MultiSelectModule, DropdownModule, InputTextModule, ToastModule],
+  templateUrl: './project-form.component.html',
+  styleUrl: './project-form.component.css',
+  standalone: true
+
 })
 export class ProjectFormComponent implements OnInit {
 
@@ -92,9 +94,9 @@ export class ProjectFormComponent implements OnInit {
 
     } else {
       console.log('Formulario inválido');
-        console.log('Formulario:', this.projectForm.value);
-        console.log('Errores del formulario:', this.projectForm.errors);
-        console.log('Estado de los controles:', this.projectForm.controls);
+      console.log('Formulario:', this.projectForm.value);
+      console.log('Errores del formulario:', this.projectForm.errors);
+      console.log('Estado de los controles:', this.projectForm.controls);
     }
   }
 

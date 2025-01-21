@@ -22,7 +22,9 @@ import { SeverityTagComponent } from '../../service/severity/severety,project';
     selector: 'app-projects',
     imports: [CommonModule, TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
     templateUrl: './projects.component.html',
-    styleUrl: './projects.component.css'
+    styleUrl: './projects.component.css',
+    standalone:true
+
 })
 
 export class ProjectsComponent implements OnInit {

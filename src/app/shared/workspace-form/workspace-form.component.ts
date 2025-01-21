@@ -9,7 +9,9 @@ import { CloudinaryService } from '../../service/cloudinary/cloudinary.service'
     selector: 'app-workspace-form',
     imports: [ReactiveFormsModule, CommonModule],
     templateUrl: './workspace-form.component.html',
-    styleUrl: './workspace-form.component.css'
+    styleUrl: './workspace-form.component.css',
+    standalone:true
+
 })
 export class WorkspaceFormComponent implements OnInit {
 

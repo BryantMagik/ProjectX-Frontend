@@ -8,7 +8,9 @@ import { DatePipe, NgFor, NgIf } from '@angular/common';
     selector: 'app-comments-list-component',
     imports: [NgIf, NgFor, DatePipe],
     templateUrl: './comments-list-component.component.html',
-    styleUrl: './comments-list-component.component.css'
+    styleUrl: './comments-list-component.component.css',
+    standalone:true
+
 })
 export class CommentsListComponentComponent implements OnInit{
   @Input() taskId?: string;

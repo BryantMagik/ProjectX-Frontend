@@ -15,7 +15,9 @@ import { MessageService } from 'primeng/api';
     imports: [CommonModule, DropdownModule, InputTextModule, ToastModule, ReactiveFormsModule],
     templateUrl: './subtasks-form.component.html',
     styleUrl: './subtasks-form.component.css',
-    providers: [MessageService]
+    providers: [MessageService],
+    standalone:true
+
 })
 export class SubtasksFormComponent implements OnInit {
 

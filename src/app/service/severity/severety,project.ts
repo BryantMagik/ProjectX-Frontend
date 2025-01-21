@@ -7,7 +7,8 @@ import { TagModule } from 'primeng/tag';
     <p-tag [value]="value" [severity]="getSeverity()"></p-tag>
   `,
     imports: [TagModule],
-    styles: []
+    styles: [],
+    standalone: true
 })
 export class SeverityTagComponent {
     @Input() value!: string;

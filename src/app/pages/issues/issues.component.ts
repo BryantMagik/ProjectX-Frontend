@@ -8,7 +8,9 @@ import { NgFor, NgIf } from '@angular/common';
     selector: 'app-issues',
     imports: [NgFor, NgIf],
     templateUrl: './issues.component.html',
-    styleUrl: './issues.component.css'
+    styleUrl: './issues.component.css',
+    standalone: true
+
 })
 export class IssuesComponent implements OnInit {
 

@@ -12,7 +12,8 @@ import { CommonModule } from '@angular/common';
     selector: 'app-layout',
     imports: [RouterOutlet, NavbarComponent, CustomSidebarComponent, ModalCreateProjectComponent, CommonModule],
     templateUrl: './layout.component.html',
-    styleUrl: './layout.component.css'
+    styleUrl: './layout.component.css',
+    standalone:true
 })
 export class LayoutComponent implements OnInit {
 

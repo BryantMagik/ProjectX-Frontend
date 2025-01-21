@@ -8,7 +8,8 @@ import { NgFor, NgIf } from '@angular/common';
     selector: 'app-comments',
     imports: [NgFor, NgIf],
     templateUrl: './comments.component.html',
-    styleUrl: './comments.component.css'
+    styleUrl: './comments.component.css',
+    standalone: true
 })
 export class CommentsComponent implements OnInit {
   comments: Comment[] = [];

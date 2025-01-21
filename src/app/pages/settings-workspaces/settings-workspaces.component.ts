@@ -12,7 +12,8 @@ import { ModalDeleteWorkspaceComponent } from "../../shared/modal-delete-workspa
     selector: 'app-settings',
     imports: [ReactiveFormsModule, CommonModule, ModalDeleteWorkspaceComponent],
     templateUrl: './settings-workspaces.component.html',
-    styleUrl: './settings-workspaces.component.css'
+    styleUrl: './settings-workspaces.component.css',
+    standalone:true
 })
 export class SettingsComponent implements OnInit {
 

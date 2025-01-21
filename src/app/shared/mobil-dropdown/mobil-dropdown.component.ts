@@ -13,7 +13,9 @@ import { MenuItem } from '../../model/menu.interface';
     selector: 'app-mobil-dropdown',
     imports: [MatListModule, MatIconModule, RouterModule, CommonModule, WorkspaceSwitcherComponent, ProjectListComponent],
     templateUrl: './mobil-dropdown.component.html',
-    styleUrl: './mobil-dropdown.component.css'
+    styleUrl: './mobil-dropdown.component.css',
+    standalone:true
+
 })
 export class MobilDropdownComponent implements OnInit {
   @Output() openModalEvent = new EventEmitter<void>();

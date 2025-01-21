@@ -10,7 +10,8 @@ import { CommonModule } from '@angular/common';
     selector: 'app-dashboard-project',
     imports: [CommonModule,],
     templateUrl: './dashboard-project.component.html',
-    styleUrl: './dashboard-project.component.css'
+    styleUrl: './dashboard-project.component.css',
+    standalone: true
 })
 export class DashboardProjectComponent implements OnInit {
 

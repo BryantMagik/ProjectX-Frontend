@@ -10,7 +10,8 @@ import { ActivatedRoute } from '@angular/router';
     selector: 'app-dashboard',
     imports: [CommonModule, ProjectCardComponent],
     templateUrl: './dashboard.component.html',
-    styleUrl: './dashboard.component.css'
+    styleUrl: './dashboard.component.css',
+    standalone: true
 })
 export class DashboardComponent implements OnInit {
 

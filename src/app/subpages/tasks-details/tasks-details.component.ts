@@ -1,12 +1,12 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgFor, NgClass } from '@angular/common';
-import { FormBuilder,FormGroup,Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommentsListComponentComponent } from '../../shared/comments-list-component/comments-list-component.component';
 
-enum tasks_priority{
-  high = 'high', 
-  medium = 'medium', 
+enum tasks_priority {
+  high = 'high',
+  medium = 'medium',
   low = 'low'
 }
 enum tasks_type {
@@ -24,35 +24,36 @@ enum tasks_status {
   Ongoing = 'Ongoing',
   Completed = 'Completed'
 }
-export interface Taskdetail{
-  id:number;
-  code:string;
-  summary:string;
-  description:string;
-  priority:string;
-  type:string;
-  status:string;
-  project_id:number;
-  assigned_user_id:number;
-  estimation:string;
-  duedate:string;
+export interface Taskdetail {
+  id: number;
+  code: string;
+  summary: string;
+  description: string;
+  priority: string;
+  type: string;
+  status: string;
+  project_id: number;
+  assigned_user_id: number;
+  estimation: string;
+  duedate: string;
 }
 
 @Component({
-    selector: 'app-tasks-details',
-    imports: [CommonModule, NgFor, NgClass, CommentsListComponentComponent],
-    templateUrl: './tasks-details.component.html',
-    styleUrl: './tasks-details.component.css'
+  selector: 'app-tasks-details',
+  imports: [CommonModule, NgFor, NgClass, CommentsListComponentComponent],
+  templateUrl: './tasks-details.component.html',
+  styleUrl: './tasks-details.component.css',
+  standalone: true
 })
-export class TasksDetailsComponent implements OnInit{
+export class TasksDetailsComponent implements OnInit {
 
   tasksPriority = Object.values(tasks_priority);
-  tasksType = Object.values (tasks_type);
+  tasksType = Object.values(tasks_type);
   tasksStatus = Object.values(tasks_status);
   taskId: string = '';
 
 
-  taskdetails: Taskdetail[] =[
+  taskdetails: Taskdetail[] = [
     {
       id: 1,
       code: 'PRJ001',
@@ -76,7 +77,7 @@ export class TasksDetailsComponent implements OnInit{
       id: [{ value: '', disabled: true }],
       code: ['', [Validators.required, Validators.maxLength(10)]],
       summary: ['', [Validators.required, Validators.maxLength(255)]],
-      description: ['',[Validators.required, Validators.maxLength(10024)]],
+      description: ['', [Validators.required, Validators.maxLength(10024)]],
       priority: ['', Validators.required],
       type: ['', Validators.required],
       status: ['', Validators.required],

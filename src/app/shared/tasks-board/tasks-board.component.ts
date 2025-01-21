@@ -19,7 +19,9 @@ export interface tasksDataBoard{
     selector: 'app-tasks-board',
     imports: [NgFor, CommonModule, NgClass],
     templateUrl: './tasks-board.component.html',
-    styleUrl: './tasks-board.component.css'
+    styleUrl: './tasks-board.component.css',
+    standalone:true
+
 })
 export class TasksBoardComponent {
   tasks: tasksDataBoard[] =[

@@ -16,7 +16,9 @@ import { MessageService } from 'primeng/api';
     imports: [CommonModule, ReactiveFormsModule, DropdownModule, InputTextModule, ToastModule, MultiSelectModule],
     templateUrl: './issues-form.component.html',
     styleUrl: './issues-form.component.css',
-    providers: [MessageService]
+    providers: [MessageService],
+    standalone:true
+
 })
 export class IssuesFormComponent implements OnInit {
   issueForm!: FormGroup;

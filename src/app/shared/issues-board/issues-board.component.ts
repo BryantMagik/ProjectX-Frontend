@@ -2,14 +2,16 @@ import { Component } from '@angular/core';
 import { LayoutComponent } from '../../pages/layout/layout.component';
 
 @Component({
-    selector: 'app-issues-board',
-    imports: [LayoutComponent],
-    templateUrl: './issues-board.component.html',
-    styleUrl: './issues-board.component.css'
+  selector: 'app-issues-board',
+  imports: [LayoutComponent],
+  templateUrl: './issues-board.component.html',
+  styleUrl: './issues-board.component.css',
+  standalone: true
+
 })
 export class IssuesBoardComponent {
 
-  constructor(private LayoutComponent:LayoutComponent) {}
+  constructor(private LayoutComponent: LayoutComponent) { }
 
   // setMostrar(value: number) {
   //   this.LayoutComponent.setMostrar(value);

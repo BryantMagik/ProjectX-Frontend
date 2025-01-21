@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 @Component({
     selector: 'app-workspace-switcher',
     imports: [FormsModule, CommonModule],
+    standalone: true,
     templateUrl: './workspace-switcher.component.html',
     styleUrl: './workspace-switcher.component.css'
 })

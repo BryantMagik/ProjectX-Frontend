@@ -12,7 +12,9 @@ import { MobilDropdownComponent } from '../mobil-dropdown/mobil-dropdown.compone
     selector: 'app-navbar',
     imports: [AvatarModule, CommonModule, RouterModule, BreadcrumbModule, FormsModule, AvatarDropdownComponent, MobilDropdownComponent],
     templateUrl: './navbar.component.html',
-    styleUrl: './navbar.component.css'
+    styleUrl: './navbar.component.css',
+    standalone:true
+
 })
 export class NavbarComponent {
   loading = true
