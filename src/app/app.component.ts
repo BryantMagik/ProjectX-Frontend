@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +11,8 @@ import { PrimeNGConfig } from 'primeng/api';
 export class AppComponent {
   title = 'ProjectX';
 
-  constructor(private primengConfig: PrimeNGConfig) { }
+  constructor() { }
   
   ngOnInit(){
-    this.primengConfig.ripple = true
   }
 }
