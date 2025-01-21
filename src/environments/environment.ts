@@ -20,7 +20,8 @@ export const apiRoutes = {
   },
   task: {
     getOnlyOwn: `${environment.apiUrl}tasks/user/tasks/`,
-    getById: `${environment.apiUrl}user/tasks/`
+    getById: `${environment.apiUrl}user/tasks/`,
+    getTaskByProjectId: `${environment.apiUrl}tasks/project`,
   },
   subtask: {
     apiUrl: `${environment.apiUrl}subtasks`,

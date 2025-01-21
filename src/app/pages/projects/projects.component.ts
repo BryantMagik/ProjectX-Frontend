@@ -85,7 +85,6 @@ export class ProjectsComponent implements OnInit {
         next: (authors: User[] | null) => {
           if (authors) {
             this.authors = authors
-            console.log("Authores", authors)
           }
         },
         error: () => this.error = 'Failed to load projects',

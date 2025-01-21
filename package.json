@@ -31,8 +31,9 @@
     "@primeng/themes": "^19.0.5",
     "http-proxy-middleware": "^3.0.3",
     "primeicons": "^7.0.0",
-    "primeng": "^17.18.15",
+    "primeng": "^18.0.2",
     "rxjs": "~7.8.0",
+    "tailwindcss-primeui": "^0.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },

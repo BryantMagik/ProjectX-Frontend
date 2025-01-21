@@ -14,11 +14,11 @@ export class SeverityTagComponent {
     @Input() value!: string;
     @Input() type!: 'status' | 'priority' | 'type';
 
-    getSeverity(): 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast' | undefined {
+    getSeverity(): 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast' | undefined {
         if (this.type === 'status') {
             switch (this.value) {
                 case 'ONGOING':
-                    return 'warning';
+                    return 'warn';
                 case 'ONWAIT':
                     return 'danger';
                 case 'COMPLETED':
@@ -33,7 +33,7 @@ export class SeverityTagComponent {
                 case 'HIGH':
                     return 'danger';
                 case 'MEDIUM':
-                    return 'warning';
+                    return 'warn';
                 case 'LOW':
                     return 'success';
                 default:
@@ -44,7 +44,7 @@ export class SeverityTagComponent {
                 case 'SOFTWARE':
                   return 'success';
                 case 'EXTERNAL':
-                  return 'warning';
+                  return 'warn';
                 case 'RESEARCH':
                   return 'danger';
                 case 'INTERNAL':

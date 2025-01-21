@@ -4,7 +4,7 @@
     <div class="card">
       <div class="card-content">
         <h2 class="heading">Crear Issue</h2>
-        <div class="mt-5">
+        <div class="mt-8">
           <form [formGroup]="issueForm" (ngSubmit)="onSubmit()">
             <div class="grid-form">
               <div>
@@ -44,11 +44,11 @@
                 </select>
               </div>
             </div>
-            <div class="mt-6">
+            <div class="mt-12">
               <button type="submit" class="button-primary">Crear Issue</button>
             </div>
           </form>
-          <div class="mt-6 flex justify-end">
+          <div class="mt-12 flex justify-end">
             <button class="button-primary" (click)="navigateToIssues()">Volver</button>
           </div>
         </div>

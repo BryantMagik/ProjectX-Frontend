@@ -1,36 +1,38 @@
 <div class="h-screen flex items-center justify-center bg-gradient-to-b bg-neutral-100 font-mono">
     <form [formGroup]="validatorForm" (ngSubmit)="login()"
-        class="text-center p-6 rounded-[32px] shadow-md w-[450px] h-[370px] bg-white select-none">
-        <div class="mb-4">
+        class="text-center p-12 rounded-[32px] shadow-md w-[450px] h-[420px] bg-white select-none">
+        <div class="mb-6">
             <p class="text-3xl text-black font-mono">Welcome back!</p>
             <p class="text-1xl text-slate-400">By signing up</p>
-            <hr class="mt-4 p-2 border-dashed">
+            <hr class="mt-6 p-2 border-dashed">
             <p-inputGroup>
                 <p-inputGroupAddon class="bg-white">
                     <i class="pi pi-user"></i>
                 </p-inputGroupAddon>
                 <input id="email" type="email" pInputText formControlName="emailValidator"
                     placeholder="Enter email address"
-                    class="w-full px-3 py-2 border border-slate-200 rounded-[5px] bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                    class="w-full px-4 py-2 border border-slate-200 rounded-[5px] bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
                 <label for="email" class="block text-gray-600 text-sm font-bold mb-2"></label>
             </p-inputGroup>
         </div>
-        <div class="mb-6">
+        <div class="mb-7">
             <p-inputGroup>
                 <p-inputGroupAddon class="bg-white">
                     <i class="pi pi-lock"></i>
                 </p-inputGroupAddon>
                 <input id="password" type="password" pInputText placeholder="Enter password"
                     formControlName="passwordValidator"
-                    class="w-full px-3 py-2 border border-slate-200 rounded-[5px] bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                    class="w-full px-4 py-2 border border-slate-200 rounded-[5px] bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
                 <label for="password" class="block text-gray-700 text-sm font-bold mb-2"></label>
             </p-inputGroup>
         </div>
-        <button type="submit" pButton label="Login" [disabled]="isLoading"
-            [label]="isLoading ? 'Logging in...' : 'Login'"
-            class="w-full py-2 px-4 bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono">
-        </button>
-        <div *ngIf="errorMessage" class="mt-4 text-red-500">
+        <div>
+            <button type="submit" pButton label="Login" [disabled]="isLoading"
+                [label]="isLoading ? 'Logging in...' : 'Login'"
+                class="w-full py-2 px-6 bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono">
+            </button>
+        </div>
+        <div *ngIf="errorMessage" class="mt-6 text-red-500">
             {{ errorMessage }}
         </div>
     </form>

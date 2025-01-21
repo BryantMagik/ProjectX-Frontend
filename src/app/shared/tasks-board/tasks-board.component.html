@@ -1,56 +1,56 @@
 <main class="flex-1">
-  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto py-12 sm:px-12 lg:px-20">
     <div class="bg-white shadow sm:rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
+      <div class="px-6 py-8 sm:p-12">
         <h2 class="text-2xl leading-6 font-medium text-gray-900">Tasks</h2>
-        <div class="mt-5 overflow-x-auto">
+        <div class="mt-8 overflow-x-auto">
           <table class="min-w-full divide-y divide-gray-200">
             <thead>
               <tr>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  class="px-8 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   ID</th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  class="px-8 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Code</th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  class="px-8 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Summary</th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  class="px-8 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Description</th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  class="px-8 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Priority</th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  class="px-8 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Type</th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  class="px-8 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Status</th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  class="px-8 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   tasksDataBoard ID</th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  class="px-8 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Assigned User ID</th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  class="px-8 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Estimation</th>
                 <th
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  class="px-8 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Due Date</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <tr *ngFor="let tasksDataBoard of tasks">
-                <td class="px-5 py-4 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.id }}</td>
-                <td class="px-5 py-4 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.code }}</td>
-                <td class="px-5 py-4 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.summary }}
+                <td class="px-8 py-6 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.id }}</td>
+                <td class="px-8 py-6 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.code }}</td>
+                <td class="px-8 py-6 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.summary }}
                 </td>
-                <td class="px-5 py-4 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.description
+                <td class="px-8 py-6 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.description
                   }}</td>
-                <td class="px-5 py-4 border-b border-gray-200 bg-white whitespace-nowrap">
+                <td class="px-8 py-6 border-b border-gray-200 bg-white whitespace-nowrap">
                   <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" [ngClass]="{
                                     'text-green-800 bg-green-100': tasksDataBoard.priority === 'low',
                                     'text-red-800 bg-red-100': tasksDataBoard.priority === 'high',
@@ -59,7 +59,7 @@
                     {{ tasksDataBoard.priority }}
                   </span>
                 </td>
-                <td class="px-5 py-4 border-b border-gray-200 bg-white whitespace-nowrap">
+                <td class="px-8 py-6 border-b border-gray-200 bg-white whitespace-nowrap">
                   <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" [ngClass]="{
                                 'text-blue-800 bg-blue-100': tasksDataBoard.type === 'Software',
                                 'text-red-800 bg-red-100': tasksDataBoard.type === 'Research'
@@ -67,7 +67,7 @@
                     {{ tasksDataBoard.type }}
                   </span>
                 </td>
-                <td class="px-5 py-4 border-b border-gray-200 bg-white whitespace-nowrap">
+                <td class="px-8 py-6 border-b border-gray-200 bg-white whitespace-nowrap">
                   <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" [ngClass]="{
                                     'text-green-800 bg-green-100': tasksDataBoard.status === 'Active',
                                     'text-yellow-800 bg-yellow-100': tasksDataBoard.status === 'Inactivo',
@@ -77,13 +77,13 @@
                     {{ tasksDataBoard.status }}
                   </span>
                 </td>
-                <td class="px-5 py-4 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.project_id
+                <td class="px-8 py-6 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.project_id
                   }}</td>
-                <td class="px-5 py-4 border-b border-gray-200 bg-white whitespace-nowrap">{{
+                <td class="px-8 py-6 border-b border-gray-200 bg-white whitespace-nowrap">{{
                   tasksDataBoard.assigned_user_id }}</td>
-                <td class="px-5 py-4 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.estimation
+                <td class="px-8 py-6 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.estimation
                   }}</td>
-                <td class="px-5 py-4 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.duedate }}
+                <td class="px-8 py-6 border-b border-gray-200 bg-white whitespace-nowrap">{{ tasksDataBoard.duedate }}
                 </td>
               </tr>
             </tbody>

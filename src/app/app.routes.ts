@@ -47,6 +47,11 @@ export const routes: Routes = [
                 component: ProfilesComponent,
             },
             {
+                path: 'pages/shared/workspace-form',
+                title: 'Workspace Form',
+                component: WorkspaceFormComponent,
+            },
+            {
                 path: 'pages/:workspaceId',
                 title: 'Workspace',
                 component: WorkspaceComponent,
@@ -72,13 +77,6 @@ export const routes: Routes = [
                 path: 'pages/issues',
                 title: 'Issues',
                 component: IssuesComponent,
-                data: { breadcrumb: 'Issues' }
-            },
-            {
-                path: 'pages/shared/workspace-form',
-                title: 'Workspace Form',
-                component: WorkspaceFormComponent,
-                data: { breadcrumb: 'Workspace Form' }
             },
         ]
     },

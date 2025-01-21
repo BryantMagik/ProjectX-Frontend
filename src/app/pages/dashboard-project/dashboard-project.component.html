@@ -1,9 +1,9 @@
 <div class="bg-white shadow sm:rounded-lg select-none">
-    <div class="px-4 py-5 sm:p-6">
+    <div class="px-6 py-8 sm:p-12">
         <div class="flex flex-row items-center">
             <div class="flex flex-row items-center">
                 <ng-container *ngIf="project?.image else noImage">
-                    <img [src]="project?.image" alt="project Icon" class="image-icon w-6 h-6 rounded-md mr-2" />
+                    <img [src]="project?.image" alt="project Icon" class="image-icon w-7 h-6 rounded-md mr-2" />
                     <p class="text-2xl font-bold text-gray-900">{{project?.name}}</p>
                 </ng-container>
 
@@ -22,13 +22,17 @@
             </div>
 
         </div>
-        <p class="">Monitor all of your projects and tasks here.</p>
-        <hr class="mt-4 p-2 border-dashed">
-        <!-- <div class="mt-5 border rounded-md flex flex-row overflow-auto max-w-full scrollbar-hide">
-            <app-project-card [title]="'Total Tasks'" [count]="2"></app-project-card>
-            <app-project-card [title]="'Assigned Tasks'" [count]="3"></app-project-card>
-            <app-project-card [title]="'Completed Tasks'" [count]="4"></app-project-card>
-            <app-project-card [title]="'Overdue Tasks'" [count]="2"></app-project-card>
-        </div> -->
+        <p class="">Monitor all of your tasks here.</p>
+        <hr class="mt-6 p-2 border-dashed">
+        <p-tabs value="table" scrollable>
+            <p-tablist>
+                <p-tab value="table">Table</p-tab>
+                <p-tab value="kanban">Kanban</p-tab>
+                <p-tab value="calendar">Calendar</p-tab>
+            </p-tablist>
+            <p-tabpanel value="table">
+                <app-tasks-table [task]="task" [loading]="loading" [error]="error"></app-tasks-table>
+            </p-tabpanel>
+        </p-tabs>
     </div>
 </div>

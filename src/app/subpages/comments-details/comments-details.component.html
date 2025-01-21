@@ -1,10 +1,10 @@
 <main class="flex-1">
-  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto py-12 sm:px-12 lg:px-20">
     <div class="bg-white shadow sm:rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
+      <div class="px-6 py-8 sm:p-12">
         <h2 class="text-2xl leading-6 font-medium text-gray-900">Comments details</h2>
         <form [formGroup]="commentFormular" (ngSubmit)="onSubmit()">
-          <div *ngIf="comment; else noComment" class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div *ngIf="comment; else noComment" class="mt-8 grid grid-cols-12 gap-4 grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label class="block text-sm font-medium text-gray-700">ID del Comentario</label>
               <input type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true">{{ comment.id }}
@@ -31,12 +31,12 @@
               ID: {{comment.authorId}}
             </div>
             <div>
-              <button type="button" (click)="toggleEdit()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <button type="button" (click)="toggleEdit()" class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 {{ isEditing ? 'Cancel' : 'Edit' }}
               </button>
             </div>
             <div *ngIf="isEditing">
-              <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <button type="submit" class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Apply
               </button>
             </div>
@@ -45,10 +45,10 @@
             <p class="text-red-500">No se encontró el comentario.</p>
           </ng-template>
         </form>
-        <div class="flex justify-between mt-6">
+        <div class="flex justify-between mt-12">
           <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none   
           focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Eliminar</button>
-          <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToComments()">Volver</button>
+          <button class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToComments()">Volver</button>
         </div>
       </div>
     </div>
