@@ -38,7 +38,7 @@ export class SubtaskService {
   getSubtaskById(id: string): Observable<Subtask | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Subtask>(`${apiRoutes.subtask.apiUrl}/${id}`, { headers });
+      return this.apiService.get<Subtask>(`${apiRoutes.subtask.getById}/${id}`, { headers });
     }
     return of(null);
   }
@@ -50,11 +50,11 @@ export class SubtaskService {
 
   updateSubtask(id: string, subtask: Partial<Subtask>): Observable<Subtask> {
     const headers = this.getAuthHeaders();
-    return this.apiService.patch<Subtask>(`${apiRoutes.subtask.apiUrl}/${id}`, subtask, { headers });
+    return this.apiService.patch<Subtask>(`${apiRoutes.subtask.getById}/${id}`, subtask, { headers });
   }
 
   deleteSubtask(id: string): Observable<void> {
     const headers = this.getAuthHeaders();
-    return this.apiService.delete<void>(`${apiRoutes.subtask.apiUrl}/${id}`, { headers });
+    return this.apiService.delete<void>(`${apiRoutes.subtask.getById}/${id}`, { headers });
   }
 }

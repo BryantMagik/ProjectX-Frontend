@@ -24,17 +24,20 @@ export const apiRoutes = {
   },
   subtask: {
     apiUrl: `${environment.apiUrl}subtasks`,
-    getOnlyOwn: `${environment.apiUrl}subtasks/user/subtasks`
+    getOnlyOwn: `${environment.apiUrl}subtasks/user/subtasks`,
+     getById: `${environment.apiUrl}subtasks/id`
   },
   issue: {
     apiUrl: `${environment.apiUrl}issues`,
-    getOnlyOwn: `${environment.apiUrl}issues/user/issues`
+    getOnlyOwn: `${environment.apiUrl}issues/user/issues`,
+    getById: `${environment.apiUrl}issues/id`
   },
   comment: {
     apiUrl: `${environment.apiUrl}comments`,
     getOnlyOwn: `${environment.apiUrl}comments/user/comments`,
     getByTask: (taskId: string) => `${environment.apiUrl}comments/tasks/${taskId}`,
-    getByIssue: (issueId: string) => `${environment.apiUrl}comments/issues/${issueId}`
+    getByIssue: (issueId: string) => `${environment.apiUrl}comments/issues/${issueId}`,
+    getById: `${environment.apiUrl}comments/id`
   },
   workspace: {
     create: `${environment.apiUrl}workspace`,
