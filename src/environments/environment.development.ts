@@ -14,8 +14,8 @@ export const apiRoutes = {
     create: `${environment.apiUrl}project`,
     getOnlyOwn: `${environment.apiUrl}project/user/projects/`,
     getAll: `${environment.apiUrl}project/`,
-    getAllProjectsByWorkspaceId: `${environment.apiUrl}project`,
-    getById: `${environment.apiUrl}project`,
+    getAllProjectsByWorkspaceId: `${environment.apiUrl}project/workspace`,
+    getById: `${environment.apiUrl}project/id`,
     update: `${environment.apiUrl}project`
   },
   task: {
