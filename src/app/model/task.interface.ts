@@ -5,6 +5,7 @@ export interface Task {
     id: string
     name: string
     description: string
+    dueTime: string
     priority: string
     task_type: string
     status: string

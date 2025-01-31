@@ -1,4 +1,4 @@
-<p-table #dt [globalFilterFields]="['code', 'project', 'author.first_name', 'status']" [value]="task" dataKey="id"
+<p-table #dt [globalFilterFields]="['name', 'project', 'author.first_name', 'status']" [value]="task" dataKey="id"
     [rows]="5" [paginator]="true" [filterDelay]="0" [showCurrentPageReport]="true" [loading]="loading">
 
     <ng-template pTemplate="header">
@@ -8,14 +8,24 @@
                     Task Name <p-sortIcon field="name" />
                 </div>
             </th>
-            <th pSortableColumn="project">
+            <th>
                 <div class="flex items-center justify-between">
-                    Project <p-sortIcon field="project" />
+                    Project
                 </div>
             </th>
             <th pSortableColumn="users">
                 <div class="flex items-center justify-between">
                     Assignee <p-sortIcon field="users" />
+                </div>
+            </th>
+            <th pSortableColumn="dueTime">
+                <div class="flex items-center justify-between">
+                    Due Date <p-sortIcon field="dueTime" />
+                </div>
+            </th>
+            <th pSortableColumn="status">
+                <div class="flex items-center justify-between">
+                    Status <p-sortIcon field="status" />
                 </div>
             </th>
         </tr>
@@ -51,6 +61,12 @@
                 <ng-template #noAssignees>
                     <span>No assignees</span>
                 </ng-template>
+            </td>
+            <td>
+                {{task.dueTime}}
+            </td>
+            <td>
+                {{task.status}}
             </td>
         </tr>
 

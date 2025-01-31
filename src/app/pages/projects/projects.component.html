@@ -17,10 +17,6 @@
         [tableStyle]="{ 'min-width': '75rem' }" [filterDelay]="0"
         [globalFilterFields]="['name', '.name', 'project.author.first_name', 'status']" [(selection)]="selectedProjects"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-        <ng-template pTemplate="caption">
-          <div class="flex items-center justify-between">
-          </div>
-        </ng-template>
 
         <ng-template pTemplate="header">
           <tr>

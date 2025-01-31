@@ -1,4 +1,4 @@
-<div class="bg-white shadow sm:rounded-lg select-none">
+<div class="bg-white shadow sm:rounded-lg select-none h-full">
     <div class="px-6 py-8 sm:p-12">
         <div class="flex flex-row items-center">
             <div class="flex flex-row items-center">
@@ -24,15 +24,20 @@
         </div>
         <p class="">Monitor all of your tasks here.</p>
         <hr class="mt-6 p-2 border-dashed">
-        <p-tabs value="table" scrollable>
-            <p-tablist>
+
+        <p-tabs class="h-full" value="table">
+            <p-tablist class="space-y-3">
                 <p-tab value="table">Table</p-tab>
                 <p-tab value="kanban">Kanban</p-tab>
                 <p-tab value="calendar">Calendar</p-tab>
+
             </p-tablist>
-            <p-tabpanel value="table">
-                <app-tasks-table [task]="task" [loading]="loading" [error]="error"></app-tasks-table>
-            </p-tabpanel>
+
+            <p-tabpanels>
+                <p-tabpanel value="table">
+                    <app-tasks-table #dt [task]="task" [loading]="loading" [error]="error"></app-tasks-table>
+                </p-tabpanel>
+            </p-tabpanels>
         </p-tabs>
     </div>
 </div>

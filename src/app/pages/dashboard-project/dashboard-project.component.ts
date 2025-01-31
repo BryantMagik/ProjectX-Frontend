@@ -9,10 +9,12 @@ import { Table, TableModule } from 'primeng/table';
 import { Task } from '../../model/task.interface';
 import { TaskService } from '../../service/task/task.service';
 import { TasksTableComponent } from "../../shared/tasks-table/tasks-table.component";
+import { ToolbarModule } from 'primeng/toolbar';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-dashboard-project',
-  imports: [CommonModule, TabsModule, TableModule, TasksTableComponent],
+  imports: [CommonModule, TabsModule, TableModule, TasksTableComponent, ToolbarModule,ButtonModule],
   templateUrl: './dashboard-project.component.html',
   styleUrl: './dashboard-project.component.css',
   standalone: true
@@ -75,5 +77,11 @@ export class DashboardProjectComponent implements OnInit {
         complete: () => this.loading = false
       })
     ).subscribe()
+  }
+
+  filterGlobal(event: Event): void {
+    const input = event.target as HTMLInputElement
+    const value = input ? input.value : ''
+    this.dt.filterGlobal(value, 'contains')
   }
 }

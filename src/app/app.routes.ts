@@ -52,6 +52,11 @@ export const routes: Routes = [
                 component: WorkspaceFormComponent,
             },
             {
+                path: 'pages/subtasks',
+                title: 'projects',
+                component: ProjectsComponent
+            },
+            {
                 path: 'pages/:workspaceId',
                 title: 'Workspace',
                 component: WorkspaceComponent,
