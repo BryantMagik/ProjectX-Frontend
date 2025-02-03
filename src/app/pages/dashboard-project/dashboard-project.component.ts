@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProjectService } from '../../service/project/project.service';
 import { Subscription, tap } from 'rxjs';
 import { Project } from '../../model/project.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TabsModule } from 'primeng/tabs';
 import { Table, TableModule } from 'primeng/table';
@@ -34,9 +34,16 @@ export class DashboardProjectComponent implements OnInit {
     private projectService: ProjectService,
     private taskService: TaskService,
     private route: ActivatedRoute,
+    private router: Router
 
   ) {
 
+  }
+
+  navigateToEditProject() {
+    if (this.projectId){
+      this.router.navigate(['/pages/projects/subpages/edit-project',this.projectId]);
+    }
   }
 
   ngOnInit(): void {

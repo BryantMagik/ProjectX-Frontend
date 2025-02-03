@@ -23,6 +23,7 @@ import { IssuesdetailsComponent } from './subpages/issuesdetails/issuesdetails.c
 import { SettingsComponent } from './pages/settings-workspaces/settings-workspaces.component';
 import { WorkspaceComponent } from './pages/workspace/workspace.component';
 import { DashboardProjectComponent } from './pages/dashboard-project/dashboard-project.component';
+import { EditProjectComponent } from './subpages/edit-project/edit-project.component';
 
 export const routes: Routes = [
     {
@@ -82,6 +83,12 @@ export const routes: Routes = [
                 path: 'pages/issues',
                 title: 'Issues',
                 component: IssuesComponent,
+            },
+            {
+                path: 'pages/projects/subpages/edit-project/:projectId',
+                title: 'Edit Project',
+                component: EditProjectComponent,
+
             },
         ]
     },
