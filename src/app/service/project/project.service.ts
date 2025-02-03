@@ -51,12 +51,12 @@ export class ProjectService {
     return of(null)
   }
 
-  postProject(workspaceId: string,newProject: Project): Observable<Project | null> {
-    const headers = this.getAuthHeaders()
+  postProject(workspaceId: string, newProject: Omit<Project, 'workspaceId'>): Observable<Project | null> {
+    const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.post<Project>(`${apiRoutes.project.create}`, newProject, { headers })
+      return this.apiService.post<Project>(`${apiRoutes.project.create}/${workspaceId}`, newProject, { headers });
     }
-    return of(null)
+    return of(null);
   }
 
   updateProject(newProject: Project, id: string): Observable<Project> {

@@ -14,6 +14,7 @@ export interface Participant {
   }
 export interface Project {
     id: string
+    workspaceId:string
     code: string
     name: string
     description: string

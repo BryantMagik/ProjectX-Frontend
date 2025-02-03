@@ -18,6 +18,8 @@ import { ProjectListComponent } from "../project-list/project-list.component";
 
 })
 export class CustomSidebarComponent implements OnInit {
+
+  @Output() workspaceSelected = new EventEmitter<string>()
   @Output() openModalEvent = new EventEmitter<void>()
   selectedWorkspaceId: string | null = null
 
@@ -26,7 +28,6 @@ export class CustomSidebarComponent implements OnInit {
   menuItems: MenuItem[] = [];
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router
   ) {
 
@@ -43,14 +44,15 @@ export class CustomSidebarComponent implements OnInit {
 
   openModal() {
     this.openModalEvent.emit()
-    const workspaceId = this.route.snapshot.paramMap.get('id')
-
   }
+  
   onWorkspaceSelected(workspaceId: string): void {
     this.selectedWorkspaceId = workspaceId
     this.selectedWorkspaceSubject.next(workspaceId)
-    this.router.navigate([`/pages/${workspaceId}/dashboard`]);
+    this.router.navigate([`/pages/${workspaceId}/dashboard`])
+    this.workspaceSelected.emit(workspaceId)
 
-    console.log('Workspace ID en Sidebar:', workspaceId)
+    console.log('Workspace ID en Sidebar:', workspaceId);
+
   }
 }

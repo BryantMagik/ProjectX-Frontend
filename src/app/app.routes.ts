@@ -11,7 +11,6 @@ import { SubtasksComponent } from './pages/subtasks/subtasks.component';
 import { IssuesComponent } from './pages/issues/issues.component';
 import { CommentsComponent } from './pages/comments/comments.component';
 import { ProfilesComponent } from './pages/profiles/profiles.component';
-import { ProjectFormComponent } from './shared/project-form/project-form.component';
 import { TasksFormComponent } from './shared/tasks-form/tasks-form.component';
 import { SubtasksFormComponent } from './shared/subtasks-form/subtasks-form.component';
 import { IssuesFormComponent } from './shared/issues-form/issues-form.component';

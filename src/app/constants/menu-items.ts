@@ -54,3 +54,26 @@ export const MENU_PROFILE: MenuItem[] = [
         route: ''
     }
 ]
+
+export const TASK_OPTIONS: MenuItem[] = [
+    {
+        label: 'Task Details',
+        icon: 'pi-external-link',
+        route: 'pages/profile'
+    },
+    {
+        label: 'Open Project',
+        icon: 'pi-external-link',
+        route: 'pages/profile'
+    },
+    {
+        label: 'Edit Task',
+        icon: 'pi-pen-to-square',
+        route: ''
+    },
+    {
+        label: 'Delete Task',
+        icon: 'pi-trash',
+        route: ''
+    },
+]

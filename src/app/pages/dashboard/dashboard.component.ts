@@ -5,10 +5,11 @@ import { Project } from '../../model/project.interface';
 import { ProjectService } from '../../service/project/project.service';
 import { Subscription, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { ModalCreateProjectComponent } from "../../shared/modal-create-project/modal-create-project.component";
 
 @Component({
     selector: 'app-dashboard',
-    imports: [CommonModule, ProjectCardComponent],
+    imports: [CommonModule, ProjectCardComponent, ModalCreateProjectComponent],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
     standalone: true
@@ -20,6 +21,7 @@ export class DashboardComponent implements OnInit {
   error: string | null = null
   workspaceId: string | null = null
   routeSub: Subscription | null = null
+  showModal = false;
 
   constructor(
     private projectService: ProjectService,
@@ -50,6 +52,14 @@ export class DashboardComponent implements OnInit {
         complete: () => this.loading = false
       })
     ).subscribe()
+  }
+
+  //testing
+  openModal() {
+    this.showModal = true;
+  }
+  closeModal() {
+    this.showModal = false;
   }
 
 }

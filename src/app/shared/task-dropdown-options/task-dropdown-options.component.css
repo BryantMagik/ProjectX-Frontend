@@ -1,0 +1,14 @@
+.dropdown-visible {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 500px; /* Puedes ajustar el valor de la altura máxima */
+    pointer-events: auto; 
+  }
+  
+  .dropdown-hidden {
+    opacity: 0;
+    transform: translateY(10px);
+    max-height: 0;
+    pointer-events: none; 
+  }
+  

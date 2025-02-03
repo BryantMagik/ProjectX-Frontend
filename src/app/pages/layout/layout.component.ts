@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { CustomSidebarComponent } from '../../shared/custom-sidebar/custom-sidebar.component';
 import { UserService } from '../../service/user/user.service';
@@ -23,9 +23,11 @@ export class LayoutComponent implements OnInit {
   error: string | null = null;
   user: User | null = null;
   showModal = false;
+  workspaceId: string | null = null
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private route: ActivatedRoute
   ) { }
 
   openModal() {
@@ -35,8 +37,16 @@ export class LayoutComponent implements OnInit {
     this.showModal = false;
   }
   
+  onWorkspaceSelected(workspaceId: string) {
+    this.workspaceId = workspaceId
+  }
+
   ngOnInit() {
-    this.loadUserProfile();
+    this.loadUserProfile()
+    this.route.paramMap.subscribe((params) => {
+      this.workspaceId = params.get('workspaceId')
+      console.log('Workspace ID Layout:', this.workspaceId)
+    })
   }
 
   private loadUserProfile(): void {
