@@ -21,6 +21,7 @@ export class EditProjectComponent implements OnInit {
   projectForm: FormGroup;
   projectId: string | null = null;
   projectImage: string | ArrayBuffer | null = '';
+  project: Project | null = null;
 
   projectTypes = PROYECTOTYPE;
   projectStatuses = PROYECTOSTATUS;
@@ -33,11 +34,10 @@ export class EditProjectComponent implements OnInit {
     private location: Location
   ) {
     this.projectForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      description: ['', Validators.required],
-      status: ['', Validators.required],
-      type: ['', Validators.required],
-      participants: ['',Validators.required],
+      name: [{ value: '' }, [Validators.required, Validators.minLength(3)]],
+      description: [{ value: '' }, Validators.required],
+      status: [{ value: '' }, Validators.required],
+      type: [{ value: '' }, Validators.required],
       image: ['']
     });
   }
@@ -56,7 +56,6 @@ export class EditProjectComponent implements OnInit {
             description: project.description,
             status: project.status,
             type: project.type,
-            participants: project.participants,
             image: project.image || ''
           });
           this.projectImage = project.image || '';
@@ -77,10 +76,20 @@ export class EditProjectComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.projectForm.valid) {
-      this.projectService.updateProject(this.projectForm.value, this.projectId || '').subscribe(() => {
-        console.log('Project updated successfully');
-        this.router.navigate(['/projects']);
+    if (this.projectForm.valid && this.projectId) {
+      const updatedProject: Partial<Project> = {
+        ...this.projectForm.value,  // Tomamos los valores del formulario
+        id: this.projectId, // Aseguramos que tenga el ID
+        image: typeof this.projectImage === 'string' ? this.projectImage : '' // Solo enviamos la imagen si es una URL/base64
+      };
+  
+      this.projectService.updateProject(updatedProject as Project, this.projectId).subscribe({
+        next: () => {
+          console.log('Proyecto actualizado correctamente');
+        },
+        error: (error) => {
+          console.error('Error al actualizar el proyecto:', error);
+        }
       });
     }
   }

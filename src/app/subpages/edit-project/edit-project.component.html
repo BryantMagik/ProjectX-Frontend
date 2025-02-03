@@ -7,12 +7,12 @@
                 <div class="space-y-2">
                     <label for="name" class="block font-bold text-sm text-gray-700">Project Name</label>
                     <input type="text" id="name" formControlName="name" placeholder="Enter project name"
-                        class="w-full border rounded-md h-12 p-4" />
+                        class="w-full border rounded-md h-12 p-4" />{{ project?.name }}
                 </div>
                 <div class="space-y-2 mt-4">
                     <label for="description" class="block font-bold text-sm text-gray-700">Description</label>
                     <textarea id="description" formControlName="description" rows="4"
-                        class="w-full border rounded-md p-4"></textarea>
+                        class="w-full border rounded-md p-4">{{project?.description}}</textarea>
                 </div>
                 <div class="space-y-2 mt-4">
                     <label for="type" class="block font-bold text-sm text-gray-700">Project Type</label>
