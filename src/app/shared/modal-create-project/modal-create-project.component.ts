@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ProjectService } from '../../service/project/project.service'
 import { ProyectDropdown, PROYECTOTYPE } from '../../types/models'
 import { Subscription } from 'rxjs'
-import { ActivatedRoute, RouterModule } from '@angular/router'
+import { ActivatedRoute, Router, RouterModule } from '@angular/router'
 import { Select } from 'primeng/select'
 
 @Component({
@@ -27,7 +27,7 @@ export class ModalCreateProjectComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
-    private route: ActivatedRoute,
+    private router: Router
 
   ) { }
 
@@ -57,10 +57,8 @@ export class ModalCreateProjectComponent implements OnInit {
       this.projectService.postProject(this.workspaceId, projectData).subscribe({
         next: (response) => {
           console.log('Project created:', response)
-          if (this.workspaceId) {
-            this.projectService.getProjectByWorkspaceId(this.workspaceId);
             this.close.emit()
-          }
+
         },
         error: (err) => {
           console.error('Error creating project:', err)

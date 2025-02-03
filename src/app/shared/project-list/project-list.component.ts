@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ProjectService } from '../../service/project/project.service';
-import { tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { Project } from '../../model/project.interface';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
@@ -20,6 +20,7 @@ export class ProjectListComponent implements OnInit {
   projects: Project[] = []
   loading: boolean = true
   error: string | null = null
+  private projectsSubscription: Subscription = new Subscription()
 
   constructor(
     private projectService: ProjectService,
@@ -41,12 +42,23 @@ export class ProjectListComponent implements OnInit {
   }
   private loadProjects(): void {
     if (this.workspace) {
-      this.getProjectByWorkspaceId(this.workspace);
+      this.projectsSubscription = this.projectService.projects$.subscribe({
+        next: (projects) => {
+          this.projects = projects;
+          this.loading = false;
+        },
+        error: () => {
+          this.error = 'Failed to load projects';
+          this.loading = false;
+        },
+      });
+
+      this.projectService.getProjectByWorkspaceId(this.workspace);
     }
   }
 
   navigateToProject(projectId: string): void {
-    this.router.navigate(['/pages', this.workspace,  projectId]);
+    this.router.navigate(['/pages', this.workspace,  projectId])
 
   }
 
@@ -56,11 +68,18 @@ export class ProjectListComponent implements OnInit {
         next: (projects: Project[] | null) => {
           if (projects) {
             this.projects = projects
+            console.log(projects)
           }
         },
         error: () => this.error = 'Failed to load projects',
         complete: () => this.loading = false
       })
     ).subscribe()
+  }
+
+  ngOnDestroy(): void {
+    if (this.projectsSubscription) {
+      this.projectsSubscription.unsubscribe();
+    }
   }
 }

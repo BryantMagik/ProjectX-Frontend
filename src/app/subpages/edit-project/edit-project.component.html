@@ -1,4 +1,4 @@
-<div class="bg-white shadow sm:rounded-lg select-none">
+<div class="bg-white shadow sm:rounded-lg select-none mb-4">
     <div class="px-6 py-8 sm:p-12">
         <p class="text-2xl font-medium text-gray-900">Edit Project</p>
         <hr class="mt-6 p-2 border-dashed">
@@ -22,7 +22,7 @@
                         </option>
                     </select>
                 </div>
-                
+
                 <div class="space-y-2 mt-4">
                     <label for="status" class="block font-bold text-sm text-gray-700">Project Status</label>
                     <select id="status" formControlName="status" class="w-full border rounded-md h-14 p-4 bg-white">
@@ -57,7 +57,8 @@
                 <hr class="mt-6 p-2 border-dashed">
                 <div class="flex justify-between">
                     <button type="button"
-                        class="mt-6 p-6 text-sm font-extrabold border rounded-md text-gray-700 hover:bg-gray-400 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="onCancel()">
+                        class="mt-6 p-6 text-sm font-extrabold border rounded-md text-gray-700 hover:bg-gray-400 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                        (click)="onCancel()">
                         Cancel
                     </button>
                     <button type="submit"
@@ -69,4 +70,20 @@
         </div>
     </div>
 </div>
-
+<div class="bg-white shadow sm:rounded-lg select-none">
+    <div class="px-6 py-8 sm:p-12 flex flex-col">
+        <p class="text-2xl font-bold text-gray-900">Danger Zone</p>
+        <hr class="mt-2 p-2 border-dashed">
+        <p class="font-light text-gray-900/50"> Deleting a workspace is irreversible. This action will remove all data
+            associated with this workspace.
+        </p>
+        <div class="flex justify-end">
+            <button (click)="toggleModal()"
+                class="mt-4 p-4 text-sm font-extrabold w-auto border rounded-md bg-red-700 text-white shadow-md hover:bg-red-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500">
+                Delete Project
+            </button>
+        </div>
+    </div>
+</div>
+<app-modal-delete-project *ngIf="showModal" (close)="toggleModal()"
+    (deleteConfirmed)="handleDelete()"></app-modal-delete-project>

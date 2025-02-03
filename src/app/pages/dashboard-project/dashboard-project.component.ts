@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProjectService } from '../../service/project/project.service';
 import { Subscription, tap } from 'rxjs';
 import { Project } from '../../model/project.interface';
-import { ActivatedRoute,Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TabsModule } from 'primeng/tabs';
 import { Table, TableModule } from 'primeng/table';
@@ -14,7 +14,7 @@ import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-dashboard-project',
-  imports: [CommonModule, TabsModule, TableModule, TasksTableComponent, ToolbarModule,ButtonModule],
+  imports: [CommonModule, TabsModule, TableModule, TasksTableComponent, ToolbarModule, ButtonModule],
   templateUrl: './dashboard-project.component.html',
   styleUrl: './dashboard-project.component.css',
   standalone: true
@@ -41,8 +41,8 @@ export class DashboardProjectComponent implements OnInit {
   }
 
   navigateToEditProject() {
-    if (this.projectId){
-      this.router.navigate(['/pages/projects/subpages/edit-project',this.projectId]);
+    if (this.projectId) {
+      this.router.navigate(['/pages/projects/subpages/edit-project', this.projectId]);
     }
   }
 

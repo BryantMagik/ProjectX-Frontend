@@ -1,16 +1,17 @@
-import { Component, OnInit,Input } from '@angular/core';
-import { FormBuilder,FormGroup,Validators,ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute,Router } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../../service/project/project.service';
 import { Project } from '../../model/project.interface';
 import { Location, NgFor, NgIf } from '@angular/common';
 import { PROYECTOTYPE, PROYECTOSTATUS } from '../../types/models';
 import { from } from 'rxjs';
+import { ModalDeleteProjectComponent } from "../../shared/modal-delete-project/modal-delete-project.component";
 
 @Component({
   selector: 'app-edit-project',
   standalone: true,
-  imports: [ReactiveFormsModule,NgIf,NgFor],
+  imports: [ReactiveFormsModule, NgIf, NgFor, ModalDeleteProjectComponent],
   templateUrl: './edit-project.component.html',
   styleUrl: './edit-project.component.css'
 })
@@ -18,13 +19,13 @@ export class EditProjectComponent implements OnInit {
 
   @Input() workspace: string | null = null
 
-  projectForm: FormGroup;
-  projectId: string | null = null;
-  projectImage: string | ArrayBuffer | null = '';
-  project: Project | null = null;
-
-  projectTypes = PROYECTOTYPE;
-  projectStatuses = PROYECTOSTATUS;
+  projectForm: FormGroup
+  projectId: string | null = null
+  projectImage: string | ArrayBuffer | null = ''
+  project: Project | null = null
+  showModal: boolean = false
+  projectTypes = PROYECTOTYPE
+  projectStatuses = PROYECTOSTATUS
 
   constructor(
     private fb: FormBuilder,
@@ -82,7 +83,7 @@ export class EditProjectComponent implements OnInit {
         id: this.projectId, // Aseguramos que tenga el ID
         image: typeof this.projectImage === 'string' ? this.projectImage : '' // Solo enviamos la imagen si es una URL/base64
       };
-  
+
       this.projectService.updateProject(updatedProject as Project, this.projectId).subscribe({
         next: () => {
           console.log('Proyecto actualizado correctamente');
@@ -94,5 +95,20 @@ export class EditProjectComponent implements OnInit {
     }
   }
 
+  toggleModal() {
+    this.showModal = !this.showModal
 
+  }
+
+  handleDelete(): void {
+    console.log("Workspace Eliminado " + this.projectId)
+    if (this.projectId) {
+      this.deleteProject(this.projectId)
+    }
+    this.toggleModal()
+  }
+
+  private deleteProject(project: string): void {
+    //todoo
+  }
 }
