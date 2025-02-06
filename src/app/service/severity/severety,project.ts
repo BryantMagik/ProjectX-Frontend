@@ -39,19 +39,19 @@ export class SeverityTagComponent {
                 default:
                     return undefined;
             }
-        } else if(this.type === 'type') {
+        } else if (this.type === 'type') {
             switch (this.value) {
                 case 'SOFTWARE':
-                  return 'success';
+                    return 'success';
                 case 'EXTERNAL':
-                  return 'warn';
+                    return 'warn';
                 case 'RESEARCH':
-                  return 'danger';
+                    return 'danger';
                 case 'INTERNAL':
-                  return 'info';
+                    return 'info';
                 default:
-                  return undefined;
-              }
+                    return undefined;
+            }
         }
         return undefined;
     }

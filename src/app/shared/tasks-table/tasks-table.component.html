@@ -1,5 +1,6 @@
 <p-table #dt [globalFilterFields]="['name', 'project', 'author.first_name', 'status']" [value]="task" dataKey="id"
-    [rows]="5" [paginator]="true" [filterDelay]="0" [showCurrentPageReport]="true" [loading]="loading" [tableStyle]="{ 'min-height': '10rem', 'margin-bottom': '300px' }">
+    [rows]="5" [paginator]="true" [filterDelay]="0" [showCurrentPageReport]="true" [loading]="loading"
+    [tableStyle]="{ 'min-height': '10vh', 'margin-bottom': '30vh' }">
 
     <ng-template pTemplate="header">
         <tr>
@@ -26,6 +27,16 @@
             <th pSortableColumn="status">
                 <div class="flex items-center justify-between">
                     Status <p-sortIcon field="status" />
+                </div>
+            </th>
+            <th pSortableColumn="priority">
+                <div class="flex items-center justify-between">
+                    Priority <p-sortIcon field="priority" />
+                </div>
+            </th>
+            <th>
+                <div class="flex items-center justify-between">
+                    <i class=" pi pi-cog"></i>
                 </div>
             </th>
         </tr>
@@ -66,7 +77,10 @@
                 {{task.dueTime}}
             </td>
             <td>
-                {{task.status}}
+                <app-severity-tag [value]="task.status" type="status"></app-severity-tag>
+            </td>
+            <td>
+                <app-severity-tag [value]="task.priority" type="priority"></app-severity-tag>
             </td>
             <td>
                 <app-task-dropdown-options></app-task-dropdown-options>
@@ -75,7 +89,7 @@
 
     </ng-template>
 </p-table>
-    <!-- <table class="w-full">
+<!-- <table class="w-full">
         <thead class="border border-slate-200 h-14">
             <tr>
                 <th>
