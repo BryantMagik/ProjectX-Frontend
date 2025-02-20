@@ -1,23 +1,23 @@
 <main class="flex-1">
-  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto py-12 sm:px-12 lg:px-20">
     <!-- Search and Filter Section -->
-    <div class="mb-6 bg-white shadow sm:rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="mb-12 bg-white shadow sm:rounded-lg">
+      <div class="px-6 py-8 sm:p-12">
+        <div class="grid grid-cols-12 gap-4 grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label for="search" class="block text-sm font-medium text-gray-700">Buscar Subtareas</label>
-            <input type="text" name="search" id="search" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Buscar por ID o nombre">
+            <label for="search" class="label-style">Buscar Subtareas</label>
+            <input type="text" name="search" id="search" class="input-style" placeholder="Buscar por ID o nombre">
           </div>
           <div>
-            <label for="filter-status" class="block text-sm font-medium text-gray-700">Filtrar por Estado</label>
-            <select id="filter-status" name="filter-status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+            <label for="filter-status" class="label-style">Filtrar por Estado</label>
+            <select id="filter-status" name="filter-status" class="select-style">
               <option *ngFor="let status of taskStatuses" [value]="status.value">
                 {{ status.name }}
               </option>
             </select>
           </div>
           <div>
-            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToSubTaskForm()">Create substask</button>
+            <button class="button-primary" (click)="navigateToSubTaskForm()">Create subtask</button>
           </div>
         </div>
       </div>
@@ -25,46 +25,46 @@
 
     <!-- Subtasks Section -->
     <div class="bg-white shadow sm:rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
+      <div class="px-6 py-8 sm:p-12">
         <h2 class="text-2xl leading-6 font-medium text-gray-900">Subtareas</h2>
-        <div class="mt-5 overflow-x-auto">
+        <div class="mt-8 overflow-x-auto">
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Task ID</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Creación</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Actualización</th>
-                <th scope="col" class="relative px-6 py-3">
+                <th scope="col" class="table-header">ID</th>
+                <th scope="col" class="table-header">Nombre</th>
+                <th scope="col" class="table-header">Descripción</th>
+                <th scope="col" class="table-header">Estado</th>
+                <th scope="col" class="table-header">Task ID</th>
+                <th scope="col" class="table-header">Fecha de Creación</th>
+                <th scope="col" class="table-header">Fecha de Actualización</th>
+                <th scope="col" class="relative px-12 py-4">
                   <span class="sr-only">Ver</span>
                 </th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <tr *ngFor="let subTask of filteredSubTasks">
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTask.id }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTask.name }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTask.description || '-' }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                <td class="table-cell">{{ subTask.id }}</td>
+                <td class="table-cell">{{ subTask.name }}</td>
+                <td class="table-cell">{{ subTask.description || '-' }}</td>
+                <td class="table-cell">
+                  <span class="badge"
                     [ngClass]="{
-                      'bg-yellow-100 text-yellow-800': subTask.status === 'PENDING',
-                      'bg-blue-100 text-blue-800': subTask.status === 'IN_PROGRESS',
-                      'bg-green-100 text-green-800': subTask.status === 'COMPLETED'
+                      'badge-pending': subTask.status === 'PENDING',
+                      'badge-in-progress': subTask.status === 'IN_PROGRESS',
+                      'badge-completed': subTask.status === 'COMPLETED'
                     }">
                     {{ subTask.status }}
                   </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTask.taskId }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTask.creation_date}}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ subTask.update_date}}</td>
+                <td class="table-cell">{{ subTask.taskId }}</td>
+                <td class="table-cell">{{ subTask.creation_date }}</td>
+                <td class="table-cell">{{ subTask.update_date }}</td>
               </tr>
-              <!-- Mostrar mensaje si no hay issues -->
+              <!-- Mostrar mensaje si no hay subtareas -->
               <tr *ngIf="subTasks.length === 0">
-                <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No hay subtareas disponibles</td>
+                <td colspan="8" class="table-cell-empty">No hay subtareas disponibles</td>
               </tr>
             </tbody>
           </table>
@@ -73,5 +73,6 @@
     </div>
   </div>
 </main>
+
 
   

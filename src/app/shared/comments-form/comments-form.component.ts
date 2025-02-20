@@ -7,11 +7,11 @@ import { ToastCloseEvent, ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CommentsService } from '../../service/comment/comments.service';
 @Component({
-  selector: 'app-comments-form',
-  standalone: true,
-  imports: [ReactiveFormsModule,CommonModule,ToastModule],
-  templateUrl: './comments-form.component.html',
-  styleUrl: './comments-form.component.css'
+    selector: 'app-comments-form',
+    imports: [ReactiveFormsModule, CommonModule, ToastModule],
+    templateUrl: './comments-form.component.html',
+    styleUrl: './comments-form.component.css',
+    standalone:true
 })
 export class CommentsFormComponent implements OnInit{
   commentForm!: FormGroup;

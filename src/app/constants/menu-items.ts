@@ -5,17 +5,17 @@ export function createMenuItems(id: string): MenuItem[] {
         {
             icon: 'dashboard',
             label: 'Dashboard',
-            route: 'pages/dashboard',
-        },
-        {
-            icon: 'settings',
-            label: 'Setting',
-            route: `pages/settings/${id ?? 'default'}`
+            route: `pages/${id ?? 'default'}/dashboard`
         },
         {
             icon: 'assignment',
             label: 'My Tasks',
             route: 'pages/tasks',
+        },
+        {
+            icon: 'settings',
+            label: 'Setting',
+            route: `pages/${id ?? 'default'}/settings`
         },
         {
             icon: 'subdirectory_arrow_right',
@@ -26,11 +26,6 @@ export function createMenuItems(id: string): MenuItem[] {
             icon: 'bug_report',
             label: 'Issues',
             route: 'pages/issues',
-        },
-        {
-            icon: 'comment',
-            label: 'Comments',
-            route: 'pages/comments',
         },
     ]
 }
@@ -58,4 +53,27 @@ export const MENU_PROFILE: MenuItem[] = [
         icon: 'pi-power-off',
         route: ''
     }
+]
+
+export const TASK_OPTIONS: MenuItem[] = [
+    {
+        label: 'Task Details',
+        icon: 'pi-external-link',
+        route: 'pages/profile'
+    },
+    {
+        label: 'Open Project',
+        icon: 'pi-external-link',
+        route: 'pages/profile'
+    },
+    {
+        label: 'Edit Task',
+        icon: 'pi-pen-to-square',
+        route: ''
+    },
+    {
+        label: 'Delete Task',
+        icon: 'pi-trash',
+        route: ''
+    },
 ]

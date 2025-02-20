@@ -11,11 +11,12 @@ import { userTypeMap } from '../../constants/user-type-items';
 import { AuthService } from '../../service/auth/auth.service';
 
 @Component({
-  selector: 'app-avatar-dropdown',
-  standalone: true,
-  imports: [AvatarModule, FormsModule, CommonModule, MatIconModule, RouterLink, RouterModule],
-  templateUrl: './avatar-dropdown.component.html',
-  styleUrl: './avatar-dropdown.component.css'
+    selector: 'app-avatar-dropdown',
+    imports: [AvatarModule, FormsModule, CommonModule, MatIconModule, RouterLink, RouterModule],
+    templateUrl: './avatar-dropdown.component.html',
+    styleUrl: './avatar-dropdown.component.css',
+    standalone:true
+
 })
 export class AvatarDropdownComponent {
   @Input() user: User | null = null

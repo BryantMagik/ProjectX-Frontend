@@ -6,7 +6,7 @@
                 class="image-icon w-12 h-12 mr-2 rounded-md" />
             <div *ngIf="!selectedWorkspace.image"
                 class="w-12 h-12 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
-                <span class="">{{ selectedWorkspace.name[0] }}</span>
+                <span class="text-2xl">{{ selectedWorkspace.name[0] }}</span>
             </div>
             <span class="">{{ selectedWorkspace.name }}</span>
         </ng-container>
@@ -24,7 +24,7 @@
 
             <ng-template #noImage>
                 <div class="w-12 h-12 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
-                    <span class="font-semibold">{{ workspace.name[0] }}</span>
+                    <span class="font-semibold text-2xl">{{ workspace.name[0] }}</span>
                 </div>
             </ng-template>
 

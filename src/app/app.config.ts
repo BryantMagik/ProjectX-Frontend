@@ -4,13 +4,26 @@ import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MessageService } from 'primeng/api';
+import { providePrimeNG } from 'primeng/config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }), 
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(withFetch()),
     provideAnimationsAsync(),
-    provideRouter(routes), 
+    provideRouter(routes),
     MessageService, provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        options: {
+          prefix: 'p',
+          darkModeSelector: 'system',
+          cssLayer: {
+            name: 'primeng',
+            order: 'app-styles, primeng, another-css-library'
+          }
+        }
+      }
+    })
   ],
 };

@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { userTypeMap } from '../constants/user-type-items';
 
 @Pipe({
-  name: 'capitalizeTypeUser'
+    name: 'capitalizeTypeUser',
+    standalone: false
 })
 export class CapitalizeTypeUserPipe implements PipeTransform {
   transform(value: 'TRAINEE' | 'DEVELOPER' | 'MANAGER' | 'DESIGNER' | 'QA' | 'PRODUCT_OWNER' | null | undefined): string {

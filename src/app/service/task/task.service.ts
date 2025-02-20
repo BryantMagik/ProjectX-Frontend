@@ -4,7 +4,7 @@ import { AuthService } from "../auth/auth.service";
 import { Observable, of } from "rxjs";
 import { Task } from "../../model/task.interface";
 import { HttpHeaders } from "@angular/common/http";
-import { apiRoutes } from '../../../environments/environment';
+import { apiRoutes } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +44,14 @@ export class TaskService {
     return of(null);
   }
 
+  getTaskByProjectId(projectId: string): Observable<Task[]> {
+    const headers = this.getAuthHeaders()
+    if (headers) {
+      return this.apiService.get<Task[]>(`${apiRoutes.task.getTaskByProjectId}/${projectId}`, { headers })
+    }
+    return of([])
+  }
+
   //TODO
   postTask() { }
   getTasksByIdWhereId(): Observable<Task[]> {
@@ -52,6 +60,5 @@ export class TaskService {
       return this.apiService.get<Task[]>(`${apiRoutes.task.getOnlyOwn}`, { headers })
     }
     return of([]);
-
   }
 }

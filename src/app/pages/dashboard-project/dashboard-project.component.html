@@ -1,0 +1,48 @@
+<div class="bg-white shadow sm:rounded-lg select-none h-full">
+    <div class="px-6 py-8 sm:p-12">
+        <div class="flex flex-row items-center">
+            <div class="flex flex-row items-center">
+                <ng-container *ngIf="project?.image else noImage">
+                    <img [src]="project?.image" alt="project Icon" class="image-icon w-7 h-6 rounded-md mr-2" />
+                    <p class="text-2xl font-bold text-gray-900">{{project?.name}}</p>
+                </ng-container>
+
+                <ng-template #noImage>
+                    <div class="w-7 h-7 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-sm">
+                        <span class="font-semibold">{{ project?.name?.[0] || 'N/A' }}</span>
+                    </div>
+                </ng-template>
+                <span class="text-2xl font-bold text-gray-900">{{project?.name}}</span>
+            </div>
+            <div class="ml-auto">
+                <button class="border p-1 rounded-md text-sm font-bold hover:bg-blue-500 hover:text-white"
+                    (click)="navigateToEditProject()"><i class="text-sm pi pi-pencil
+                    "></i>
+                    Edit Project
+                </button>
+            </div>
+
+        </div>
+        <p class="">Monitor all of your tasks here.</p>
+        <hr class="mt-6 p-2 border-dashed">
+
+        <p-tabs class="h-full" value="table">
+            <p-tablist class="space-y-3">
+                <p-tab value="table">Table</p-tab>
+                <p-tab value="kanban">Kanban</p-tab>
+                <p-tab value="calendar">Calendar</p-tab>
+
+            </p-tablist>
+
+            <p-tabpanels>
+                <button
+                    class=" m-1 p-2 text-sm font-extrabold w-full border rounded-md bg-blue-700 text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">+
+                    New</button>
+
+                <p-tabpanel value="table">
+                    <app-tasks-table #dt [task]="task" [loading]="loading" [error]="error"></app-tasks-table>
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
+    </div>
+</div>

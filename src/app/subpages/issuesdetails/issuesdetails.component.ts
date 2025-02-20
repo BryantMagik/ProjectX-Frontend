@@ -1,22 +1,24 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgFor, NgClass, NgIf } from '@angular/common';
-import { FormGroup,Validators,FormBuilder,FormsModule,ReactiveFormsModule } from '@angular/forms';
-import { Router,ActivatedRoute } from '@angular/router';
+import { FormGroup, Validators, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { IssueService } from '../../service/issue/issue.service';
-import { Issue,IssueStatus,IssueType,TaskPriority} from '../../model/issue.interface';
+import { Issue, IssueStatus, IssueType, TaskPriority } from '../../model/issue.interface';
 import { tap } from 'rxjs';
 import { User } from '../../model/user.interface';
 import { UserService } from '../../service/user/user.service';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { CommentsListComponentComponent } from '../../shared/comments-list-component/comments-list-component.component';
 
 @Component({
   selector: 'app-issuesdetails',
-  standalone: true,
-  imports: [CommonModule,NgClass,ReactiveFormsModule,NgIf,NgFor,MultiSelectModule],
+  imports: [CommonModule, NgClass, ReactiveFormsModule, NgIf, NgFor, MultiSelectModule, CommentsListComponentComponent],
   templateUrl: './issuesdetails.component.html',
-  styleUrl: './issuesdetails.component.css'
+  styleUrl: './issuesdetails.component.css',
+  standalone: true
+
 })
-export class IssuesdetailsComponent implements OnInit{
+export class IssuesdetailsComponent implements OnInit {
 
   issue: Issue | null = null;
   issueId: string | null = null;
@@ -32,18 +34,18 @@ export class IssuesdetailsComponent implements OnInit{
 
   constructor(
     private fb: FormBuilder,
-    private router:Router,
+    private router: Router,
     private route: ActivatedRoute,
-    private issueService:IssueService,
+    private issueService: IssueService,
     private userService: UserService,
 
   ) {
     this.issuesFormular = this.fb.group({
-      type: [{value:''}, Validators.required],
-      summary: [{value:''}, [Validators.required, Validators.maxLength(10024)]],
-      description: [{value:''}, [Validators.required, Validators.maxLength(10024)]],
-      priority: [{value:''}, Validators.required],
-      status: [{value:''}, Validators.required],
+      type: [{ value: '' }, Validators.required],
+      summary: [{ value: '' }, [Validators.required, Validators.maxLength(10024)]],
+      description: [{ value: '' }, [Validators.required, Validators.maxLength(10024)]],
+      priority: [{ value: '' }, Validators.required],
+      status: [{ value: '' }, Validators.required],
       assignedTo: [[]],
     });
 
@@ -56,17 +58,17 @@ export class IssuesdetailsComponent implements OnInit{
     }
   }
 
-  navigateToIssues(){
+  navigateToIssues() {
     this.router.navigate(['/pages/issues']);
   }
 
   toggleEdit() {
     if (this.isEditing) {
       this.isEditing = false;
-      this.issuesFormular .disable();
+      this.issuesFormular.disable();
     } else {
       this.isEditing = true;
-      this.issuesFormular .enable();
+      this.issuesFormular.enable();
     }
   }
 
@@ -83,12 +85,12 @@ export class IssuesdetailsComponent implements OnInit{
             status: issue.status,
             assignedTo: issue.assignedTo?.map(Assigneds => Assigneds.id) || []
           });
-          this.availableAssigneds = issue.assignedTo 
-          ? issue.assignedTo.map(assigned => ({
+          this.availableAssigneds = issue.assignedTo
+            ? issue.assignedTo.map(assigned => ({
               id: assigned.id,
               first_name: assigned.first_name
-            })) 
-          : [];
+            }))
+            : [];
         } else {
           console.error('El issue no existe.');
         }
@@ -113,7 +115,7 @@ export class IssuesdetailsComponent implements OnInit{
         }
       });
     }
-   
+
   }
 
 

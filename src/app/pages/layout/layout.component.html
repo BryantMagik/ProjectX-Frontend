@@ -1,10 +1,12 @@
 <div class="min-h-screen max-h-screen font-mono overflow-hidden">
-  <app-custom-sidebar (openModalEvent)="openModal()"></app-custom-sidebar>
+  <app-custom-sidebar (openModalEvent)="openModal()"
+    (workspaceSelected)="onWorkspaceSelected($event)"></app-custom-sidebar>
   <app-navbar [user]="user"></app-navbar>
-  <app-modal-create-project *ngIf="showModal" (close)="closeModal()"></app-modal-create-project>
+  <app-modal-create-project [workspaceId]="workspaceId" *ngIf="showModal"
+    (close)="closeModal()"></app-modal-create-project>
 
   <div
-    class="p-4 xl:ml-72 mt-20 font-mono overflow-auto bg-neutral-100 rounded-t-[30px] h-[calc(100vh-5rem)] shadow-inner">
+    class="p-6 xl:ml-72 mt-20 font-mono overflow-auto bg-neutral-100 rounded-t-[30px] h-[calc(100vh-5rem)] shadow-inner">
     <router-outlet></router-outlet>
   </div>
 

@@ -6,19 +6,19 @@ import { TagModule } from 'primeng/tag';
     template: `
     <p-tag [value]="value" [severity]="getSeverity()"></p-tag>
   `,
-    standalone: true,
     imports: [TagModule],
-    styles: []
+    styles: [],
+    standalone: true
 })
 export class SeverityTagComponent {
     @Input() value!: string;
     @Input() type!: 'status' | 'priority' | 'type';
 
-    getSeverity(): 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast' | undefined {
+    getSeverity(): 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast' | undefined {
         if (this.type === 'status') {
             switch (this.value) {
                 case 'ONGOING':
-                    return 'warning';
+                    return 'warn';
                 case 'ONWAIT':
                     return 'danger';
                 case 'COMPLETED':
@@ -33,25 +33,25 @@ export class SeverityTagComponent {
                 case 'HIGH':
                     return 'danger';
                 case 'MEDIUM':
-                    return 'warning';
+                    return 'warn';
                 case 'LOW':
                     return 'success';
                 default:
                     return undefined;
             }
-        } else if(this.type === 'type') {
+        } else if (this.type === 'type') {
             switch (this.value) {
                 case 'SOFTWARE':
-                  return 'success';
+                    return 'success';
                 case 'EXTERNAL':
-                  return 'warning';
+                    return 'warn';
                 case 'RESEARCH':
-                  return 'danger';
+                    return 'danger';
                 case 'INTERNAL':
-                  return 'info';
+                    return 'info';
                 default:
-                  return undefined;
-              }
+                    return undefined;
+            }
         }
         return undefined;
     }

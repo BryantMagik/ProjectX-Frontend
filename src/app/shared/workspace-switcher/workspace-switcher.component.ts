@@ -7,14 +7,14 @@ import { CommonModule } from '@angular/common'
 import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
-  selector: 'app-workspace-switcher',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './workspace-switcher.component.html',
-  styleUrl: './workspace-switcher.component.css'
+    selector: 'app-workspace-switcher',
+    imports: [FormsModule, CommonModule],
+    standalone: true,
+    templateUrl: './workspace-switcher.component.html',
+    styleUrl: './workspace-switcher.component.css'
 })
 export class WorkspaceSwitcherComponent implements OnInit {
-  @Output() workspaceSelected = new EventEmitter<string>();
+  @Output() workspaceSelected = new EventEmitter<string>()
 
   workspaces: Workspace[] = []
   error: string | null = null
@@ -32,7 +32,6 @@ export class WorkspaceSwitcherComponent implements OnInit {
     this.selectedWorkspace = workspace
     this.selectedWorkspaceId = workspace.id
     this.dropdownOpen = false
-    console.log('Workspace seleccionado:', this.selectedWorkspaceId)
     this.workspaceSelected.emit(this.selectedWorkspaceId!)
   }
 
@@ -46,9 +45,6 @@ export class WorkspaceSwitcherComponent implements OnInit {
         next: (workspace: Workspace[] | null) => {
           if (workspace) {
             this.workspaces = workspace
-            if (this.selectedWorkspaceId) {
-              this.selectedWorkspace = workspace.find(ws => ws.id === this.selectedWorkspaceId) || null
-            }
           }
         },
         error: () => this.error = 'Failed to load workspaces',

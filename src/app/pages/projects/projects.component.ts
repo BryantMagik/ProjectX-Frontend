@@ -19,11 +19,12 @@ import { UserService } from '../../service/user/user.service';
 import { SeverityTagComponent } from '../../service/severity/severety,project';
 
 @Component({
-  selector: 'app-projects',
-  standalone: true,
-  imports: [CommonModule, TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
-  templateUrl: './projects.component.html',
-  styleUrl: './projects.component.css'
+    selector: 'app-projects',
+    imports: [CommonModule, TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
+    templateUrl: './projects.component.html',
+    styleUrl: './projects.component.css',
+    standalone:true
+
 })
 
 export class ProjectsComponent implements OnInit {
@@ -84,7 +85,6 @@ export class ProjectsComponent implements OnInit {
         next: (authors: User[] | null) => {
           if (authors) {
             this.authors = authors
-            console.log("Authores", authors)
           }
         },
         error: () => this.error = 'Failed to load projects',

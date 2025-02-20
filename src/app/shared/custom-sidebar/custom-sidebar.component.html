@@ -1,38 +1,40 @@
-<aside
-    class="bg-white font-mono fixed inset-0 z-50 h-full w-72 xl:translate-x-0 transition-transform duration-300 select-none">
-    <div class="relative text-neutral-500">
-        <a class="flex items-center gap-4 py-6 px-8">
-            <h6
-                class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-800">
-                Jiro
-            </h6>
-        </a>
-    </div>
-    <div class="m-4">
-        <hr class="mt-4 p-2 border-dashed">
-        <div class="flex items-center justify-between text-neutral-500">
-            <a class="text-xs uppercase">workspace </a>
-            <i class="pi pi-plus-circle text-xs uppercase rounded-full"
-                [routerLink]="['/pages/shared/workspace-form']"></i>
-        </div>
-        <app-workspace-switcher (workspaceSelected)="onWorkspaceSelected($event)"></app-workspace-switcher>
-        <hr class="mt-4 p-2 border-dashed">
-    </div>
-    <div class="m-4">
-        <a class="flex items-center gap-4 py-2 px-4 hover:bg-blue-700 rounded-md hover:text-white transition-transform duration-300 hover:rotate-y-180 mt-4 text-xs uppercase text-neutral-500"
-            mat-list-item *ngFor="let item of menuItems" [routerLink]="item.route"
-            routerLinkActive="bg-blue-800 text-white" [routerLinkActiveOptions]="{ exact: true }">
-            <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-            <span matListItemTitle>{{ item.label }}</span>
-        </a>
-    </div>
-    <div class="m-4">
-        <hr class="mt-4 p-2 border-dashed">
-        <div class="flex items-center justify-between text-neutral-500">
-            <a class="text-xs uppercase">projects </a>
-            <i class="pi pi-plus-circle text-xs uppercase rounded-full" (click)="openModal()"></i>
-        </div>
-        <app-project-list [workspace]="selectedWorkspaceId"></app-project-list>
-    </div>
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <a class="sidebar-link">
+      <h6 class="sidebar-title">LOGO</h6>
+    </a>
+  </div>
 
+  <div class="sidebar-section">
+    <hr class="sidebar-divider">
+    <div class="sidebar-section-header mb-2">
+      <a>workspace</a>
+      <i class="pi pi-plus-circle" [routerLink]="['/pages/shared/workspace-form']"></i>
+    </div>
+    <app-workspace-switcher (workspaceSelected)="onWorkspaceSelected($event)"></app-workspace-switcher>
+    <hr class="sidebar-divider">
+  </div>
+
+  <div class="sidebar-section">
+    <a 
+      class="sidebar-menu-item" 
+      mat-list-item 
+      *ngFor="let item of menuItems" 
+      [routerLink]="item.route"
+      routerLinkActive="sidebar-menu-item-active" 
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+      <span matListItemTitle>{{ item.label }}</span>
+    </a>
+  </div>
+
+  <div class="sidebar-section">
+    <hr class="sidebar-divider">
+    <div class="sidebar-section-header">
+      <a>projects</a>
+      <i class="pi pi-plus-circle" (click)="openModal()"></i>
+    </div>
+    <app-project-list [workspace]="selectedWorkspaceId"></app-project-list>
+  </div>
 </aside>

@@ -1,0 +1,168 @@
+<p-table #dt [globalFilterFields]="['name', 'project', 'author.first_name', 'status']" [value]="task" dataKey="id"
+    [rows]="5" [paginator]="true" [filterDelay]="0" [showCurrentPageReport]="true" [loading]="loading"
+    [tableStyle]="{ 'min-height': '10vh', 'margin-bottom': '30vh' }">
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="name">
+                <div class="flex items-center justify-between">
+                    Task Name <p-sortIcon field="name" />
+                </div>
+            </th>
+            <th>
+                <div class="flex items-center justify-between">
+                    Project
+                </div>
+            </th>
+            <th pSortableColumn="users">
+                <div class="flex items-center justify-between">
+                    Assignee <p-sortIcon field="users" />
+                </div>
+            </th>
+            <th pSortableColumn="dueTime">
+                <div class="flex items-center justify-between">
+                    Due Date <p-sortIcon field="dueTime" />
+                </div>
+            </th>
+            <th pSortableColumn="status">
+                <div class="flex items-center justify-between">
+                    Status <p-sortIcon field="status" />
+                </div>
+            </th>
+            <th pSortableColumn="priority">
+                <div class="flex items-center justify-between">
+                    Priority <p-sortIcon field="priority" />
+                </div>
+            </th>
+            <th>
+                <div class="flex items-center justify-between">
+                    <i class=" pi pi-cog"></i>
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-task>
+        <tr class="overflow-auto hover:bg-slate-300">
+            <td>
+                {{task.name}}
+            </td>
+            <td>
+                <div class="flex flex-row items-center">
+                    <ng-container *ngIf="task.project?.image else noImage">
+                        <img [src]="task.project?.image" alt="project Icon"
+                            class="image-icon w-7 h-6 rounded-md mr-2" />
+                        <p class="text-2xl font-bold text-gray-900">{{task.project.name}}</p>
+                    </ng-container>
+
+                    <ng-template #noImage>
+                        <div class="w-7 h-7 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-sm">
+                            <span class="font-semibold">{{ task.project.name?.[0] || 'N/A' }}</span>
+                        </div>
+                    </ng-template>
+                    <span class="text-sm font-bold text-gray-900">{{task.project.name}}</span>
+                </div>
+            </td>
+            <td>
+                <ng-container *ngIf="task.users?.length; else noAssignees">
+                    <div *ngFor="let user of task.users">
+                        {{ user.first_name }}
+                    </div>
+                </ng-container>
+                <ng-template #noAssignees>
+                    <span>No assignees</span>
+                </ng-template>
+            </td>
+            <td>
+                {{task.dueTime}}
+            </td>
+            <td>
+                <app-severity-tag [value]="task.status" type="status"></app-severity-tag>
+            </td>
+            <td>
+                <app-severity-tag [value]="task.priority" type="priority"></app-severity-tag>
+            </td>
+            <td>
+                <app-task-dropdown-options></app-task-dropdown-options>
+            </td>
+        </tr>
+
+    </ng-template>
+</p-table>
+<!-- <table class="w-full">
+        <thead class="border border-slate-200 h-14">
+            <tr>
+                <th>
+                    <div>
+                        Task Name
+                    </div>
+                </th>
+                <th>
+                    <div>
+                        Project
+                    </div>
+                </th>
+                <th>
+                    <div>
+                        Assignee
+                    </div>
+                </th>
+                <th>
+                    <div>
+                        Due Date
+                    </div>
+                </th>
+                <th>
+                    <div>
+                        Status
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="border">
+            <tr *ngFor="let task of task" class="border h-11">
+                <td class="p-3">
+                    {{ task.name }}
+                </td>
+                <td class="p-3 text-center justify-center flex">
+                    <div class="flex flex-row items-center">
+                        <ng-container *ngIf="task.project?.image else noImage">
+                            <img [src]="task.project.image" alt="project Icon"
+                                class="image-icon w-7 h-6 rounded-md mr-2" />
+                            <p class="text-2xl font-bold text-gray-900">{{task.project.name}}</p>
+                        </ng-container>
+
+                        <ng-template #noImage>
+                            <div
+                                class="w-7 h-7 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-sm">
+                                <span class="font-semibold">{{ task.project.name.slice(0,1) || 'N/A' }}</span>
+                            </div>
+                        </ng-template>
+                        <span class="text-sm font-bold text-gray-900">{{task.project.name}}</span>
+                    </div>
+                </td>
+                <td class="p-3">
+                    <div class="flex flex-row items-center">
+                        <ng-container *ngIf="task.users?.length else noAssignees">
+                            <div *ngFor="let user of task.users">
+                                {{ user.first_name }}
+                            </div>
+                        </ng-container>
+                        <ng-template #noAssignees>
+                            <span>No assignees</span>
+                        </ng-template>
+                    </div>
+                </td>
+                <td class="p-3">
+                    {{task.dueTime}}
+                </td>
+                <td class="p-3">
+                    {{task.status}}
+                </td>
+                <td class="p-3">
+                    <app-task-dropdown-options></app-task-dropdown-options>
+                </td>
+            </tr>
+        </tbody>
+
+    </table> -->

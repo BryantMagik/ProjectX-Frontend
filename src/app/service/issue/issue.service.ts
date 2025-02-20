@@ -40,7 +40,7 @@ export class IssueService {
   getIssueById(id: string): Observable<Issue | null> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.get<Issue>(`${apiRoutes.issue.apiUrl}/${id}`, { headers });
+      return this.apiService.get<Issue>(`${apiRoutes.issue.getById}/${id}`, { headers });
     }
     return of(null);
   }
@@ -52,12 +52,12 @@ export class IssueService {
 
   updateIssue(id: string, updatedIssue: Partial<Issue>): Observable<Issue> {
     const headers = this.getAuthHeaders();
-    return this.apiService.patch<Issue>(`${apiRoutes.issue.apiUrl}/${id}`, updatedIssue, { headers });
+    return this.apiService.patch<Issue>(`${apiRoutes.issue.getById}/${id}`, updatedIssue, { headers });
   }
 
   deleteIssue(id: string): Observable<void> {
     const headers = this.getAuthHeaders();
-    return this.apiService.delete<void>(`${apiRoutes.issue.apiUrl}/${id}`, { headers });
+    return this.apiService.delete<void>(`${apiRoutes.issue.getById}/${id}`, { headers });
   }
 
 }

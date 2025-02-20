@@ -1,58 +1,115 @@
 <main class="flex-1">
-  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <div class="bg-white shadow sm:rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
-        <h2 class="text-2xl leading-6 font-medium text-gray-900">Comments details</h2>
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <h2 class="heading">Comments details</h2>
         <form [formGroup]="commentFormular" (ngSubmit)="onSubmit()">
-          <div *ngIf="comment; else noComment" class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div *ngIf="comment; else noComment" class="grid-form">
+            <!-- ID del Comentario -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">ID del Comentario</label>
-              <input type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true">{{ comment.id }}
+              <label class="label">ID del Comentario</label>
+              <input
+                type="text"
+                class="input"
+                [readonly]="true"
+              />{{ comment.id }}
             </div>
+
+            <!-- Contenido -->
             <div class="md:col-span-2">
-              <label class="block text-sm font-medium text-gray-700">Contenido</label>
-              <textarea formControlName="body" class="mt-1 text-sm text-gray-900 p-2 rounded-md w-full" [ngClass]="{'bg-gray-200': isEditing}">{{ comment.body }}</textarea>
+              <label class="label">Contenido</label>
+              <textarea
+                formControlName="body"
+                class="input input-full"
+                [ngClass]="{ 'input-disabled': isEditing }"
+              >{{ comment.body }}</textarea>
             </div>
+
+            <!-- Fecha -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">Fecha</label>
-              <input type="date" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true">{{ comment.date || 'No disponible' }}
+              <label class="label">Fecha</label>
+              <input
+                type="date"
+                class="input"
+                [readonly]="true"
+              />{{ comment.date || 'No disponible' }}
             </div>
+
+            <!-- Fecha de última actualización -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">Fecha de ultima actualización</label>
-              <input type="date" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true"> {{ comment.updateAt || 'No disponible' }}
+              <label class="label">Fecha de última actualización</label>
+              <input
+                type="date"
+                class="input"
+                [readonly]="true"
+              />{{ comment.updateAt || 'No disponible' }}
             </div>
+
+            <!-- ID del Issue o Tarea -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">ID del Issue o de la Tarea</label>
-              <input type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true">{{ comment.taskId || comment.issueId || 'No especificado' }}
+              <label class="label">ID del Issue o de la Tarea</label>
+              <input
+                type="text"
+                class="input"
+                [readonly]="true"
+              />{{ comment.taskId || comment.issueId || 'No especificado' }}
             </div>
+
+            <!-- Datos del Autor -->
             <div>
-              <label class="block text-sm font-medium text-gray-700">Datos del Autor</label>
-              <input type="text" class="mt-1 text-sm text-gray-900 p-2 rounded-md" [readonly]="true">Nombre: {{comment.author?.first_name}}
-              ID: {{comment.authorId}}
+              <label class="label">Datos del Autor</label>
+              <input
+                type="text"
+                class="input"
+                [readonly]="true"
+              />Nombre: {{ comment.author?.first_name }}
+              ID: {{ comment.authorId }}
             </div>
+
+            <!-- Botones -->
             <div>
-              <button type="button" (click)="toggleEdit()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <button
+                type="button"
+                (click)="toggleEdit()"
+                class="button button-primary"
+              >
                 {{ isEditing ? 'Cancel' : 'Edit' }}
               </button>
             </div>
             <div *ngIf="isEditing">
-              <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <button
+                type="submit"
+                class="button button-primary"
+              >
                 Apply
               </button>
             </div>
           </div>
+
+          <!-- Sin comentarios -->
           <ng-template #noComment>
-            <p class="text-red-500">No se encontró el comentario.</p>
+            <p class="error-text">No se encontró el comentario.</p>
           </ng-template>
         </form>
-        <div class="flex justify-between mt-6">
-          <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none   
-          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Eliminar</button>
-          <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToComments()">Volver</button>
+
+        <!-- Botones secundarios -->
+        <div class="flex-between">
+          <button
+            class="button button-danger"
+          >
+            Eliminar
+          </button>
+          <button
+            class="button button-primary"
+            (click)="navigateToComments()"
+          >
+            Volver
+          </button>
         </div>
       </div>
     </div>
   </div>
 </main>
+
 
   

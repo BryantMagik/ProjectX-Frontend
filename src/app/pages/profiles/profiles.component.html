@@ -1,12 +1,12 @@
-<main class="flex-1 select-none">
-  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+<!-- <main class="flex-1 select-none">
+  <div class="max-w-7xl mx-auto py-12 sm:px-12 lg:px-20">
     <div class="bg-white shadow sm:rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
+      <div class="px-6 py-8 sm:p-12">
         <h2 class="text-2xl leading-6 font-medium text-gray-900">Profile</h2>
-        <div class="mt-5">
-          <div *ngIf="user" class="mt-5">
+        <div class="mt-8">
+          <div *ngIf="user" class="mt-8">
             <form action="#" method="POST">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="grid grid-cols-12 gap-4 grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label for="user-id" class="block text-sm font-medium text-gray-700">ID</label>
                   <input type="text" name="user-id" id="user-id"
@@ -53,9 +53,9 @@
                     disabled>
                 </div>
               </div>
-              <div class="mt-6">
+              <div class="mt-12">
                 <button type="submit"
-                  class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Actualizar
+                  class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Actualizar
                   Perfil</button>
               </div>
             </form>
@@ -64,4 +64,34 @@
       </div>
     </div>
   </div>
-</main>
+</main> -->
+<div class="bg-white shadow sm:rounded-lg select-none mb-4">
+  <div class="px-6 py-8 sm:p-12">
+    <p class="text-2xl font-medium text-gray-900">Profile for {{user?.first_name}}</p>
+    <hr class="mt-6 p-2 border-dashed">
+    <div class="mt-2">
+      <!-- <div class="flex flex-row items-center p-8 rounded-lg w-auto space-x-4">
+          <div class="w-24 h-24 rounded-md bg-gray-300 flex justify-center items-center overflow-hidden"
+              *ngIf="workspaceForm.get('image')?.value; else defaultImage">
+              <img [src]="workspaceForm.get('image')?.value" alt="Workspace Icon" class="image-icon" />
+          </div>
+          <ng-template #defaultImage>
+              <div
+                  class="flex items-center justify-center w-[100px] h-[100px] bg-slate-200 rounded-full p-6">
+                  <img [src]="workspace?.image" alt="Workspace Icon" class="object-cover w-full h-full" />
+              </div>
+          </ng-template>
+          <div class="mt-4">
+              <label for="image" class="font-bold text-sm text-gray-700">Workspace Icon</label>
+              <p class="text-xs text-gray-500">JPG, PNG, SVG or JPEG, max 1mb</p>
+              <input #fileInput id="image" type="file" (change)="onFileSelected($event)"
+                  accept=".jpg, .jpeg, .png, .svg" class="mt-2 hidden" />
+              <a (click)="fileInput.click()"
+                  class="mt-4 px-2 py-1 bg-blue-200 text-white rounded-md font-bold hover:text-blue-500 focus:outline-none cursor-pointer">
+                  Upload Image
+              </a>
+          </div>
+      </div> -->
+  </div>
+  </div>
+</div>

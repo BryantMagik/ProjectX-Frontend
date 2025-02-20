@@ -1,15 +1,11 @@
 import { Project } from "./project.interface"
 import { User } from "./user.interface"
 
-export interface Author {
-    id: string
-    name: string 
-  }
 export interface Task {
     id: string
-    code: string
     name: string
     description: string
+    dueTime: string
     priority: string
     task_type: string
     status: string

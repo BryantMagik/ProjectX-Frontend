@@ -7,11 +7,11 @@ import { TASKSSTATUS } from '../../types/models';
 
 
 @Component({
-  selector: 'app-subtasks',
-  standalone: true,
-  imports: [NgFor,NgIf,NgClass],
-  templateUrl: './subtasks.component.html',
-  styleUrl: './subtasks.component.css'
+    selector: 'app-subtasks',
+    imports: [NgFor, NgIf, NgClass],
+    templateUrl: './subtasks.component.html',
+    styleUrl: './subtasks.component.css',
+    standalone:true
 })
 export class SubtasksComponent {
 

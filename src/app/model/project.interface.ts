@@ -1,3 +1,4 @@
+import { Task } from "./task.interface";
 import { User } from "./user.interface"
 
 export interface Participant {
@@ -13,6 +14,7 @@ export interface Participant {
   }
 export interface Project {
     id: string
+    workspaceId:string
     code: string
     name: string
     description: string
@@ -25,4 +27,5 @@ export interface Project {
     createdAt: string,
     updatedAt: string,
     image?: string
+    tasks: Task
 }

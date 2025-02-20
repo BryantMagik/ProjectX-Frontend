@@ -1,7 +1,7 @@
-import { Component,OnInit } from '@angular/core';
-import { CommonModule, NgClass, NgFor,NgIf } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SubtaskService } from '../../service/subtask/subtask.service';
 import { Subtask } from '../../model/subtask.interface';
 import { tap } from 'rxjs';
@@ -11,10 +11,10 @@ import { TASKSSTATUS } from '../../types/models';
 
 @Component({
   selector: 'app-subtasks-details',
-  standalone: true,
-  imports: [CommonModule,NgClass,ReactiveFormsModule,NgIf,NgFor],
+  imports: [CommonModule, NgClass, ReactiveFormsModule, NgIf, NgFor],
   templateUrl: './subtasks-details.component.html',
-  styleUrl: './subtasks-details.component.css'
+  styleUrl: './subtasks-details.component.css',
+  standalone: true
 })
 
 export class SubtasksDetailsComponent implements OnInit {
@@ -25,14 +25,14 @@ export class SubtasksDetailsComponent implements OnInit {
   subtasksFormular: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private router:Router,
+    private router: Router,
     private route: ActivatedRoute,
     private subtaskService: SubtaskService
-  ) { 
+  ) {
     this.subtasksFormular = this.fb.group({
-      name: [{value:'', disabled: true}, [Validators.required, Validators.maxLength(50)]],
-      description: [{value:'', disabled: true}],
-      status: [{value:'', disabled: true}, Validators.required],
+      name: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(50)]],
+      description: [{ value: '', disabled: true }],
+      status: [{ value: '', disabled: true }, Validators.required],
     });
   }
 
@@ -48,7 +48,7 @@ export class SubtasksDetailsComponent implements OnInit {
   toggleEdit() {
     if (this.isEditing) {
       this.isEditing = false;
-      this.subtasksFormular.disable(); 
+      this.subtasksFormular.disable();
     } else {
       this.isEditing = true;
       this.subtasksFormular.enable();
@@ -59,13 +59,13 @@ export class SubtasksDetailsComponent implements OnInit {
     if (this.subtasksFormular.invalid || !this.subtask) {
       return;
     }
-  
+
     const updatedSubtask: Partial<Subtask> = {
       name: this.subtasksFormular.get('name')?.value,
       description: this.subtasksFormular.get('description')?.value,
       status: this.subtasksFormular.get('status')?.value,
     };
-  
+
     this.subtaskService.updateSubtask(this.subtask.id!, updatedSubtask).subscribe({
       next: (updated) => {
         console.log('Subtask updated:', updated);
@@ -77,7 +77,7 @@ export class SubtasksDetailsComponent implements OnInit {
         console.error('Error updating subtask:', err);
       },
     });
-    
+
   }
 
   private loadSubtask(): void {

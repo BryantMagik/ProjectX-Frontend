@@ -17,11 +17,11 @@ import { User } from '../../model/user.interface';
 import { SeverityTagComponent } from "../../service/severity/severety,project";
 
 @Component({
-  selector: 'app-tasks',
-  standalone: true,
-  imports: [CommonModule, TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
-  templateUrl: './tasks.component.html',
-  styleUrl: './tasks.component.css'
+    selector: 'app-tasks',
+    imports: [CommonModule, TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
+    templateUrl: './tasks.component.html',
+    styleUrl: './tasks.component.css',
+    standalone:true
 })
 export class TasksComponent implements OnInit {
 

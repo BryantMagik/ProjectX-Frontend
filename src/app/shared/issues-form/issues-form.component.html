@@ -1,63 +1,60 @@
 <main class="flex-1">
-    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-      <!-- Issue Creation Section -->
-      <div class="bg-white shadow sm:rounded-lg">
-        <div class="px-4 py-5 sm:p-6">
-          <h2 class="text-2xl leading-6 font-medium text-gray-900">Crear Issue</h2>
-          <div class="mt-5">
-            <form [formGroup]="issueForm" (ngSubmit)="onSubmit()">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label for="code" class="block text-sm font-medium text-gray-700">Código</label>
-                  <input type="text" id="code" formControlName="code" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-                <div>
-                  <label for="type" class="block text-sm font-medium text-gray-700">Tipo</label>
-                  <select id="type" formControlName="type" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    <option *ngFor="let type of issueTypes" [value]="type">{{ type }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="summary" class="block text-sm font-medium text-gray-700">Resumen</label>
-                  <input type="text" id="summary" formControlName="summary" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-                <div>
-                  <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
-                  <textarea id="description" formControlName="description" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
-                </div>
-                <div>
-                  <label for="priority" class="block text-sm font-medium text-gray-700">Prioridad</label>
-                  <select id="priority" formControlName="priority" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    <option *ngFor="let priority of issuePriorities" [value]="priority">{{ priority }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="projectId" class="block text-sm font-medium text-gray-700">ID de Proyecto</label>
-                  <select
-                  id="projectId"
-                  formControlName="projectId"
-                  class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                >
+  <div class="main-container">
+    <!-- Issue Creation Section -->
+    <div class="card">
+      <div class="card-content">
+        <h2 class="heading">Crear Issue</h2>
+        <div class="mt-8">
+          <form [formGroup]="issueForm" (ngSubmit)="onSubmit()">
+            <div class="grid-form">
+              <div>
+                <label for="code" class="label-style">Código</label>
+                <input type="text" id="code" formControlName="code" class="input-style" />
+              </div>
+              <div>
+                <label for="type" class="label-style">Tipo</label>
+                <select id="type" formControlName="type" class="input-style">
+                  <option *ngFor="let type of issueTypes" [value]="type">{{ type }}</option>
+                </select>
+              </div>
+              <div>
+                <label for="summary" class="label-style">Resumen</label>
+                <input type="text" id="summary" formControlName="summary" class="input-style" />
+              </div>
+              <div>
+                <label for="description" class="label-style">Descripción</label>
+                <textarea id="description" formControlName="description" class="input-style"></textarea>
+              </div>
+              <div>
+                <label for="priority" class="label-style">Prioridad</label>
+                <select id="priority" formControlName="priority" class="input-style">
+                  <option *ngFor="let priority of issuePriorities" [value]="priority">{{ priority }}</option>
+                </select>
+              </div>
+              <div>
+                <label for="projectId" class="label-style">ID de Proyecto</label>
+                <select id="projectId" formControlName="projectId" class="input-style">
                   <option *ngFor="let project of projects" [value]="project.id">{{ project.name }}</option>
                 </select>
-                </div>
-                <div>
-                  <label for="status" class="block text-sm font-medium text-gray-700">Estado</label>
-                  <select id="status" formControlName="status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    <option *ngFor="let status of issueStatues" [value]="status">{{ status }}</option>
-                  </select>
-                </div>
               </div>
-              <div class="mt-6">
-                <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Crear Issue</button>
+              <div>
+                <label for="status" class="label-style">Estado</label>
+                <select id="status" formControlName="status" class="input-style">
+                  <option *ngFor="let status of issueStatues" [value]="status">{{ status }}</option>
+                </select>
               </div>
-            </form>
-            <div class="mt-6 flex justify-end">
-              <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToIssues()">volver</button>
             </div>
+            <div class="mt-12">
+              <button type="submit" class="button-primary">Crear Issue</button>
+            </div>
+          </form>
+          <div class="mt-12 flex justify-end">
+            <button class="button-primary" (click)="navigateToIssues()">Volver</button>
           </div>
         </div>
       </div>
     </div>
-  </main>
+  </div>
+</main>
+
   

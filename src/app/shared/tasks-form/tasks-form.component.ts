@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-tasks-form',
-  standalone: true,
-  imports: [],
-  templateUrl: './tasks-form.component.html',
-  styleUrl: './tasks-form.component.css'
+    selector: 'app-tasks-form',
+    imports: [],
+    templateUrl: './tasks-form.component.html',
+    styleUrl: './tasks-form.component.css',
+    standalone: true,
 })
 export class TasksFormComponent {
   taskForm: FormGroup;

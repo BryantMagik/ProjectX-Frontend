@@ -1,29 +1,29 @@
 <main class="flex-1">
-  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto py-12 sm:px-12 lg:px-20">
     <!-- Search and Filter Section -->
-    <div class="mb-6 bg-white shadow sm:rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="mb-12 bg-white shadow sm:rounded-lg">
+      <div class="px-6 py-8 sm:p-12">
+        <div class="grid grid-cols-12 gap-4 grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <label for="search" class="block text-sm font-medium text-gray-700">Buscar Comentarios</label>
             <input type="text" name="search" id="search" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Buscar por ID o contenido">
           </div>
           <div>
             <label for="filter-issue" class="block text-sm font-medium text-gray-700">Filtrar por Issue</label>
-            <select id="filter-issue" name="filter-issue" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+            <select id="filter-issue" name="filter-issue" class="mt-1 block w-full pl-4 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
               <option>Todos</option>
               <!-- Más opciones de Issues -->
             </select>
           </div>
           <div>
             <label for="filter-author" class="block text-sm font-medium text-gray-700">Filtrar por Autor</label>
-            <select id="filter-author" name="filter-author" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+            <select id="filter-author" name="filter-author" class="mt-1 block w-full pl-4 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
               <option>Todos</option>
               <!-- Más opciones de autores -->
             </select>
           </div>
           <div>
-            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToCommentsForm()">Create comment</button>
+            <button class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)="navigateToCommentsForm()">Create comment</button>
           </div>
         </div>
       </div>
@@ -31,18 +31,18 @@
 
     <!-- Comments Section -->
     <div class="bg-white shadow sm:rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
+      <div class="px-6 py-8 sm:p-12">
         <h2 class="text-2xl leading-6 font-medium text-gray-900">Comentarios</h2>
-        <div class="mt-5 overflow-x-auto">
+        <div class="mt-8 overflow-x-auto">
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contenido</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Issue ID or Task ID</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Autor ID</th>
-                <th scope="col" class="relative px-6 py-3">
+                <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contenido</th>
+                <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Issue ID or Task ID</th>
+                <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Autor ID</th>
+                <th scope="col" class="relative px-12 py-4">
                   <span class="sr-only">Ver</span>
                 </th>
               </tr>
@@ -50,17 +50,17 @@
             <tbody class="bg-white divide-y divide-gray-200">
               <!-- Comment Item -->
               <tr *ngFor="let comment of comments">
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comment.id }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ comment.body }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comment.date }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comment.issueId || comment.taskId }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ comment.authorId }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-500">{{ comment.id }}</td>
+                <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-900">{{ comment.body }}</td>
+                <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-500">{{ comment.date }}</td>
+                <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-500">{{ comment.issueId || comment.taskId }}</td>
+                <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-500">{{ comment.authorId }}</td>
+                <td class="px-12 py-6 whitespace-nowrap text-right text-sm font-medium">
                   <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
                 </td>
               </tr>
               <tr *ngIf="comments.length === 0">
-                <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No se encontraron comentarios</td>
+                <td colspan="6" class="px-12 py-6 whitespace-nowrap text-sm text-gray-500 text-center">No se encontraron comentarios</td>
               </tr>
             </tbody>
           </table>

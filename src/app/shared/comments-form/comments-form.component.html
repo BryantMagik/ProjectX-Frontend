@@ -1,72 +1,72 @@
 <main class="flex-1">
-  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <div class="bg-white shadow sm:rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
-        <h2 class="text-2xl leading-6 font-medium text-gray-900">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <h2 class="heading">
           {{ isEditing ? 'Editar Comentario' : 'Añadir Comentario' }}
         </h2>
-        <div class="mt-5">
+        <div class="margin-top-8">
           <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid-form">
               <!-- Campo para ID de Incidencia -->
               <div>
-                <label for="issueId" class="block text-sm font-medium text-gray-700">
+                <label for="issueId" class="label">
                   ID de Incidencia
                 </label>
                 <input
                   type="text"
                   id="issueId"
                   formControlName="issueId"
-                  class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  class="input"
                   placeholder="Introduce el ID de la incidencia"
                 />
               </div>
 
               <!-- Campo para ID de Tarea -->
               <div>
-                <label for="taskId" class="block text-sm font-medium text-gray-700">
+                <label for="taskId" class="label">
                   ID de Tarea
                 </label>
                 <input
                   type="text"
                   id="taskId"
                   formControlName="taskId"
-                  class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  class="input"
                   placeholder="Introduce el ID de la tarea"
                 />
               </div>
 
               <!-- Validación de campos -->
               <div class="md:col-span-2">
-                <div *ngIf="commentForm.hasError('oneFieldRequired')" class="text-red-500 text-sm mt-1">
+                <div *ngIf="commentForm.hasError('oneFieldRequired')" class="error-text">
                   Debes proporcionar al menos un ID: Incidencia o Tarea.
                 </div>
               </div>
 
               <!-- Campo para el contenido del comentario -->
               <div class="md:col-span-2">
-                <label for="body" class="block text-sm font-medium text-gray-700">
+                <label for="body" class="label">
                   Comentario <span class="text-red-500">*</span>
                 </label>
                 <textarea
                   id="body"
                   formControlName="body"
-                  class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  class="input"
                   rows="4"
                   placeholder="Escribe tu comentario aquí..."
                 ></textarea>
-                <div *ngIf="commentForm.get('body')?.invalid && commentForm.get('body')?.touched" class="text-red-500 text-sm mt-1">
+                <div *ngIf="commentForm.get('body')?.invalid && commentForm.get('body')?.touched" class="error-text">
                   El comentario es requerido y no debe exceder los 500 caracteres.
                 </div>
               </div>
             </div>
 
             <!-- Botón de envío -->
-            <div class="mt-6">
+            <div class="margin-top-12">
               <button
                 type="submit"
                 [disabled]="commentForm.invalid"
-                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                class="button-primary"
               >
                 {{ isEditing ? 'Actualizar Comentario' : 'Enviar Comentario' }}
               </button>
@@ -74,10 +74,10 @@
           </form>
 
           <!-- Botón para volver -->
-          <div class="mt-6 flex justify-end">
+          <div class="margin-top-12 flex justify-end">
             <button
               type="button"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              class="button-secondary"
               (click)="navigateToComments()"
             >
               Volver
@@ -88,5 +88,6 @@
     </div>
   </div>
 </main>
+
 
   

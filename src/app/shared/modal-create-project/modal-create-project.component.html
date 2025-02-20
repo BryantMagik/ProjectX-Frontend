@@ -1,25 +1,31 @@
 <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 select-none">
-    <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full">
-        <p class="text-2xl font-medium text-gray-900">Create a new project</p>
-        <hr class="mt-4 p-2 border-dashed">
-        <div class="mt-5">
-            <form>
+    <div class="bg-white rounded-lg shadow-lg p-12 max-w-lg w-full">
+        <form (ngSubmit)="onSubmit()" [formGroup]="projectForm">
+            <p class="text-2xl font-medium text-gray-900">Create a new project</p>
+            <hr class="mt-6 p-2 border-dashed">
+            <div class="mt-8">
                 <div class="space-y-2">
                     <label for="name" class="block font-bold text-sm text-gray-700">Project Name</label>
                     <input type="text" id="name" pInputText formControlName="name" placeholder="Enter project name"
-                        class="w-full  border rounded-md h-12 p-3" />
+                        class="w-full  border rounded-md h-12 p-4" />
+                    <label for="code" class="block font-bold text-sm text-gray-700">Code</label>
+                    <input type="text" id="code" pInputText formControlName="code" placeholder="Enter project code"
+                        class="w-full  border rounded-md h-12 p-4" />
+                    <label for="type" class="block font-bold text-sm text-gray-700">Type</label>
+                    <p-select [options]="proyectoType" optionLabel="name" optionValue="value" formControlName="type"
+                        placeholder="Select a project type" class="w-full" />
                 </div>
-            </form>
-        </div>
-        <hr class="mt-4 p-2 border-dashed">
-        <div class="flex justify-between">
-            <button
-                class="mt-4 p-4 text-sm font-extrabold w-auto border rounded-md text-gray-700 hover:bg-gray-400 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                (click)="onClose()">Cancel</button>
-            <button
-                class="mt-4 p-4 text-sm font-extrabold w-auto border rounded-md bg-blue-700 text-white shadow-md hover:bg-blue-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
-                Create Project
-            </button>
-        </div>
+            </div>
+            <hr class="mt-6 p-2 border-dashed">
+            <div class="flex justify-between">
+                <button type="button"
+                    class="mt-6 p-6 text-sm font-extrabold w-auto border rounded-md text-gray-700 hover:bg-gray-400 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    (click)="onClose()">Cancel</button>
+                <button type="submit"
+                    class="mt-6 p-6 text-sm font-extrabold w-auto border rounded-md bg-blue-700 text-white shadow-md hover:bg-blue-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Create Project
+                </button>
+            </div>
+        </form>
     </div>
 </div>
