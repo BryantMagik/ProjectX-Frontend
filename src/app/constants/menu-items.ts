@@ -10,7 +10,7 @@ export function createMenuItems(id: string): MenuItem[] {
         {
             icon: 'assignment',
             label: 'My Tasks',
-            route: 'pages/tasks',
+            route: `pages/${id ?? 'default'}/tasks`
         },
         {
             icon: 'settings',

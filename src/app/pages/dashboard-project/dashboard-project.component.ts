@@ -86,6 +86,8 @@ export class DashboardProjectComponent implements OnInit {
     ).subscribe()
   }
 
+  
+
   filterGlobal(event: Event): void {
     const input = event.target as HTMLInputElement
     const value = input ? input.value : ''

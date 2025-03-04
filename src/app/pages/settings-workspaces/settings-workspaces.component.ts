@@ -135,7 +135,9 @@ export class SettingsComponent implements OnInit {
     this.workspaceService.deleteWorkspace(workspaceId).pipe(
       tap({
         next: (response) => { },
-        error: (error) => { }
+        error: (error) => { 
+          console.log(error)
+        }
       },
       ),
     ).subscribe()
