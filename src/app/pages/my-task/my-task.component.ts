@@ -1,7 +1,6 @@
-import { Component,EventEmitter,OnInit,Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Workspace } from '../../model/workspace.interface';
 import { WorkspaceService } from '../../service/workspace/workspace.service';
-import { tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
@@ -18,7 +17,7 @@ export class MyTaskComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private workspaceService: WorkspaceService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe(params => {
@@ -27,7 +26,6 @@ export class MyTaskComponent implements OnInit {
         this.loadWorkspace();
       }
     });
-    
   }
 
   private loadWorkspace(): void {
