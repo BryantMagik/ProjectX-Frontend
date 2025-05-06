@@ -17,7 +17,7 @@ export class CloudinaryService {
     const formData = new FormData()
     formData.append('file', file)
     formData.append('upload_preset', this.uploadPreset)
-
+    
     try {
       const response = await firstValueFrom(
         this.http.post<any>(this.baseUrl, formData)

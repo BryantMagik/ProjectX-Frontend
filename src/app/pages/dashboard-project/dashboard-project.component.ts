@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ProjectService } from '../../service/project/project.service';
 import { Subscription, tap } from 'rxjs';
 import { Project } from '../../model/project.interface';
@@ -23,6 +23,8 @@ export class DashboardProjectComponent implements OnInit {
 
   @ViewChild('dt') dt!: Table
 
+  @Output() openModalEvent = new EventEmitter<void>()
+
   routeSub: Subscription | null = null
   projectId: string | null = null
   project: Project | null = null
@@ -44,6 +46,10 @@ export class DashboardProjectComponent implements OnInit {
     if (this.projectId) {
       this.router.navigate(['/pages/projects/subpages/edit-project', this.projectId]);
     }
+  }
+
+  openModal() {
+    this.openModalEvent.emit()
   }
 
   ngOnInit(): void {
@@ -86,7 +92,7 @@ export class DashboardProjectComponent implements OnInit {
     ).subscribe()
   }
 
-  
+
 
   filterGlobal(event: Event): void {
     const input = event.target as HTMLInputElement

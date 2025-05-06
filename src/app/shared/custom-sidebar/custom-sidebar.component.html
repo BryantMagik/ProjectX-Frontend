@@ -35,6 +35,8 @@
       <a>projects</a>
       <i class="pi pi-plus-circle" (click)="openModal()"></i>
     </div>
-    <app-project-list [workspace]="selectedWorkspaceId"></app-project-list>
+    <div class="h-60 overflow-y-auto mt-2">
+      <app-project-list [workspace]="selectedWorkspaceId"></app-project-list>
+    </div>
   </div>
 </aside>
