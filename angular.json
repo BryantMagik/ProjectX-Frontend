@@ -27,7 +27,6 @@
               }
             ],
             "styles": [
-
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.css"
             ],
@@ -98,11 +97,23 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": "24039f7b-e620-4ebe-b6ac-61c633900546"
+    "analytics": "24039f7b-e620-4ebe-b6ac-61c633900546",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

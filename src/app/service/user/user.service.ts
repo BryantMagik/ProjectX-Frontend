@@ -1,20 +1,23 @@
-import { Injectable } from "@angular/core";
-import { ApiService } from "../api.service";
+import { Injectable, inject } from "@angular/core";
+import { ApiService } from "../../core/services/api.service";
 import { Observable, of, } from "rxjs";
 import { User } from "../../model/user.interface";
 import { apiRoutes } from '../../../environments/environment';
-import { AuthService } from "../auth/auth.service";
+import { AuthService } from "../../core/services/auth.service";
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private apiService = inject(ApiService);
+  private authService = inject(AuthService);
 
-  constructor(
-    private apiService: ApiService,
-    private authService: AuthService
-  ) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+
+  constructor() { }
 
   profile(token: string): Observable<User> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

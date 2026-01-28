@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule, NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SubtaskService } from '../../service/subtask/subtask.service';
@@ -11,24 +11,27 @@ import { TASKSSTATUS } from '../../types/models';
 
 @Component({
   selector: 'app-subtasks-details',
-  imports: [CommonModule, NgClass, ReactiveFormsModule, NgIf, NgFor],
+  imports: [CommonModule, NgClass, ReactiveFormsModule],
   templateUrl: './subtasks-details.component.html',
   styleUrl: './subtasks-details.component.css',
   standalone: true
 })
 
 export class SubtasksDetailsComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private subtaskService = inject(SubtaskService);
+
   subtask: Subtask | null = null;
   taskStatuses = TASKSSTATUS;
 
   isEditing = false;
   subtasksFormular: FormGroup;
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
-    private subtaskService: SubtaskService
-  ) {
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+  constructor() {
     this.subtasksFormular = this.fb.group({
       name: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(50)]],
       description: [{ value: '', disabled: true }],

@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../../service/auth/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
-import { CommonModule } from '@angular/common';
+import { DatePickerModule } from 'primeng/datepicker';
 import { provideIcons } from '@ng-icons/core';
 import { heroLockClosed, heroUsers } from '@ng-icons/heroicons/outline';
 import { featherAirplay } from '@ng-icons/feather-icons';
@@ -17,11 +16,10 @@ import { DividerModule } from 'primeng/divider';
   selector: 'app-login',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     InputTextModule,
     ButtonModule,
-    CalendarModule,
+    DatePickerModule,
     InputGroupModule,
     InputGroupAddonModule,
     DividerModule
@@ -31,34 +29,35 @@ import { DividerModule } from 'primeng/divider';
   viewProviders: [provideIcons({ featherAirplay, heroUsers, heroLockClosed })],
 })
 export class LoginComponent {
-  isLoading = false;
-  validatorForm: FormGroup;
-  errorMessage: string | undefined = '';
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.validatorForm = new FormGroup({
-      emailValidator: new FormControl('', [Validators.required, Validators.email]),
-      passwordValidator: new FormControl('', [Validators.required])
-    })
-  }
+  isLoading = signal(false);
+  showPassword = signal(false);
+  errorMessage = signal<string | undefined>(undefined);
+
+  validatorForm = new FormGroup({
+    emailValidator: new FormControl('', [Validators.required, Validators.email]),
+    passwordValidator: new FormControl('', [Validators.required])
+  });
 
   login(): void {
     if (this.validatorForm.valid) {
-      this.isLoading = true
+      this.isLoading.set(true);
       const { emailValidator, passwordValidator } = this.validatorForm.value;
 
       this.authService.login(emailValidator!, passwordValidator!).subscribe({
-        next: (response) => {
-          this.isLoading = false
+        next: (_response) => {
+          this.isLoading.set(false);
           this.router.navigate(['pages/dashboard']);
         },
-        error: (err) => {
-          this.isLoading = false
-          this.errorMessage = 'Invalid credentials. Please try again.';
+        error: (_err) => {
+          this.isLoading.set(false);
+          this.errorMessage.set('Invalid credentials. Please try again.');
         }
       });
     } else {
-      this.errorMessage = 'Please fill in all required fields!';
+      this.errorMessage.set('Please fill in all required fields!');
     }
   }
 
@@ -68,5 +67,9 @@ export class LoginComponent {
 
   get passwordControl() {
     return this.validatorForm.get('passwordValidator');
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword.update(value => !value);
   }
 }

@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { TASKSSTATUS } from '../../types/models';
@@ -12,7 +12,7 @@ import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-subtasks-form',
-    imports: [CommonModule, DropdownModule, InputTextModule, ToastModule, ReactiveFormsModule],
+    imports: [SelectModule, InputTextModule, ToastModule, ReactiveFormsModule],
     templateUrl: './subtasks-form.component.html',
     styleUrl: './subtasks-form.component.css',
     providers: [MessageService],
@@ -20,16 +20,19 @@ import { MessageService } from 'primeng/api';
 
 })
 export class SubtasksFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private subtaskService = inject(SubtaskService);
+  private messageService = inject(MessageService);
+
 
   subtaskForm!: FormGroup;
   taskStatuses = TASKSSTATUS;
 
-  constructor(
-    private fb: FormBuilder,
-    private router:Router,
-    private subtaskService: SubtaskService,
-    private messageService: MessageService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.initializeForm();

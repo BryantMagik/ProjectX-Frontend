@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, inject } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ToastModule } from 'primeng/toast';
@@ -13,7 +13,7 @@ import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-issues-form',
-    imports: [CommonModule, ReactiveFormsModule, DropdownModule, InputTextModule, ToastModule, MultiSelectModule],
+    imports: [ReactiveFormsModule, SelectModule, InputTextModule, ToastModule, MultiSelectModule],
     templateUrl: './issues-form.component.html',
     styleUrl: './issues-form.component.css',
     providers: [MessageService],
@@ -21,6 +21,12 @@ import { MessageService } from 'primeng/api';
 
 })
 export class IssuesFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private issueService = inject(IssueService);
+  private projectService = inject(ProjectService);
+  private messageService = inject(MessageService);
+
   issueForm!: FormGroup;
   issueTypes = Object.values(IssueType);
   issueStatues = Object.values(IssueStatus);
@@ -28,14 +34,10 @@ export class IssuesFormComponent implements OnInit {
   projects: {id: string; name:string}[] = [];
   reporterId: string | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    private router:Router,
-    private issueService: IssueService,
-    private projectService: ProjectService,
-    private messageService: MessageService
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.reporterId = sessionStorage.getItem('userId');

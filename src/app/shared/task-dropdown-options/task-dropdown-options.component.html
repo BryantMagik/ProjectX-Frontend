@@ -1,12 +1,13 @@
 <div class="dropdown-container rounded-md hover:bg-slate-200 w-[25px] h-[25px] flex items-center justify-center "
-    (click)="toggleDropdown()">
-    <i class="pi pi-ellipsis-v"></i>
-    <div [ngClass]="{'dropdown-visible': dropdownVisible, 'dropdown-hidden': !dropdownVisible}"
-        class="absolute right-0 mt-[165px] w-40 bg-white shadow-lg rounded-md z-10 transition-all duration-400 ease-in-out">
-        <a class="flex m-2 space-x-4 items-center text-center hover:bg-slate-100 rounded-md p-1"
-            *ngFor="let option of menuItems()" mat-list-item (click)="selectOption(option.label)">
-            <i class="pi" [class]="option.icon"></i>
-            <span matListItemTitle class="text-xs">{{ option.label }}</span>
-
-        </a>
-    </div>
+  (click)="toggleDropdown()">
+  <i class="pi pi-ellipsis-v"></i>
+  <div [ngClass]="{'dropdown-visible': dropdownVisible, 'dropdown-hidden': !dropdownVisible}"
+    class="absolute right-0 mt-[165px] w-40 bg-white shadow-lg rounded-md z-10 transition-all duration-400 ease-in-out">
+    @for (option of menuItems(); track option) {
+      <a class="flex m-2 space-x-4 items-center text-center hover:bg-slate-100 rounded-md p-1"
+        mat-list-item (click)="selectOption(option.label)">
+        <i class="pi" [class]="option.icon"></i>
+        <span matListItemTitle class="text-xs">{{ option.label }}</span>
+      </a>
+    }
+  </div>

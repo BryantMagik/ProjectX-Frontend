@@ -1,20 +1,24 @@
-import { NgIf,NgClass, NgFor} from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder,FormGroup,Validators,AbstractControl, ReactiveFormsModule } from '@angular/forms';
+import { NgClass} from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormBuilder,FormGroup,Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { CommentsService } from '../../service/comment/comments.service';
 import { Comment } from '../../model/comment.interface';
-import { tap } from 'rxjs';
 
 @Component({
     selector: 'app-comments-details',
-    imports: [NgIf, NgClass, ReactiveFormsModule],
+    imports: [NgClass, ReactiveFormsModule],
     templateUrl: './comments-details.component.html',
     styleUrl: './comments-details.component.css',
     standalone:true
 
 })
 export class CommentsDetailsComponent implements OnInit{
+  private route = inject(ActivatedRoute);
+  private commentsService = inject(CommentsService);
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+
 
   isEditing = false;
 
@@ -23,12 +27,8 @@ export class CommentsDetailsComponent implements OnInit{
   commentId: string | null = null;
   comment: Comment | null = null;
 
-  constructor(
-    private route: ActivatedRoute,
-    private commentsService: CommentsService,
-    private fb: FormBuilder,
-    private router:Router
-  ) {
+
+  constructor() {
     this.commentFormular = this.fb.group({
       body: ['', [Validators.required, Validators.minLength(5)]]
     });
@@ -43,7 +43,7 @@ export class CommentsDetailsComponent implements OnInit{
       console.error('No se proporcionó un ID de comentario.');
     }
   }
-  
+
   navigateToComments(){
     this.router.navigate(['/pages/comments']);
   }
@@ -99,8 +99,8 @@ export class CommentsDetailsComponent implements OnInit{
         console.error('Error al actualizar el comentario:', err);
       }
     });
-    
+
   }
 
-  
+
 }

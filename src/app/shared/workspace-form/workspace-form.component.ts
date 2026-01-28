@@ -1,30 +1,33 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { User } from '../../model/user.interface'
 import { WorkspaceService } from '../../service/workspace/workspace.service'
-import { CommonModule } from '@angular/common'
-import { CloudinaryService } from '../../service/cloudinary/cloudinary.service'
+
+import { CloudinaryService } from '../../core/services/cloudinary.service'
 
 @Component({
     selector: 'app-workspace-form',
-    imports: [ReactiveFormsModule, CommonModule],
+    imports: [ReactiveFormsModule],
     templateUrl: './workspace-form.component.html',
     styleUrl: './workspace-form.component.css',
     standalone:true
 
 })
 export class WorkspaceFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private workspaceService = inject(WorkspaceService);
+  private cloudinaryService = inject(CloudinaryService);
+
 
   workspaceForm!: FormGroup
   users: User[] = []
   authorId: string | null = null
   isUploading = false
 
-  constructor(
-    private fb: FormBuilder,
-    private workspaceService: WorkspaceService,
-    private cloudinaryService: CloudinaryService
-  ) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
 
   ngOnInit(): void {

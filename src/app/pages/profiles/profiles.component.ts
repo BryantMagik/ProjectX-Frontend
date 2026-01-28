@@ -1,21 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { User } from '../../model/user.interface';
 import { UserService } from '../../service/user/user.service';
-import { CommonModule } from '@angular/common';
+
 import { first, tap } from 'rxjs';
-import { CloudinaryService } from '../../service/cloudinary/cloudinary.service';
+import { CloudinaryService } from '../../core/services/cloudinary.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
     selector: 'app-profiles',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './profiles.component.html',
     styleUrl: './profiles.component.css',
     standalone:true
 })
 
 export class ProfilesComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private userService = inject(UserService);
+  private cloudinaryService = inject(CloudinaryService);
+
 
   profileForm!: FormGroup
   user: User | null = null
@@ -23,11 +27,10 @@ export class ProfilesComponent implements OnInit {
   error: string | null = null
   isUploading = false
 
-  constructor(
-    private fb: FormBuilder,
-    private userService: UserService,
-    private cloudinaryService: CloudinaryService
-  ) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   ngOnInit(): void {
     this.loadUserProfile()

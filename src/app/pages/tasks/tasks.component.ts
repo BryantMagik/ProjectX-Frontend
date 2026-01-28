@@ -1,8 +1,8 @@
-import { CommonModule, NgClass, NgFor } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TaskService } from '../../service/task/task.service';
-import { AuthService } from '../../service/auth/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 import { UserService } from '../../service/user/user.service';
 import { ToolbarModule } from 'primeng/toolbar';
 import { Table, TableModule } from 'primeng/table';
@@ -14,16 +14,20 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { Task } from '../../model/task.interface';
 import { tap } from 'rxjs';
 import { User } from '../../model/user.interface';
-import { SeverityTagComponent } from "../../service/severity/severety,project";
+import { SeverityTagComponent } from "../../service/severity/severity-tag.component";
 
 @Component({
     selector: 'app-tasks',
-    imports: [CommonModule, TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
+    imports: [TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
     templateUrl: './tasks.component.html',
     styleUrl: './tasks.component.css',
     standalone:true
 })
 export class TasksComponent implements OnInit {
+  private userService = inject(UserService);
+  private router = inject(Router);
+  private taskService = inject(TaskService);
+
 
   @ViewChild('dt') dt!: Table;
   task: Task[] = []
@@ -32,11 +36,10 @@ export class TasksComponent implements OnInit {
   loading: boolean = true;
   selectedTask!: Task[] | null
 
-  constructor(
-    private userService: UserService,
-    private router: Router,
-    private taskService: TaskService,
-  ) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   ngOnInit(): void {
     this.getTask()

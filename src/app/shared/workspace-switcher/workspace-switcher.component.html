@@ -1,35 +1,41 @@
 <div class="relative">
-    <button class="w-full bg-neutral-200 h-[70px] rounded-md flex items-center p-2"
-        (click)="dropdownOpen = !dropdownOpen">
-        <ng-container *ngIf="selectedWorkspace; else noWorkspaceSelected">
-            <img *ngIf="selectedWorkspace.image" [src]="selectedWorkspace.image" alt="Workspace Icon"
-                class="image-icon w-12 h-12 mr-2 rounded-md" />
-            <div *ngIf="!selectedWorkspace.image"
-                class="w-12 h-12 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
-                <span class="text-2xl">{{ selectedWorkspace.name[0] }}</span>
-            </div>
-            <span class="">{{ selectedWorkspace.name }}</span>
-        </ng-container>
-        <ng-template #noWorkspaceSelected>
-            <span>No workspace selected</span>
-        </ng-template>
-    </button>
-
-    <div *ngIf="dropdownOpen" class="absolute w-full bg-white border border-gray-200 rounded-md shadow-lg mt-1">
-        <div *ngFor="let workspace of workspaces" (click)="selectWorkspace(workspace)"
-            class="cursor-pointer p-2 hover:bg-gray-200 flex items-center rounded-sm">
-            <ng-container *ngIf="workspace.image; else noImage">
-                <img [src]="workspace.image" alt="Workspace Icon" class="image-icon w-12 h-12 rounded-md mr-2" />
-            </ng-container>
-
-            <ng-template #noImage>
-                <div class="w-12 h-12 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
-                    <span class="font-semibold text-2xl">{{ workspace.name[0] }}</span>
-                </div>
-            </ng-template>
-
-            <span>{{ workspace.name }}</span>
-            <i *ngIf="workspace === selectedWorkspace" class="pi pi-check ml-auto"></i>
+  <button class="w-full bg-neutral-200 h-[70px] rounded-md flex items-center p-2"
+    (click)="dropdownOpen = !dropdownOpen">
+    @if (selectedWorkspace) {
+      @if (selectedWorkspace.image) {
+        <img [src]="selectedWorkspace.image" alt="Workspace Icon"
+          class="image-icon w-12 h-12 mr-2 rounded-md" />
+      }
+      @if (!selectedWorkspace.image) {
+        <div
+          class="w-12 h-12 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
+          <span class="text-2xl">{{ selectedWorkspace.name[0] }}</span>
         </div>
+      }
+      <span class="">{{ selectedWorkspace.name }}</span>
+    } @else {
+      <span>No workspace selected</span>
+    }
+  </button>
+
+  @if (dropdownOpen) {
+    <div class="absolute w-full bg-white border border-gray-200 rounded-md shadow-lg mt-1">
+      @for (workspace of workspaces; track workspace) {
+        <div (click)="selectWorkspace(workspace)"
+          class="cursor-pointer p-2 hover:bg-gray-200 flex items-center rounded-sm">
+          @if (workspace.image) {
+            <img [src]="workspace.image" alt="Workspace Icon" class="image-icon w-12 h-12 rounded-md mr-2" />
+          } @else {
+            <div class="w-12 h-12 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
+              <span class="font-semibold text-2xl">{{ workspace.name[0] }}</span>
+            </div>
+          }
+          <span>{{ workspace.name }}</span>
+          @if (workspace === selectedWorkspace) {
+            <i class="pi pi-check ml-auto"></i>
+          }
+        </div>
+      }
     </div>
+  }
 </div>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgFor, NgClass, NgIf } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule, NgClass } from '@angular/common';
 import { FormGroup, Validators, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IssueService } from '../../service/issue/issue.service';
@@ -11,14 +11,20 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { CommentsListComponentComponent } from '../../shared/comments-list-component/comments-list-component.component';
 
 @Component({
-  selector: 'app-issuesdetails',
-  imports: [CommonModule, NgClass, ReactiveFormsModule, NgIf, NgFor, MultiSelectModule, CommentsListComponentComponent],
-  templateUrl: './issuesdetails.component.html',
-  styleUrl: './issuesdetails.component.css',
+  selector: 'app-issues-details',
+  imports: [CommonModule, NgClass, ReactiveFormsModule, MultiSelectModule, CommentsListComponentComponent],
+  templateUrl: './issues-details.component.html',
+  styleUrl: './issues-details.component.css',
   standalone: true
 
 })
-export class IssuesdetailsComponent implements OnInit {
+export class IssuesDetailsComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private issueService = inject(IssueService);
+  private userService = inject(UserService);
+
 
   issue: Issue | null = null;
   issueId: string | null = null;
@@ -32,14 +38,10 @@ export class IssuesdetailsComponent implements OnInit {
   taskPriorities = Object.values(TaskPriority);
   issueStatuses = Object.values(IssueStatus);
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
-    private issueService: IssueService,
-    private userService: UserService,
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
-  ) {
+  constructor() {
     this.issuesFormular = this.fb.group({
       type: [{ value: '' }, Validators.required],
       summary: [{ value: '' }, [Validators.required, Validators.maxLength(10024)]],

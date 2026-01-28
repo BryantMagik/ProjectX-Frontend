@@ -19,75 +19,79 @@
                   formControlName="issueId"
                   class="input"
                   placeholder="Introduce el ID de la incidencia"
-                />
-              </div>
-
-              <!-- Campo para ID de Tarea -->
-              <div>
-                <label for="taskId" class="label">
-                  ID de Tarea
-                </label>
-                <input
-                  type="text"
-                  id="taskId"
-                  formControlName="taskId"
-                  class="input"
-                  placeholder="Introduce el ID de la tarea"
-                />
-              </div>
-
-              <!-- Validación de campos -->
-              <div class="md:col-span-2">
-                <div *ngIf="commentForm.hasError('oneFieldRequired')" class="error-text">
-                  Debes proporcionar al menos un ID: Incidencia o Tarea.
+                  />
                 </div>
-              </div>
 
-              <!-- Campo para el contenido del comentario -->
-              <div class="md:col-span-2">
-                <label for="body" class="label">
-                  Comentario <span class="text-red-500">*</span>
-                </label>
-                <textarea
-                  id="body"
-                  formControlName="body"
-                  class="input"
-                  rows="4"
-                  placeholder="Escribe tu comentario aquí..."
-                ></textarea>
-                <div *ngIf="commentForm.get('body')?.invalid && commentForm.get('body')?.touched" class="error-text">
-                  El comentario es requerido y no debe exceder los 500 caracteres.
+                <!-- Campo para ID de Tarea -->
+                <div>
+                  <label for="taskId" class="label">
+                    ID de Tarea
+                  </label>
+                  <input
+                    type="text"
+                    id="taskId"
+                    formControlName="taskId"
+                    class="input"
+                    placeholder="Introduce el ID de la tarea"
+                    />
+                  </div>
+
+                  <!-- Validación de campos -->
+                  <div class="md:col-span-2">
+                    @if (commentForm.hasError('oneFieldRequired')) {
+                      <div class="error-text">
+                        Debes proporcionar al menos un ID: Incidencia o Tarea.
+                      </div>
+                    }
+                  </div>
+
+                  <!-- Campo para el contenido del comentario -->
+                  <div class="md:col-span-2">
+                    <label for="body" class="label">
+                      Comentario <span class="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      id="body"
+                      formControlName="body"
+                      class="input"
+                      rows="4"
+                      placeholder="Escribe tu comentario aquí..."
+                    ></textarea>
+                    @if (commentForm.get('body')?.invalid && commentForm.get('body')?.touched) {
+                      <div class="error-text">
+                        El comentario es requerido y no debe exceder los 500 caracteres.
+                      </div>
+                    }
+                  </div>
                 </div>
+
+                <!-- Botón de envío -->
+                <div class="margin-top-12">
+                  <button
+                    type="submit"
+                    [disabled]="commentForm.invalid"
+                    class="button-primary"
+                    >
+                    {{ isEditing ? 'Actualizar Comentario' : 'Enviar Comentario' }}
+                  </button>
+                </div>
+              </form>
+
+              <!-- Botón para volver -->
+              <div class="margin-top-12 flex justify-end">
+                <button
+                  type="button"
+                  class="button-secondary"
+                  (click)="navigateToComments()"
+                  >
+                  Volver
+                </button>
               </div>
             </div>
-
-            <!-- Botón de envío -->
-            <div class="margin-top-12">
-              <button
-                type="submit"
-                [disabled]="commentForm.invalid"
-                class="button-primary"
-              >
-                {{ isEditing ? 'Actualizar Comentario' : 'Enviar Comentario' }}
-              </button>
-            </div>
-          </form>
-
-          <!-- Botón para volver -->
-          <div class="margin-top-12 flex justify-end">
-            <button
-              type="button"
-              class="button-secondary"
-              (click)="navigateToComments()"
-            >
-              Volver
-            </button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</main>
+    </main>
 
 
-  
+

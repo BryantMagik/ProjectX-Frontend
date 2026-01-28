@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LayoutComponent } from '../../pages/layout/layout.component';
 
 @Component({
@@ -10,8 +10,13 @@ import { LayoutComponent } from '../../pages/layout/layout.component';
 
 })
 export class CommentsBoardComponent {
+  private LayoutComponent = inject(LayoutComponent);
 
-  constructor(private LayoutComponent:LayoutComponent) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+
+  constructor() {}
 
   // setMostrar(value: number) {
   //   this.LayoutComponent.setMostrar(value);

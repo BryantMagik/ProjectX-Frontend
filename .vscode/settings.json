@@ -1,0 +1,10 @@
+{
+  "html.validate.scripts": false,
+  "html.validate.styles": false,
+  "html-validate.enable": false,
+  "html.customData": [],
+  "[html]": {
+    "editor.suggest.insertMode": "replace",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

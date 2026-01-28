@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, signal } from '@angular/core'
-import { CommonModule, NgIf } from '@angular/common'
+
 import { User } from '../../model/user.interface'
 import { BreadcrumbModule } from 'primeng/breadcrumb'
 import { RouterModule } from '@angular/router'
@@ -10,7 +10,7 @@ import { MobilDropdownComponent } from '../mobil-dropdown/mobil-dropdown.compone
 
 @Component({
     selector: 'app-navbar',
-    imports: [AvatarModule, CommonModule, RouterModule, BreadcrumbModule, FormsModule, AvatarDropdownComponent, MobilDropdownComponent],
+    imports: [AvatarModule, RouterModule, BreadcrumbModule, FormsModule, AvatarDropdownComponent, MobilDropdownComponent],
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.css',
     standalone:true

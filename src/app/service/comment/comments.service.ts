@@ -1,22 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable,of } from 'rxjs';
 import { Comment } from '../../model/comment.interface';
-import { ApiService } from '../api.service';
-import { AuthService } from '../auth/auth.service';
+import { ApiService } from '../../core/services/api.service';
+import { AuthService } from '../../core/services/auth.service';
 import { apiRoutes } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentsService {
+  private http = inject(HttpClient);
+  private apiService = inject(ApiService);
+  private authService = inject(AuthService);
 
-  constructor(
-    private http: HttpClient,
-    private apiService: ApiService,
-    private authService: AuthService
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
-  ) {}
+
+  constructor() {}
 
   private getAuthHeaders(): HttpHeaders {
     let headers = new HttpHeaders()

@@ -1,20 +1,23 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { ProjectCardComponent } from "../../components/project-card/project-card.component";
-import { Project } from '../../model/project.interface';
-import { ProjectService } from '../../service/project/project.service';
+import { Project } from '../../models/project.interface';
+import { ProjectService } from '../../features/projects/services/project.service';
 import { Subscription, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ModalCreateProjectComponent } from "../../shared/modal-create-project/modal-create-project.component";
 
 @Component({
     selector: 'app-dashboard',
-    imports: [CommonModule, ProjectCardComponent, ModalCreateProjectComponent],
+    imports: [ProjectCardComponent, ModalCreateProjectComponent],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
     standalone: true
 })
 export class DashboardComponent implements OnInit {
+  private projectService = inject(ProjectService);
+  private route = inject(ActivatedRoute);
+
 
   projects: Project[] = []
   loading: boolean = true
@@ -23,11 +26,10 @@ export class DashboardComponent implements OnInit {
   routeSub: Subscription | null = null
   showModal = false;
 
-  constructor(
-    private projectService: ProjectService,
-    private route: ActivatedRoute,
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
-  ) {
+  constructor() {
 
   }
 

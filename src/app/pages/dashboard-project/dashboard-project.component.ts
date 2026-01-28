@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ProjectService } from '../../service/project/project.service';
 import { Subscription, tap } from 'rxjs';
 import { Project } from '../../model/project.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { TabsModule } from 'primeng/tabs';
 import { Table, TableModule } from 'primeng/table';
 import { Task } from '../../model/task.interface';
@@ -14,12 +14,17 @@ import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-dashboard-project',
-  imports: [CommonModule, TabsModule, TableModule, TasksTableComponent, ToolbarModule, ButtonModule],
+  imports: [TabsModule, TableModule, TasksTableComponent, ToolbarModule, ButtonModule],
   templateUrl: './dashboard-project.component.html',
   styleUrl: './dashboard-project.component.css',
   standalone: true
 })
 export class DashboardProjectComponent implements OnInit {
+  private projectService = inject(ProjectService);
+  private taskService = inject(TaskService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
 
   @ViewChild('dt') dt!: Table
 
@@ -30,13 +35,10 @@ export class DashboardProjectComponent implements OnInit {
   loading: boolean = true
   error: string | null = null
 
-  constructor(
-    private projectService: ProjectService,
-    private taskService: TaskService,
-    private route: ActivatedRoute,
-    private router: Router
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
-  ) {
+  constructor() {
 
   }
 

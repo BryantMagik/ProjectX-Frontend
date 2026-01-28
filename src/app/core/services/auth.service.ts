@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { ApiService } from '../api.service';
+import { Injectable, inject } from '@angular/core';
+import { ApiService } from './api.service';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { apiRoutes } from '../../../environments/environment';
@@ -8,8 +8,14 @@ import { apiRoutes } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
+  private apiService = inject(ApiService);
+  private router = inject(Router);
 
-  constructor(private apiService: ApiService, private router: Router) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+
+  constructor() { }
   private tokenKey = 'tokeykey';
   private userId = 'userId'
 
@@ -55,7 +61,7 @@ export class AuthService {
     }
   }
 
-  
+
   logout(): void {
     sessionStorage.removeItem(this.tokenKey);
     sessionStorage.removeItem('userId');

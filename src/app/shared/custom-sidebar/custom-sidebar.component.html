@@ -16,17 +16,18 @@
   </div>
 
   <div class="sidebar-section">
-    <a 
-      class="sidebar-menu-item" 
-      mat-list-item 
-      *ngFor="let item of menuItems" 
-      [routerLink]="item.route"
-      routerLinkActive="sidebar-menu-item-active" 
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-      <span matListItemTitle>{{ item.label }}</span>
-    </a>
+    @for (item of menuItems; track item) {
+      <a
+        class="sidebar-menu-item"
+        mat-list-item
+        [routerLink]="item.route"
+        routerLinkActive="sidebar-menu-item-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+        <span matListItemTitle>{{ item.label }}</span>
+      </a>
+    }
   </div>
 
   <div class="sidebar-section">

@@ -1,19 +1,21 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core'
 import { Workspace } from '../../model/workspace.interface'
 import { WorkspaceService } from '../../service/workspace/workspace.service'
 import { tap } from 'rxjs'
 import { FormsModule } from '@angular/forms'
-import { CommonModule } from '@angular/common'
+
 import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
     selector: 'app-workspace-switcher',
-    imports: [FormsModule, CommonModule],
+    imports: [FormsModule],
     standalone: true,
     templateUrl: './workspace-switcher.component.html',
     styleUrl: './workspace-switcher.component.css'
 })
 export class WorkspaceSwitcherComponent implements OnInit {
+  private workspaceService = inject(WorkspaceService);
+
   @Output() workspaceSelected = new EventEmitter<string>()
 
   workspaces: Workspace[] = []
@@ -23,9 +25,10 @@ export class WorkspaceSwitcherComponent implements OnInit {
   selectedWorkspace: Workspace | null = null
   dropdownOpen: boolean = false
 
-  constructor(
-    private workspaceService: WorkspaceService,
-  ) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
 
   selectWorkspace(workspace: Workspace): void {

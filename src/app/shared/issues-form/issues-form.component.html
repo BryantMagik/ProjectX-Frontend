@@ -14,7 +14,9 @@
               <div>
                 <label for="type" class="label-style">Tipo</label>
                 <select id="type" formControlName="type" class="input-style">
-                  <option *ngFor="let type of issueTypes" [value]="type">{{ type }}</option>
+                  @for (type of issueTypes; track type) {
+                    <option [value]="type">{{ type }}</option>
+                  }
                 </select>
               </div>
               <div>
@@ -28,19 +30,25 @@
               <div>
                 <label for="priority" class="label-style">Prioridad</label>
                 <select id="priority" formControlName="priority" class="input-style">
-                  <option *ngFor="let priority of issuePriorities" [value]="priority">{{ priority }}</option>
+                  @for (priority of issuePriorities; track priority) {
+                    <option [value]="priority">{{ priority }}</option>
+                  }
                 </select>
               </div>
               <div>
                 <label for="projectId" class="label-style">ID de Proyecto</label>
                 <select id="projectId" formControlName="projectId" class="input-style">
-                  <option *ngFor="let project of projects" [value]="project.id">{{ project.name }}</option>
+                  @for (project of projects; track project) {
+                    <option [value]="project.id">{{ project.name }}</option>
+                  }
                 </select>
               </div>
               <div>
                 <label for="status" class="label-style">Estado</label>
                 <select id="status" formControlName="status" class="input-style">
-                  <option *ngFor="let status of issueStatues" [value]="status">{{ status }}</option>
+                  @for (status of issueStatues; track status) {
+                    <option [value]="status">{{ status }}</option>
+                  }
                 </select>
               </div>
             </div>
@@ -57,4 +65,4 @@
   </div>
 </main>
 
-  
+

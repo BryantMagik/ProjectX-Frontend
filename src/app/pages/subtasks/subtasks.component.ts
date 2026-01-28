@@ -1,19 +1,22 @@
-import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, NgClass } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { SubtaskService } from '../../service/subtask/subtask.service';
-import { Subtask } from '../../model/subtask.interface';
+import { SubtaskService } from '../../features/subtasks/services/subtask.service';
+import { Subtask } from '../../models/subtask.interface';
 import { TASKSSTATUS } from '../../types/models';
 
 
 @Component({
     selector: 'app-subtasks',
-    imports: [NgFor, NgIf, NgClass],
+    imports: [NgClass],
     templateUrl: './subtasks.component.html',
     styleUrl: './subtasks.component.css',
     standalone:true
 })
-export class SubtasksComponent {
+export class SubtasksComponent implements OnInit {
+  private router = inject(Router);
+  private subtaskService = inject(SubtaskService);
+
 
   subTasks: Subtask[] = [];
   filteredSubTasks: Subtask[] = [];
@@ -21,7 +24,10 @@ export class SubtasksComponent {
   selectedStatus: string = '';
   taskStatuses = TASKSSTATUS;
 
-  constructor(private router:Router,private subtaskService: SubtaskService){}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor(){}
 
   navigateToSubTaskForm() {
     this.router.navigate(['/pages/subtasks/shared/subtasks-form']);

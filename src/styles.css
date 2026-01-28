@@ -1,14 +1,10 @@
 @import "primeicons/primeicons.css";
 
-@layer tailwind-base, primeng, tailwind-utilities;
-
-@layer tailwind-base {
 @tailwind base;
-}
-
-@layer tailwind-utilities {
 @tailwind components;
 @tailwind utilities;
-}
+
+@layer tailwind-base, primeng, tailwind-utilities;
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

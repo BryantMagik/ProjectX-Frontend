@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../../service/project/project.service';
 import { Project } from '../../model/project.interface';
-import { Location, NgFor, NgIf } from '@angular/common';
+import { Location } from '@angular/common';
 import { PROYECTOTYPE, PROYECTOSTATUS } from '../../types/models';
 import { from } from 'rxjs';
 import { ModalDeleteProjectComponent } from "../../shared/modal-delete-project/modal-delete-project.component";
@@ -11,11 +11,17 @@ import { ModalDeleteProjectComponent } from "../../shared/modal-delete-project/m
 @Component({
   selector: 'app-edit-project',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, NgFor, ModalDeleteProjectComponent],
+  imports: [ReactiveFormsModule, ModalDeleteProjectComponent],
   templateUrl: './edit-project.component.html',
   styleUrl: './edit-project.component.css'
 })
 export class EditProjectComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private projectService = inject(ProjectService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private location = inject(Location);
+
 
   @Input() workspace: string | null = null
 
@@ -27,13 +33,10 @@ export class EditProjectComponent implements OnInit {
   projectTypes = PROYECTOTYPE
   projectStatuses = PROYECTOSTATUS
 
-  constructor(
-    private fb: FormBuilder,
-    private projectService: ProjectService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private location: Location
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.projectForm = this.fb.group({
       name: [{ value: '' }, [Validators.required, Validators.minLength(3)]],
       description: [{ value: '' }, Validators.required],

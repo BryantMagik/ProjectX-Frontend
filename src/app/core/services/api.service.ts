@@ -1,13 +1,18 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+  private httpClient = inject(HttpClient);
 
-  constructor(private httpClient: HttpClient) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+
+  constructor() { }
 
   get<T>(url: string, options?: { headers?: HttpHeaders }): Observable<T> {
     return this.httpClient.get<T>(url, options);

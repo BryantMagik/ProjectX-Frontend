@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,8 +9,13 @@ import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
     standalone:true
 })
 export class WorkspaceComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   workspaceId: string | null = null
-  constructor(private route: ActivatedRoute) {
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+  constructor() {
 
   }
 

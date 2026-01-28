@@ -1,21 +1,26 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output, OnDestroy, inject } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { finalize, Subscription, tap } from 'rxjs'
 import { Workspace } from '../../model/workspace.interface'
 import { WorkspaceService } from '../../service/workspace/workspace.service'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
-import { CommonModule } from '@angular/common'
-import { CloudinaryService } from '../../service/cloudinary/cloudinary.service'
+
+import { CloudinaryService } from '../../core/services/cloudinary.service'
 import { ModalDeleteWorkspaceComponent } from "../../shared/modal-delete-workspace/modal-delete-workspace.component";
 
 @Component({
     selector: 'app-settings',
-    imports: [ReactiveFormsModule, CommonModule, ModalDeleteWorkspaceComponent],
+    imports: [ReactiveFormsModule, ModalDeleteWorkspaceComponent],
     templateUrl: './settings-workspaces.component.html',
     styleUrl: './settings-workspaces.component.css',
     standalone:true
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
+  private fb = inject(FormBuilder);
+  private route = inject(ActivatedRoute);
+  private workspaceService = inject(WorkspaceService);
+  private cloudinaryService = inject(CloudinaryService);
+
 
   workspaceForm!: FormGroup
   workspaceId: string | null = null
@@ -27,12 +32,10 @@ export class SettingsComponent implements OnInit {
   authorId: string | null = null
   showModal: boolean = false
 
-  constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private workspaceService: WorkspaceService,
-    private cloudinaryService: CloudinaryService
-  ) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   ngOnInit(): void {
     this.routeSub = this.route.parent?.paramMap.subscribe(params => {

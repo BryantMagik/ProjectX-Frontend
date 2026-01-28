@@ -1,9 +1,9 @@
 import { BehaviorSubject, catchError, Observable, of, switchMap, tap } from "rxjs"
-import { ApiService } from "../api.service"
-import { AuthService } from "../auth/auth.service"
+import { ApiService } from "../../core/services/api.service"
+import { AuthService } from "../../core/services/auth.service"
 import { Project } from "../../model/project.interface"
 import { HttpHeaders } from "@angular/common/http"
-import { Injectable } from "@angular/core"
+import { Injectable, inject } from "@angular/core"
 import { apiRoutes } from "../../../environments/environment.development"
 
 @Injectable({
@@ -11,13 +11,16 @@ import { apiRoutes } from "../../../environments/environment.development"
 })
 
 export class ProjectService {
+  private apiService = inject(ApiService);
+  private authService = inject(AuthService);
+
   private projectsSubject = new BehaviorSubject<Project[]>([])
     projects$ = this.projectsSubject.asObservable()
-    
-  constructor(
-    private apiService: ApiService,
-    private authService: AuthService
-  ) { }
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   private getAuthHeaders(): HttpHeaders {
     let headers = new HttpHeaders()
@@ -47,7 +50,7 @@ export class ProjectService {
       const headers = this.getAuthHeaders()
       if (headers) {
         return this.apiService.get<Project[]>(`${apiRoutes.project.getAllProjectsByWorkspaceId}/${workspaceId}`, { headers }).pipe(
-          tap((projects) => {
+          tap((projects: Project[]) => {
             this.projectsSubject.next(projects)
           }),
           catchError((error) => {
@@ -71,7 +74,7 @@ export class ProjectService {
       const headers = this.getAuthHeaders();
       if (headers) {
         return this.apiService.post<Project>(`${apiRoutes.project.create}/${workspaceId}`, newProject, { headers }).pipe(
-          switchMap(() => this.getProjectByWorkspaceId(workspaceId)), 
+          switchMap(() => this.getProjectByWorkspaceId(workspaceId)),
           catchError(error => {
             console.error('Error al crear el proyecto:', error)
             return of([])

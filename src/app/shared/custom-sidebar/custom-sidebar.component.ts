@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, signal, SimpleChanges } from '@angular/core';
+
+import { Component, EventEmitter, OnInit, Output, signal, SimpleChanges, inject } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
@@ -11,13 +11,15 @@ import { ProjectListComponent } from "../project-list/project-list.component";
 
 @Component({
   selector: 'app-custom-sidebar',
-  imports: [CommonModule, MatListModule, MatIconModule, RouterLink, RouterModule, WorkspaceSwitcherComponent, ProjectListComponent],
+  imports: [MatListModule, MatIconModule, RouterLink, RouterModule, WorkspaceSwitcherComponent, ProjectListComponent],
   templateUrl: './custom-sidebar.component.html',
   styleUrl: './custom-sidebar.component.css',
   standalone: true
 
 })
 export class CustomSidebarComponent implements OnInit {
+  private router = inject(Router);
+
 
   @Output() workspaceSelected = new EventEmitter<string>()
   @Output() openModalEvent = new EventEmitter<void>()
@@ -27,9 +29,10 @@ export class CustomSidebarComponent implements OnInit {
   selectedWorkspaceId$ = this.selectedWorkspaceSubject.asObservable()
   menuItems: MenuItem[] = [];
 
-  constructor(
-    private router: Router
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
 
   }
 

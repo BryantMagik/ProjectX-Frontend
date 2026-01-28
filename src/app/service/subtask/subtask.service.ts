@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable,of } from 'rxjs';
-import { ApiService } from '../api.service';
-import { AuthService } from '../auth/auth.service';
+import { ApiService } from '../../core/services/api.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Subtask } from '../../model/subtask.interface';
 import { apiRoutes } from '../../../environments/environment';
 
@@ -10,11 +10,14 @@ import { apiRoutes } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class SubtaskService {
+  private apiService = inject(ApiService);
+  private authService = inject(AuthService);
 
-  constructor(
-    private apiService: ApiService,
-    private authService: AuthService
-  ) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+
+  constructor() { }
 
   private getAuthHeaders(): HttpHeaders {
     let headers = new HttpHeaders();

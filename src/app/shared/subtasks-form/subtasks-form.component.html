@@ -9,81 +9,82 @@
               <!-- Subtask Name -->
               <div>
                 <label for="name" class="label-style">Nombre</label>
-                <input 
-                  type="text" 
-                  id="name" 
-                  formControlName="name" 
-                  class="input-style" 
-                  placeholder="Nombre de la subtarea" 
-                />
-              </div>
-
-              <!-- Subtask Description -->
-              <div class="md:col-span-2">
-                <label for="description" class="label-style">Descripción</label>
-                <textarea 
-                  id="description" 
-                  formControlName="description" 
-                  class="input-style" 
-                  rows="4" 
-                  placeholder="Descripción de la subtarea"
-                ></textarea>
-              </div>
-
-              <!-- Subtask Status -->
-              <div>
-                <label for="status" class="label-style">Estado</label>
-                <select 
-                  id="status" 
-                  formControlName="status" 
+                <input
+                  type="text"
+                  id="name"
+                  formControlName="name"
                   class="input-style"
-                >
-                  <option 
-                    *ngFor="let status of taskStatuses" 
-                    [value]="status.value"
+                  placeholder="Nombre de la subtarea"
+                  />
+                </div>
+
+                <!-- Subtask Description -->
+                <div class="md:col-span-2">
+                  <label for="description" class="label-style">Descripción</label>
+                  <textarea
+                    id="description"
+                    formControlName="description"
+                    class="input-style"
+                    rows="4"
+                    placeholder="Descripción de la subtarea"
+                  ></textarea>
+                </div>
+
+                <!-- Subtask Status -->
+                <div>
+                  <label for="status" class="label-style">Estado</label>
+                  <select
+                    id="status"
+                    formControlName="status"
+                    class="input-style"
+                    >
+                    @for (status of taskStatuses; track status) {
+                      <option
+                        [value]="status.value"
+                        >
+                        {{ status.name }}
+                      </option>
+                    }
+                  </select>
+                </div>
+
+                <!-- Task ID -->
+                <div>
+                  <label for="task-id" class="label-style">ID de Tarea</label>
+                  <input
+                    type="text"
+                    id="taskId"
+                    formControlName="taskId"
+                    class="input-style"
+                    placeholder="ID de la tarea"
+                    />
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="margin-top-6">
+                  <button
+                    type="submit"
+                    class="button-primary"
+                    >
+                    Crear Subtarea
+                  </button>
+                </div>
+              </form>
+
+              <!-- Back Button -->
+              <div class="margin-top-6 flex justify-end">
+                <button
+                  class="button-primary"
+                  (click)="navigateToSubTasks()"
                   >
-                    {{ status.name }}
-                  </option>
-                </select>
-              </div>
-
-              <!-- Task ID -->
-              <div>
-                <label for="task-id" class="label-style">ID de Tarea</label>
-                <input 
-                  type="text" 
-                  id="taskId" 
-                  formControlName="taskId" 
-                  class="input-style" 
-                  placeholder="ID de la tarea" 
-                />
+                  Volver
+                </button>
               </div>
             </div>
-
-            <!-- Submit Button -->
-            <div class="margin-top-6">
-              <button 
-                type="submit" 
-                class="button-primary"
-              >
-                Crear Subtarea
-              </button>
-            </div>
-          </form>
-
-          <!-- Back Button -->
-          <div class="margin-top-6 flex justify-end">
-            <button 
-              class="button-primary" 
-              (click)="navigateToSubTasks()"
-            >
-              Volver
-            </button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</main>
+    </main>
 
-  
+

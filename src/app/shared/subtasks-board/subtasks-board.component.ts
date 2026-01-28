@@ -1,4 +1,4 @@
-import { CommonModule, NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 
 export interface subTasksDataBoard{
@@ -13,7 +13,7 @@ export interface subTasksDataBoard{
 
 @Component({
     selector: 'app-subtasks-board',
-    imports: [NgFor, CommonModule],
+    imports: [],
     templateUrl: './subtasks-board.component.html',
     styleUrl: './subtasks-board.component.css',
     standalone:true

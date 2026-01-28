@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, Input, signal } from '@angular/core';
+import { Component, HostListener, Input, signal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { AvatarModule } from 'primeng/avatar';
@@ -8,7 +8,7 @@ import { MENU_PROFILE } from '../../constants/menu-items';
 import { RouterLink, RouterModule } from '@angular/router'
 import { User } from '../../model/user.interface';
 import { userTypeMap } from '../../constants/user-type-items';
-import { AuthService } from '../../service/auth/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
     selector: 'app-avatar-dropdown',
@@ -19,9 +19,14 @@ import { AuthService } from '../../service/auth/auth.service';
 
 })
 export class AvatarDropdownComponent {
+  private authService = inject(AuthService);
+
   @Input() user: User | null = null
 
-  constructor(private authService: AuthService) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   onLogout(): void {
     this.authService.logout()

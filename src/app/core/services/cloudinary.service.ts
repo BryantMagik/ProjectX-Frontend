@@ -1,17 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
 })
 export class CloudinaryService {
+  private http = inject(HttpClient);
+
 
   private cloudName = 'dk5b2zjck'
   private uploadPreset = 'jiro_uploads'
   private baseUrl = `https://api.cloudinary.com/v1_1/${this.cloudName}/image/upload`
 
-  constructor(private http: HttpClient) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   async uploadImage(file: File): Promise<string> {
     const formData = new FormData()

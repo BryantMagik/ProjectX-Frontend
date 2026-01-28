@@ -1,39 +1,91 @@
-<div class="h-screen flex items-center justify-center bg-gradient-to-b bg-neutral-100 font-mono">
-    <form [formGroup]="validatorForm" (ngSubmit)="login()"
-        class="text-center p-12 rounded-[32px] shadow-md w-[450px] h-[420px] bg-white select-none">
-        <div class="mb-6">
-            <p class="text-3xl text-black font-mono">Welcome back!</p>
-            <p class="text-1xl text-slate-400">By signing up</p>
-            <hr class="mt-6 p-2 border-dashed">
-            <p-inputGroup>
-                <p-inputGroupAddon class="bg-white">
-                    <i class="pi pi-user"></i>
-                </p-inputGroupAddon>
-                <input id="email" type="email" pInputText formControlName="emailValidator"
-                    placeholder="Enter email address"
-                    class="w-full px-4 py-2 border border-slate-200 rounded-[5px] bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-                <label for="email" class="block text-gray-600 text-sm font-bold mb-2"></label>
-            </p-inputGroup>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div class="text-center">
+            <div class="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg">
+                <i class="pi pi-sign-in text-white text-2xl"></i>
+            </div>
+            <h2 class="mt-6 text-3xl font-extrabold text-gray-900">Welcome back</h2>
+            <p class="mt-2 text-sm text-gray-600">Sign in to continue to your account</p>
         </div>
-        <div class="mb-7">
-            <p-inputGroup>
-                <p-inputGroupAddon class="bg-white">
-                    <i class="pi pi-lock"></i>
-                </p-inputGroupAddon>
-                <input id="password" type="password" pInputText placeholder="Enter password"
-                    formControlName="passwordValidator"
-                    class="w-full px-4 py-2 border border-slate-200 rounded-[5px] bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-                <label for="password" class="block text-gray-700 text-sm font-bold mb-2"></label>
-            </p-inputGroup>
+        <div class="bg-white py-8 px-6 shadow-2xl rounded-2xl border border-gray-100">
+            <form [formGroup]="validatorForm" (ngSubmit)="login()" class="space-y-6">
+                <div>
+                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email address</label>
+                    <p-inputGroup>
+                        <p-inputGroupAddon>
+                            <i class="pi pi-envelope text-gray-500"></i>
+                        </p-inputGroupAddon>
+                        <input id="email"
+                               type="email"
+                               pInputText
+                               formControlName="emailValidator"
+                               placeholder="you@example.com"
+                               class="w-full"
+                               [class.ng-invalid]="validatorForm.get('emailValidator')?.invalid && validatorForm.get('emailValidator')?.touched" />
+                    </p-inputGroup>
+                    @if (validatorForm.get('emailValidator')?.invalid && validatorForm.get('emailValidator')?.touched) {
+                    <small class="text-red-500 text-xs mt-1 block">Please enter a valid email address</small>
+                    }
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                    <p-inputGroup>
+                        <p-inputGroupAddon>
+                            <i class="pi pi-lock text-gray-500"></i>
+                        </p-inputGroupAddon>
+                        <input id="password"
+                               [type]="showPassword() ? 'text' : 'password'"
+                               pInputText
+                               formControlName="passwordValidator"
+                               placeholder="Enter your password"
+                               class="w-full"
+                               [class.ng-invalid]="validatorForm.get('passwordValidator')?.invalid && validatorForm.get('passwordValidator')?.touched" />
+                        <p-inputGroupAddon class="cursor-pointer" (click)="togglePasswordVisibility()">
+                            <i [class]="showPassword() ? 'pi pi-eye-slash text-gray-500' : 'pi pi-eye text-gray-500'"></i>
+                        </p-inputGroupAddon>
+                    </p-inputGroup>
+                    @if (validatorForm.get('passwordValidator')?.invalid && validatorForm.get('passwordValidator')?.touched) {
+                    <small class="text-red-500 text-xs mt-1 block">Password is required</small>
+                    }
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me"
+                               type="checkbox"
+                               class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                    </div>
+                    <div class="text-sm">
+                        <a href="#"
+                           class="font-medium text-blue-600 hover:text-blue-500 transition-colors">Forgot password?</a>
+                    </div>
+                </div>
+                @if (errorMessage()) {
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                    <div class="flex items-center">
+                        <i class="pi pi-exclamation-triangle text-red-500 mr-3"></i>
+                        <p class="text-sm text-red-700">{{ errorMessage() }}</p>
+                    </div>
+                </div>
+                }
+                <div>
+                    <button type="submit"
+                            pButton
+                            [disabled]="isLoading() || validatorForm.invalid"
+                            [label]="isLoading() ? 'Signing in...' : 'Sign in'"
+                            [icon]="isLoading() ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in'"
+                            title="Sign in to your account"
+                            class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                    </button>
+                </div>
+            </form>
         </div>
-        <div>
-            <button type="submit" pButton label="Login" [disabled]="isLoading"
-                [label]="isLoading ? 'Logging in...' : 'Login'"
-                class="w-full py-2 px-6 bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono">
-            </button>
+        <div class="text-center">
+            <p class="text-sm text-gray-600">
+                Don't have an account?
+                <a href="#"
+                   class="font-medium text-blue-600 hover:text-blue-500 transition-colors">Sign up now</a>
+            </p>
         </div>
-        <div *ngIf="errorMessage" class="mt-6 text-red-500">
-            {{ errorMessage }}
-        </div>
-    </form>
+    </div>
 </div>

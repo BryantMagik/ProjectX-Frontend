@@ -1,28 +1,31 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { CommentsService } from '../../service/comment/comments.service';
 import { Comment } from '../../model/comment.interface';
 import { Router } from '@angular/router';
-import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-comments-list-component',
-    imports: [NgIf, NgFor, DatePipe],
+    imports: [DatePipe],
     templateUrl: './comments-list-component.component.html',
     styleUrl: './comments-list-component.component.css',
     standalone:true
 
 })
 export class CommentsListComponentComponent implements OnInit{
+  private commentsService = inject(CommentsService);
+  private router = inject(Router);
+
   @Input() taskId?: string;
   @Input() issueId?: string;
   comments: Comment[] = [];
   isLoading = true;
   errorMessage: string | null = null;
 
-  constructor(
-    private commentsService: CommentsService,
-    private router: Router
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.loadComments();

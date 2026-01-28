@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -10,9 +10,15 @@ import { Router } from '@angular/router';
     standalone: true,
 })
 export class TasksFormComponent {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+
   taskForm: FormGroup;
 
-  constructor(private fb: FormBuilder,private router:Router) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.taskForm = this.fb.group({
       code: ['', [Validators.required, Validators.maxLength(10)]],
       summary: ['', [Validators.required, Validators.maxLength(255)]],

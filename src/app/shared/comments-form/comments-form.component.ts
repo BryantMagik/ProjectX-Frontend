@@ -1,29 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastCloseEvent, ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CommentsService } from '../../service/comment/comments.service';
 @Component({
     selector: 'app-comments-form',
-    imports: [ReactiveFormsModule, CommonModule, ToastModule],
+    imports: [ReactiveFormsModule, ToastModule],
     templateUrl: './comments-form.component.html',
     styleUrl: './comments-form.component.css',
     standalone:true
 })
 export class CommentsFormComponent implements OnInit{
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private commentsService = inject(CommentsService);
+  private messageService = inject(MessageService);
+
   commentForm!: FormGroup;
   isEditing = false;
   commentId: string | null = null;
 
-  constructor(
-    private fb: FormBuilder, 
-    private router:Router,
-    private commentsService: CommentsService,
-    private messageService: MessageService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.initializeForm();

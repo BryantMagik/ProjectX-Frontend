@@ -1,70 +1,73 @@
 <div class="bg-white shadow sm:rounded-lg select-none mb-4">
-    <form [formGroup]="workspaceForm" (ngSubmit)="onSubmit()">
-        <div class="px-6 py-8 sm:p-12">
-            <p class="text-2xl font-medium text-gray-900">Settings for {{workspace?.name}}</p>
-            <hr class="mt-6 p-2 border-dashed">
-            <div class="mt-8">
-                <div class="space-y-2">
-                    <label for="name" class="block font-bold text-sm text-gray-700">Workspace Name</label>
-                    <input type="text" id="name" pInputText formControlName="name" placeholder="Edit workspace name"
-                        class="w-full border rounded-md h-12 p-4" [value]="workspace?.name" />
-                    <label for="name" class="block font-bold text-sm text-gray-700">Description</label>
-                    <textarea id="workspace-description" pInputText formControlName="description"
-                        placeholder="Description of the workspace" class="w-full border rounded-md p-4"
-                        rows="4">{{ workspace?.description }}</textarea>
+  <form [formGroup]="workspaceForm" (ngSubmit)="onSubmit()">
+    <div class="px-6 py-8 sm:p-12">
+      <p class="text-2xl font-medium text-gray-900">Settings for {{workspace?.name}}</p>
+      <hr class="mt-6 p-2 border-dashed">
+      <div class="mt-8">
+        <div class="space-y-2">
+          <label for="name" class="block font-bold text-sm text-gray-700">Workspace Name</label>
+          <input type="text" id="name" pInputText formControlName="name" placeholder="Edit workspace name"
+            class="w-full border rounded-md h-12 p-4" [value]="workspace?.name" />
+            <label for="name" class="block font-bold text-sm text-gray-700">Description</label>
+            <textarea id="workspace-description" pInputText formControlName="description"
+              placeholder="Description of the workspace" class="w-full border rounded-md p-4"
+            rows="4">{{ workspace?.description }}</textarea>
+          </div>
+          <div class="mt-2">
+            <div class="flex flex-row items-center p-8 rounded-lg w-auto space-x-4">
+              @if (workspaceForm.get('image')?.value) {
+                <div class="w-24 h-24 rounded-md bg-gray-300 flex justify-center items-center overflow-hidden"
+                  >
+                  <img [src]="workspaceForm.get('image')?.value" alt="Workspace Icon" class="image-icon" />
                 </div>
-                <div class="mt-2">
-                    <div class="flex flex-row items-center p-8 rounded-lg w-auto space-x-4">
-                        <div class="w-24 h-24 rounded-md bg-gray-300 flex justify-center items-center overflow-hidden"
-                            *ngIf="workspaceForm.get('image')?.value; else noImage">
-                            <img [src]="workspaceForm.get('image')?.value" alt="Workspace Icon" class="image-icon" />
-                        </div>
-                        <ng-template #noImage>
-                            <div
-                                class="w-14 h-14 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
-                                <span class="font-semibold text-2xl">{{ workspace?.name?.[0] }}</span>
-                            </div>
-                        </ng-template>
-
-                        <div class="mt-4">
-                            <label for="image" class="font-bold text-sm text-gray-700">Workspace Icon</label>
-                            <p class="text-xs text-gray-500">JPG, PNG, SVG or JPEG, max 1mb</p>
-                            <input #fileInput id="image" type="file" (change)="onFileSelected($event)"
-                                accept=".jpg, .jpeg, .png, .svg" class="mt-2 hidden" />
-                            <a (click)="fileInput.click()"
-                                class="mt-4 px-2 py-1 bg-blue-200 text-white rounded-md font-bold hover:text-blue-500 focus:outline-none cursor-pointer">
-                                Upload Image
-                            </a>
-                        </div>
-                    </div>
+              } @else {
+                <div
+                  class="w-14 h-14 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
+                  <span class="font-semibold text-2xl">{{ workspace?.name?.[0] }}</span>
                 </div>
-            </div>
-            <div class="flex justify-end">
-                <button
-                    class="mt-4 p-4 text-sm font-extrabold w-auto border rounded-md bg-blue-700 text-white shadow-md hover:bg-blue-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    Save Changes
-                </button>
-            </div>
-            <div class="mt-8 flex">
+              }
 
+              <div class="mt-4">
+                <label for="image" class="font-bold text-sm text-gray-700">Workspace Icon</label>
+                <p class="text-xs text-gray-500">JPG, PNG, SVG or JPEG, max 1mb</p>
+                <input #fileInput id="image" type="file" (change)="onFileSelected($event)"
+                  accept=".jpg, .jpeg, .png, .svg" class="mt-2 hidden" />
+                  <a (click)="fileInput.click()"
+                    class="mt-4 px-2 py-1 bg-blue-200 text-white rounded-md font-bold hover:text-blue-500 focus:outline-none cursor-pointer">
+                    Upload Image
+                  </a>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="flex justify-end">
+            <button
+              class="mt-4 p-4 text-sm font-extrabold w-auto border rounded-md bg-blue-700 text-white shadow-md hover:bg-blue-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+              Save Changes
+            </button>
+          </div>
+          <div class="mt-8 flex">
+
+          </div>
         </div>
-    </form>
-</div>
-<div class="bg-white shadow sm:rounded-lg select-none">
-    <div class="px-6 py-8 sm:p-12 flex flex-col">
+      </form>
+    </div>
+    <div class="bg-white shadow sm:rounded-lg select-none">
+      <div class="px-6 py-8 sm:p-12 flex flex-col">
         <p class="text-2xl font-bold text-gray-900">Danger Zone</p>
         <hr class="mt-2 p-2 border-dashed">
         <p class="font-light text-gray-900/50"> Deleting a workspace is irreversible. This action will remove all data
-            associated with this workspace.
+          associated with this workspace.
         </p>
         <div class="flex justify-end">
-            <button (click)="toggleModal()"
-                class="mt-4 p-4 text-sm font-extrabold w-auto border rounded-md bg-red-700 text-white shadow-md hover:bg-red-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500">
-                Delete Workspace
-            </button>
+          <button (click)="toggleModal()"
+            class="mt-4 p-4 text-sm font-extrabold w-auto border rounded-md bg-red-700 text-white shadow-md hover:bg-red-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500">
+            Delete Workspace
+          </button>
         </div>
+      </div>
     </div>
-</div>
-<app-modal-delete-workspace *ngIf="showModal" (close)="toggleModal()"
-    (deleteConfirmed)="handleDelete()"></app-modal-delete-workspace>
+    @if (showModal) {
+      <app-modal-delete-workspace (close)="toggleModal()"
+      (deleteConfirmed)="handleDelete()"></app-modal-delete-workspace>
+    }

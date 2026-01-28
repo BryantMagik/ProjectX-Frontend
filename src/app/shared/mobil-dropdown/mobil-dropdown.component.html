@@ -1,56 +1,58 @@
 <div>
-    <!-- Botón activador del menú en el navbar -->
-    <button
-      class="p-2 text-gray-800 bg-gray-200 rounded-md shadow-md focus:outline-none md:hidden"
-      (click)="toggleDropdown()">
-      <mat-icon>{{ isDropdownOpen ? 'close' : 'menu' }}</mat-icon>
-    </button>
-  
-    <!-- Menú desplegable lateral -->
-    <aside
-      class="fixed inset-y-0 left-0 z-40 h-full w-64 bg-white transform transition-transform duration-300 ease-in-out"
-      [ngClass]="{ '-translate-x-full': !isDropdownOpen }">
-      <div class="p-6">
-        <h6 class="text-base font-semibold text-gray-800">Menu</h6>
+  <!-- Botón activador del menú en el navbar -->
+  <button
+    class="p-2 text-gray-800 bg-gray-200 rounded-md shadow-md focus:outline-none md:hidden"
+    (click)="toggleDropdown()">
+    <mat-icon>{{ isDropdownOpen ? 'close' : 'menu' }}</mat-icon>
+  </button>
+
+  <!-- Menú desplegable lateral -->
+  <aside
+    class="fixed inset-y-0 left-0 z-40 h-full w-64 bg-white transform transition-transform duration-300 ease-in-out"
+    [ngClass]="{ '-translate-x-full': !isDropdownOpen }">
+    <div class="p-6">
+      <h6 class="text-base font-semibold text-gray-800">Menu</h6>
+    </div>
+    <div class="m-6">
+      <hr class="mt-6 p-2 border-dashed">
+      <div class="flex items-center justify-between text-gray-500">
+        <a class="text-xs uppercase">Workspace</a>
+        <i
+          class="pi pi-plus-circle text-xs uppercase rounded-full"
+        [routerLink]="['/pages/shared/workspace-form']"></i>
       </div>
-      <div class="m-6">
-        <hr class="mt-6 p-2 border-dashed">
-        <div class="flex items-center justify-between text-gray-500">
-          <a class="text-xs uppercase">Workspace</a>
-          <i
-            class="pi pi-plus-circle text-xs uppercase rounded-full"
-            [routerLink]="['/pages/shared/workspace-form']"></i>
-        </div>
-        <app-workspace-switcher (workspaceSelected)="onWorkspaceSelected($event)"></app-workspace-switcher>
-        <hr class="mt-6 p-2 border-dashed">
-      </div>
-      <div class="m-6">
+      <app-workspace-switcher (workspaceSelected)="onWorkspaceSelected($event)"></app-workspace-switcher>
+      <hr class="mt-6 p-2 border-dashed">
+    </div>
+    <div class="m-6">
+      @for (item of menuItems; track item) {
         <a
           class="flex items-center gap-6 py-2 px-6 hover:bg-blue-700 rounded-md hover:text-white transition-transform duration-300 mt-6 text-xs uppercase text-gray-500"
           mat-list-item
-          *ngFor="let item of menuItems"
           [routerLink]="item.route"
           routerLinkActive="bg-blue-800 text-white"
           [routerLinkActiveOptions]="{ exact: true }">
           <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
           <span matListItemTitle>{{ item.label }}</span>
         </a>
-      </div>
-      <div class="m-6">
-        <hr class="mt-6 p-2 border-dashed">
-        <div class="flex items-center justify-between text-neutral-500">
-            <a class="text-xs uppercase">projects </a>
-            <i class="pi pi-plus-circle text-xs uppercase rounded-full" (click)="openModal()"></i>
-        </div>
-        <app-project-list [workspace]="selectedWorkspaceId"></app-project-list>
+      }
     </div>
-    </aside>
-  
-    <!-- Overlay para cerrar el menú -->
+    <div class="m-6">
+      <hr class="mt-6 p-2 border-dashed">
+      <div class="flex items-center justify-between text-neutral-500">
+        <a class="text-xs uppercase">projects </a>
+        <i class="pi pi-plus-circle text-xs uppercase rounded-full" (click)="openModal()"></i>
+      </div>
+      <app-project-list [workspace]="selectedWorkspaceId"></app-project-list>
+    </div>
+  </aside>
+
+  <!-- Overlay para cerrar el menú -->
+  @if (isDropdownOpen) {
     <div
       class="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
-      *ngIf="isDropdownOpen"
       (click)="closeDropdown()">
     </div>
-  </div>
-  
+  }
+</div>
+

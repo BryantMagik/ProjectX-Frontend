@@ -1,21 +1,24 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { CustomSidebarComponent } from '../../shared/custom-sidebar/custom-sidebar.component';
-import { UserService } from '../../service/user/user.service';
-import { User } from '../../model/user.interface';
+import { UserService } from '../../features/profile/services/user.service';
+import { User } from '../../models/user.interface';
 import { tap } from 'rxjs';
 import { ModalCreateProjectComponent } from "../../shared/modal-create-project/modal-create-project.component";
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-layout',
-    imports: [RouterOutlet, NavbarComponent, CustomSidebarComponent, ModalCreateProjectComponent, CommonModule],
+    imports: [RouterOutlet, NavbarComponent, CustomSidebarComponent, ModalCreateProjectComponent],
     templateUrl: './layout.component.html',
     styleUrl: './layout.component.css',
     standalone:true
 })
 export class LayoutComponent implements OnInit {
+  private userService = inject(UserService);
+  private route = inject(ActivatedRoute);
+
 
   @ViewChild(NavbarComponent) navbarComponent!: NavbarComponent;
 
@@ -25,10 +28,10 @@ export class LayoutComponent implements OnInit {
   showModal = false;
   workspaceId: string | null = null
 
-  constructor(
-    private userService: UserService,
-    private route: ActivatedRoute
-  ) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   openModal() {
     this.showModal = true;

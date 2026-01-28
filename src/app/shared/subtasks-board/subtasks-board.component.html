@@ -1,25 +1,26 @@
 <main class="flex-1">
-    <div class="max-w-7xl mx-auto py-12 sm:px-12 lg:px-20">
-      <!-- Subtasks Section -->
-      <div class="bg-white shadow sm:rounded-lg">
-        <div class="px-6 py-8 sm:p-12">
-          <h2 class="text-2xl leading-6 font-medium text-gray-900">Subtareas</h2>
-          <div class="mt-8 overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
+  <div class="max-w-7xl mx-auto py-12 sm:px-12 lg:px-20">
+    <!-- Subtasks Section -->
+    <div class="bg-white shadow sm:rounded-lg">
+      <div class="px-6 py-8 sm:p-12">
+        <h2 class="text-2xl leading-6 font-medium text-gray-900">Subtareas</h2>
+        <div class="mt-8 overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
+                <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Task ID</th>
+                <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Creación</th>
+                <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Actualización</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <!-- Subtask Item -->
+              @for (subTasksDataBoard of subTasks; track subTasksDataBoard) {
                 <tr>
-                  <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                  <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                  <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                  <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                  <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Task ID</th>
-                  <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Creación</th>
-                  <th scope="col" class="px-12 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Actualización</th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <!-- Subtask Item -->
-                <tr *ngFor="let subTasksDataBoard of subTasks">
                   <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-900">{{ subTasksDataBoard.id }}</td>
                   <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-900">{{ subTasksDataBoard.name }}</td>
                   <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-900">{{ subTasksDataBoard.description }}</td>
@@ -30,11 +31,12 @@
                   <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-900">{{ subTasksDataBoard.creation_date }}</td>
                   <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-900">{{ subTasksDataBoard.update_date }}</td>
                 </tr>
-                <!-- More subtasks... -->
-              </tbody>
-            </table>
-          </div>
+              }
+              <!-- More subtasks... -->
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  </main>
+  </div>
+</main>

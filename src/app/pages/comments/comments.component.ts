@@ -1,20 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommentsService } from '../../service/comment/comments.service';
-import { Comment } from '../../model/comment.interface';
-import { NgFor, NgIf } from '@angular/common';
+import { CommentsService } from '../../features/comments/services/comments.service';
+import { Comment } from '../../models/comment.interface';
+
 
 @Component({
     selector: 'app-comments',
-    imports: [NgFor, NgIf],
+    imports: [],
     templateUrl: './comments.component.html',
     styleUrl: './comments.component.css',
     standalone: true
 })
 export class CommentsComponent implements OnInit {
+  private router = inject(Router);
+  private commentsService = inject(CommentsService);
+
   comments: Comment[] = [];
 
-  constructor(private router:Router,private commentsService: CommentsService){}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor(){}
 
   navigateToCommentsForm() {
     this.router.navigate(['/pages/comments/shared/comments-form']);

@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common'
-import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core'
+
+import { Component, Output, EventEmitter, OnInit, Input, inject } from '@angular/core'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { ProjectService } from '../../service/project/project.service'
 import { ProyectDropdown, PROYECTOTYPE } from '../../types/models'
@@ -9,13 +9,17 @@ import { Select } from 'primeng/select'
 
 @Component({
   selector: 'app-modal-create-project',
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, Select],
+  imports: [ReactiveFormsModule, RouterModule, Select],
   templateUrl: './modal-create-project.component.html',
   styleUrl: './modal-create-project.component.css',
   standalone: true
 
 })
 export class ModalCreateProjectComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private projectService = inject(ProjectService);
+  private router = inject(Router);
+
 
   @Input() workspaceId: string | null = null
   @Output() close = new EventEmitter<void>()
@@ -24,12 +28,10 @@ export class ModalCreateProjectComponent implements OnInit {
   projectForm!: FormGroup
   proyectoType: ProyectDropdown[] = []
 
-  constructor(
-    private fb: FormBuilder,
-    private projectService: ProjectService,
-    private router: Router
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
 

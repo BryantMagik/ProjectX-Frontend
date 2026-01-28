@@ -1,19 +1,22 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, OnChanges, OnDestroy, inject } from '@angular/core';
 import { ProjectService } from '../../service/project/project.service';
 import { Subscription, tap } from 'rxjs';
 import { Project } from '../../model/project.interface';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-project-list',
-    imports: [CommonModule, NgFor, NgIf],
+    imports: [],
     templateUrl: './project-list.component.html',
     styleUrl: './project-list.component.css',
     standalone:true
 
 })
-export class ProjectListComponent implements OnInit {
+export class ProjectListComponent implements OnInit, OnChanges, OnDestroy {
+  private projectService = inject(ProjectService);
+  private router = inject(Router);
+
 
   @Input() workspace: string | null = null
 
@@ -22,10 +25,10 @@ export class ProjectListComponent implements OnInit {
   error: string | null = null
   private projectsSubscription: Subscription = new Subscription()
 
-  constructor(
-    private projectService: ProjectService,
-    private router: Router
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
 
   }
 

@@ -1,11 +1,8 @@
-import {
-  Component, OnInit,
-  ViewChild
-} from '@angular/core';
-import { CommonModule, NgFor, NgClass } from '@angular/common';
-import { ProjectService } from '../../service/project/project.service';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { ProjectService } from '../../features/projects/services/project.service';
 import { tap } from 'rxjs';
-import { Project } from '../../model/project.interface';
+import { Project } from '../../models/project.interface';
 import { Router } from '@angular/router';
 import { Table, TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -14,13 +11,13 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { TagModule } from 'primeng/tag';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { User } from '../../model/user.interface';
-import { UserService } from '../../service/user/user.service';
-import { SeverityTagComponent } from '../../service/severity/severety,project';
+import { User } from '../../models/user.interface';
+import { UserService } from '../../features/profile/services/user.service';
+import { SeverityTagComponent } from '../../service/severity/severity-tag.component';
 
 @Component({
     selector: 'app-projects',
-    imports: [CommonModule, TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
+    imports: [TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
     templateUrl: './projects.component.html',
     styleUrl: './projects.component.css',
     standalone:true
@@ -28,6 +25,10 @@ import { SeverityTagComponent } from '../../service/severity/severety,project';
 })
 
 export class ProjectsComponent implements OnInit {
+  private userService = inject(UserService);
+  private projectsService = inject(ProjectService);
+  private router = inject(Router);
+
 
   @ViewChild('dt') dt!: Table;
 
@@ -39,13 +40,11 @@ export class ProjectsComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
-  constructor(
-    private userService: UserService,
-    private projectsService: ProjectService,
-    private router: Router
 
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.getProject()

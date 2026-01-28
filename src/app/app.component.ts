@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { PrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
@@ -11,9 +11,11 @@ import Aura from '@primeng/themes/aura';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  private primeng = inject(PrimeNG);
+
   title = 'ProjectX';
 
-  constructor(private primeng: PrimeNG) {
+  constructor() {
     this.primeng.theme.set({
         preset: Aura,
             options: {

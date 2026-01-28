@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -8,10 +8,16 @@ import { Breadcrumb } from '../model/breadcrumb.interface';
   providedIn: 'root'
 })
 export class BreadcrumbService {
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+
 
   private breadcrumbsSubject = new BehaviorSubject<Breadcrumb[]>([]);
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map(() => this.createBreadcrumbs(this.activatedRoute.root))

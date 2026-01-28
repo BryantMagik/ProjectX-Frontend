@@ -11,9 +11,11 @@
           <div>
             <label for="filter-status" class="label-style">Filtrar por Estado</label>
             <select id="filter-status" name="filter-status" class="select-style">
-              <option *ngFor="let status of taskStatuses" [value]="status.value">
-                {{ status.name }}
-              </option>
+              @for (status of taskStatuses; track status) {
+                <option [value]="status.value">
+                  {{ status.name }}
+                </option>
+              }
             </select>
           </div>
           <div>
@@ -44,28 +46,32 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr *ngFor="let subTask of filteredSubTasks">
-                <td class="table-cell">{{ subTask.id }}</td>
-                <td class="table-cell">{{ subTask.name }}</td>
-                <td class="table-cell">{{ subTask.description || '-' }}</td>
-                <td class="table-cell">
-                  <span class="badge"
+              @for (subTask of filteredSubTasks; track subTask) {
+                <tr>
+                  <td class="table-cell">{{ subTask.id }}</td>
+                  <td class="table-cell">{{ subTask.name }}</td>
+                  <td class="table-cell">{{ subTask.description || '-' }}</td>
+                  <td class="table-cell">
+                    <span class="badge"
                     [ngClass]="{
                       'badge-pending': subTask.status === 'PENDING',
                       'badge-in-progress': subTask.status === 'IN_PROGRESS',
                       'badge-completed': subTask.status === 'COMPLETED'
                     }">
-                    {{ subTask.status }}
-                  </span>
-                </td>
-                <td class="table-cell">{{ subTask.taskId }}</td>
-                <td class="table-cell">{{ subTask.creation_date }}</td>
-                <td class="table-cell">{{ subTask.update_date }}</td>
-              </tr>
+                      {{ subTask.status }}
+                    </span>
+                  </td>
+                  <td class="table-cell">{{ subTask.taskId }}</td>
+                  <td class="table-cell">{{ subTask.creation_date }}</td>
+                  <td class="table-cell">{{ subTask.update_date }}</td>
+                </tr>
+              }
               <!-- Mostrar mensaje si no hay subtareas -->
-              <tr *ngIf="subTasks.length === 0">
-                <td colspan="8" class="table-cell-empty">No hay subtareas disponibles</td>
-              </tr>
+              @if (subTasks.length === 0) {
+                <tr>
+                  <td colspan="8" class="table-cell-empty">No hay subtareas disponibles</td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>
@@ -75,4 +81,4 @@
 </main>
 
 
-  
+

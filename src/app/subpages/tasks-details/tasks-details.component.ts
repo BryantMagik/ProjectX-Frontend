@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgFor, NgClass } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule, NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommentsListComponentComponent } from '../../shared/comments-list-component/comments-list-component.component';
@@ -40,12 +40,15 @@ export interface Taskdetail {
 
 @Component({
   selector: 'app-tasks-details',
-  imports: [CommonModule, NgFor, NgClass, CommentsListComponentComponent],
+  imports: [CommonModule, NgClass, CommentsListComponentComponent],
   templateUrl: './tasks-details.component.html',
   styleUrl: './tasks-details.component.css',
   standalone: true
 })
 export class TasksDetailsComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+
 
   tasksPriority = Object.values(tasks_priority);
   tasksType = Object.values(tasks_type);
@@ -71,8 +74,10 @@ export class TasksDetailsComponent implements OnInit {
 
   isEditing = false;
   tasksFormular: FormGroup;
-  constructor(private fb: FormBuilder,
-    private router: Router) {
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+  constructor() {
     this.tasksFormular = this.fb.group({
       id: [{ value: '', disabled: true }],
       code: ['', [Validators.required, Validators.maxLength(10)]],

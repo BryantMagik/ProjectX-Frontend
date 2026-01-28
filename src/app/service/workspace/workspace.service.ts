@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { ApiService } from "../api.service";
-import { AuthService } from "../auth/auth.service";
+import { Injectable, inject } from "@angular/core";
+import { ApiService } from "../../core/services/api.service";
+import { AuthService } from "../../core/services/auth.service";
 import { HttpHeaders } from "@angular/common/http";
 import { Workspace } from "../../model/workspace.interface";
 import { Observable, of } from "rxjs";
@@ -10,10 +10,13 @@ import { apiRoutes } from "../../../environments/environment.development";
     providedIn: 'root'
 })
 export class WorkspaceService {
-    constructor(
-        private apiService: ApiService,
-        private authService: AuthService
-    ) { }
+    private apiService = inject(ApiService);
+    private authService = inject(AuthService);
+
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
+    constructor() { }
 
     private getAuthHeaders(): HttpHeaders {
         let headers = new HttpHeaders()

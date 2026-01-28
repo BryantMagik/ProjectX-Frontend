@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule, NgClass, NgFor } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 
 export interface tasksDataBoard{
   id:number;
@@ -17,7 +17,7 @@ export interface tasksDataBoard{
 
 @Component({
     selector: 'app-tasks-board',
-    imports: [NgFor, CommonModule, NgClass],
+    imports: [CommonModule, NgClass],
     templateUrl: './tasks-board.component.html',
     styleUrl: './tasks-board.component.css',
     standalone:true

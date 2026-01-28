@@ -52,22 +52,30 @@
             </thead>
             <tbody class="table-row">
               <!-- Issue Item -->
-              <tr *ngFor="let issue of issues">
-                <td class="table-cell">{{ issue.code }}</td>
-                <td class="table-cell">
-                  <span *ngIf="issue.type === 'BUG'" class="badge-bug">Bug</span>
-                  <span *ngIf="issue.type === 'FEATURE_REQUEST'" class="badge-feature">Feature</span>
-                </td>
-                <td class="table-cell text-gray-900">{{ issue.summary }}</td>
-                <td class="table-cell">{{ issue.reporter?.first_name }}</td>
-                <td class="table-cell text-right text-sm font-medium">
-                  <a class="link-primary">Ver</a>
-                </td>
-              </tr>
+              @for (issue of issues; track issue) {
+                <tr>
+                  <td class="table-cell">{{ issue.code }}</td>
+                  <td class="table-cell">
+                    @if (issue.type === 'BUG') {
+                      <span class="badge-bug">Bug</span>
+                    }
+                    @if (issue.type === 'FEATURE_REQUEST') {
+                      <span class="badge-feature">Feature</span>
+                    }
+                  </td>
+                  <td class="table-cell text-gray-900">{{ issue.summary }}</td>
+                  <td class="table-cell">{{ issue.reporter?.first_name }}</td>
+                  <td class="table-cell text-right text-sm font-medium">
+                    <a class="link-primary">Ver</a>
+                  </td>
+                </tr>
+              }
               <!-- Mostrar mensaje si no hay issues -->
-              <tr *ngIf="issues.length === 0">
-                <td colspan="5" class="table-cell text-center">No hay issues disponibles</td>
-              </tr>
+              @if (issues.length === 0) {
+                <tr>
+                  <td colspan="5" class="table-cell text-center">No hay issues disponibles</td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>

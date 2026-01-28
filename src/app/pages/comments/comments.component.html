@@ -49,19 +49,23 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <!-- Comment Item -->
-              <tr *ngFor="let comment of comments">
-                <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-500">{{ comment.id }}</td>
-                <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-900">{{ comment.body }}</td>
-                <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-500">{{ comment.date }}</td>
-                <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-500">{{ comment.issueId || comment.taskId }}</td>
-                <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-500">{{ comment.authorId }}</td>
-                <td class="px-12 py-6 whitespace-nowrap text-right text-sm font-medium">
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
-                </td>
-              </tr>
-              <tr *ngIf="comments.length === 0">
-                <td colspan="6" class="px-12 py-6 whitespace-nowrap text-sm text-gray-500 text-center">No se encontraron comentarios</td>
-              </tr>
+              @for (comment of comments; track comment) {
+                <tr>
+                  <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-500">{{ comment.id }}</td>
+                  <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-900">{{ comment.body }}</td>
+                  <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-500">{{ comment.date }}</td>
+                  <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-500">{{ comment.issueId || comment.taskId }}</td>
+                  <td class="px-12 py-6 whitespace-nowrap text-sm text-gray-500">{{ comment.authorId }}</td>
+                  <td class="px-12 py-6 whitespace-nowrap text-right text-sm font-medium">
+                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Ver</a>
+                  </td>
+                </tr>
+              }
+              @if (comments.length === 0) {
+                <tr>
+                  <td colspan="6" class="px-12 py-6 whitespace-nowrap text-sm text-gray-500 text-center">No se encontraron comentarios</td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>
@@ -70,4 +74,4 @@
   </div>
 </main>
 
-  
+

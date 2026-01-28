@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { ApiService } from "../api.service";
-import { AuthService } from "../auth/auth.service";
+import { Injectable, inject } from "@angular/core";
+import { ApiService } from "../../core/services/api.service";
+import { AuthService } from "../../core/services/auth.service";
 import { Observable, of } from "rxjs";
 import { Task } from "../../model/task.interface";
 import { HttpHeaders } from "@angular/common/http";
@@ -11,10 +11,13 @@ import { apiRoutes } from '../../../environments/environment.development';
 })
 
 export class TaskService {
-  constructor(
-    private apiService: ApiService,
-    private authService: AuthService
-  ) { }
+  private apiService = inject(ApiService);
+  private authService = inject(AuthService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() { }
 
   //COMPLETED TODO: TESTING
   private getAuthHeaders(): HttpHeaders {
