@@ -12,6 +12,8 @@ export interface Task {
     projectId: string
     project: Project
     creator: User
+    code: string
+    summary: string
     creators: User[]
     users: User[]
     createdAt: string

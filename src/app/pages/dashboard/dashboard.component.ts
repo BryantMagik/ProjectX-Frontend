@@ -1,7 +1,7 @@
 
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { ProjectCardComponent } from "../../components/project-card/project-card.component";
-import { Project } from '../../models/project.interface';
+import { Project } from '../../model/project.interface';
 import { ProjectService } from '../../features/projects/services/project.service';
 import { Subscription, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';

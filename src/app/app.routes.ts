@@ -13,6 +13,11 @@ import { SettingsComponent } from './pages/settings-workspaces/settings-workspac
 import { WorkspaceComponent } from './pages/workspace/workspace.component';
 import { DashboardProjectComponent } from './pages/dashboard-project/dashboard-project.component';
 import { EditProjectComponent } from './subpages/edit-project/edit-project.component';
+import { TasksFormComponent } from './shared/tasks-form/tasks-form.component';
+import { TasksDetailsComponent } from './subpages/tasks-details/tasks-details.component';
+import { SubtasksFormComponent } from './shared/subtasks-form/subtasks-form.component';
+import { SubtasksDetailsComponent } from './subpages/subtasks-details/subtasks-details.component';
+import { TasksComponent } from './pages/tasks/tasks.component';
 
 export const routes: Routes = [
     {
@@ -32,6 +37,11 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             {
+              path: 'pages/tasks',
+              title: 'Tasks',
+              component: TasksComponent,
+            },
+            {
                 path: 'pages/profile',
                 title: 'Profile',
                 component: ProfilesComponent,
@@ -42,9 +52,44 @@ export const routes: Routes = [
                 component: WorkspaceFormComponent,
             },
             {
+                path: 'pages/issues',
+                title: 'Issues',
+                component: IssuesComponent,
+            },
+            {
+              path: 'pages/tasks/shared/tasks-form',
+              title: 'New Task',
+              component: TasksFormComponent,
+            },
+            {
+              path: 'pages/tasks/shared/tasks-form/:id',
+              title: 'Edit Task',
+              component: TasksFormComponent,
+            },
+            {
+              path: 'pages/tasks/subpages/tasks-details/:id',
+              title: 'Task Details',
+              component: TasksDetailsComponent,
+            },
+            {
                 path: 'pages/subtasks',
                 title: 'projects',
                 component: ProjectsComponent
+            },
+            {
+              path: 'pages/subtasks/shared/subtasks-form',
+              title: 'New Subtask',
+              component: SubtasksFormComponent,
+            },
+            {
+              path: 'pages/subtasks/shared/subtasks-form/:id',
+              title: 'Edit Subtask',
+              component: SubtasksFormComponent,
+            },
+            {
+              path: 'pages/subtasks/subpages/subtasks-details/:id',
+              title: 'Subtask Details',
+              component: SubtasksDetailsComponent,
             },
             {
                 path: 'pages/:workspaceId',
@@ -67,11 +112,6 @@ export const routes: Routes = [
                         component: DashboardProjectComponent
                     }
                 ]
-            },
-            {
-                path: 'pages/issues',
-                title: 'Issues',
-                component: IssuesComponent,
             },
             {
                 path: 'pages/projects/subpages/edit-project/:projectId',

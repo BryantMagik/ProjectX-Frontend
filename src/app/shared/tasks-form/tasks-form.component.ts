@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-tasks-form',
-    imports: [],
+    imports: [CommonModule, ReactiveFormsModule],
     templateUrl: './tasks-form.component.html',
     styleUrl: './tasks-form.component.css',
     standalone: true,
@@ -14,9 +15,6 @@ export class TasksFormComponent {
   private router = inject(Router);
 
   taskForm: FormGroup;
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor() {
     this.taskForm = this.fb.group({

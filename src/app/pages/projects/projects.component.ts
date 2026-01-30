@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { ProjectService } from '../../features/projects/services/project.service';
 import { tap } from 'rxjs';
-import { Project } from '../../models/project.interface';
+import { Project } from '../../model/project.interface';
 import { Router } from '@angular/router';
 import { Table, TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -11,7 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { TagModule } from 'primeng/tag';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { User } from '../../models/user.interface';
+import { User } from '../../model/user.interface';
 import { UserService } from '../../features/profile/services/user.service';
 import { SeverityTagComponent } from '../../service/severity/severity-tag.component';
 

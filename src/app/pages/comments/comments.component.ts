@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommentsService } from '../../features/comments/services/comments.service';
-import { Comment } from '../../models/comment.interface';
+import { Comment } from '../../model/comment.interface';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class CommentsComponent implements OnInit {
   navigateToCommentsForm() {
     this.router.navigate(['/pages/comments/shared/comments-form']);
   }
-  
+
   ngOnInit(): void {
     this.getComments();
   }

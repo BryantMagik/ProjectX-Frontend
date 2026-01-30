@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { IssueService } from '../../features/issues/services/issue.service';
-import { Issue } from '../../models/issue.interface';
+import { Issue } from '../../model/issue.interface';
 
 
 @Component({

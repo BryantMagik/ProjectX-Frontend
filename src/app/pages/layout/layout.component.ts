@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { CustomSidebarComponent } from '../../shared/custom-sidebar/custom-sidebar.component';
 import { UserService } from '../../features/profile/services/user.service';
-import { User } from '../../models/user.interface';
+import { User } from '../../model/user.interface';
 import { tap } from 'rxjs';
 import { ModalCreateProjectComponent } from "../../shared/modal-create-project/modal-create-project.component";
 
@@ -39,7 +39,7 @@ export class LayoutComponent implements OnInit {
   closeModal() {
     this.showModal = false;
   }
-  
+
   onWorkspaceSelected(workspaceId: string) {
     this.workspaceId = workspaceId
   }
@@ -69,5 +69,5 @@ export class LayoutComponent implements OnInit {
 
 
 
-  
+
 }

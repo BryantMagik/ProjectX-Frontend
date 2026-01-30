@@ -3,7 +3,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { Subtask } from '../../../models/subtask.interface';
+import { Subtask } from '../../../model/subtask.interface';
 import { apiRoutes } from '../../../../environments/environment';
 
 @Injectable({

@@ -5,27 +5,27 @@ export function createMenuItems(id: string): MenuItem[] {
         {
             icon: 'dashboard',
             label: 'Dashboard',
-            route: `pages/${id ?? 'default'}/dashboard`
+            route: `/pages/${id ?? 'default'}/dashboard`
         },
         {
             icon: 'assignment',
             label: 'My Tasks',
-            route: 'pages/tasks',
+            route: '/pages/tasks',
         },
         {
             icon: 'settings',
             label: 'Setting',
-            route: `pages/${id ?? 'default'}/settings`
+            route: `/pages/${id ?? 'default'}/settings`
         },
         {
             icon: 'subdirectory_arrow_right',
             label: 'SubTasks',
-            route: 'pages/subtasks',
+            route: '/pages/subtasks',
         },
         {
             icon: 'bug_report',
             label: 'Issues',
-            route: 'pages/issues',
+            route: '/pages/issues',
         },
     ]
 }

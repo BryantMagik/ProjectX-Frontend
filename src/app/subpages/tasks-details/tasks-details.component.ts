@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommentsListComponentComponent } from '../../shared/comments-list-component/comments-list-component.component';
 
@@ -40,7 +40,7 @@ export interface Taskdetail {
 
 @Component({
   selector: 'app-tasks-details',
-  imports: [CommonModule, NgClass, CommentsListComponentComponent],
+  imports: [CommonModule, NgClass, ReactiveFormsModule, CommentsListComponentComponent],
   templateUrl: './tasks-details.component.html',
   styleUrl: './tasks-details.component.css',
   standalone: true

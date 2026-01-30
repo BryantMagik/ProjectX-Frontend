@@ -2,7 +2,7 @@ import { CommonModule, NgClass } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SubtaskService } from '../../features/subtasks/services/subtask.service';
-import { Subtask } from '../../models/subtask.interface';
+import { Subtask } from '../../model/subtask.interface';
 import { TASKSSTATUS } from '../../types/models';
 
 
@@ -46,7 +46,7 @@ export class SubtasksComponent implements OnInit {
 
   applyFilters(): void {
     this.filteredSubTasks = this.subTasks.filter(subTask => {
-      const matchesSearch = this.searchTerm ? 
+      const matchesSearch = this.searchTerm ?
         subTask.name.toLowerCase().includes(this.searchTerm.toLowerCase()) : true;
       const matchesStatus = this.selectedStatus ? subTask.status === this.selectedStatus : true;
       return matchesSearch && matchesStatus;
