@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal } from '@angular/core'
+import { Component, Input, } from '@angular/core'
 
 import { User } from '../../model/user.interface'
 import { BreadcrumbModule } from 'primeng/breadcrumb'

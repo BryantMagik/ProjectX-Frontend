@@ -1,0 +1,50 @@
+/* Container principal */
+.layout-container {
+  @apply min-h-screen max-h-screen overflow-hidden;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+/* Área de contenido principal */
+.main-content {
+  @apply p-6 xl:ml-72 mt-16 overflow-auto;
+  min-height: calc(100vh - 4rem);
+  max-height: calc(100vh - 4rem);
+}
+
+/* Ajustes responsive */
+@media (max-width: 1280px) {
+  .main-content {
+    @apply ml-60;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    @apply ml-48;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    @apply ml-0;
+  }
+}
+
+/* Scroll suave y estilizado */
+.main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: rgba(226, 232, 240, 0.3);
+  border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+}

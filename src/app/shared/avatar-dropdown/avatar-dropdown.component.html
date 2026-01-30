@@ -1,25 +1,26 @@
 @if (user) {
   <div
-    class="flex justify-center items-center ml-auto relative cursor-pointer select-none dropdown-container"
+    class="avatar-dropdown-container"
     (click)="toggleDropdown()">
     <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle"
-      class="flex justify-center items-center">
+      class="avatar-image">
     </p-avatar>
-    <div class="flex flex-col p-2">
-      <span class="font-bold">{{user.first_name}} {{user.last_name}}</span>
-      <span class="font-thin">
+    <div class="user-info hidden md:flex">
+      <span class="user-name">{{user.first_name}} {{user.last_name}}</span>
+      <span class="user-role">
         {{ user.type_user ? userTypeMap[user.type_user] : 'Unknown' }}
       </span>
     </div>
-    <i class="pi pi-angle-down ml-2"></i>
+    <i class="pi pi-angle-down dropdown-icon"></i>
     <div [ngClass]="{'dropdown-visible': dropdownVisible, 'dropdown-hidden': !dropdownVisible}"
-      class="absolute right-0 mt-[200px] w-40 bg-white shadow-lg rounded-md z-10 transition-all duration-400 ease-in-out">
+      class="dropdown-menu"
+      (click)="$event.stopPropagation()">
       @for (option of menuItems(); track option) {
-        <a class="flex m-2 space-x-4 items-center text-center hover:bg-slate-100 rounded-md p-1"
+        <a class="dropdown-item"
           mat-list-item (click)="selectOption(option.label)"
           [routerLink]="option.route">
-          <i class="pi" [class]="option.icon"></i>
-          <span matListItemTitle class="text-xs">{{ option.label }}</span>
+          <i class="pi dropdown-item-icon" [class]="option.icon"></i>
+          <span class="dropdown-item-text">{{ option.label }}</span>
         </a>
       }
     </div>

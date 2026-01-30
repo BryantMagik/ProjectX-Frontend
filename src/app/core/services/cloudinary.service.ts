@@ -13,8 +13,6 @@ export class CloudinaryService {
   private uploadPreset = 'jiro_uploads'
   private baseUrl = `https://api.cloudinary.com/v1_1/${this.cloudName}/image/upload`
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor() { }
 

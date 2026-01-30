@@ -1,97 +1,130 @@
-<!-- <main class="flex-1 select-none">
-  <div class="max-w-7xl mx-auto py-12 sm:px-12 lg:px-20">
-    <div class="bg-white shadow sm:rounded-lg">
-      <div class="px-6 py-8 sm:p-12">
-        <h2 class="text-2xl leading-6 font-medium text-gray-900">Profile</h2>
-        <div class="mt-8">
-          <div *ngIf="user" class="mt-8">
-            <form action="#" method="POST">
-              <div class="grid grid-cols-12 gap-4 grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label for="user-id" class="block text-sm font-medium text-gray-700">ID</label>
-                  <input type="text" name="user-id" id="user-id"
-                    class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.id"
-                    disabled>
-                </div>
-                <div>
-                  <label for="firstname" class="block text-sm font-medium text-gray-700">Nombre</label>
-                  <input type="text" name="firstname" id="firstname"
-                    class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.first_name">
-                </div>
-                <div>
-                  <label for="lastname" class="block text-sm font-medium text-gray-700">Apellido</label>
-                  <input type="text" name="lastname" id="lastname"
-                    class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.last_name">
-                </div>
-                <div>
-                  <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                  <input type="email" name="email" id="email"
-                    class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.email">
-                </div>
-                <div>
-                  <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
-                  <input type="password" name="password" id="password"
-                    class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="*********">
-                </div>
-                <div>
-                  <label for="role" class="block text-sm font-medium text-gray-700">Rol</label>
-                  <input type="text" name="role" id="role"
-                    class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.role"
-                    disabled>
-                </div>
-                <div>
-                  <label for="creation-date" class="block text-sm font-medium text-gray-700">Fecha de Creación</label>
-                  <input type="text" name="creation-date" id="creation-date"
-                    class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.createdAt"
-                    disabled>
-                </div>
-                <div>
-                  <label for="update-date" class="block text-sm font-medium text-gray-700">Fecha de
-                    Actualización</label>
-                  <input type="text" name="update-date" id="update-date"
-                    class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="user.updatedAt"
-                    disabled>
-                </div>
+<div class="profile-container">
+  @if (loading) {
+    <div class="loading-state">
+      <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
+      <p class="text-slate-600 mt-4">Loading profile...</p>
+    </div>
+  }
+
+  @if (!loading && user) {
+    <div class="profile-header">
+      <div class="profile-header-content">
+        <div class="profile-avatar-section">
+          <div class="avatar-container">
+            @if (user.profile_picture) {
+              <img [src]="user.profile_picture" alt="Profile" class="avatar-image" />
+            } @else {
+              <div class="avatar-placeholder">
+                <span class="avatar-initials">{{ user.first_name[0] }}{{ user.last_name[0] }}</span>
               </div>
-              <div class="mt-12">
-                <button type="submit"
-                  class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Actualizar
-                  Perfil</button>
-              </div>
-            </form>
+            }
+            <button class="avatar-edit-button" (click)="fileInput.click()" [disabled]="isUploading" title="Edit profile picture">
+              <i class="pi" [ngClass]="isUploading ? 'pi-spin pi-spinner' : 'pi-camera'"></i>
+            </button>
+            <input #fileInput type="file" (change)="onFileSelected($event)"
+                   accept=".jpg, .jpeg, .png, .svg" class="hidden" title="Edit profile picture" />
           </div>
+          <div class="profile-info">
+            <h1 class="profile-name">{{ user.first_name }} {{ user.last_name }}</h1>
+            <p class="profile-email">{{ user.email }}</p>
+            <span class="profile-badge">{{ user.type_user || 'User' }}</span>
+          </div>
+        </div>
+        <div class="profile-actions">
+          <button class="action-btn primary" (click)="updateProfile()">
+            <i class="pi pi-save"></i>
+            Save Changes
+          </button>
         </div>
       </div>
     </div>
-  </div>
-</main> -->
-<div class="bg-white shadow sm:rounded-lg select-none mb-4">
-  <div class="px-6 py-8 sm:p-12">
-    <p class="text-2xl font-medium text-gray-900">Profile for {{user?.first_name}}</p>
-    <hr class="mt-6 p-2 border-dashed">
-    <div class="mt-2">
-      <!-- <div class="flex flex-row items-center p-8 rounded-lg w-auto space-x-4">
-          <div class="w-24 h-24 rounded-md bg-gray-300 flex justify-center items-center overflow-hidden"
-              *ngIf="workspaceForm.get('image')?.value; else defaultImage">
-              <img [src]="workspaceForm.get('image')?.value" alt="Workspace Icon" class="image-icon" />
+
+    <div class="profile-content">
+      <form [formGroup]="profileForm" class="profile-form">
+        <div class="form-section">
+          <div class="section-header">
+            <i class="pi pi-user"></i>
+            <h2>Personal Information</h2>
           </div>
-          <ng-template #defaultImage>
-              <div
-                  class="flex items-center justify-center w-[100px] h-[100px] bg-slate-200 rounded-full p-6">
-                  <img [src]="workspace?.image" alt="Workspace Icon" class="object-cover w-full h-full" />
-              </div>
-          </ng-template>
-          <div class="mt-4">
-              <label for="image" class="font-bold text-sm text-gray-700">Workspace Icon</label>
-              <p class="text-xs text-gray-500">JPG, PNG, SVG or JPEG, max 1mb</p>
-              <input #fileInput id="image" type="file" (change)="onFileSelected($event)"
-                  accept=".jpg, .jpeg, .png, .svg" class="mt-2 hidden" />
-              <a (click)="fileInput.click()"
-                  class="mt-4 px-2 py-1 bg-blue-200 text-white rounded-md font-bold hover:text-blue-500 focus:outline-none cursor-pointer">
-                  Upload Image
-              </a>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="first_name">First Name</label>
+              <input id="first_name" type="text" formControlName="first_name"
+                     class="form-input" placeholder="Enter your first name" />
+            </div>
+            <div class="form-field">
+              <label for="last_name">Last Name</label>
+              <input id="last_name" type="text" formControlName="last_name"
+                     class="form-input" placeholder="Enter your last name" />
+            </div>
+            <div class="form-field full-width">
+              <label for="email">Email Address</label>
+              <input id="email" type="email" formControlName="email"
+                     class="form-input" placeholder="Enter your email" />
+            </div>
           </div>
-      </div> -->
-  </div>
-  </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-header">
+            <i class="pi pi-shield"></i>
+            <h2>Account Information</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="user_id">User ID</label>
+              <input id="user_id" type="text" [value]="user.id"
+                     class="form-input" disabled />
+            </div>
+            <div class="form-field">
+              <label for="role">Role</label>
+              <input id="role" type="text" [value]="user.role || 'N/A'"
+                     class="form-input" disabled />
+            </div>
+            <div class="form-field">
+              <label for="created_at">Member Since</label>
+              <input id="created_at" type="text" [value]="user.createdAt | date:'medium'"
+                     class="form-input" disabled />
+            </div>
+            <div class="form-field">
+              <label for="updated_at">Last Updated</label>
+              <input id="updated_at" type="text" [value]="user.updatedAt | date:'medium'"
+                     class="form-input" disabled />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-header">
+            <i class="pi pi-lock"></i>
+            <h2>Security</h2>
+          </div>
+          <div class="form-grid">
+            <div class="form-field full-width">
+              <label for="current_password">Current Password</label>
+              <input id="current_password" type="password"
+                     class="form-input" placeholder="Enter current password" />
+            </div>
+            <div class="form-field">
+              <label for="new_password">New Password</label>
+              <input id="new_password" type="password"
+                     class="form-input" placeholder="Enter new password" />
+            </div>
+            <div class="form-field">
+              <label for="confirm_password">Confirm New Password</label>
+              <input id="confirm_password" type="password"
+                     class="form-input" placeholder="Confirm new password" />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  }
+
+  @if (error) {
+    <div class="error-state">
+      <i class="pi pi-exclamation-triangle text-4xl text-red-500"></i>
+      <p class="text-red-600 mt-4">{{ error }}</p>
+    </div>
+  }
 </div>

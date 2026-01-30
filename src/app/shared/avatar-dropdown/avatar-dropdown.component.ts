@@ -54,7 +54,7 @@ export class AvatarDropdownComponent {
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
-    const clickedInside = event.target instanceof HTMLElement && event.target.closest('.dropdown-container');
+    const clickedInside = event.target instanceof HTMLElement && event.target.closest('.avatar-dropdown-container');
     if (!clickedInside) {
       this.closeDropdown();
     }

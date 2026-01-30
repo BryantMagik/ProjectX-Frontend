@@ -13,8 +13,6 @@ export class WorkspaceComponent implements OnInit {
 
   workspaceId: string | null = null
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
   constructor() {
 
   }

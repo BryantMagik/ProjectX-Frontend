@@ -1,3 +1,166 @@
-.shadow-b-md {
-    box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06);
+.navbar {
+  @apply w-full fixed top-0 left-0 right-0 z-40;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.25), 0 2px 6px -1px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-container {
+  @apply flex items-center justify-between h-16 px-6;
+}
+
+/* Logo móvil */
+.mobile-logo {
+  @apply flex items-center gap-3;
+  @apply md:hidden absolute left-4 top-1/2 transform -translate-y-1/2;
+}
+
+.mobile-logo-icon {
+  @apply h-10 w-10 flex items-center justify-center rounded-lg shadow-lg;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  transition: all 0.3s ease;
+}
+
+.mobile-logo-icon:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.4);
+}
+
+.mobile-logo-text {
+  @apply text-lg font-bold;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Contenido del navbar */
+.navbar-content {
+  @apply flex justify-between items-center w-full gap-4;
+  @apply md:ml-0;
+}
+
+/* Breadcrumb mejorado */
+.navbar-title {
+  @apply hidden md:flex items-center;
+}
+
+.breadcrumb-container {
+  @apply flex items-center gap-2 px-4 py-2 rounded-lg;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  transition: all 0.2s ease;
+}
+
+.breadcrumb-container:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(99, 102, 241, 0.25) 100%);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.breadcrumb-icon {
+  @apply text-blue-400;
+  font-size: 1rem;
+}
+
+.breadcrumb-text {
+  @apply text-slate-200 font-semibold text-sm;
+}
+
+/* Barra de búsqueda */
+.navbar-search {
+  @apply flex-1 max-w-md mx-4;
+}
+
+.search-wrapper {
+  @apply relative flex items-center;
+}
+
+.search-icon {
+  @apply absolute left-3 text-slate-400;
+  font-size: 0.875rem;
+}
+
+.search-input {
+  @apply w-full pl-10 pr-16 py-2 rounded-lg;
+  @apply text-sm text-slate-200 placeholder-slate-400;
+  @apply border border-slate-600;
+  @apply transition-all duration-200;
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.search-input:focus {
+  @apply outline-none;
+  border-color: rgba(59, 130, 246, 0.5);
+  background: rgba(15, 23, 42, 0.7);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15), 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
+.search-kbd {
+  @apply absolute right-3 px-2 py-1 rounded text-xs;
+  @apply bg-slate-700 text-slate-300 border border-slate-600;
+  font-family: monospace;
+  font-weight: 600;
+}
+
+/* Acciones del navbar */
+.navbar-actions {
+  @apply flex items-center gap-2;
+}
+
+.action-button {
+  @apply relative flex items-center justify-center;
+  @apply w-10 h-10 rounded-lg;
+  @apply text-slate-300 hover:text-white;
+  @apply transition-all duration-200;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.action-button:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+
+.action-button:active {
+  transform: translateY(0);
+}
+
+/* Badge de notificaciones */
+.notification-badge {
+  @apply absolute -top-1 -right-1;
+  @apply w-5 h-5 rounded-full;
+  @apply flex items-center justify-center;
+  @apply text-xs font-bold text-white;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+  animation: pulse-notification 2s ease-in-out infinite;
+}
+
+@keyframes pulse-notification {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
   }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-content {
+    @apply justify-end;
+  }
+
+  .navbar-actions {
+    @apply gap-1;
+  }
+
+  .action-button {
+    @apply w-9 h-9;
+  }
+}

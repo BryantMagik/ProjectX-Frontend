@@ -1,40 +1,63 @@
 <aside class="sidebar">
   <div class="sidebar-header">
-    <a class="sidebar-link">
-      <h6 class="sidebar-title">LOGO</h6>
-    </a>
+    <div class="sidebar-logo">
+      <div class="logo-icon">
+        <i class="pi pi-th-large text-white text-2xl"></i>
+      </div>
+      <h6 class="sidebar-title">ProjectX</h6>
+    </div>
   </div>
 
   <div class="sidebar-section">
-    <hr class="sidebar-divider">
-    <div class="sidebar-section-header mb-2">
-      <a>workspace</a>
-      <i class="pi pi-plus-circle" [routerLink]="['/pages/shared/workspace-form']"></i>
+    <div class="sidebar-section-header">
+      <span class="section-title">
+        <i class="pi pi-briefcase mr-2"></i>
+        Workspace
+      </span>
+      <button
+        class="add-button"
+        [routerLink]="['/pages/shared/workspace-form']"
+        title="Create new workspace">
+        <i class="pi pi-plus"></i>
+      </button>
     </div>
     <app-workspace-switcher (workspaceSelected)="onWorkspaceSelected($event)"></app-workspace-switcher>
-    <hr class="sidebar-divider">
   </div>
 
+  <div class="sidebar-divider"></div>
+
   <div class="sidebar-section">
+    <div class="menu-label">
+      <i class="pi pi-bars mr-2"></i>
+      Menu
+    </div>
     @for (item of menuItems; track item) {
       <a
         class="sidebar-menu-item"
-        mat-list-item
         [routerLink]="item.route"
         routerLinkActive="sidebar-menu-item-active"
         [routerLinkActiveOptions]="{ exact: true }"
         >
-        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-        <span matListItemTitle>{{ item.label }}</span>
+        <mat-icon class="menu-icon">{{ item.icon }}</mat-icon>
+        <span class="menu-label-text">{{ item.label }}</span>
       </a>
     }
   </div>
 
+  <div class="sidebar-divider"></div>
+
   <div class="sidebar-section">
-    <hr class="sidebar-divider">
     <div class="sidebar-section-header">
-      <a>projects</a>
-      <i class="pi pi-plus-circle" (click)="openModal()"></i>
+      <span class="section-title">
+        <i class="pi pi-folder mr-2"></i>
+        Projects
+      </span>
+      <button
+        class="add-button"
+        (click)="openModal()"
+        title="Create new project">
+        <i class="pi pi-plus"></i>
+      </button>
     </div>
     <app-project-list [workspace]="selectedWorkspaceId"></app-project-list>
   </div>

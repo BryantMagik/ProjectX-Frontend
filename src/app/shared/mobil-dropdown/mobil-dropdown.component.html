@@ -1,12 +1,10 @@
 <div>
-  <!-- Botón activador del menú en el navbar -->
   <button
     class="p-2 text-gray-800 bg-gray-200 rounded-md shadow-md focus:outline-none md:hidden"
     (click)="toggleDropdown()">
     <mat-icon>{{ isDropdownOpen ? 'close' : 'menu' }}</mat-icon>
   </button>
 
-  <!-- Menú desplegable lateral -->
   <aside
     class="fixed inset-y-0 left-0 z-40 h-full w-64 bg-white transform transition-transform duration-300 ease-in-out"
     [ngClass]="{ '-translate-x-full': !isDropdownOpen }">
@@ -47,7 +45,6 @@
     </div>
   </aside>
 
-  <!-- Overlay para cerrar el menú -->
   @if (isDropdownOpen) {
     <div
       class="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"

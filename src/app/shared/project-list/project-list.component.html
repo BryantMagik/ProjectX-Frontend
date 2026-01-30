@@ -1,15 +1,16 @@
-<div class="p-2 flex flex-col rounded-sm">
+<div class="project-list">
   @for (project of projects; track project) {
-    <div class="flex flex-row items-center mt-1 mb-1 bg-gray-300 p-2"
+    <div class="project-item"
       (click)="navigateToProject(project.id)">
       @if (project.image) {
-        <img [src]="project.image" alt="project Icon" class="image-icon w-6 h-6 rounded-md mr-2" />
+        <img [src]="project.image" alt="project Icon" class="project-avatar" />
       } @else {
-        <div class="w-6 h-6 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
-          <span class="font-semibold ">{{ project.name[0] }}</span>
+        <div class="project-avatar-placeholder">
+          <span class="project-letter">{{ project.name[0] }}</span>
         </div>
       }
-      <span class="text-sm">{{ project.name }}</span>
+      <span class="project-name">{{ project.name }}</span>
+      <i class="pi pi-chevron-right project-arrow"></i>
     </div>
   }
 </div>

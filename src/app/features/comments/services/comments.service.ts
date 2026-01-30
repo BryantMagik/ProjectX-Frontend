@@ -14,10 +14,6 @@ export class CommentsService {
   private apiService = inject(ApiService);
   private authService = inject(AuthService);
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-
   constructor() {}
 
   private getAuthHeaders(): HttpHeaders {

@@ -1,75 +1,131 @@
-.shadow-b-md {
-    box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-  :host {
-    display: block;
-  }
-  
+:host {
+  display: block;
+}
+
+.sidebar {
+  @apply fixed inset-0 z-50 h-full transition-all duration-300 select-none;
+  @apply w-72;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 1280px) {
   .sidebar {
-    @apply bg-white font-mono fixed inset-0 z-50 h-full transition-transform duration-300 select-none;
-    @apply w-72;
+    @apply w-60;
   }
-  @media (max-width: 1280px) {
-    .sidebar {
-      @apply w-60;
-    }
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    @apply w-48;
   }
-  
-  @media (max-width: 1024px) {
-    .sidebar {
-      @apply w-48;
-    }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    @apply hidden;
   }
-  
-  /* Ocultar en pantallas pequeñas */
-  @media (max-width: 768px) {
-    .sidebar {
-      @apply hidden;
-    }
-  }
-  
-  .sidebar-header {
-    @apply relative text-neutral-500;
-  }
-  
-  .sidebar-link {
-    @apply flex items-center gap-4 py-6 px-8;
-  }
-  
-  .sidebar-title {
-    @apply block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-800;
-  }
-  
-  .sidebar-section {
-    @apply m-4;
-  }
-  
-  .sidebar-divider {
-    @apply mt-4 p-2 border-dashed;
-  }
-  
+}
+
+/* Header con logo */
+.sidebar-header {
+  @apply py-6 px-6 border-b border-slate-700;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+}
+
+.sidebar-logo {
+  @apply flex items-center gap-4;
+}
+
+.logo-icon {
+  @apply h-12 w-12 flex items-center justify-center rounded-xl shadow-lg;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+}
+
+.sidebar-title {
+  @apply text-xl font-bold text-white tracking-tight;
+}
+
+/* Secciones */
+.sidebar-section {
+  @apply px-4 py-3;
+}
+
+.sidebar-divider {
+  @apply mx-4 my-4 border-t border-slate-700;
+}
+
+/* Section headers */
+.sidebar-section-header {
+  @apply flex items-center justify-between mb-3 px-2;
+}
+
+.section-title {
+  @apply text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center;
+}
+
+.menu-label {
+  @apply text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-2 flex items-center;
+}
+
+.add-button {
+  @apply w-7 h-7 flex items-center justify-center rounded-lg;
+  @apply text-slate-400 hover:text-white;
+  @apply transition-all duration-200;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.add-button:hover {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* Menu items */
+.sidebar-menu-item {
+  @apply flex flex-row items-center py-3 px-4 rounded-xl;
+  @apply text-slate-300 hover:text-white;
+  @apply transition-all duration-200 mb-1;
+  @apply no-underline;
+  font-size: 0.875rem;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.sidebar-menu-item:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
+  transform: translateX(4px);
+}
+
+@media (max-width: 1280px) {
   .sidebar-menu-item {
-    @apply flex items-center gap-4 py-2 px-4 hover:bg-blue-700 rounded-md hover:text-white transition-transform duration-300 mt-4 text-xs uppercase text-neutral-500;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
   }
+}
 
-  @media (max-width: 1280px) {
-    .sidebar-menu-item {
-      font-size: 0.8125rem;
-    }
+@media (max-width: 1024px) {
+  .sidebar-menu-item {
+    font-size: 0.75rem;
+    @apply py-2 px-3;
   }
+}
 
-  @media (max-width: 1024px) {
-    .sidebar-menu-item {
-      font-size: 0.75rem;
-    }
-  }
-  
-  .sidebar-menu-item-active {
-    @apply bg-blue-800 text-white;
-  }
-  
-  .sidebar-section-header {
-    @apply flex items-center justify-between text-neutral-500 text-xs uppercase;
-  }
-  
+.sidebar-menu-item-active {
+  @apply text-white;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.menu-icon {
+  @apply text-current;
+  font-size: 1.25rem !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  line-height: 1 !important;
+  flex-shrink: 0;
+}
+
+.menu-label-text {
+  @apply font-medium;
+  line-height: 1.25rem;
+  flex: 1;
+}

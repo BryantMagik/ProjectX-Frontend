@@ -9,6 +9,8 @@ export const apiRoutes = {
   auth: {
     login: `${environment.apiUrl}auth/login`,
     profile: `${environment.apiUrl}auth/profile`,
+    refresh: `${environment.apiUrl}auth/refresh`,
+    logout: `${environment.apiUrl}auth/logout`,
   },
   project: {
     create: `${environment.apiUrl}project`,

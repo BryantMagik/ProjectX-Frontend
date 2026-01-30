@@ -25,9 +25,6 @@ export class ProjectListComponent implements OnInit, OnChanges, OnDestroy {
   error: string | null = null
   private projectsSubscription: Subscription = new Subscription()
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
   constructor() {
 
   }
@@ -39,42 +36,38 @@ export class ProjectListComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['workspace']) {
-      this.loadProjects()
-    }
-  }
-  private loadProjects(): void {
-    if (this.workspace) {
-      this.projectsSubscription = this.projectService.projects$.subscribe({
-        next: (projects) => {
-          this.projects = projects;
-          this.loading = false;
-        },
-        error: () => {
-          this.error = 'Failed to load projects';
-          this.loading = false;
-        },
-      });
-
-      this.projectService.getProjectByWorkspaceId(this.workspace);
+    if (changes['workspace'] && !changes['workspace'].firstChange) {
+      const newWorkspaceId = changes['workspace'].currentValue;
+      if (newWorkspaceId) {
+        this.loading = true;
+        this.projects = [];
+        this.getProjectByWorkspaceId(newWorkspaceId);
+      }
     }
   }
 
   navigateToProject(projectId: string): void {
     this.router.navigate(['/pages', this.workspace,  projectId])
-
   }
 
   private getProjectByWorkspaceId(workspaceId: string): void {
-    this.projectService.getProjectByWorkspaceId(workspaceId).pipe(
+    // Limpiar la suscripción anterior si existe
+    if (this.projectsSubscription) {
+      this.projectsSubscription.unsubscribe();
+    }
+
+    this.projectsSubscription = this.projectService.getProjectByWorkspaceId(workspaceId).pipe(
       tap({
         next: (projects: Project[] | null) => {
           if (projects) {
             this.projects = projects
-            console.log(projects)
+            console.log('Projects loaded for workspace:', workspaceId, projects)
           }
         },
-        error: () => this.error = 'Failed to load projects',
+        error: () => {
+          this.error = 'Failed to load projects'
+          this.projects = []
+        },
         complete: () => this.loading = false
       })
     ).subscribe()

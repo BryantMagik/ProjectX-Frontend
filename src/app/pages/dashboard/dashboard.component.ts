@@ -26,8 +26,6 @@ export class DashboardComponent implements OnInit {
   routeSub: Subscription | null = null
   showModal = false;
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor() {
 
@@ -56,7 +54,6 @@ export class DashboardComponent implements OnInit {
     ).subscribe()
   }
 
-  //testing
   openModal() {
     this.showModal = true;
   }

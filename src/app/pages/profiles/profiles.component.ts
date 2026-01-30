@@ -1,15 +1,15 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { User } from '../../model/user.interface';
 import { UserService } from '../../service/user/user.service';
-
 import { first, tap } from 'rxjs';
 import { CloudinaryService } from '../../core/services/cloudinary.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
     selector: 'app-profiles',
-    imports: [],
+    imports: [CommonModule, ReactiveFormsModule],
     templateUrl: './profiles.component.html',
     styleUrl: './profiles.component.css',
     standalone:true
@@ -27,9 +27,6 @@ export class ProfilesComponent implements OnInit {
   error: string | null = null
   isUploading = false
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
   constructor() { }
 
   ngOnInit(): void {
@@ -38,7 +35,6 @@ export class ProfilesComponent implements OnInit {
       first_name: [''],
       last_name: [''],
       email: [''],
-      
     })
   }
 
@@ -47,7 +43,13 @@ export class ProfilesComponent implements OnInit {
       tap({
         next: (user: User | null) => {
           this.user = user;
-          if (!user) {
+          if (user) {
+            this.profileForm.patchValue({
+              first_name: user.first_name,
+              last_name: user.last_name,
+              email: user.email
+            });
+          } else {
             this.error = 'Failed to load user profile';
           }
         },
@@ -55,6 +57,13 @@ export class ProfilesComponent implements OnInit {
         complete: () => this.loading = false,
       })
     ).subscribe();
+  }
+
+  updateProfile(): void {
+    if (this.profileForm.valid) {
+      console.log('Profile updated:', this.profileForm.value);
+      // Aquí iría la lógica para actualizar el perfil
+    }
   }
 
   onFileSelected(event: Event) {

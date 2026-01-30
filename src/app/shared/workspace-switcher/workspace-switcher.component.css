@@ -1,0 +1,94 @@
+.workspace-switcher {
+  @apply relative;
+}
+
+.workspace-button {
+  @apply w-full h-16 rounded-xl flex items-center px-3 py-2;
+  @apply transition-all duration-200 cursor-pointer;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.workspace-button:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.workspace-avatar {
+  @apply w-10 h-10 rounded-lg mr-3 object-cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.workspace-avatar-placeholder {
+  @apply w-10 h-10 rounded-lg mr-3 flex items-center justify-center;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+.avatar-letter {
+  @apply text-white font-bold text-lg;
+}
+
+.workspace-name {
+  @apply text-slate-200 font-semibold text-sm flex-1;
+}
+
+.workspace-empty {
+  @apply text-slate-400 text-sm;
+}
+
+/* Dropdown */
+.workspace-dropdown {
+  @apply absolute w-full mt-2 rounded-xl overflow-hidden shadow-2xl z-50;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.workspace-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.workspace-dropdown::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.workspace-dropdown::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  border-radius: 3px;
+}
+
+.workspace-item {
+  @apply flex items-center p-3 cursor-pointer;
+  @apply transition-all duration-200;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.workspace-item:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
+}
+
+.workspace-item:last-child {
+  border-bottom: none;
+}
+
+.workspace-item-avatar {
+  @apply w-9 h-9 rounded-lg mr-3 object-cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.workspace-item-avatar-placeholder {
+  @apply w-9 h-9 rounded-lg mr-3 flex items-center justify-center;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+}
+
+.item-avatar-letter {
+  @apply text-white font-semibold text-base;
+}
+
+.workspace-item-name {
+  @apply text-slate-200 font-medium text-sm flex-1;
+}

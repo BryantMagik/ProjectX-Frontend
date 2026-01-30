@@ -1,38 +1,38 @@
-<div class="relative">
-  <button class="w-full bg-neutral-200 h-[70px] rounded-md flex items-center p-2"
+<div class="workspace-switcher">
+  <button class="workspace-button"
     (click)="dropdownOpen = !dropdownOpen">
     @if (selectedWorkspace) {
       @if (selectedWorkspace.image) {
         <img [src]="selectedWorkspace.image" alt="Workspace Icon"
-          class="image-icon w-12 h-12 mr-2 rounded-md" />
+          class="workspace-avatar" />
       }
       @if (!selectedWorkspace.image) {
-        <div
-          class="w-12 h-12 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
-          <span class="text-2xl">{{ selectedWorkspace.name[0] }}</span>
+        <div class="workspace-avatar-placeholder">
+          <span class="avatar-letter">{{ selectedWorkspace.name[0] }}</span>
         </div>
       }
-      <span class="">{{ selectedWorkspace.name }}</span>
+      <span class="workspace-name">{{ selectedWorkspace.name }}</span>
+      <i class="pi pi-chevron-down ml-auto text-slate-400"></i>
     } @else {
-      <span>No workspace selected</span>
+      <span class="workspace-empty">Select workspace</span>
     }
   </button>
 
   @if (dropdownOpen) {
-    <div class="absolute w-full bg-white border border-gray-200 rounded-md shadow-lg mt-1">
+    <div class="workspace-dropdown">
       @for (workspace of workspaces; track workspace) {
         <div (click)="selectWorkspace(workspace)"
-          class="cursor-pointer p-2 hover:bg-gray-200 flex items-center rounded-sm">
+          class="workspace-item">
           @if (workspace.image) {
-            <img [src]="workspace.image" alt="Workspace Icon" class="image-icon w-12 h-12 rounded-md mr-2" />
+            <img [src]="workspace.image" alt="Workspace Icon" class="workspace-item-avatar" />
           } @else {
-            <div class="w-12 h-12 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
-              <span class="font-semibold text-2xl">{{ workspace.name[0] }}</span>
+            <div class="workspace-item-avatar-placeholder">
+              <span class="item-avatar-letter">{{ workspace.name[0] }}</span>
             </div>
           }
-          <span>{{ workspace.name }}</span>
+          <span class="workspace-item-name">{{ workspace.name }}</span>
           @if (workspace === selectedWorkspace) {
-            <i class="pi pi-check ml-auto"></i>
+            <i class="pi pi-check ml-auto text-blue-400"></i>
           }
         </div>
       }
