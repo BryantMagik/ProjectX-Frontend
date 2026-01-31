@@ -1,5 +1,5 @@
 .profile-container {
-  @apply max-w-6xl mx-auto py-8 px-4;
+  @apply mx-auto py-8 px-4;
 }
 
 /* Loading & Error States */

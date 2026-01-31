@@ -2,31 +2,17 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
-import { provideIcons } from '@ng-icons/core';
-import { heroLockClosed, heroUsers } from '@ng-icons/heroicons/outline';
-import { featherAirplay } from '@ng-icons/feather-icons';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { DividerModule } from 'primeng/divider';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
-    InputTextModule,
-    ButtonModule,
-    DatePickerModule,
-    InputGroupModule,
-    InputGroupAddonModule,
-    DividerModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
-  viewProviders: [provideIcons({ featherAirplay, heroUsers, heroLockClosed })],
+  styleUrl: './login.component.css'
 })
 export class LoginComponent {
   private authService = inject(AuthService);

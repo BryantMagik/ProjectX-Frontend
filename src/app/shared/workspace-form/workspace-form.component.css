@@ -1,0 +1,142 @@
+.workspace-form-container {
+  @apply max-w-2xl mx-auto p-8;
+}
+
+/* Header */
+.form-header {
+  @apply mb-8 text-center;
+}
+
+.form-title {
+  @apply text-3xl font-bold mb-2;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.form-subtitle {
+  @apply text-slate-600 text-sm;
+}
+
+/* Form Content */
+.form-content {
+  @apply bg-white rounded-2xl shadow-xl p-8;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+/* Form Groups */
+.form-group {
+  @apply mb-6;
+}
+
+.form-label {
+  @apply flex items-center text-sm font-semibold text-slate-700 mb-2;
+}
+
+.form-label i {
+  @apply text-blue-500;
+}
+
+/* Inputs */
+.form-input {
+  @apply w-full px-4 py-3 rounded-xl border border-slate-300;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  @apply transition-all duration-200;
+  @apply text-slate-800;
+}
+
+.form-input:hover {
+  @apply border-blue-300;
+}
+
+.form-textarea {
+  @apply w-full px-4 py-3 rounded-xl border border-slate-300;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  @apply transition-all duration-200;
+  @apply text-slate-800 resize-none;
+}
+
+.form-textarea:hover {
+  @apply border-blue-300;
+}
+
+.error-text {
+  @apply text-red-500 text-xs mt-1 block;
+}
+
+/* Image Upload */
+.image-upload-container {
+  @apply flex items-center gap-6 p-6 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300;
+}
+
+.image-preview {
+  @apply relative w-24 h-24 rounded-xl overflow-hidden;
+  @apply shadow-lg;
+}
+
+.image-preview img {
+  @apply w-full h-full object-cover;
+}
+
+.remove-image-btn {
+  @apply absolute top-1 right-1 w-6 h-6 rounded-full;
+  @apply bg-red-500 text-white flex items-center justify-center;
+  @apply hover:bg-red-600 transition-colors duration-200;
+  @apply text-xs;
+}
+
+.image-placeholder {
+  @apply w-24 h-24 rounded-xl flex items-center justify-center;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+  @apply text-blue-400 text-4xl;
+}
+
+.image-upload-info {
+  @apply flex-1;
+}
+
+.image-upload-text {
+  @apply text-sm font-semibold text-slate-700 mb-1;
+}
+
+.image-upload-size {
+  @apply text-xs text-slate-500 mb-3;
+}
+
+.btn-upload {
+  @apply px-4 py-2 rounded-lg font-semibold text-sm;
+  @apply flex items-center gap-2;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  @apply text-white;
+  @apply hover:shadow-lg transform hover:-translate-y-0.5;
+  @apply transition-all duration-200;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none;
+}
+
+/* Action Buttons */
+.form-actions {
+  @apply flex justify-end gap-4 mt-8 pt-6 border-t border-slate-200;
+}
+
+.btn-cancel {
+  @apply px-6 py-3 rounded-xl font-semibold text-sm;
+  @apply text-slate-700 bg-slate-100;
+  @apply hover:bg-slate-200;
+  @apply transition-all duration-200;
+  @apply flex items-center gap-2;
+}
+
+.btn-submit {
+  @apply px-6 py-3 rounded-xl font-semibold text-sm;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  @apply text-white shadow-lg;
+  @apply hover:shadow-xl transform hover:-translate-y-0.5;
+  @apply transition-all duration-200;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none;
+  @apply flex items-center gap-2;
+}
+
+input[type="file"] {
+  @apply hidden;
+}

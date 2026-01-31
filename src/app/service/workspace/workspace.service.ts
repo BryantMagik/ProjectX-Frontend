@@ -65,4 +65,50 @@ export class WorkspaceService {
         }
         return of(null)
     }
+
+    // Invitation methods
+    createInvitation(workspaceId: string, invitationData: any): Observable<any> {
+        const headers = this.getAuthHeaders()
+        if (headers) {
+            const baseUrl = apiRoutes.workspace.create.replace('/workspace', '');
+            return this.apiService.post<any>(`${baseUrl}/workspace/${workspaceId}/invitations`, invitationData, { headers })
+        }
+        return of(null)
+    }
+
+    getWorkspaceInvitations(workspaceId: string): Observable<any[]> {
+        const headers = this.getAuthHeaders()
+        if (headers) {
+            const baseUrl = apiRoutes.workspace.create.replace('/workspace', '');
+            return this.apiService.get<any[]>(`${baseUrl}/workspace/${workspaceId}/invitations`, { headers })
+        }
+        return of([])
+    }
+
+    joinWorkspaceByToken(token: string): Observable<any> {
+        const headers = this.getAuthHeaders()
+        if (headers) {
+            const baseUrl = apiRoutes.workspace.create.replace('/workspace', '');
+            return this.apiService.post<any>(`${baseUrl}/workspace/join`, { token }, { headers })
+        }
+        return of(null)
+    }
+
+    getWorkspaceMembers(workspaceId: string): Observable<any> {
+        const headers = this.getAuthHeaders()
+        if (headers) {
+            const baseUrl = apiRoutes.workspace.create.replace('/workspace', '');
+            return this.apiService.get<any>(`${baseUrl}/workspace/${workspaceId}/members`, { headers })
+        }
+        return of(null)
+    }
+
+    deactivateInvitation(invitationId: string): Observable<any> {
+        const headers = this.getAuthHeaders()
+        if (headers) {
+            const baseUrl = apiRoutes.workspace.create.replace('/workspace', '');
+            return this.apiService.patch<any>(`${baseUrl}/workspace/invitations/${invitationId}/deactivate`, {}, { headers })
+        }
+        return of(null)
+    }
 }

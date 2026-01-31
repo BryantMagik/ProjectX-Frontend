@@ -18,6 +18,8 @@ import { TasksDetailsComponent } from './subpages/tasks-details/tasks-details.co
 import { SubtasksFormComponent } from './shared/subtasks-form/subtasks-form.component';
 import { SubtasksDetailsComponent } from './subpages/subtasks-details/subtasks-details.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
+import { WorkspaceMembersComponent } from './pages/workspace-members/workspace-members.component';
+import { JoinWorkspaceComponent } from './pages/join-workspace/join-workspace.component';
 
 export const routes: Routes = [
     {
@@ -55,6 +57,11 @@ export const routes: Routes = [
                 path: 'pages/issues',
                 title: 'Issues',
                 component: IssuesComponent,
+            },
+            {
+                path: 'pages/join-workspace',
+                title: 'Join Workspace',
+                component: JoinWorkspaceComponent,
             },
             {
               path: 'pages/tasks/shared/tasks-form',
@@ -105,6 +112,11 @@ export const routes: Routes = [
                         path: 'settings',
                         title: 'Settings',
                         component: SettingsComponent,
+                    },
+                    {
+                        path: 'members',
+                        title: 'Members',
+                        component: WorkspaceMembersComponent,
                     },
                     {
                         path: ':projectId',

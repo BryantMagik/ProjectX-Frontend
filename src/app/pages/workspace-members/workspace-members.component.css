@@ -1,0 +1,263 @@
+.members-container {
+  @apply mx-auto p-6;
+}
+
+/* Header */
+.members-header {
+  @apply flex justify-between items-center mb-8 p-6 rounded-2xl;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.header-title {
+  @apply text-3xl font-bold text-white;
+}
+
+.header-subtitle {
+  @apply text-slate-400 text-sm mt-1;
+}
+
+.btn-invite {
+  @apply px-6 py-3 rounded-xl font-semibold text-sm flex items-center gap-2;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  @apply text-white shadow-lg;
+  @apply hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200;
+}
+
+/* Loading & Error */
+.loading-container {
+  @apply flex flex-col items-center justify-center py-16;
+}
+
+.error-banner {
+  @apply bg-red-50 border-l-4 border-red-500 p-4 rounded-lg flex items-center;
+  @apply text-red-700 mb-6;
+}
+
+/* Stats Grid */
+.stats-grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6 mb-8;
+}
+
+.stat-card {
+  @apply bg-white rounded-xl shadow-md p-6 flex items-center gap-4;
+  @apply border border-slate-200 hover:shadow-lg transition-shadow duration-200;
+}
+
+.stat-icon {
+  @apply w-14 h-14 rounded-xl flex items-center justify-center text-2xl;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+  @apply text-blue-500;
+}
+
+.stat-label {
+  @apply text-slate-600 text-sm font-medium;
+}
+
+.stat-value {
+  @apply text-3xl font-bold text-slate-800 mt-1;
+}
+
+/* Sections */
+.section {
+  @apply mb-8;
+}
+
+.section-title {
+  @apply text-xl font-bold text-slate-800 mb-4 flex items-center;
+}
+
+/* Member Cards */
+.members-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
+}
+
+.member-card {
+  @apply bg-white rounded-xl shadow-md p-4 flex items-center gap-4;
+  @apply border border-slate-200;
+  @apply hover:shadow-lg hover:border-blue-300 transition-all duration-200;
+}
+
+.creator-card {
+  @apply border-2 border-yellow-300;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, rgba(245, 158, 11, 0.05) 100%);
+}
+
+.member-avatar {
+  @apply w-12 h-12 rounded-full flex items-center justify-center overflow-hidden;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  @apply text-white font-semibold text-lg;
+  @apply shadow-lg;
+}
+
+.member-avatar img {
+  @apply w-full h-full object-cover;
+}
+
+.member-info {
+  @apply flex-1;
+}
+
+.member-name {
+  @apply text-slate-800 font-semibold text-sm;
+}
+
+.member-email {
+  @apply text-slate-500 text-xs mt-1;
+}
+
+/* Badges */
+.badge {
+  @apply px-3 py-1 rounded-lg text-xs font-semibold;
+}
+
+.badge-creator {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.badge-owner {
+  @apply bg-purple-100 text-purple-800;
+}
+
+.badge-member {
+  @apply bg-blue-100 text-blue-800;
+}
+
+/* Invitations */
+.invitations-list {
+  @apply space-y-3;
+}
+
+.invitation-card {
+  @apply bg-white rounded-xl shadow-md p-4 flex items-center justify-between;
+  @apply border border-slate-200;
+  @apply hover:shadow-lg transition-shadow duration-200;
+}
+
+.invitation-inactive {
+  @apply opacity-60 bg-slate-50;
+}
+
+.invitation-info {
+  @apply flex-1;
+}
+
+.invitation-code {
+  @apply font-mono text-sm font-semibold text-slate-800;
+  @apply px-2 py-1 bg-slate-100 rounded;
+}
+
+.status-badge {
+  @apply px-2 py-1 rounded text-xs font-semibold;
+}
+
+.status-active {
+  @apply bg-green-100 text-green-800;
+}
+
+.status-inactive {
+  @apply bg-slate-100 text-slate-600;
+}
+
+.invitation-meta {
+  @apply text-slate-600 text-xs mt-2;
+}
+
+.invitation-stats {
+  @apply flex gap-4 text-slate-500 text-xs mt-2;
+}
+
+.btn-deactivate {
+  @apply w-10 h-10 rounded-lg flex items-center justify-center;
+  @apply bg-red-50 text-red-500;
+  @apply hover:bg-red-100 transition-colors duration-200;
+}
+
+/* Modal */
+.modal-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+}
+
+.modal-content {
+  @apply bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4;
+  @apply overflow-hidden;
+}
+
+.modal-header {
+  @apply flex justify-between items-center p-6;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+
+.modal-title {
+  @apply text-xl font-bold text-white;
+}
+
+.modal-close {
+  @apply w-8 h-8 rounded-lg flex items-center justify-center;
+  @apply text-slate-400 hover:text-white hover:bg-slate-700;
+  @apply transition-colors duration-200;
+}
+
+.modal-body {
+  @apply p-6;
+}
+
+.modal-footer {
+  @apply flex justify-end gap-3 p-6 border-t border-slate-200;
+}
+
+/* Form */
+.form-group {
+  @apply mb-4;
+}
+
+.form-label {
+  @apply flex items-center text-sm font-semibold text-slate-700 mb-2;
+}
+
+.form-input {
+  @apply w-full px-4 py-3 rounded-xl border border-slate-300;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  @apply transition-all duration-200;
+}
+
+.btn-cancel {
+  @apply px-6 py-2 rounded-xl font-semibold text-sm;
+  @apply text-slate-700 bg-slate-100;
+  @apply hover:bg-slate-200 transition-colors duration-200;
+}
+
+.btn-generate {
+  @apply px-6 py-2 rounded-xl font-semibold text-sm flex items-center gap-2;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  @apply text-white shadow-lg;
+  @apply hover:shadow-xl transition-shadow duration-200;
+}
+
+.btn-done {
+  @apply px-6 py-2 rounded-xl font-semibold text-sm;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  @apply text-white shadow-lg;
+  @apply hover:shadow-xl transition-shadow duration-200;
+}
+
+/* Link Generated */
+.link-generated {
+  @apply text-center;
+}
+
+.link-display {
+  @apply flex gap-2;
+}
+
+.link-input {
+  @apply flex-1 px-4 py-3 rounded-xl border border-slate-300 bg-slate-50;
+  @apply text-sm font-mono text-slate-700;
+}
+
+.btn-copy {
+  @apply px-6 py-3 rounded-xl font-semibold text-sm flex items-center gap-2;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  @apply text-white shadow-lg;
+  @apply hover:shadow-xl transition-shadow duration-200;
+}

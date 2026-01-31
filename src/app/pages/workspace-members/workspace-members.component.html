@@ -1,0 +1,279 @@
+<div class="members-container">
+  <div class="members-header">
+    <div>
+      <h1 class="header-title">Workspace Members</h1>
+      <p class="header-subtitle">Manage your team and invitations</p>
+    </div>
+    <button (click)="openInviteModal()" class="btn-invite">
+      <i class="pi pi-user-plus mr-2"></i>
+      Invite Members
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
+      <p class="text-slate-600 mt-4">Loading members...</p>
+    </div>
+  }
+
+  @if (error) {
+    <div class="error-banner">
+      <i class="pi pi-exclamation-triangle mr-2"></i>
+      {{ error }}
+    </div>
+  }
+
+  @if (!loading && !error) {
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="pi pi-users"></i>
+        </div>
+        <div>
+          <p class="stat-label">Total Members</p>
+          <p class="stat-value">{{ getMemberCount() }}</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="pi pi-shield"></i>
+        </div>
+        <div>
+          <p class="stat-label">Owners</p>
+          <p class="stat-value">{{ owners.length }}</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="pi pi-envelope"></i>
+        </div>
+        <div>
+          <p class="stat-label">Active Invitations</p>
+          <p class="stat-value">{{ getActiveInvitationsCount() }}</p>
+        </div>
+      </div>
+    </div>
+
+    @if (creator) {
+      <div class="section">
+        <h2 class="section-title">
+          <i class="pi pi-star-fill mr-2 text-yellow-400"></i>
+          Workspace Creator
+        </h2>
+        <div class="member-card creator-card">
+          <div class="member-avatar">
+            @if (creator.profile_picture) {
+              <img [src]="creator.profile_picture" alt="{{creator.first_name}} {{creator.last_name}}" title="{{creator.first_name}} {{creator.last_name}}"/>
+            } @else {
+              <span>{{ creator.first_name[0] }}{{ creator.last_name[0] }}</span>
+            }
+          </div>
+          <div class="member-info">
+            <p class="member-name">{{ creator.first_name }} {{ creator.last_name }}</p>
+            <p class="member-email">{{ creator.email }}</p>
+          </div>
+          <span class="badge badge-creator">Creator</span>
+        </div>
+      </div>
+    }
+
+    @if (owners.length > 0) {
+      <div class="section">
+        <h2 class="section-title">
+          <i class="pi pi-shield mr-2 text-purple-400"></i>
+          Owners ({{ owners.length }})
+        </h2>
+        <div class="members-grid">
+          @for (owner of owners; track owner.id) {
+            <div class="member-card">
+              <div class="member-avatar">
+                @if (owner.profile_picture) {
+                  <img [src]="owner.profile_picture" alt="{{owner.first_name}} {{owner.last_name}}" title="{{owner.first_name}} {{owner.last_name}}" />
+                } @else {
+                  <span>{{ owner.first_name[0] }}{{ owner.last_name[0] }}</span>
+                }
+              </div>
+              <div class="member-info">
+                <p class="member-name">{{ owner.first_name }} {{ owner.last_name }}</p>
+                <p class="member-email">{{ owner.email }}</p>
+              </div>
+              <span class="badge badge-owner">Owner</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (members.length > 0) {
+      <div class="section">
+        <h2 class="section-title">
+          <i class="pi pi-users mr-2 text-blue-400"></i>
+          Members ({{ members.length }})
+        </h2>
+        <div class="members-grid">
+          @for (member of members; track member.id) {
+            <div class="member-card">
+              <div class="member-avatar">
+                @if (member.profile_picture) {
+                  <img [src]="member.profile_picture" alt="{{member.first_name}} {{member.last_name}}" title="{{member.first_name}} {{member.last_name}}" />
+                } @else {
+                  <span>{{ member.first_name[0] }}{{ member.last_name[0] }}</span>
+                }
+              </div>
+              <div class="member-info">
+                <p class="member-name">{{ member.first_name }} {{ member.last_name }}</p>
+                <p class="member-email">{{ member.email }}</p>
+              </div>
+              <span class="badge badge-member">Member</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (invitations.length > 0) {
+      <div class="section">
+        <h2 class="section-title">
+          <i class="pi pi-link mr-2 text-green-400"></i>
+          Invitations ({{ invitations.length }})
+        </h2>
+        <div class="invitations-list">
+          @for (invitation of invitations; track invitation.id) {
+            <div class="invitation-card" [class.invitation-inactive]="!isInvitationActive(invitation)">
+              <div class="invitation-info">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="invitation-code">{{ invitation.code }}</span>
+                  @if (isInvitationActive(invitation)) {
+                    <span class="status-badge status-active">Active</span>
+                  } @else {
+                    <span class="status-badge status-inactive">{{ getInvitationStatus(invitation) }}</span>
+                  }
+                </div>
+                <p class="invitation-meta">
+                  Created by {{ invitation.author.first_name }} {{ invitation.author.last_name }}
+                </p>
+                <div class="invitation-stats">
+                  <span>
+                    <i class="pi pi-users mr-1"></i>
+                    Uses: {{ invitation.uses }}@if (invitation.maxUses) { / {{ invitation.maxUses }} }
+                  </span>
+                  @if (invitation.expiresAt) {
+                    <span>
+                      <i class="pi pi-calendar mr-1"></i>
+                      Expires: {{ invitation.expiresAt | date:'short' }}
+                    </span>
+                  }
+                </div>
+              </div>
+              @if (isInvitationActive(invitation)) {
+                <button
+                  (click)="deactivateInvitation(invitation.id)"
+                  class="btn-deactivate"
+                  title="Deactivate invitation"
+                >
+                  <i class="pi pi-ban"></i>
+                </button>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  }
+</div>
+
+@if (showInviteModal) {
+  <div class="modal-overlay" (click)="closeInviteModal()" (keydown.escape)="closeInviteModal()" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()" tabindex="-1">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Generate Invitation Link</h3>
+        <button (click)="closeInviteModal()" class="modal-close" title="Close modal" aria-label="Close modal">
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
+
+      @if (!generatedLink) {
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="maxUses" class="form-label">
+              <i class="pi pi-users mr-2"></i>
+              Maximum Uses (Optional)
+            </label>
+            <input
+              id="maxUses"
+              type="number"
+              [(ngModel)]="maxUses"
+              placeholder="Unlimited"
+              min="1"
+              class="form-input"
+              aria-label="Maximum uses for invitation"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="expiresInDays" class="form-label">
+              <i class="pi pi-calendar mr-2"></i>
+              Expires in Days (Optional)
+            </label>
+            <input
+              id="expiresInDays"
+              type="number"
+              [(ngModel)]="expiresInDays"
+              placeholder="Never expires"
+              min="1"
+              class="form-input"
+              aria-label="Expires in days"
+            />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button (click)="closeInviteModal()" class="btn-cancel">
+            Cancel
+          </button>
+          <button (click)="generateInviteLink()" class="btn-generate">
+            <i class="pi pi-link mr-2"></i>
+            Generate Link
+          </button>
+        </div>
+      } @else {
+        <div class="modal-body">
+          <div class="link-generated">
+            <i class="pi pi-check-circle text-green-500 text-4xl mb-4"></i>
+            <p class="text-slate-700 font-semibold mb-2">Invitation link generated!</p>
+            <p class="text-slate-500 text-sm mb-4">Share this link with people you want to invite</p>
+
+            <div class="link-display">
+              <input
+                type="text"
+                [value]="generatedLink"
+                readonly
+                class="link-input"
+                aria-label="Generated invitation link"
+                aria-readonly="true"
+              />
+              <button (click)="copyInviteLink()" class="btn-copy">
+                @if (linkCopied) {
+                  <i class="pi pi-check mr-2"></i>
+                  Copied!
+                } @else {
+                  <i class="pi pi-copy mr-2"></i>
+                  Copy
+                }
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button (click)="closeInviteModal()" class="btn-done">
+            Done
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+}

@@ -1,91 +1,103 @@
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-        <div class="text-center">
-            <div class="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg">
-                <i class="pi pi-sign-in text-white text-2xl"></i>
+<div class="login-container">
+    <!-- Background with gradient -->
+    <div class="login-background"></div>
+
+    <!-- Login card -->
+    <div class="login-card">
+        <!-- Header -->
+        <div class="login-header">
+            <div class="login-icon">
+                <i class="pi pi-building"></i>
             </div>
-            <h2 class="mt-6 text-3xl font-extrabold text-gray-900">Welcome back</h2>
-            <p class="mt-2 text-sm text-gray-600">Sign in to continue to your account</p>
+            <h1 class="login-title">Welcome to Jiro</h1>
+            <p class="login-subtitle">Sign in to manage your projects</p>
         </div>
-        <div class="bg-white py-8 px-6 shadow-2xl rounded-2xl border border-gray-100">
-            <form [formGroup]="validatorForm" (ngSubmit)="login()" class="space-y-6">
-                <div>
-                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email address</label>
-                    <p-inputGroup>
-                        <p-inputGroupAddon>
-                            <i class="pi pi-envelope text-gray-500"></i>
-                        </p-inputGroupAddon>
-                        <input id="email"
-                               type="email"
-                               pInputText
-                               formControlName="emailValidator"
-                               placeholder="you@example.com"
-                               class="w-full"
-                               [class.ng-invalid]="validatorForm.get('emailValidator')?.invalid && validatorForm.get('emailValidator')?.touched" />
-                    </p-inputGroup>
-                    @if (validatorForm.get('emailValidator')?.invalid && validatorForm.get('emailValidator')?.touched) {
-                    <small class="text-red-500 text-xs mt-1 block">Please enter a valid email address</small>
-                    }
-                </div>
-                <div>
-                    <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
-                    <p-inputGroup>
-                        <p-inputGroupAddon>
-                            <i class="pi pi-lock text-gray-500"></i>
-                        </p-inputGroupAddon>
-                        <input id="password"
-                               [type]="showPassword() ? 'text' : 'password'"
-                               pInputText
-                               formControlName="passwordValidator"
-                               placeholder="Enter your password"
-                               class="w-full"
-                               [class.ng-invalid]="validatorForm.get('passwordValidator')?.invalid && validatorForm.get('passwordValidator')?.touched" />
-                        <p-inputGroupAddon class="cursor-pointer" (click)="togglePasswordVisibility()">
-                            <i [class]="showPassword() ? 'pi pi-eye-slash text-gray-500' : 'pi pi-eye text-gray-500'"></i>
-                        </p-inputGroupAddon>
-                    </p-inputGroup>
-                    @if (validatorForm.get('passwordValidator')?.invalid && validatorForm.get('passwordValidator')?.touched) {
-                    <small class="text-red-500 text-xs mt-1 block">Password is required</small>
-                    }
-                </div>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <input id="remember-me"
-                               type="checkbox"
-                               class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
-                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
-                    </div>
-                    <div class="text-sm">
-                        <a href="#"
-                           class="font-medium text-blue-600 hover:text-blue-500 transition-colors">Forgot password?</a>
-                    </div>
-                </div>
-                @if (errorMessage()) {
-                <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
-                    <div class="flex items-center">
-                        <i class="pi pi-exclamation-triangle text-red-500 mr-3"></i>
-                        <p class="text-sm text-red-700">{{ errorMessage() }}</p>
-                    </div>
-                </div>
+
+        <!-- Form -->
+        <form [formGroup]="validatorForm" (ngSubmit)="login()" class="login-form">
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email" class="form-label">
+                    <i class="pi pi-envelope mr-2"></i>
+                    Email Address
+                </label>
+                <input
+                    id="email"
+                    type="email"
+                    formControlName="emailValidator"
+                    placeholder="you@example.com"
+                    class="form-input"
+                    [class.input-error]="validatorForm.get('emailValidator')?.invalid && validatorForm.get('emailValidator')?.touched"
+                />
+                @if (validatorForm.get('emailValidator')?.invalid && validatorForm.get('emailValidator')?.touched) {
+                    <span class="error-text">Please enter a valid email address</span>
                 }
-                <div>
-                    <button type="submit"
-                            pButton
-                            [disabled]="isLoading() || validatorForm.invalid"
-                            [label]="isLoading() ? 'Signing in...' : 'Sign in'"
-                            [icon]="isLoading() ? 'pi pi-spin pi-spinner' : 'pi pi-sign-in'"
-                            title="Sign in to your account"
-                            class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password" class="form-label">
+                    <i class="pi pi-lock mr-2"></i>
+                    Password
+                </label>
+                <div class="password-input-wrapper">
+                    <input
+                        id="password"
+                        [type]="showPassword() ? 'text' : 'password'"
+                        formControlName="passwordValidator"
+                        placeholder="Enter your password"
+                        class="form-input password-input"
+                        [class.input-error]="validatorForm.get('passwordValidator')?.invalid && validatorForm.get('passwordValidator')?.touched"
+                    />
+                    <button
+                        type="button"
+                        (click)="togglePasswordVisibility()"
+                        class="password-toggle"
+                    >
+                        <i [class]="showPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
                     </button>
                 </div>
-            </form>
-        </div>
-        <div class="text-center">
-            <p class="text-sm text-gray-600">
-                Don't have an account?
-                <a href="#"
-                   class="font-medium text-blue-600 hover:text-blue-500 transition-colors">Sign up now</a>
-            </p>
+                @if (validatorForm.get('passwordValidator')?.invalid && validatorForm.get('passwordValidator')?.touched) {
+                    <span class="error-text">Password is required</span>
+                }
+            </div>
+
+            <!-- Remember & Forgot -->
+            <div class="form-options">
+                <label class="remember-checkbox">
+                    <input type="checkbox" />
+                    <span>Remember me</span>
+                </label>
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <!-- Error message -->
+            @if (errorMessage()) {
+                <div class="error-banner">
+                    <i class="pi pi-exclamation-triangle mr-2"></i>
+                    {{ errorMessage() }}
+                </div>
+            }
+
+            <!-- Submit button -->
+            <button
+                type="submit"
+                [disabled]="isLoading() || validatorForm.invalid"
+                class="btn-submit"
+            >
+                @if (isLoading()) {
+                    <i class="pi pi-spin pi-spinner mr-2"></i>
+                    Signing in...
+                } @else {
+                    <i class="pi pi-sign-in mr-2"></i>
+                    Sign In
+                }
+            </button>
+        </form>
+
+        <!-- Sign up link -->
+        <div class="login-footer">
+            <p>Don't have an account? <a href="#" class="signup-link">Sign up now</a></p>
         </div>
     </div>
 </div>

@@ -1,0 +1,39 @@
+<div class="join-container">
+  <div class="join-card">
+    @if (loading) {
+      <div class="join-content loading">
+        <i class="pi pi-spin pi-spinner text-6xl text-blue-500 mb-6"></i>
+        <h1 class="join-title">Processing Invitation</h1>
+        <p class="join-text">Please wait while we add you to the workspace...</p>
+      </div>
+    }
+
+    @if (success && !loading) {
+      <div class="join-content success">
+        <div class="success-icon">
+          <i class="pi pi-check-circle"></i>
+        </div>
+        <h1 class="join-title success-title">Welcome!</h1>
+        <p class="join-text">You've successfully joined <strong>{{ workspaceName }}</strong></p>
+        <p class="join-subtext">Redirecting to workspace...</p>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+    }
+
+    @if (error && !loading) {
+      <div class="join-content error">
+        <div class="error-icon">
+          <i class="pi pi-times-circle"></i>
+        </div>
+        <h1 class="join-title error-title">Unable to Join</h1>
+        <p class="join-text">{{ error }}</p>
+        <button (click)="goToHome()" class="btn-home">
+          <i class="pi pi-home mr-2"></i>
+          Go to Dashboard
+        </button>
+      </div>
+    }
+  </div>
+</div>

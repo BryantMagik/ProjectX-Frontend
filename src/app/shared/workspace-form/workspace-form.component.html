@@ -1,49 +1,115 @@
-<div class="bg-white shadow sm:rounded-lg select-none">
-  <div class="px-6 py-8 sm:p-12">
-    <p class="text-2xl font-medium text-gray-900">Create a new Workspace</p>
-    <hr class="mt-6 p-2 border-dashed">
-    <div class="mt-8">
-      <form (ngSubmit)="onSubmit()" [formGroup]="workspaceForm">
-        <div class="space-y-2">
-          <label for="name" class="block font-bold text-sm text-gray-700">Workspace Name</label>
-          <input type="text" id="name" pInputText formControlName="name" placeholder="Enter workspace name"
-            class="w-full  border rounded-md h-12 p-4" />
+<div class="workspace-form-container">
+  <!-- Header -->
+  <div class="form-header">
+    <h1 class="form-title">Create New Workspace</h1>
+    <p class="form-subtitle">Set up a collaborative space for your team</p>
+  </div>
+
+  <!-- Form -->
+  <form (ngSubmit)="onSubmit()" [formGroup]="workspaceForm" class="form-content">
+    <!-- Workspace Name -->
+    <div class="form-group">
+      <label for="name" class="form-label">
+        <i class="pi pi-building mr-2"></i>
+        Workspace Name
+      </label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        placeholder="Enter workspace name"
+        class="form-input"
+        maxlength="30"
+      />
+      @if (workspaceForm.get('name')?.hasError('required') && workspaceForm.get('name')?.touched) {
+        <span class="error-text">Workspace name is required</span>
+      }
+      @if (workspaceForm.get('name')?.hasError('maxlength')) {
+        <span class="error-text">Maximum 30 characters allowed</span>
+      }
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description" class="form-label">
+        <i class="pi pi-align-left mr-2"></i>
+        Description (Optional)
+      </label>
+      <textarea
+        id="description"
+        formControlName="description"
+        placeholder="Describe your workspace"
+        class="form-textarea"
+        rows="4"
+      ></textarea>
+    </div>
+
+    <!-- Workspace Icon -->
+    <div class="form-group">
+      <label class="form-label">
+        <i class="pi pi-image mr-2"></i>
+        Workspace Icon
+      </label>
+      <div class="image-upload-container">
+        @if (workspaceForm.get('image')?.value) {
+          <div class="image-preview">
+            <img [src]="workspaceForm.get('image')?.value" alt="Workspace Icon" />
+            <button
+              type="button"
+              (click)="workspaceForm.patchValue({ image: '' })"
+              class="remove-image-btn"
+            >
+              <i class="pi pi-times"></i>
+            </button>
           </div>
-          <div class="mt-2">
-            <div class="flex flex-row items-center p-8 rounded-lg w-auto space-x-4">
-              @if (workspaceForm.get('image')?.value) {
-                <div class="w-24 h-24 rounded-md bg-gray-300 flex justify-center items-center overflow-hidden"
-                  >
-                  <img [src]="workspaceForm.get('image')?.value" alt="Workspace Icon" class="image-icon" />
-                </div>
-              } @else {
-                <div
-                  class="flex items-center justify-center w-[100px] h-[100px] bg-slate-200 rounded-full p-6">
-                  <i class="pi pi-image text-gray-500 text-4xl"></i>
-                </div>
-              }
-              <div class="mt-4">
-                <label for="image" class="font-bold text-sm text-gray-700">Workspace Icon</label>
-                <p class="text-xs text-gray-500">JPG, PNG, SVG or JPEG, max 1mb</p>
-                <input #fileInput id="image" type="file" (change)="onFileSelected($event)"
-                  accept=".jpg, .jpeg, .png, .svg" class="mt-2 hidden" />
-                  <a (click)="fileInput.click()"
-                    class="mt-4 px-2 py-1 bg-blue-200 text-white rounded-md font-bold hover:text-blue-500 focus:outline-none cursor-pointer">
-                    Upload Image
-                  </a>
-                </div>
-              </div>
-            </div>
-            <hr class="mt-6 p-2 border-dashed">
-            <div class="flex justify-between">
-              <button
-              class="mt-6 p-6 text-sm font-extrabold w-auto border rounded-md text-gray-700 hover:bg-gray-400 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500">Cancel</button>
-              <button
-                class="mt-6 p-6 text-sm font-extrabold w-auto border rounded-md bg-blue-700 text-white shadow-md hover:bg-blue-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
-                Create Workspace
-              </button>
-            </div>
-          </form>
+        } @else {
+          <div class="image-placeholder">
+            <i class="pi pi-image"></i>
+          </div>
+        }
+        <div class="image-upload-info">
+          <p class="image-upload-text">JPG, PNG, SVG or JPEG</p>
+          <p class="image-upload-size">Maximum size: 1MB</p>
+          <input
+            #fileInput
+            id="image"
+            type="file"
+            (change)="onFileSelected($event)"
+            accept=".jpg, .jpeg, .png, .svg"
+            style="display: none;"
+          />
+          <button
+            type="button"
+            (click)="fileInput.click()"
+            [disabled]="isUploading"
+            class="btn-upload"
+          >
+            @if (isUploading) {
+              <i class="pi pi-spin pi-spinner mr-2"></i>
+              Uploading...
+            } @else {
+              <i class="pi pi-cloud-upload mr-2"></i>
+              Upload Image
+            }
+          </button>
         </div>
       </div>
     </div>
+
+    <!-- Action Buttons -->
+    <div class="form-actions">
+      <button type="button" class="btn-cancel">
+        <i class="pi pi-times mr-2"></i>
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn-submit"
+        [disabled]="workspaceForm.invalid || isUploading"
+      >
+        <i class="pi pi-check mr-2"></i>
+        Create Workspace
+      </button>
+    </div>
+  </form>
+</div>

@@ -13,6 +13,11 @@ export function createMenuItems(id: string): MenuItem[] {
             route: '/pages/tasks',
         },
         {
+            icon: 'people',
+            label: 'Members',
+            route: `/pages/${id ?? 'default'}/members`
+        },
+        {
             icon: 'settings',
             label: 'Setting',
             route: `/pages/${id ?? 'default'}/settings`
