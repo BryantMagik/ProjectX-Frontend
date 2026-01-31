@@ -8,10 +8,6 @@
           <p class="subtitle">Manage and track your assigned tasks</p>
         </div>
       </div>
-      <button class="btn-primary" (click)="navigateToTaskForm()">
-        <i class="pi pi-plus"></i>
-        New Task
-      </button>
     </div>
   </div>
 
@@ -115,12 +111,6 @@
         <i class="pi pi-inbox"></i>
         <h3>No tasks found</h3>
         <p>{{ searchTerm || selectedStatus !== 'all' || selectedPriority !== 'all' ? 'Try adjusting your filters' : 'Create your first task to get started' }}</p>
-        @if (!searchTerm && selectedStatus === 'all' && selectedPriority === 'all') {
-          <button class="btn-secondary" (click)="navigateToTaskForm()">
-            <i class="pi pi-plus"></i>
-            Create Task
-          </button>
-        }
       </div>
     } @else {
       <div class="tasks-grid">

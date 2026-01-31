@@ -1,16 +1,16 @@
-import { Component, EventEmitter, OnInit, Output, OnDestroy, inject } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
-import { finalize, Subscription, tap } from 'rxjs'
+import { Component, OnInit, OnDestroy, inject } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
+import { Subscription, tap } from 'rxjs'
 import { Workspace } from '../../model/workspace.interface'
 import { WorkspaceService } from '../../service/workspace/workspace.service'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
-
+import { CommonModule } from '@angular/common'
 import { CloudinaryService } from '../../core/services/cloudinary.service'
-import { ModalDeleteWorkspaceComponent } from "../../shared/modal-delete-workspace/modal-delete-workspace.component";
+import { ModalDeleteWorkspaceComponent } from "../../shared/modal-delete-workspace/modal-delete-workspace.component"
 
 @Component({
     selector: 'app-settings',
-    imports: [ReactiveFormsModule, ModalDeleteWorkspaceComponent],
+    imports: [ReactiveFormsModule, CommonModule, ModalDeleteWorkspaceComponent],
     templateUrl: './settings-workspaces.component.html',
     styleUrl: './settings-workspaces.component.css',
     standalone:true
@@ -18,9 +18,9 @@ import { ModalDeleteWorkspaceComponent } from "../../shared/modal-delete-workspa
 export class SettingsComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private workspaceService = inject(WorkspaceService);
   private cloudinaryService = inject(CloudinaryService);
-
 
   workspaceForm!: FormGroup
   workspaceId: string | null = null
@@ -31,9 +31,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   isUploading = false
   authorId: string | null = null
   showModal: boolean = false
+  successMessage: string | null = null
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor() { }
 
@@ -42,7 +41,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.workspaceId = params.get('workspaceId')
       if (this.workspaceId) {
         this.getWorkspaceById(this.workspaceId)
-      } else {
       }
     }) || null
 
@@ -57,23 +55,30 @@ export class SettingsComponent implements OnInit, OnDestroy {
     const file = (event.target as HTMLInputElement).files?.[0]
     if (file) {
       this.isUploading = true
+      this.error = null
 
       const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml']
       if (!allowedTypes.includes(file.type)) {
-        alert('Invalid file type. Please upload JPG, PNG, or SVG.')
+        this.error = 'Invalid file type. Please upload JPG, PNG, or SVG.'
+        this.isUploading = false
         return
       }
       const maxSize = 1 * 1024 * 1024
       if (file.size > maxSize) {
-        alert('File size exceeds 1MB. Please upload a smaller image.')
+        this.error = 'File size exceeds 1MB. Please upload a smaller image.'
+        this.isUploading = false
         return
       }
 
       this.cloudinaryService.uploadImage(file)
         .then((imageUrl) => {
           this.workspaceForm.patchValue({ image: imageUrl })
+          this.successMessage = 'Image uploaded successfully!'
+          setTimeout(() => this.successMessage = null, 3000)
         },
           (error) => {
+            this.error = 'Failed to upload image. Please try again.'
+            console.error('Upload error:', error)
           }
         ).finally(() => {
           this.isUploading = false;
@@ -81,13 +86,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  removeImage(): void {
+    this.workspaceForm.patchValue({ image: '' })
+    this.successMessage = 'Image removed'
+    setTimeout(() => this.successMessage = null, 2000)
+  }
+
   toggleModal(): void {
     this.showModal = !this.showModal
   }
 
   handleDelete(): void {
-    console.log("Workspace Eliminado " + this.workspaceId)
     if (this.workspaceId) {
+      this.loading = true
       this.deleteWorkspace(this.workspaceId)
     }
     this.toggleModal()
@@ -100,22 +111,40 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    if (this.workspaceForm.valid) {
-      console.log('Workspace form data:', this.workspaceForm.value)
+    if (this.workspaceForm.valid && !this.isUploading) {
+      this.error = null
+      this.successMessage = null
+
       const workspaceData: Workspace = this.workspaceForm.value
       if (this.workspaceId) {
+        this.loading = true
         this.workspaceService.updateWorkspace(workspaceData, this.workspaceId).subscribe({
           next: (response) => {
+            this.successMessage = 'Workspace updated successfully!'
+            this.workspace = response
+            this.loading = false
 
-          }, error: (error) => {
-            console.error('Error creating workspace:', error)
+            // Clear success message after 3 seconds
+            setTimeout(() => this.successMessage = null, 3000)
+          },
+          error: (error) => {
+            console.error('Error updating workspace:', error)
+            this.error = 'Failed to update workspace. Please try again.'
+            this.loading = false
           }
         })
       }
+    } else if (this.isUploading) {
+      this.error = 'Please wait for the image to finish uploading.'
+    } else {
+      this.error = 'Please fill in all required fields correctly.'
     }
   }
 
   private getWorkspaceById(workspaceId: string): void {
+    this.loading = true
+    this.error = null
+
     this.workspaceService.getWorkspaceById(workspaceId).pipe(
       tap({
         next: (workspace: Workspace | null) => {
@@ -126,9 +155,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
               description: workspace.description,
               image: workspace.image
             })
+          } else {
+            this.error = 'Workspace not found'
           }
         },
-        error: () => this.error = 'Failed to load workspace',
+        error: (error) => {
+          console.error('Error loading workspace:', error)
+          this.error = 'Failed to load workspace. Please try again.'
+        },
         complete: () => this.loading = false
       })
     ).subscribe()
@@ -137,10 +171,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private deleteWorkspace(workspaceId: string): void {
     this.workspaceService.deleteWorkspace(workspaceId).pipe(
       tap({
-        next: (response) => { },
-        error: (error) => { }
-      },
-      ),
+        next: () => {
+          this.successMessage = 'Workspace deleted successfully. Redirecting...'
+          // Redirect to workspaces list or home after 2 seconds
+          setTimeout(() => {
+            this.router.navigate(['/workspaces'])
+          }, 2000)
+        },
+        error: (error) => {
+          console.error('Error deleting workspace:', error)
+          this.error = 'Failed to delete workspace. Please try again.'
+          this.loading = false
+        }
+      })
     ).subscribe()
   }
 }

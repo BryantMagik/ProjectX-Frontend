@@ -1,73 +1,208 @@
-<div class="bg-white shadow sm:rounded-lg select-none mb-4">
-  <form [formGroup]="workspaceForm" (ngSubmit)="onSubmit()">
-    <div class="px-6 py-8 sm:p-12">
-      <p class="text-2xl font-medium text-gray-900">Settings for {{workspace?.name}}</p>
-      <hr class="mt-6 p-2 border-dashed">
-      <div class="mt-8">
-        <div class="space-y-2">
-          <label for="name" class="block font-bold text-sm text-gray-700">Workspace Name</label>
-          <input type="text" id="name" pInputText formControlName="name" placeholder="Edit workspace name"
-            class="w-full border rounded-md h-12 p-4" [value]="workspace?.name" />
-            <label for="name" class="block font-bold text-sm text-gray-700">Description</label>
-            <textarea id="workspace-description" pInputText formControlName="description"
-              placeholder="Description of the workspace" class="w-full border rounded-md p-4"
-            rows="4">{{ workspace?.description }}</textarea>
+<div class="settings-container">
+  @if (successMessage) {
+    <div class="notification success">
+      <i class="pi pi-check-circle mr-2"></i>
+      {{ successMessage }}
+    </div>
+  }
+
+  @if (error && !loading) {
+    <div class="notification error">
+      <i class="pi pi-exclamation-triangle mr-2"></i>
+      {{ error }}
+    </div>
+  }
+
+  @if (loading) {
+    <div class="loading-state">
+      <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
+      <p class="text-slate-600 mt-4">Loading workspace settings...</p>
+    </div>
+  }
+
+  @if (!loading && workspace) {
+    <div class="settings-header">
+      <div class="header-content">
+        <div class="header-info">
+          <div class="workspace-icon">
+            @if (workspace.image) {
+              <img [src]="workspace.image" alt="{{workspace.name}}" />
+            } @else {
+              <span class="icon-placeholder">{{ workspace.name[0] }}</span>
+            }
           </div>
-          <div class="mt-2">
-            <div class="flex flex-row items-center p-8 rounded-lg w-auto space-x-4">
+          <div>
+            <h1 class="title">{{ workspace.name }}</h1>
+            <p class="subtitle">Workspace Settings</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="pi pi-calendar"></i>
+        </div>
+        <div>
+          <p class="stat-label">Created</p>
+          <p class="stat-value">{{ workspace.createdAt | date:'short' }}</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="pi pi-clock"></i>
+        </div>
+        <div>
+          <p class="stat-label">Last Updated</p>
+          <p class="stat-value">{{ workspace.updatedAt | date:'short' }}</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="pi pi-hashtag"></i>
+        </div>
+        <div>
+          <p class="stat-label">Workspace ID</p>
+          <p class="stat-value-small">{{ workspace.id }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <form [formGroup]="workspaceForm" (ngSubmit)="onSubmit()">
+        <div class="section-header">
+          <i class="pi pi-cog"></i>
+          <h2>General Settings</h2>
+        </div>
+
+        <div class="form-content">
+          <div class="icon-upload-section">
+            <div class="icon-preview">
               @if (workspaceForm.get('image')?.value) {
-                <div class="w-24 h-24 rounded-md bg-gray-300 flex justify-center items-center overflow-hidden"
-                  >
-                  <img [src]="workspaceForm.get('image')?.value" alt="Workspace Icon" class="image-icon" />
+                <div class="preview-image">
+                  <img [src]="workspaceForm.get('image')?.value" alt="Workspace Icon" />
+                  <button
+                    type="button"
+                    (click)="removeImage()"
+                    class="remove-icon-btn"
+                    title="Remove image">
+                    <i class="pi pi-times"></i>
+                  </button>
                 </div>
               } @else {
-                <div
-                  class="w-14 h-14 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-md">
-                  <span class="font-semibold text-2xl">{{ workspace?.name?.[0] }}</span>
+                <div class="preview-placeholder">
+                  <span>{{ workspaceForm.get('name')?.value?.[0] || 'W' }}</span>
                 </div>
               }
-
-              <div class="mt-4">
-                <label for="image" class="font-bold text-sm text-gray-700">Workspace Icon</label>
-                <p class="text-xs text-gray-500">JPG, PNG, SVG or JPEG, max 1mb</p>
-                <input #fileInput id="image" type="file" (change)="onFileSelected($event)"
-                  accept=".jpg, .jpeg, .png, .svg" class="mt-2 hidden" />
-                  <a (click)="fileInput.click()"
-                    class="mt-4 px-2 py-1 bg-blue-200 text-white rounded-md font-bold hover:text-blue-500 focus:outline-none cursor-pointer">
-                    Upload Image
-                  </a>
-                </div>
-              </div>
+              <button
+                type="button"
+                (click)="fileInput.click()"
+                class="edit-icon-btn"
+                [disabled]="isUploading"
+                title="Change workspace icon">
+                <i class="pi" [ngClass]="isUploading ? 'pi-spin pi-spinner' : 'pi-camera'"></i>
+              </button>
+              <input
+                #fileInput
+                type="file"
+                (change)="onFileSelected($event)"
+                accept=".jpg, .jpeg, .png, .svg"                title="Upload workspace icon"                class="hidden" />
+            </div>
+            <div class="icon-info">
+              <p class="info-label">Workspace Icon</p>
+              <p class="info-description">JPG, PNG, SVG or JPEG. Max 1MB</p>
             </div>
           </div>
-          <div class="flex justify-end">
+
+          <div class="form-grid">
+            <div class="form-field full-width">
+              <label for="name">Workspace Name <span class="required">*</span></label>
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
+                placeholder="Enter workspace name"
+                class="form-input"
+                maxlength="30" />
+              @if (workspaceForm.get('name')?.invalid && workspaceForm.get('name')?.touched) {
+                <span class="error-message">
+                  <i class="pi pi-exclamation-circle"></i>
+                  Workspace name is required (max 30 characters)
+                </span>
+              }
+            </div>
+
+            <div class="form-field full-width">
+              <label for="description">Description</label>
+              <textarea
+                id="description"
+                formControlName="description"
+                placeholder="Describe your workspace..."
+                class="form-textarea"
+                rows="4"></textarea>
+              <span class="helper-text">
+                <i class="pi pi-info-circle"></i>
+                A brief description of what this workspace is used for
+              </span>
+            </div>
+          </div>
+
+          <div class="form-actions">
             <button
-              class="mt-4 p-4 text-sm font-extrabold w-auto border rounded-md bg-blue-700 text-white shadow-md hover:bg-blue-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+              type="submit"
+              class="btn-primary"
+              [disabled]="workspaceForm.invalid || isUploading">
+              <i class="pi pi-save mr-2"></i>
               Save Changes
             </button>
-          </div>
-          <div class="mt-8 flex">
-
           </div>
         </div>
       </form>
     </div>
-    <div class="bg-white shadow sm:rounded-lg select-none">
-      <div class="px-6 py-8 sm:p-12 flex flex-col">
-        <p class="text-2xl font-bold text-gray-900">Danger Zone</p>
-        <hr class="mt-2 p-2 border-dashed">
-        <p class="font-light text-gray-900/50"> Deleting a workspace is irreversible. This action will remove all data
-          associated with this workspace.
-        </p>
-        <div class="flex justify-end">
-          <button (click)="toggleModal()"
-            class="mt-4 p-4 text-sm font-extrabold w-auto border rounded-md bg-red-700 text-white shadow-md hover:bg-red-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500">
-            Delete Workspace
-          </button>
+
+    <!-- Danger Zone -->
+    <div class="danger-zone">
+      <div class="section-header danger">
+        <i class="pi pi-exclamation-triangle"></i>
+        <h2>Danger Zone</h2>
+      </div>
+      <div class="danger-content">
+        <div class="danger-info">
+          <p class="danger-title">Delete Workspace</p>
+          <p class="danger-description">
+            Once you delete a workspace, there is no going back. This action is irreversible and will
+            permanently remove all data, projects, tasks, and issues associated with this workspace.
+          </p>
         </div>
+        <button
+          type="button"
+          (click)="toggleModal()"
+          class="btn-danger">
+          <i class="pi pi-trash mr-2"></i>
+          Delete Workspace
+        </button>
       </div>
     </div>
-    @if (showModal) {
-      <app-modal-delete-workspace (close)="toggleModal()"
-      (deleteConfirmed)="handleDelete()"></app-modal-delete-workspace>
-    }
+  }
+
+  @if (!loading && !workspace && error) {
+    <div class="error-state">
+      <i class="pi pi-exclamation-triangle text-4xl text-red-500"></i>
+      <p class="text-red-600 mt-4">{{ error }}</p>
+      <button (click)="ngOnInit()" class="retry-btn mt-4">
+        <i class="pi pi-refresh mr-2"></i>
+        Retry
+      </button>
+    </div>
+  }
+</div>
+
+@if (showModal) {
+  <app-modal-delete-workspace
+    (close)="toggleModal()"
+    (deleteConfirmed)="handleDelete()">
+  </app-modal-delete-workspace>
+}

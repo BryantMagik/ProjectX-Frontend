@@ -79,7 +79,7 @@ export const routes: Routes = [
               component: TasksDetailsComponent,
             },
             {
-                path: 'pages/subtasks',
+                path: 'pages/projects',
                 title: 'projects',
                 component: ProjectsComponent
             },
@@ -109,7 +109,7 @@ export const routes: Routes = [
                         component: DashboardComponent,
                     },
                     {
-                        path: 'settings',
+                        path: 'workspace',
                         title: 'Settings',
                         component: SettingsComponent,
                     },

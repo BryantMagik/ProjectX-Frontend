@@ -39,9 +39,6 @@ export class TasksComponent implements OnInit {
     this.getUsers();
   }
 
-  navigateToTaskForm() {
-    this.router.navigate(['/pages/tasks/shared/tasks-form']);
-  }
 
   navigateToTaskDetails(taskId: string) {
     this.router.navigate(['/pages/tasks/subpages/tasks-details', taskId]);

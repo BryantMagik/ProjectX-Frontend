@@ -6,4 +6,6 @@ export interface Workspace {
     image: string
     description: string
     members: User[]
+    createdAt?: Date
+    updatedAt?: Date
 }

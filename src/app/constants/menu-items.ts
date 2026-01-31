@@ -18,14 +18,14 @@ export function createMenuItems(id: string): MenuItem[] {
             route: `/pages/${id ?? 'default'}/members`
         },
         {
-            icon: 'settings',
-            label: 'Setting',
-            route: `/pages/${id ?? 'default'}/settings`
+            icon: 'workspace',
+            label: 'Workspace',
+            route: `/pages/${id ?? 'default'}/workspace`
         },
         {
-            icon: 'subdirectory_arrow_right',
-            label: 'SubTasks',
-            route: '/pages/subtasks',
+            icon: 'folder',
+            label: 'Projects',
+            route: '/pages/projects',
         },
         {
             icon: 'bug_report',
@@ -43,11 +43,11 @@ export const MENU_PROFILE: MenuItem[] = [
         icon: 'pi pi-user',
         route: 'pages/profile'
     },
-    {
-        label: 'Inbox',
-        icon: 'pi-inbox',
-        route: ''
-    },
+    // {
+    //     label: 'Inbox',
+    //     icon: 'pi-inbox',
+    //     route: ''
+    // },
     {
         label: 'Settings',
         icon: 'pi-cog',

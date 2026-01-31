@@ -32,9 +32,6 @@ export class DashboardProjectComponent implements OnInit {
   currentView: 'table' | 'kanban' | 'calendar' = 'table'
   searchTerm: string = ''
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
   constructor() {}
 
   navigateToEditProject() {
