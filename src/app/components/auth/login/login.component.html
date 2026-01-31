@@ -1,10 +1,7 @@
 <div class="login-container">
-    <!-- Background with gradient -->
     <div class="login-background"></div>
 
-    <!-- Login card -->
     <div class="login-card">
-        <!-- Header -->
         <div class="login-header">
             <div class="login-icon">
                 <i class="pi pi-building"></i>
@@ -13,9 +10,7 @@
             <p class="login-subtitle">Sign in to manage your projects</p>
         </div>
 
-        <!-- Form -->
         <form [formGroup]="validatorForm" (ngSubmit)="login()" class="login-form">
-            <!-- Email -->
             <div class="form-group">
                 <label for="email" class="form-label">
                     <i class="pi pi-envelope mr-2"></i>
@@ -34,7 +29,6 @@
                 }
             </div>
 
-            <!-- Password -->
             <div class="form-group">
                 <label for="password" class="form-label">
                     <i class="pi pi-lock mr-2"></i>
@@ -53,6 +47,7 @@
                         type="button"
                         (click)="togglePasswordVisibility()"
                         class="password-toggle"
+                        title="password"
                     >
                         <i [class]="showPassword() ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
                     </button>
@@ -62,7 +57,6 @@
                 }
             </div>
 
-            <!-- Remember & Forgot -->
             <div class="form-options">
                 <label class="remember-checkbox">
                     <input type="checkbox" />
@@ -71,7 +65,6 @@
                 <a href="#" class="forgot-link">Forgot password?</a>
             </div>
 
-            <!-- Error message -->
             @if (errorMessage()) {
                 <div class="error-banner">
                     <i class="pi pi-exclamation-triangle mr-2"></i>
@@ -79,7 +72,6 @@
                 </div>
             }
 
-            <!-- Submit button -->
             <button
                 type="submit"
                 [disabled]="isLoading() || validatorForm.invalid"
@@ -94,8 +86,6 @@
                 }
             </button>
         </form>
-
-        <!-- Sign up link -->
         <div class="login-footer">
             <p>Don't have an account? <a href="#" class="signup-link">Sign up now</a></p>
         </div>

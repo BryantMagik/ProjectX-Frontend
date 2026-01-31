@@ -1,47 +1,162 @@
-<div class="bg-white shadow sm:rounded-lg select-none h-full">
-  <div class="px-6 py-8 sm:p-12">
-    <div class="flex flex-row items-center">
-      <div class="flex flex-row items-center">
+<div class="page-container">
+  <div class="header">
+    <div class="header-content">
+      <div class="header-title">
         @if (project?.image) {
-          <img [src]="project?.image" alt="project Icon" class="image-icon w-7 h-6 rounded-md mr-2" />
-          <p class="text-2xl font-bold text-gray-900">{{project?.name}}</p>
+          <img [src]="project?.image" alt="{{project?.name}}" title="{{project?.name}}" class="project-icon" />
         } @else {
-          <div class="w-7 h-7 mr-2 flex items-center justify-center bg-blue-500 text-white rounded-sm">
-            <span class="font-semibold">{{ project?.name?.[0] || 'N/A' }}</span>
+          <div class="project-icon-placeholder">
+            <span>{{ project?.name?.[0] || 'P' }}</span>
           </div>
         }
-
-        <span class="text-2xl font-bold text-gray-900">{{project?.name}}</span>
+        <div>
+          <h1 class="title">{{project?.name || 'Project'}}</h1>
+          <p class="subtitle">{{project?.code || 'Manage your project tasks'}}</p>
+        </div>
       </div>
-      <div class="ml-auto">
-        <button class="border p-1 rounded-md text-sm font-bold hover:bg-blue-500 hover:text-white"
-                    (click)="navigateToEditProject()"><i class="text-sm pi pi-pencil
-                    "></i>
-        Edit Project
-      </button>
+      <div class="header-actions">
+        <button class="new-task-button" (click)="navigateToNewTask()" title="Create New Task">
+          <i class="pi pi-plus"></i>
+          <span>New Task</span>
+        </button>
+        <button class="edit-button" (click)="navigateToEditProject()" title="Edit Project">
+          <i class="pi pi-pencil"></i>
+          <span>Edit Project</span>
+        </button>
+      </div>
     </div>
-
   </div>
-  <p class="">Monitor all of your tasks here.</p>
-  <hr class="mt-6 p-2 border-dashed">
 
-  <p-tabs class="h-full" value="table">
-    <p-tablist class="space-y-3">
-      <p-tab value="table">Table</p-tab>
-      <p-tab value="kanban">Kanban</p-tab>
-      <p-tab value="calendar">Calendar</p-tab>
+  <div class="view-tabs">
+    <button
+      class="tab-button"
+      [class.active]="currentView === 'table'"
+      (click)="currentView = 'table'"
+      title="Table View">
+      <i class="pi pi-table"></i>
+      <span>Table</span>
+    </button>
+    <button
+      class="tab-button"
+      [class.active]="currentView === 'kanban'"
+      (click)="currentView = 'kanban'"
+      title="Kanban View">
+      <i class="pi pi-th-large"></i>
+      <span>Kanban</span>
+    </button>
+    <button
+      class="tab-button"
+      [class.active]="currentView === 'calendar'"
+      (click)="currentView = 'calendar'"
+      title="Calendar View">
+      <i class="pi pi-calendar"></i>
+      <span>Calendar</span>
+    </button>
+  </div>
 
-    </p-tablist>
+  <div class="content-card">
+    @if (currentView === 'table') {
+      <div class="table-view">
+        <div class="filters">
+          <div class="search-box">
+            <i class="pi pi-search"></i>
+            <input
+              type="text"
+              placeholder="Search tasks..."
+              [(ngModel)]="searchTerm"
+              class="search-input" />
+          </div>
+          <button class="filters-new-task-button" (click)="navigateToNewTask()" title="Create New Task">
+            <i class="pi pi-plus"></i>
+            <span>New Task</span>
+          </button>
+        </div>
 
-    <p-tabpanels>
-      <button
-        class=" m-1 p-2 text-sm font-extrabold w-full border rounded-md bg-blue-700 text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">+
-      New</button>
+        @if (loading) {
+          <div class="loading-state">
+            <i class="pi pi-spin pi-spinner"></i>
+            <span>Loading tasks...</span>
+          </div>
+        } @else if (error) {
+          <div class="error-state">
+            <i class="pi pi-exclamation-triangle"></i>
+            <span>{{error}}</span>
+          </div>
+        } @else if (task.length === 0) {
+          <div class="empty-state">
+            <i class="pi pi-inbox"></i>
+            <h3>No tasks yet</h3>
+            <p>Create your first task to get started</p>
+            <button class="empty-state-button" (click)="navigateToNewTask()">
+              <i class="pi pi-plus"></i>
+              <span>Create First Task</span>
+            </button>
+          </div>
+        } @else {
+          <div class="table-container">
+            <table class="tasks-table">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Assignee</th>
+                  <th>Due Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (t of task; track t.id) {
+                  <tr class="task-row" (click)="navigateToTask(t.id)">
+                    <td>
+                      <div class="task-info">
+                        <span class="task-name">{{t.name}}</span>
+                        <span class="task-code">{{t.code}}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <app-severity-tag [value]="t.priority" [type]="'priority'"></app-severity-tag>
+                    </td>
+                    <td>
+                      <span class="status-badge" [attr.data-status]="t.status">{{t.status}}</span>
+                    </td>
+                    <td>
+                      <div class="assignee-info">
+                        @if (t.creator.profile_picture) {
+                          <img [src]="t.creator.profile_picture" alt="{{t.creator.first_name}}" title="{{t.creator.first_name}}" class="author-avatar" />
+                        } @else {
+                          <div class="author-avatar-placeholder">
+                            {{t.creator.first_name[0] || 'U'}}
+                          </div>
+                        }
+                        <span>{{t.creator.first_name || 'Unassigned'}}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="due-date">{{t.dueTime | date:'MMM d, y'}}</span>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    }
 
-      <p-tabpanel value="table">
-        <app-tasks-table #dt [task]="task" [loading]="loading" [error]="error"></app-tasks-table>
-      </p-tabpanel>
-    </p-tabpanels>
-  </p-tabs>
-</div>
+    @if (currentView === 'kanban') {
+      <div class="coming-soon">
+        <i class="pi pi-th-large"></i>
+        <h3>Kanban Board</h3>
+        <p>Coming soon! Organize your tasks visually with drag-and-drop columns.</p>
+      </div>
+    }
+
+    @if (currentView === 'calendar') {
+      <div class="coming-soon">
+        <i class="pi pi-calendar"></i>
+        <h3>Calendar View</h3>
+        <p>Coming soon! View your tasks in a calendar layout with due dates.</p>
+      </div>
+    }
+  </div>
 </div>

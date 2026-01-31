@@ -1,20 +1,17 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ProjectService } from '../../service/project/project.service';
 import { Subscription, tap } from 'rxjs';
 import { Project } from '../../model/project.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { TabsModule } from 'primeng/tabs';
-import { Table, TableModule } from 'primeng/table';
 import { Task } from '../../model/task.interface';
 import { TaskService } from '../../service/task/task.service';
-import { TasksTableComponent } from "../../shared/tasks-table/tasks-table.component";
-import { ToolbarModule } from 'primeng/toolbar';
-import { ButtonModule } from 'primeng/button';
+import { SeverityTagComponent } from '../../service/severity/severity-tag.component';
 
 @Component({
   selector: 'app-dashboard-project',
-  imports: [TabsModule, TableModule, TasksTableComponent, ToolbarModule, ButtonModule],
+  imports: [CommonModule, FormsModule, SeverityTagComponent],
   templateUrl: './dashboard-project.component.html',
   styleUrl: './dashboard-project.component.css',
   standalone: true
@@ -25,22 +22,20 @@ export class DashboardProjectComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-
-  @ViewChild('dt') dt!: Table
-
   routeSub: Subscription | null = null
   projectId: string | null = null
+  workspaceId: string | null = null
   project: Project | null = null
   task: Task[] = []
   loading: boolean = true
   error: string | null = null
+  currentView: 'table' | 'kanban' | 'calendar' = 'table'
+  searchTerm: string = ''
 
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);
 
-  constructor() {
-
-  }
+  constructor() {}
 
   navigateToEditProject() {
     if (this.projectId) {
@@ -48,9 +43,28 @@ export class DashboardProjectComponent implements OnInit {
     }
   }
 
+  navigateToNewTask() {
+    console.log('navigateToNewTask called, projectId:', this.projectId);
+    if (this.projectId) {
+      this.router.navigate(['/pages/tasks/shared/tasks-form'], {
+        queryParams: { projectId: this.projectId }
+      });
+    } else {
+      console.warn('No projectId available');
+    }
+  }
+
+  navigateToTask(taskId: string) {
+    if (taskId) {
+      this.router.navigate(['/pages/tasks', taskId]);
+    }
+  }
+
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe(params => {
+      this.workspaceId = params.get('workspaceId')
       this.projectId = params.get('projectId')
+      console.log('Route params - workspaceId:', this.workspaceId, 'projectId:', this.projectId)
       if (this.projectId) {
         this.getProjectById(this.projectId)
         this.getTaskByProjectId(this.projectId)
@@ -86,11 +100,5 @@ export class DashboardProjectComponent implements OnInit {
         complete: () => this.loading = false
       })
     ).subscribe()
-  }
-
-  filterGlobal(event: Event): void {
-    const input = event.target as HTMLInputElement
-    const value = input ? input.value : ''
-    this.dt.filterGlobal(value, 'contains')
   }
 }

@@ -1,23 +1,17 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
-import { NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ProjectService } from '../../features/projects/services/project.service';
 import { tap } from 'rxjs';
 import { Project } from '../../model/project.interface';
 import { Router } from '@angular/router';
-import { Table, TableModule } from 'primeng/table';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ToastModule } from 'primeng/toast';
-import { ButtonModule } from 'primeng/button';
-import { FormsModule } from '@angular/forms';
-import { TagModule } from 'primeng/tag';
-import { MultiSelectModule } from 'primeng/multiselect';
 import { User } from '../../model/user.interface';
 import { UserService } from '../../features/profile/services/user.service';
 import { SeverityTagComponent } from '../../service/severity/severity-tag.component';
 
 @Component({
     selector: 'app-projects',
-    imports: [TableModule, ToolbarModule, ToastModule, ButtonModule, FormsModule, TagModule, MultiSelectModule, SeverityTagComponent],
+    imports: [CommonModule, FormsModule, SeverityTagComponent],
     templateUrl: './projects.component.html',
     styleUrl: './projects.component.css',
     standalone:true
@@ -30,8 +24,6 @@ export class ProjectsComponent implements OnInit {
   private router = inject(Router);
 
 
-  @ViewChild('dt') dt!: Table;
-
   projectDialog: boolean = false
   submitted: boolean = false
   project: Project[] = []
@@ -39,9 +31,9 @@ export class ProjectsComponent implements OnInit {
   selectedProjects!: Project[] | null
   loading: boolean = true;
   error: string | null = null
+  currentView: 'table' | 'kanban' | 'calendar' = 'table';
+  searchTerm: string = '';
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
 
   constructor() { }
@@ -95,7 +87,9 @@ export class ProjectsComponent implements OnInit {
   filterGlobal(event: Event): void {
     const input = event.target as HTMLInputElement
     const value = input ? input.value : ''
-    this.dt.filterGlobal(value, 'contains')
+    this.searchTerm = value.toLowerCase();
+    // El filtrado se puede implementar con un pipe en el template o aquí
+    // Por ahora, el binding con [(ngModel)] ya actualiza searchTerm
   }
 
 }

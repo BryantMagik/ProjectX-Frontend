@@ -17,9 +17,6 @@ export class ProjectService {
   private projectsSubject = new BehaviorSubject<Project[]>([])
     projects$ = this.projectsSubject.asObservable()
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
   constructor() { }
 
   private getAuthHeaders(): HttpHeaders {

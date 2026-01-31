@@ -55,8 +55,18 @@ export class TaskService {
     return of([])
   }
 
-  //TODO
-  postTask() { }
+  createTask(taskData: any): Observable<Task> {
+    const headers = this.getAuthHeaders()
+    const { projectId, ...dataToSend } = taskData; // Extract projectId from body
+    console.log('TaskService - projectId:', projectId);
+    console.log('TaskService - dataToSend:', dataToSend);
+    return this.apiService.post<Task>(`${apiRoutes.task.create}/${projectId}`, dataToSend, { headers })
+  }
+
+  updateTask(taskId: string, taskData: any): Observable<Task> {
+    const headers = this.getAuthHeaders()
+    return this.apiService.put<Task>(`${apiRoutes.task.update}/${taskId}`, taskData, { headers })
+  }
   getTasksByIdWhereId(): Observable<Task[]> {
     const headers = this.getAuthHeaders()
     if (headers) {

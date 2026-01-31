@@ -1,7 +1,18 @@
 .project-list {
-  @apply flex flex-col gap-1 mt-2;
+  @apply flex flex-col gap-2 mt-2;
 }
 
+/* Loading, Error, Empty States */
+.loading-state,
+.error-state {
+  @apply flex items-center px-3 py-2;
+}
+
+.empty-state {
+  @apply flex items-center justify-center py-4 px-3;
+}
+
+/* Project Item */
 .project-item {
   @apply flex items-center px-3 py-2.5 rounded-lg cursor-pointer;
   @apply transition-all duration-200;
@@ -17,12 +28,12 @@
 }
 
 .project-avatar {
-  @apply w-7 h-7 rounded-md mr-3 object-cover;
+  @apply w-8 h-8 rounded-md object-cover flex-shrink-0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .project-avatar-placeholder {
-  @apply w-7 h-7 rounded-md mr-3 flex items-center justify-center;
+  @apply w-8 h-8 rounded-md flex items-center justify-center flex-shrink-0;
   background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
   box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
 }
@@ -31,15 +42,23 @@
   @apply text-white font-semibold text-xs;
 }
 
+.project-info {
+  @apply flex-1 ml-3 min-w-0;
+}
+
 .project-name {
-  @apply text-slate-200 font-medium text-sm flex-1;
+  @apply text-slate-200 font-medium text-sm block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+.project-code {
+  @apply text-blue-300 text-xs font-mono block mt-0.5;
+}
+
 .project-arrow {
-  @apply text-slate-400 text-xs ml-auto;
+  @apply text-slate-400 text-xs ml-auto flex-shrink-0;
   transition: transform 0.2s ease;
 }
 

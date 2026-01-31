@@ -1,77 +1,164 @@
-<main class="flex-1"> 
-    <div class="max-w-7xl mx-auto py-12 sm:px-12 lg:px-20">
-      <div class="bg-white shadow sm:rounded-lg">
-        <div class="px-6 py-8 sm:p-12">
-          <h2 class="text-2xl leading-6 font-medium text-gray-900">Crear Tarea</h2>
-          <div class="mt-8">
-            <form (ngSubmit)="onSubmit()">
-              <div class="grid grid-cols-12 md:grid-cols-2 gap-6">
-                <div>
-                  <label for="code" class="block text-sm font-medium text-gray-700">Código</label>
-                  <input type="text" id="code" formControlName="code" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-                <div>
-                  <label for="summary" class="block text-sm font-medium text-gray-700">Resumen</label>
-                  <input type="text" id="summary" formControlName="summary" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-                <div class="col-span-2">
-                  <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
-                  <textarea id="description" formControlName="description" rows="3" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
-                </div>
-                <div>
-                  <label for="priority" class="block text-sm font-medium text-gray-700">Prioridad</label>
-                  <select id="priority" formControlName="priority" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    <option value="">Seleccionar Prioridad</option>
-                    <option value="low">Baja</option>
-                    <option value="medium">Media</option>
-                    <option value="high">Alta</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="task_type" class="block text-sm font-medium text-gray-700">Tipo de Tarea</label>
-                  <select id="task_type" formControlName="task_type" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    <option value="">Seleccionar Tipo</option>
-                    <option value="bug">Bug</option>
-                    <option value="feature">Feature</option>
-                    <option value="task">Tarea</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="status" class="block text-sm font-medium text-gray-700">Estado</label>
-                  <select id="status" formControlName="status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    <option value="">Seleccionar Estado</option>
-                    <option value="open">Abierta</option>
-                    <option value="in_progress">En Progreso</option>
-                    <option value="closed">Cerrada</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="project_id" class="block text-sm font-medium text-gray-700">ID del Proyecto</label>
-                  <input type="number" id="project_id" formControlName="project_id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-                <div>
-                  <label for="assigned_user_id" class="block text-sm font-medium text-gray-700">Usuario Asignado</label>
-                  <input type="number" id="assigned_user_id" formControlName="assigned_user_id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-                <div>
-                  <label for="estimation" class="block text-sm font-medium text-gray-700">Estimación (horas)</label>
-                  <input type="number" id="estimation" formControlName="estimation" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-                <div>
-                  <label for="due_date" class="block text-sm font-medium text-gray-700">Fecha de Entrega</label>
-                  <input type="date" id="due_date" formControlName="due_date" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-              </div>
-              <div class="mt-12">
-                <button type="submit" class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Crear Tarea</button>
-              </div>
-            </form>
-            <div class="mt-12 flex justify-end">
-              <button class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)=" navigateToTasks()">volver</button>
-          </div>
-          </div>
+<div class="page-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <div class="header-title">
+        <i class="pi pi-check-square text-3xl icon-blue"></i>
+        <div>
+          <h1 class="title">{{isEditMode ? 'Edit Task' : 'Create New Task'}}</h1>
+          <p class="subtitle">{{isEditMode ? 'Update task details and assignment' : 'Add a new task to your project'}}</p>
         </div>
       </div>
     </div>
-  </main>
-  
+  </div>
+
+  <!-- Form Content -->
+  <div class="content-card">
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <!-- Task Name and Code -->
+      <div class="form-grid">
+        <div class="form-section">
+          <label for="name" class="form-label">Task Name <span class="required">*</span></label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            placeholder="Enter task name"
+            class="form-input" />
+          @if (taskForm.get('name')?.invalid && taskForm.get('name')?.touched) {
+            <span class="error-message">Task name is required (min 3 characters)</span>
+          }
+        </div>
+
+        <div class="form-section">
+          <label for="code" class="form-label">Task Code (Auto-generated)</label>
+          <input
+            type="text"
+            id="code"
+            formControlName="code"
+            placeholder="Auto-generated"
+            class="form-input"
+            readonly />
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-section">
+        <label for="description" class="form-label">Description <span class="required">*</span></label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="4"
+          placeholder="Describe the task in detail"
+          class="form-textarea"></textarea>
+        @if (taskForm.get('description')?.invalid && taskForm.get('description')?.touched) {
+          <span class="error-message">Description is required</span>
+        }
+      </div>
+
+      <!-- Summary -->
+      <div class="form-section">
+        <label for="summary" class="form-label">Summary <span class="required">*</span></label>
+        <input
+          type="text"
+          id="summary"
+          formControlName="summary"
+          placeholder="Brief summary of the task"
+          class="form-input" />
+        @if (taskForm.get('summary')?.invalid && taskForm.get('summary')?.touched) {
+          <span class="error-message">Summary is required</span>
+        }
+      </div>
+
+      <!-- Priority, Type, Status Grid -->
+      <div class="form-grid-3">
+        <div class="form-section">
+          <label for="priority" class="form-label">Priority</label>
+          <select id="priority" formControlName="priority" class="form-select">
+            <option value="">Select Priority</option>
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
+            <option value="CRITICAL">Critical</option>
+          </select>
+          @if (taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched) {
+            <span class="error-message">Priority is required</span>
+          }
+        </div>
+
+        <div class="form-section">
+          <label for="task_type" class="form-label">Type</label>
+          <select id="task_type" formControlName="task_type" class="form-select">
+            <option value="">Select Type</option>
+            <option value="BUG">Bug</option>
+            <option value="FEATURE">Feature</option>
+            <option value="TASK">Task</option>
+            <option value="IMPROVEMENT">Improvement</option>
+          </select>
+          @if (taskForm.get('task_type')?.invalid && taskForm.get('task_type')?.touched) {
+            <span class="error-message">Type is required</span>
+          }
+        </div>
+
+        <div class="form-section">
+          <label for="task_status" class="form-label">Status <span class="required">*</span></label>
+          <select id="task_status" formControlName="task_status" class="form-select">
+            <option value="">Select Status</option>
+            <option value="PENDING">Pending</option>
+            <option value="ONGOING">Ongoing</option>
+            <option value="COMPLETED">Completed</option>
+          </select>
+          @if (taskForm.get('task_status')?.invalid && taskForm.get('task_status')?.touched) {
+            <span class="error-message">Status is required</span>
+          }
+        </div>
+      </div>
+
+      <!-- Estimation and Due Date -->
+      <div class="form-grid">
+        <div class="form-section">
+          <label for="dueTime" class="form-label">Due Date</label>
+          <input
+            type="date"
+            id="dueTime"
+            formControlName="dueTime"
+            class="form-input" />
+        </div>
+
+        <div class="form-section">
+          <label for="projectId" class="form-label">Project ID</label>
+          <input
+            type="text"
+            id="projectId"
+            formControlName="projectId"
+            placeholder="Project ID"
+            class="form-input"
+            readonly />
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button
+          type="button"
+          class="cancel-button"
+          (click)="onCancel()">
+          <i class="pi pi-times"></i>
+          <span>Cancel</span>
+        </button>
+        <button
+          type="submit"
+          class="submit-button"
+          [disabled]="taskForm.invalid || submitting">
+          @if (submitting) {
+            <i class="pi pi-spin pi-spinner"></i>
+            <span>{{isEditMode ? 'Updating...' : 'Creating...'}}</span>
+          } @else {
+            <i class="pi pi-check"></i>
+            <span>{{isEditMode ? 'Update Task' : 'Create Task'}}</span>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

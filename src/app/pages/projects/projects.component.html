@@ -1,111 +1,165 @@
-<div class="bg-white shadow sm:rounded-lg">
-  <div class="px-6 py-8 sm:p-12">
-    <h2 class="text-2xl leading-6 font-medium text-gray-900">Projects</h2>
-    <div class="mt-8 overflow-x-auto">
-      <p-toolbar styleClass="mb-6 gap-2">
-        <p-button severity="success" label="New project" icon="pi pi-plus"
-          class="mr-2 bg-green-500 text-white rounded-md" styleClass="p-2" (onClick)="navigateToProjectForm()" />
-        <div class="relative">
-          <i class="pi pi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-          <input type="text" placeholder="Search..." (input)="filterGlobal($event)"
-            class="pl-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+<div class="projects-container">
+  <!-- Header -->
+  <div class="projects-header">
+    <div class="header-content">
+      <div class="header-title">
+        <i class="pi pi-briefcase text-3xl"></i>
+        <div>
+          <h1 class="title">Projects</h1>
+          <p class="subtitle">Manage your workspace projects</p>
         </div>
-
-      </p-toolbar>
-      <p-table #dt [value]="project" dataKey="id" [rows]="5" [rowHover]="true" [paginator]="true"
-        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
-        [tableStyle]="{ 'min-width': '75rem' }" [filterDelay]="0"
-        [globalFilterFields]="['name', '.name', 'project.author.first_name', 'status']" [(selection)]="selectedProjects"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-
-        <ng-template pTemplate="header">
-          <tr>
-            <th pSortableColumn="name" style="min-width: 15rem;">
-              <div class="flex items-center justify-between">
-                Name <p-sortIcon field="name" />
-                <p-columnFilter type="text" field="name" display="menu" class="ml-auto" />
-              </div>
-            </th>
-            <th pSortableColumn="description" style="min-width: 15rem;">
-              <div class="flex items-center justify-between">
-                Description<p-sortIcon field="description" />
-                <p-columnFilter type="text" field="description" display="menu" class="ml-auto" />
-              </div>
-            </th>
-            <th pSortableColumn="author.first_name" style="min-width: 14rem">
-              <div class="flex items-center justify-between">
-                Author
-                <p-sortIcon field="author.first_name" />
-                <p-columnFilter type="text" field="author" matchMode="in" display="menu" class="ml-auto"
-                  [showMatchModes]="false" [showOperator]="false" showAddButton="false">
-                  <ng-template pTemplate="header">
-                    <div class="px-4 pt-4 pb-0">
-                      <span class="font-bold">Author Picker</span>
-                    </div>
-                  </ng-template>
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-multiSelect [ngModel]="value" [options]="authors" placeholder="Any"
-                      (onChange)="filter($event.value)" optionLabel="first_name">
-                      <ng-template let-option pTemplate="item">
-                        <div class="inline-block">
-                          <span class="ml-1 mt-1">{{option.first_name}}</span>
-                        </div>
-                      </ng-template>
-                    </p-multiSelect>
-                  </ng-template>
-                </p-columnFilter>
-              </div>
-            </th>
-            <th pSortableColumn="code" style="min-width: 15rem;">
-              <div class="flex items-center justify-between">
-
-                Code<p-sortIcon field="code" />
-                <p-columnFilter type="text" field="description" display="menu" class="ml-auto" />
-              </div>
-            </th>
-
-            <th pSortableColumn="type" style="min-width: 15rem;">
-              <div class="flex items-center justify-between">
-                Type<p-sortIcon field="type" />
-                <p-columnFilter type="text" field="type" display="menu" class="ml-auto" />
-              </div>
-            </th>
-            <th pSortableColumn="status" style="min-width: 15rem;">
-              <div class="flex items-center justify-between">
-                Status<p-sortIcon field="status" />
-                <p-columnFilter type="text" field="status" display="menu" class="ml-auto" />
-              </div>
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-project>
-          <tr (click)="navigateToProject(project.id)">
-            <td>
-              {{ project.name }}
-            </td>
-            <td>
-              {{ project.description }}
-            </td>
-            <td>
-              <span class="p-column-title">Representative</span>
-              <span class="ml-1 align-middle">{{ project.author.first_name }}</span>
-            </td>
-            <td>
-              {{ project.code }}
-            </td>
-            <td>
-              <app-severity-tag [value]="project.type" type="type"></app-severity-tag>
-            </td>
-            <td>
-              <app-severity-tag [value]="project.status" type="status"></app-severity-tag>
-            </td>
-        </ng-template>
-        <ng-template pTemplate="summary">
-          <div class="flex items-center justify-between">
-            In total there are {{ project ? project.length : 0 }} project.
-          </div>
-        </ng-template>
-      </p-table>
+      </div>
+      <button class="btn-primary" (click)="navigateToProjectForm()">
+        <i class="pi pi-plus"></i>
+        New Project
+      </button>
     </div>
   </div>
+
+  <!-- View Tabs -->
+  <div class="view-tabs">
+    <button 
+      class="tab-button" 
+      [class.active]="currentView === 'table'" 
+      (click)="currentView = 'table'">
+      <i class="pi pi-table"></i>
+      Table View
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="currentView === 'kanban'" 
+      (click)="currentView = 'kanban'">
+      <i class="pi pi-th-large"></i>
+      Kanban Board
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="currentView === 'calendar'" 
+      (click)="currentView = 'calendar'">
+      <i class="pi pi-calendar"></i>
+      Calendar
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
+      <p class="text-slate-600 mt-4">Loading projects...</p>
+    </div>
+  }
+
+  @if (error) {
+    <div class="error-banner">
+      <i class="pi pi-exclamation-triangle mr-2"></i>
+      {{ error }}
+    </div>
+  }
+
+  @if (!loading && !error) {
+    <!-- Table View -->
+    @if (currentView === 'table') {
+      <div class="content-card">
+        <!-- Filters -->
+        <div class="filters-section">
+          <div class="search-box">
+            <i class="pi pi-search search-icon"></i>
+            <input
+              type="text"
+              [(ngModel)]="searchTerm"
+              (input)="filterGlobal($event)"
+              placeholder="Search projects by name, code, or author..."
+              class="search-input"
+            />
+          </div>
+        </div>
+
+        <!-- Projects Table -->
+        <div class="table-container">
+          <table class="projects-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Author</th>
+                <th>Code</th>
+                <th>Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (proj of project; track proj.id) {
+                <tr (click)="navigateToProject(proj.id)" class="project-row">
+                  <td>
+                    <div class="project-name">
+                      <i class="pi pi-folder text-blue-500 mr-2"></i>
+                      {{ proj.name }}
+                    </div>
+                  </td>
+                  <td>
+                    <span class="project-description">{{ proj.description || 'No description' }}</span>
+                  </td>
+                  <td>
+                    <div class="author-cell">
+                      <div class="author-avatar">
+                        @if (proj.author.profile_picture) {
+                          <img [src]="proj.author.profile_picture" alt="{{proj.author.first_name}}" title="{{proj.author.first_name}}">
+                        } @else {
+                          <span>{{ proj.author.first_name[0] }}{{ proj.author.last_name[0] }}</span>
+                        }
+                      </div>
+                      <span>{{ proj.author.first_name }} {{ proj.author.last_name }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="project-code">{{ proj.code }}</span>
+                  </td>
+                  <td>
+                    <app-severity-tag [value]="proj.type" type="type"></app-severity-tag>
+                  </td>
+                  <td>
+                    <app-severity-tag [value]="proj.status" type="status"></app-severity-tag>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+
+          @if (project.length === 0) {
+            <div class="empty-state">
+              <i class="pi pi-inbox text-6xl text-slate-300 mb-4"></i>
+              <p class="text-slate-600 font-semibold">No projects found</p>
+              <p class="text-slate-400 text-sm">Create your first project to get started</p>
+            </div>
+          }
+        </div>
+
+        <!-- Summary -->
+        <div class="table-summary">
+          Total: {{ project.length }} {{ project.length === 1 ? 'project' : 'projects' }}
+        </div>
+      </div>
+    }
+
+    <!-- Kanban View -->
+    @if (currentView === 'kanban') {
+      <div class="content-card">
+        <div class="coming-soon">
+          <i class="pi pi-th-large text-6xl text-blue-400 mb-4"></i>
+          <h3 class="text-xl font-bold text-slate-700 mb-2">Kanban Board</h3>
+          <p class="text-slate-500">Coming soon - Organize your projects visually</p>
+        </div>
+      </div>
+    }
+
+    <!-- Calendar View -->
+    @if (currentView === 'calendar') {
+      <div class="content-card">
+        <div class="coming-soon">
+          <i class="pi pi-calendar text-6xl text-blue-400 mb-4"></i>
+          <h3 class="text-xl font-bold text-slate-700 mb-2">Calendar View</h3>
+          <p class="text-slate-500">Coming soon - Track project timelines</p>
+        </div>
+      </div>
+    }
+  }
 </div>

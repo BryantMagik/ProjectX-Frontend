@@ -1,13 +1,18 @@
 <div class="members-container">
   <div class="members-header">
-    <div>
-      <h1 class="header-title">Workspace Members</h1>
-      <p class="header-subtitle">Manage your team and invitations</p>
+    <div class="header-content">
+      <div class="header-title">
+        <i class="pi pi-users text-3xl"></i>
+        <div>
+          <h1 class="title">Workspace Members</h1>
+          <p class="subtitle">Manage your team and invitations</p>
+        </div>
+      </div>
+      <button (click)="openInviteModal()" class="btn-invite">
+        <i class="pi pi-user-plus mr-2"></i>
+        Invite Members
+      </button>
     </div>
-    <button (click)="openInviteModal()" class="btn-invite">
-      <i class="pi pi-user-plus mr-2"></i>
-      Invite Members
-    </button>
   </div>
 
   @if (loading) {
