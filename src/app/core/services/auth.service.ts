@@ -151,9 +151,9 @@ export class AuthService {
     // Limpiar workspace guardado del usuario
     const userId = this.getId();
     if (userId) {
-      localStorage.removeItem(`workspace_${userId}`);
+      sessionStorage.removeItem(`workspace_${userId}`);
     }
     // También limpiar la key genérica por si acaso
-    localStorage.removeItem('selectedWorkspaceId');
+    sessionStorage.removeItem('selectedWorkspaceId');
   }
 }

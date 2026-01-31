@@ -42,8 +42,8 @@ export class WorkspaceSwitcherComponent implements OnInit {
     this.selectedWorkspaceId = workspace.id
     this.dropdownOpen = false
 
-    // Guardar en localStorage vinculado al usuario
-    localStorage.setItem(this.getWorkspaceStorageKey(), workspace.id)
+    // Guardar en sessionStorage vinculado al usuario
+    sessionStorage.setItem(this.getWorkspaceStorageKey(), workspace.id)
 
     this.workspaceSelected.emit(this.selectedWorkspaceId!)
   }
@@ -59,10 +59,10 @@ export class WorkspaceSwitcherComponent implements OnInit {
       const workspaceIdFromUrl = params.get('workspaceId')
       if (workspaceIdFromUrl) {
         this.selectedWorkspaceId = workspaceIdFromUrl
-        localStorage.setItem(this.getWorkspaceStorageKey(), workspaceIdFromUrl)
+        sessionStorage.setItem(this.getWorkspaceStorageKey(), workspaceIdFromUrl)
       } else {
-        // Si no hay en la URL, intentar obtener de localStorage del usuario actual
-        const savedWorkspaceId = localStorage.getItem(this.getWorkspaceStorageKey())
+        // Si no hay en la URL, intentar obtener de sessionStorage del usuario actual
+        const savedWorkspaceId = sessionStorage.getItem(this.getWorkspaceStorageKey())
         if (savedWorkspaceId) {
           this.selectedWorkspaceId = savedWorkspaceId
         }
@@ -73,6 +73,11 @@ export class WorkspaceSwitcherComponent implements OnInit {
         this.selectedWorkspace = this.workspaces.find(w => w.id === this.selectedWorkspaceId) || null
         if (this.selectedWorkspace) {
           this.workspaceSelected.emit(this.selectedWorkspaceId)
+        } else {
+          // El workspace no existe en la lista del usuario, limpiar
+          sessionStorage.removeItem(this.getWorkspaceStorageKey())
+          this.selectedWorkspaceId = null
+          this.router.navigate(['/pages/dashboard'])
         }
       }
     })
@@ -99,7 +104,16 @@ export class WorkspaceSwitcherComponent implements OnInit {
       this.selectedWorkspace = this.workspaces.find(w => w.id === this.selectedWorkspaceId) || null
       if (this.selectedWorkspace) {
         this.workspaceSelected.emit(this.selectedWorkspaceId)
+      } else {
+        // El workspace guardado ya no existe, limpiar sessionStorage
+        sessionStorage.removeItem(this.getWorkspaceStorageKey())
+        this.selectedWorkspaceId = null
+        // Redirigir al dashboard principal
+        this.router.navigate(['/pages/dashboard'])
       }
+    } else if (this.workspaces.length > 0 && !this.selectedWorkspaceId) {
+      // Si no hay workspace seleccionado pero hay workspaces disponibles, seleccionar el primero
+      this.selectWorkspace(this.workspaces[0])
     }
   }
 

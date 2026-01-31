@@ -99,7 +99,7 @@
 }
 
 .member-card {
-  @apply rounded-xl shadow-md p-4 flex items-center gap-4;
+  @apply rounded-xl shadow-md p-4 flex items-start gap-3;
   background: rgba(30, 41, 59, 0.5);
   border: 1px solid rgba(59, 130, 246, 0.2);
   @apply hover:shadow-lg transition-all duration-200;
@@ -119,6 +119,7 @@
   background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
   @apply text-white font-semibold text-lg;
   @apply shadow-lg;
+  flex-shrink: 0;
 }
 
 .member-avatar img {
@@ -137,6 +138,11 @@
 .member-email {
   @apply text-xs mt-1;
   color: #cbd5e1;
+}
+
+.member-actions {
+  @apply flex flex-col items-end gap-1.5;
+  margin-left: auto;
 }
 
 /* Badges */
@@ -227,6 +233,25 @@
 .btn-deactivate:hover {
   background: rgba(239, 68, 68, 0.25);
   border-color: rgba(239, 68, 68, 0.5);
+}
+
+.btn-remove {
+  @apply w-8 h-8 rounded-lg flex items-center justify-center;
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  @apply transition-all duration-200;
+  cursor: pointer;
+}
+
+.btn-remove:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.5);
+  transform: scale(1.05);
+}
+
+.btn-remove i {
+  @apply text-sm;
 }
 
 /* Modal */

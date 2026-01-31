@@ -33,9 +33,9 @@ export class ProjectService {
   getProjectsRequest(): Observable<Project[]> {
     const headers = this.getAuthHeaders()
     if (headers) {
-      return this.apiService.get<Project[]>(`${apiRoutes.project.getAll}`, { headers }).pipe(
+      return this.apiService.get<Project[]>(`${apiRoutes.project.getOnlyOwn}`, { headers }).pipe(
         catchError(error => {
-          console.error('Error al obtener todos los proyectos:', error)
+          console.error('Error al obtener proyectos del usuario:', error)
           return of([])
         })
       )

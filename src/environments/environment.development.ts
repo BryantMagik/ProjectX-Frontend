@@ -14,7 +14,7 @@ export const apiRoutes = {
   },
   project: {
     create: `${environment.apiUrl}project`,
-    getOnlyOwn: `${environment.apiUrl}project/user/projects/`,
+    getOnlyOwn: `${environment.apiUrl}project/user/projects`,
     getAll: `${environment.apiUrl}project/`,
     getAllProjectsByWorkspaceId: `${environment.apiUrl}project/workspace`,
     getById: `${environment.apiUrl}project/id`,
@@ -47,6 +47,7 @@ export const apiRoutes = {
   workspace: {
     create: `${environment.apiUrl}workspace`,
     getAll: `${environment.apiUrl}workspace/`,
+    getOnlyOwn: `${environment.apiUrl}workspace/user/workspace`,
     getById: `${environment.apiUrl}workspace`,
     update: `${environment.apiUrl}workspace`,
     delete: `${environment.apiUrl}workspace`,

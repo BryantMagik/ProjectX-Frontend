@@ -45,7 +45,7 @@ export class WorkspaceService {
     getAllWorkspace(): Observable<Workspace[]> {
         const headers = this.getAuthHeaders()
         if (headers) {
-            return this.apiService.get<Workspace[]>(`${apiRoutes.workspace.getAll}`, { headers })
+            return this.apiService.get<Workspace[]>(`${apiRoutes.workspace.getOnlyOwn}`, { headers })
         }
         return of([])
     }
@@ -108,6 +108,15 @@ export class WorkspaceService {
         if (headers) {
             const baseUrl = apiRoutes.workspace.create.replace('/workspace', '');
             return this.apiService.patch<any>(`${baseUrl}/workspace/invitations/${invitationId}/deactivate`, {}, { headers })
+        }
+        return of(null)
+    }
+
+    removeMemberFromWorkspace(workspaceId: string, userId: string): Observable<any> {
+        const headers = this.getAuthHeaders()
+        if (headers) {
+            const baseUrl = apiRoutes.workspace.create.replace('/workspace', '');
+            return this.apiService.delete<any>(`${baseUrl}/workspace/${workspaceId}/members/${userId}`, { headers })
         }
         return of(null)
     }

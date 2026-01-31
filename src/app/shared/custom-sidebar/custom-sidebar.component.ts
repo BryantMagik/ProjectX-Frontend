@@ -41,7 +41,7 @@ export class CustomSidebarComponent implements OnInit {
 
   ngOnInit(): void {
     // Intentar recuperar el workspace guardado del usuario actual
-    const savedWorkspaceId = localStorage.getItem(this.getWorkspaceStorageKey())
+    const savedWorkspaceId = sessionStorage.getItem(this.getWorkspaceStorageKey())
     if (savedWorkspaceId) {
       this.selectedWorkspaceId = savedWorkspaceId
       this.selectedWorkspaceSubject.next(savedWorkspaceId)
