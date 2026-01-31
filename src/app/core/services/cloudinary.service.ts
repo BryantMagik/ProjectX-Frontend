@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs'
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,28 +9,39 @@ import { firstValueFrom } from 'rxjs'
 export class CloudinaryService {
   private http = inject(HttpClient);
 
-
-  private cloudName = 'dk5b2zjck'
-  private uploadPreset = 'jiro_uploads'
-  private baseUrl = `https://api.cloudinary.com/v1_1/${this.cloudName}/image/upload`
-
+  private uploadUrl = `${environment.apiUrl}upload/image`;
 
   constructor() { }
 
   async uploadImage(file: File): Promise<string> {
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('upload_preset', this.uploadPreset)
 
     try {
+      console.log('Uploading to backend:', {
+        url: this.uploadUrl,
+        fileName: file.name,
+        fileType: file.type,
+        fileSize: file.size,
+        token: sessionStorage.getItem('token') ? 'Present' : 'Missing'
+      });
+
       const response = await firstValueFrom(
-        this.http.post<any>(this.baseUrl, formData)
+        this.http.post<{ success: boolean; url: string }>(this.uploadUrl, formData)
       );
-      console.log('Response from Cloudinary:', response)
-      return response.secure_url
-    } catch (error) {
+      console.log('Response from backend:', response)
+      return response.url
+    } catch (error: any) {
       console.error('Error uploading image:', error)
-      throw new Error('Error uploading image to Cloudinary')
+      console.error('Full error object:', error);
+      console.error('Error details:', {
+        status: error?.status,
+        statusText: error?.statusText,
+        message: error?.message,
+        error: error?.error,
+        url: error?.url
+      });
+      throw error;
     }
   }
 

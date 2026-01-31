@@ -1,22 +1,35 @@
 .workspace-form-container {
-  @apply max-w-2xl mx-auto p-8;
+  @apply mx-auto p-6;
 }
 
 /* Header */
 .form-header {
-  @apply mb-8 text-center;
+  @apply mb-8 p-6 rounded-2xl;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
-.form-title {
-  @apply text-3xl font-bold mb-2;
-  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.header-content {
+  @apply flex justify-between items-center;
 }
 
-.form-subtitle {
-  @apply text-slate-600 text-sm;
+.header-title {
+  @apply flex items-center gap-4;
+  color: white;
+}
+
+.header-title i {
+  @apply text-3xl;
+  color: #60a5fa;
+}
+
+.title {
+  @apply text-3xl font-bold text-white m-0;
+}
+
+.subtitle {
+  @apply text-sm text-slate-400 mt-1;
 }
 
 /* Form Content */

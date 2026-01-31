@@ -1,13 +1,17 @@
 <div class="workspace-form-container">
-  <!-- Header -->
   <div class="form-header">
-    <h1 class="form-title">Create New Workspace</h1>
-    <p class="form-subtitle">Set up a collaborative space for your team</p>
+    <div class="header-content">
+      <div class="header-title">
+        <i class="pi pi-building"></i>
+        <div>
+          <h1 class="title">Create New Workspace</h1>
+          <p class="subtitle">Set up a collaborative space for your team</p>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Form -->
   <form (ngSubmit)="onSubmit()" [formGroup]="workspaceForm" class="form-content">
-    <!-- Workspace Name -->
     <div class="form-group">
       <label for="name" class="form-label">
         <i class="pi pi-building mr-2"></i>
@@ -44,7 +48,6 @@
       ></textarea>
     </div>
 
-    <!-- Workspace Icon -->
     <div class="form-group">
       <label class="form-label">
         <i class="pi pi-image mr-2"></i>
@@ -56,8 +59,9 @@
             <img [src]="workspaceForm.get('image')?.value" alt="Workspace Icon" />
             <button
               type="button"
-              (click)="workspaceForm.patchValue({ image: '' })"
+              (click)="removeImage()"
               class="remove-image-btn"
+              title="Remove image"
             >
               <i class="pi pi-times"></i>
             </button>
@@ -96,7 +100,6 @@
       </div>
     </div>
 
-    <!-- Action Buttons -->
     <div class="form-actions">
       <button type="button" class="btn-cancel">
         <i class="pi pi-times mr-2"></i>
