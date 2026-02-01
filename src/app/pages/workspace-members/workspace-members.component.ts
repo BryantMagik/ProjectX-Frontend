@@ -125,7 +125,7 @@ export class WorkspaceMembersComponent implements OnInit {
     this.workspaceService.createInvitation(this.workspaceId, invitationData).subscribe({
       next: (response: { invitation: { token: string } }) => {
         const token = response.invitation.token;
-        this.generatedLink = `${window.location.origin}/pages/join-workspace?token=${token}`;
+        this.generatedLink = `${window.location.origin}/join-workspace?token=${token}`;
         this.loadInvitations();
       },
       error: (err) => {

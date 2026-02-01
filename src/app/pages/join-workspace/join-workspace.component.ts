@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkspaceService } from '../../service/workspace/workspace.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-join-workspace',
@@ -14,6 +15,7 @@ export class JoinWorkspaceComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private workspaceService = inject(WorkspaceService);
+  private authService = inject(AuthService);
 
   token: string | null = null;
   loading = true;
@@ -25,12 +27,26 @@ export class JoinWorkspaceComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.token = params['token'];
       if (this.token) {
-        this.joinWorkspace();
+        this.checkAuthAndJoin();
       } else {
         this.error = 'Invalid invitation link';
         this.loading = false;
       }
     });
+  }
+
+  private checkAuthAndJoin(): void {
+    // Verificar si el usuario está autenticado
+    const isAuthenticated = this.authService.isAuthenticated();
+
+    if (!isAuthenticated) {
+      // Guardar la URL actual para volver después del login
+      const returnUrl = `/join-workspace?token=${this.token}`;
+      this.router.navigate(['/login'], { queryParams: { returnUrl } });
+      return;
+    }
+
+    this.joinWorkspace();
   }
 
   private joinWorkspace(): void {
@@ -44,7 +60,7 @@ export class JoinWorkspaceComponent implements OnInit {
 
         // Redirect to workspace after 3 seconds
         setTimeout(() => {
-          this.router.navigate(['/pages', response.workspace.id]);
+          this.router.navigate(['/pages', response.workspace.id, 'dashboard']);
         }, 3000);
       },
       error: (err) => {
@@ -56,6 +72,6 @@ export class JoinWorkspaceComponent implements OnInit {
   }
 
   goToHome(): void {
-    this.router.navigate(['/pages/dashboard']);
+    this.router.navigate(['/']);
   }
 }

@@ -34,6 +34,11 @@ export const routes: Routes = [
         component: LoginComponent,
     },
     {
+        path: 'join-workspace',
+        title: 'Join Workspace',
+        component: JoinWorkspaceComponent,
+    },
+    {
         path: '',
         component: LayoutComponent,
         canActivate: [AuthGuard],
@@ -57,11 +62,6 @@ export const routes: Routes = [
                 path: 'pages/issues',
                 title: 'Issues',
                 component: IssuesComponent,
-            },
-            {
-                path: 'pages/join-workspace',
-                title: 'Join Workspace',
-                component: JoinWorkspaceComponent,
             },
             {
               path: 'pages/tasks/shared/tasks-form',
