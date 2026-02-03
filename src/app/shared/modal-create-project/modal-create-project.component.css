@@ -1,0 +1,94 @@
+/* Overlay de fondo */
+.modal-overlay {
+  @apply fixed inset-0 flex items-center justify-center z-50 select-none;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+/* Tarjeta del Modal */
+.modal-card {
+  @apply rounded-2xl shadow-2xl p-12 max-w-lg w-full;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+/* Título */
+.modal-title {
+  @apply text-2xl font-bold m-0;
+  color: white;
+}
+
+/* Separadores */
+.form-divider {
+  @apply mt-6 mb-6 border-dashed;
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* Contenedor de campos */
+.form-content {
+  @apply space-y-6;
+}
+
+.form-group {
+  @apply flex flex-col gap-2;
+}
+
+/* Etiquetas */
+.form-label {
+  @apply block font-bold text-sm;
+  color: #cbd5e1;
+}
+
+/* Inputs y Selects */
+.form-input {
+  @apply w-full h-12 p-4 rounded-xl transition-all duration-200;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500;
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  color: white;
+}
+
+.form-input::placeholder {
+  color: #64748b;
+}
+
+/* Ajuste específico para el componente PrimeNG p-select */
+:host ::ng-deep .form-select .p-select {
+  @apply w-full h-12 rounded-xl;
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 2px solid rgba(59, 130, 246, 0.3) !important;
+}
+
+:host ::ng-deep .form-select .p-select-label {
+  color: white !important;
+  @apply flex items-center h-full px-4;
+}
+
+/* Botones y Acciones */
+.form-actions {
+  @apply flex justify-between gap-4 mt-6;
+}
+
+.btn-cancel {
+  @apply px-6 py-4 text-sm font-extrabold rounded-xl transition-all duration-200;
+  @apply border border-transparent;
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.btn-submit {
+  @apply px-6 py-4 text-sm font-extrabold rounded-xl shadow-md transition-all duration-200;
+  @apply flex-1 text-white;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-submit:hover {
+  @apply shadow-xl transform -translate-y-0.5;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}

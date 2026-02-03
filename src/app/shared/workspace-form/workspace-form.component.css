@@ -29,13 +29,15 @@
 }
 
 .subtitle {
-  @apply text-sm text-slate-400 mt-1;
+  @apply text-sm mt-1;
+  color: #cbd5e1;
 }
 
 /* Form Content */
 .form-content {
-  @apply bg-white rounded-2xl shadow-xl p-8;
-  border: 1px solid rgba(59, 130, 246, 0.1);
+  @apply rounded-2xl shadow-xl p-8;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 /* Form Groups */
@@ -44,34 +46,47 @@
 }
 
 .form-label {
-  @apply flex items-center text-sm font-semibold text-slate-700 mb-2;
+  @apply flex items-center text-sm font-semibold mb-2;
+  color: white;
 }
 
 .form-label i {
-  @apply text-blue-500;
+  @apply text-blue-400;
 }
 
 /* Inputs */
 .form-input {
-  @apply w-full px-4 py-3 rounded-xl border border-slate-300;
+  @apply w-full px-4 py-3 rounded-xl;
   @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
   @apply transition-all duration-200;
-  @apply text-slate-800;
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  color: white;
+}
+
+.form-input::placeholder {
+  color: #94a3b8;
 }
 
 .form-input:hover {
-  @apply border-blue-300;
+  border-color: rgba(59, 130, 246, 0.5);
 }
 
 .form-textarea {
-  @apply w-full px-4 py-3 rounded-xl border border-slate-300;
+  @apply w-full px-4 py-3 rounded-xl;
   @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
   @apply transition-all duration-200;
-  @apply text-slate-800 resize-none;
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  color: white;
+}
+
+.form-textarea::placeholder {
+  color: #94a3b8;
 }
 
 .form-textarea:hover {
-  @apply border-blue-300;
+  border-color: rgba(59, 130, 246, 0.5);
 }
 
 .error-text {
@@ -80,12 +95,14 @@
 
 /* Image Upload */
 .image-upload-container {
-  @apply flex items-center gap-6 p-6 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300;
+  @apply flex items-center gap-6 p-6 rounded-xl border-2 border-dashed;
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
 .image-preview {
   @apply relative w-24 h-24 rounded-xl overflow-hidden;
-  @apply shadow-lg;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .image-preview img {
@@ -101,8 +118,8 @@
 
 .image-placeholder {
   @apply w-24 h-24 rounded-xl flex items-center justify-center;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
-  @apply text-blue-400 text-4xl;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  @apply text-white;
 }
 
 .image-upload-info {
@@ -110,11 +127,13 @@
 }
 
 .image-upload-text {
-  @apply text-sm font-semibold text-slate-700 mb-1;
+  @apply text-sm font-semibold mb-1;
+  color: white;
 }
 
 .image-upload-size {
-  @apply text-xs text-slate-500 mb-3;
+  @apply text-xs mb-3;
+  color: #cbd5e1;
 }
 
 .btn-upload {
@@ -129,15 +148,22 @@
 
 /* Action Buttons */
 .form-actions {
-  @apply flex justify-end gap-4 mt-8 pt-6 border-t border-slate-200;
+  @apply flex justify-end gap-4 mt-8 pt-6 border-t;
+  border-color: rgba(59, 130, 246, 0.2);
 }
 
 .btn-cancel {
   @apply px-6 py-3 rounded-xl font-semibold text-sm;
-  @apply text-slate-700 bg-slate-100;
-  @apply hover:bg-slate-200;
   @apply transition-all duration-200;
   @apply flex items-center gap-2;
+  background: rgba(15, 23, 42, 0.5);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-cancel:hover {
+  background: rgba(15, 23, 42, 0.8);
+  color: white;
 }
 
 .btn-submit {
