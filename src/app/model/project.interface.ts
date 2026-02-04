@@ -14,18 +14,23 @@ export interface Participant {
   }
 export interface Project {
     id: string
-    workspaceId:string
+    workspaceId: string
     code: string
     name: string
     description: string
     status: string
     type: string
+    visibility: string
+    startDate?: string
+    endDate?: string
     userId: string
     author: User
+    lead?: User
+    leadId?: string
     participants: Participant[];
     authors: Author[];
-    createdAt: string,
-    updatedAt: string,
+    createdAt: string
+    updatedAt: string
     image?: string
     tasks: Task
 }

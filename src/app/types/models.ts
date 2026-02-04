@@ -14,7 +14,11 @@ export const PROYECTOSTATUS = [
     { name: 'Inactive', value: 'ONWAIT' },
     { name: 'On going', value: 'ONGOING' },
     { name: 'Completed', value: 'COMPLETED' },
+]
 
+export const PROYECTOVISIBILITY = [
+    { name: 'Private', value: 'PRIVATE' },
+    { name: 'Public', value: 'PUBLIC' },
 ]
 
 export const TASKSTYPE = [

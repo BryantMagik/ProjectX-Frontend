@@ -1,0 +1,259 @@
+<div class="project-form-container">
+  <div class="form-header">
+    <div class="header-content">
+      <div class="header-title">
+        <i class="pi pi-folder"></i>
+        <div>
+          <h1 class="title">Create New Project</h1>
+          <p class="subtitle">Set up a new project for your workspace</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="projectForm" class="form-content">
+    <div class="form-section">
+      <h2 class="section-title">Basic Information</h2>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name" class="form-label">
+            <i class="pi pi-folder mr-2"></i>
+            Project Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            placeholder="Enter project name"
+            class="form-input"
+            maxlength="50"
+          />
+          @if (projectForm.get('name')?.hasError('required') && projectForm.get('name')?.touched) {
+            <span class="error-text">Project name is required</span>
+          }
+          @if (projectForm.get('name')?.hasError('maxlength')) {
+            <span class="error-text">Maximum 50 characters allowed</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="code" class="form-label">
+            <i class="pi pi-hashtag mr-2"></i>
+            Project Code
+            <span class="auto-generated-badge">Auto-generated</span>
+          </label>
+          <input
+            type="text"
+            id="code"
+            formControlName="code"
+            placeholder="Type a name to generate..."
+            class="form-input code-input"
+            readonly
+          />
+          <span class="code-hint">Based on project name (e.g., "Marketing" → MAR-001)</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="form-label">
+          <i class="pi pi-align-left mr-2"></i>
+          Description (Optional)
+        </label>
+        <textarea
+          id="description"
+          formControlName="description"
+          placeholder="Describe your project"
+          class="form-textarea"
+          rows="4"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title">Project Settings</h2>
+
+      <div class="form-row three-cols">
+        <div class="form-group">
+          <label for="type" class="form-label">
+            <i class="pi pi-tag mr-2"></i>
+            Type
+          </label>
+          <p-select
+            id="type"
+            formControlName="type"
+            [options]="projectTypes"
+            optionLabel="name"
+            optionValue="value"
+            placeholder="Select type"
+            styleClass="w-full custom-select"
+          ></p-select>
+          @if (projectForm.get('type')?.hasError('required') && projectForm.get('type')?.touched) {
+            <span class="error-text">Type is required</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="status" class="form-label">
+            <i class="pi pi-circle-fill mr-2"></i>
+            Status
+          </label>
+          <p-select
+            id="status"
+            formControlName="status"
+            [options]="projectStatuses"
+            optionLabel="name"
+            optionValue="value"
+            placeholder="Select status"
+            styleClass="w-full custom-select"
+          ></p-select>
+        </div>
+
+        <div class="form-group">
+          <label for="visibility" class="form-label">
+            <i class="pi pi-eye mr-2"></i>
+            Visibility
+          </label>
+          <p-select
+            id="visibility"
+            formControlName="visibility"
+            [options]="projectVisibilities"
+            optionLabel="name"
+            optionValue="value"
+            placeholder="Select visibility"
+            styleClass="w-full custom-select"
+          ></p-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title">Timeline</h2>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="startDate" class="form-label">
+            <i class="pi pi-calendar mr-2"></i>
+            Start Date (Optional)
+          </label>
+          <input
+            type="date"
+            id="startDate"
+            formControlName="startDate"
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="endDate" class="form-label">
+            <i class="pi pi-calendar-times mr-2"></i>
+            End Date (Optional)
+          </label>
+          <input
+            type="date"
+            id="endDate"
+            formControlName="endDate"
+            class="form-input"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title">Team</h2>
+
+      <div class="form-group">
+        <label for="leadId" class="form-label">
+          <i class="pi pi-user mr-2"></i>
+          Project Lead (Optional)
+        </label>
+        <p-select
+          id="leadId"
+          formControlName="leadId"
+          [options]="workspaceMembers"
+          optionLabel="first_name"
+          optionValue="id"
+          placeholder="Select project lead"
+          styleClass="w-full custom-select"
+          [showClear]="true"
+        >
+          <ng-template pTemplate="selectedItem" let-selected>
+            @if (selected) {
+              <span>{{ selected.first_name }} {{ selected.last_name }}</span>
+            }
+          </ng-template>
+          <ng-template pTemplate="item" let-member>
+            <span>{{ member.first_name }} {{ member.last_name }}</span>
+          </ng-template>
+        </p-select>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2 class="section-title">Project Image</h2>
+
+      <div class="form-group">
+        <div class="image-upload-container">
+          @if (projectForm.get('image')?.value) {
+            <div class="image-preview">
+              <img [src]="projectForm.get('image')?.value" alt="Project Image" />
+              <button
+                type="button"
+                (click)="removeImage()"
+                class="remove-image-btn"
+                title="Remove image"
+              >
+                <i class="pi pi-times"></i>
+              </button>
+            </div>
+          } @else {
+            <div class="image-placeholder">
+              <i class="pi pi-image"></i>
+            </div>
+          }
+          <div class="image-upload-info">
+            <p class="image-upload-text">JPG, PNG, SVG or JPEG</p>
+            <p class="image-upload-size">Maximum size: 1MB</p>
+            <input
+              #fileInput
+              id="image"
+              type="file"
+              (change)="onFileSelected($event)"
+              accept=".jpg, .jpeg, .png, .svg"
+              style="display: none;"
+            />
+            <button
+              type="button"
+              (click)="fileInput.click()"
+              [disabled]="isUploading"
+              class="btn-upload"
+            >
+              @if (isUploading) {
+                <i class="pi pi-spin pi-spinner mr-2"></i>
+                Uploading...
+              } @else {
+                <i class="pi pi-cloud-upload mr-2"></i>
+                Upload Image
+              }
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="onCancel()">
+        <i class="pi pi-times mr-2"></i>
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn-submit"
+        [disabled]="!canSubmit"
+      >
+        <i class="pi pi-check mr-2"></i>
+        Create Project
+      </button>
+    </div>
+  </form>
+</div>

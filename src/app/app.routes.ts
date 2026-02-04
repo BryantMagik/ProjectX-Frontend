@@ -9,6 +9,7 @@ import { ProjectsComponent } from './pages/projects/projects.component';
 import { IssuesComponent } from './pages/issues/issues.component';
 import { ProfilesComponent } from './pages/profiles/profiles.component';
 import { WorkspaceFormComponent } from './shared/workspace-form/workspace-form.component';
+import { ProjectFormComponent } from './shared/project-form/project-form.component';
 import { SettingsComponent } from './pages/settings-workspaces/settings-workspaces.component';
 import { WorkspaceComponent } from './pages/workspace/workspace.component';
 import { DashboardProjectComponent } from './pages/dashboard-project/dashboard-project.component';
@@ -57,6 +58,11 @@ export const routes: Routes = [
                 path: 'pages/shared/workspace-form',
                 title: 'Workspace Form',
                 component: WorkspaceFormComponent,
+            },
+            {
+                path: 'pages/shared/project-form',
+                title: 'Project Form',
+                component: ProjectFormComponent,
             },
             {
                 path: 'pages/issues',

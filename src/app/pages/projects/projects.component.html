@@ -1,5 +1,4 @@
 <div class="projects-container">
-  <!-- Header -->
   <div class="projects-header">
     <div class="header-content">
       <div class="header-title">
@@ -16,149 +15,138 @@
     </div>
   </div>
 
-  <!-- View Tabs -->
-  <div class="view-tabs">
-    <button 
-      class="tab-button" 
-      [class.active]="currentView === 'table'" 
-      (click)="currentView = 'table'">
-      <i class="pi pi-table"></i>
-      Table View
-    </button>
-    <button 
-      class="tab-button" 
-      [class.active]="currentView === 'kanban'" 
-      (click)="currentView = 'kanban'">
-      <i class="pi pi-th-large"></i>
-      Kanban Board
-    </button>
-    <button 
-      class="tab-button" 
-      [class.active]="currentView === 'calendar'" 
-      (click)="currentView = 'calendar'">
-      <i class="pi pi-calendar"></i>
-      Calendar
-    </button>
+  <div class="filters-section">
+    <div class="search-box">
+      <i class="pi pi-search search-icon"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Search projects by name, code, or description..."
+        class="search-input"
+      />
+    </div>
+  </div>
+
+  <div class="stats-cards">
+    <div class="stat-card">
+      <div class="stat-icon stat-total">
+        <i class="pi pi-list"></i>
+      </div>
+      <div class="stat-info">
+        <p class="stat-value">{{ filteredProjects.length }}</p>
+        <p class="stat-label">Total Projects</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-active">
+        <i class="pi pi-clock"></i>
+      </div>
+      <div class="stat-info">
+        <p class="stat-value">{{ getActiveProjectsCount() }}</p>
+        <p class="stat-label">Active</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-completed">
+        <i class="pi pi-check-circle"></i>
+      </div>
+      <div class="stat-info">
+        <p class="stat-value">{{ getCompletedProjectsCount() }}</p>
+        <p class="stat-label">Completed</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon stat-ongoing">
+        <i class="pi pi-sync"></i>
+      </div>
+      <div class="stat-info">
+        <p class="stat-value">{{ getOngoingProjectsCount() }}</p>
+        <p class="stat-label">Ongoing</p>
+      </div>
+    </div>
   </div>
 
   @if (loading) {
-    <div class="loading-container">
-      <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
-      <p class="text-slate-600 mt-4">Loading projects...</p>
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading projects...</p>
     </div>
   }
 
-  @if (error) {
-    <div class="error-banner">
-      <i class="pi pi-exclamation-triangle mr-2"></i>
-      {{ error }}
+  @if (error && !loading) {
+    <div class="error-state">
+      <i class="pi pi-exclamation-circle"></i>
+      <p>{{ error }}</p>
     </div>
   }
 
   @if (!loading && !error) {
-    <!-- Table View -->
-    @if (currentView === 'table') {
-      <div class="content-card">
-        <!-- Filters -->
-        <div class="filters-section">
-          <div class="search-box">
-            <i class="pi pi-search search-icon"></i>
-            <input
-              type="text"
-              [(ngModel)]="searchTerm"
-              (input)="filterGlobal($event)"
-              placeholder="Search projects by name, code, or author..."
-              class="search-input"
-            />
-          </div>
-        </div>
-
-        <!-- Projects Table -->
-        <div class="table-container">
-          <table class="projects-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Author</th>
-                <th>Code</th>
-                <th>Type</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (proj of project; track proj.id) {
-                <tr (click)="navigateToProject(proj.id)" class="project-row">
-                  <td>
-                    <div class="project-name">
-                      <i class="pi pi-folder text-blue-500 mr-2"></i>
-                      {{ proj.name }}
-                    </div>
-                  </td>
-                  <td>
-                    <span class="project-description">{{ proj.description || 'No description' }}</span>
-                  </td>
-                  <td>
-                    <div class="author-cell">
-                      <div class="author-avatar">
-                        @if (proj.author.profile_picture) {
-                          <img [src]="proj.author.profile_picture" alt="{{proj.author.first_name}}" title="{{proj.author.first_name}}">
-                        } @else {
-                          <span>{{ proj.author.first_name[0] }}{{ proj.author.last_name[0] }}</span>
-                        }
-                      </div>
-                      <span>{{ proj.author.first_name }} {{ proj.author.last_name }}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <span class="project-code">{{ proj.code }}</span>
-                  </td>
-                  <td>
-                    <app-severity-tag [value]="proj.type" type="type"></app-severity-tag>
-                  </td>
-                  <td>
-                    <app-severity-tag [value]="proj.status" type="status"></app-severity-tag>
-                  </td>
-                </tr>
+    @if (filteredProjects.length === 0) {
+      <div class="empty-state">
+        <i class="pi pi-inbox"></i>
+        <h3>No projects found</h3>
+        <p>{{ searchTerm ? 'Try adjusting your search' : 'Create your first project to get started' }}</p>
+      </div>
+    } @else {
+      <div class="projects-grid">
+        @for (proj of filteredProjects; track proj.id) {
+          <div class="project-card" (click)="navigateToProject(proj.id)" title="View Project Details">
+            <div class="project-header">
+              @if (proj.image) {
+                <img [src]="proj.image" alt="{{proj.name}}" class="project-image">
+              } @else {
+                <div class="project-image-placeholder">
+                  <i class="pi pi-folder text-6xl"></i>
+                </div>
               }
-            </tbody>
-          </table>
-
-          @if (project.length === 0) {
-            <div class="empty-state">
-              <i class="pi pi-inbox text-6xl text-slate-300 mb-4"></i>
-              <p class="text-slate-600 font-semibold">No projects found</p>
-              <p class="text-slate-400 text-sm">Create your first project to get started</p>
+              <div class="project-overlay">
+                <span class="project-code">{{ proj.code }}</span>
+              </div>
             </div>
-          }
-        </div>
 
-        <!-- Summary -->
-        <div class="table-summary">
-          Total: {{ project.length }} {{ project.length === 1 ? 'project' : 'projects' }}
-        </div>
-      </div>
-    }
+            <div class="project-body">
+              <div class="project-title-row">
+                <h3 class="project-title">{{ proj.name }}</h3>
+                <span class="project-status" [ngClass]="'status-' + proj.status.toLowerCase()">
+                  {{ proj.status }}
+                </span>
+              </div>
 
-    <!-- Kanban View -->
-    @if (currentView === 'kanban') {
-      <div class="content-card">
-        <div class="coming-soon">
-          <i class="pi pi-th-large text-6xl text-blue-400 mb-4"></i>
-          <h3 class="text-xl font-bold text-slate-700 mb-2">Kanban Board</h3>
-          <p class="text-slate-500">Coming soon - Organize your projects visually</p>
-        </div>
-      </div>
-    }
+              @if (proj.description) {
+                <p class="project-description">{{ proj.description }}</p>
+              } @else {
+                <p class="project-description no-description">No description available</p>
+              }
 
-    <!-- Calendar View -->
-    @if (currentView === 'calendar') {
-      <div class="content-card">
-        <div class="coming-soon">
-          <i class="pi pi-calendar text-6xl text-blue-400 mb-4"></i>
-          <h3 class="text-xl font-bold text-slate-700 mb-2">Calendar View</h3>
-          <p class="text-slate-500">Coming soon - Track project timelines</p>
-        </div>
+              <div class="project-tags">
+                <span class="project-tag tag-type">{{ proj.type }}</span>
+                @if (proj.visibility) {
+                  <span class="project-tag tag-visibility">
+                    <i class="pi" [ngClass]="proj.visibility === 'public' ? 'pi-eye' : 'pi-lock'"></i>
+                    {{ proj.visibility }}
+                  </span>
+                }
+              </div>
+
+              <div class="project-footer">
+                <div class="project-author">
+                  <div class="author-avatar">
+                    @if (proj.author.profile_picture) {
+                      <img [src]="proj.author.profile_picture" alt="{{proj.author.first_name}}">
+                    } @else {
+                      <span>{{ proj.author.first_name[0] || 'U' }}{{ proj.author.last_name[0] || '' }}</span>
+                    }
+                  </div>
+                  <span class="author-name">{{ proj.author.first_name || 'Unknown' }} {{ proj.author.last_name || '' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
       </div>
     }
   }

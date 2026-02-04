@@ -7,11 +7,10 @@ import { Project } from '../../model/project.interface';
 import { Router } from '@angular/router';
 import { User } from '../../model/user.interface';
 import { UserService } from '../../features/profile/services/user.service';
-import { SeverityTagComponent } from '../../service/severity/severity-tag.component';
 
 @Component({
     selector: 'app-projects',
-    imports: [CommonModule, FormsModule, SeverityTagComponent],
+    imports: [CommonModule, FormsModule],
     templateUrl: './projects.component.html',
     styleUrl: './projects.component.css',
     standalone:true
@@ -23,51 +22,58 @@ export class ProjectsComponent implements OnInit {
   private projectsService = inject(ProjectService);
   private router = inject(Router);
 
-
-  projectDialog: boolean = false
-  submitted: boolean = false
-  project: Project[] = []
-  authors: User[] = []
-  selectedProjects!: Project[] | null
+  projects: Project[] = [];
+  filteredProjects: Project[] = [];
+  authors: User[] = [];
   loading: boolean = true;
-  error: string | null = null
-  currentView: 'table' | 'kanban' | 'calendar' = 'table';
+  error: string | null = null;
   searchTerm: string = '';
-
-
 
   constructor() { }
 
   ngOnInit(): void {
-    this.getProject()
-    this.getUsers()
+    this.getProjects();
+    this.getUsers();
   }
 
   navigateToProjectForm() {
-    this.router.navigate(['/pages/projects/shared/project-form']);
+    // Obtener workspaceId de sessionStorage (mismo método que usa workspace-switcher)
+    const userId = sessionStorage.getItem('userId');
+    const storageKey = userId ? `workspace_${userId}` : 'selectedWorkspaceId';
+    const workspaceId = sessionStorage.getItem(storageKey);
+
+    if (workspaceId) {
+      this.router.navigate(['/pages/shared/project-form'], {
+        queryParams: { workspaceId }
+      });
+    } else {
+      console.error('No workspace selected');
+      this.router.navigate(['/pages/shared/project-form']);
+    }
   }
 
   navigateToProject(projectId: string) {
     this.router.navigate(['/pages/projects', projectId]);
   }
 
-  openNew() {
-    this.submitted = false
-    this.projectDialog = true;
-  }
-
-  private getProject(): void {
+  private getProjects(): void {
     this.projectsService.getProjectByIdWhereId().pipe(
       tap({
-        next: (project: Project[] | null) => {
-          if (project) {
-            this.project = project
+        next: (projects: Project[] | null) => {
+          if (projects) {
+            this.projects = projects;
+            this.filteredProjects = projects;
+            console.log('Projects loaded:', projects);
           }
         },
-        error: () => this.error = 'Failed to load projects',
+        error: (err) => {
+          console.error('Error loading projects:', err);
+          this.error = 'Failed to load projects';
+          this.loading = false;
+        },
         complete: () => this.loading = false
       })
-    ).subscribe()
+    ).subscribe();
   }
 
   private getUsers(): void {
@@ -75,21 +81,43 @@ export class ProjectsComponent implements OnInit {
       tap({
         next: (authors: User[] | null) => {
           if (authors) {
-            this.authors = authors
+            this.authors = authors;
+            console.log('Authors loaded:', authors);
           }
         },
-        error: () => this.error = 'Failed to load projects',
-        complete: () => this.loading = false
+        error: (err) => {
+          console.warn('Could not load users:', err);
+          // No mostrar error si solo fallan los usuarios
+        }
       })
-    ).subscribe()
+    ).subscribe();
   }
 
-  filterGlobal(event: Event): void {
-    const input = event.target as HTMLInputElement
-    const value = input ? input.value : ''
-    this.searchTerm = value.toLowerCase();
-    // El filtrado se puede implementar con un pipe en el template o aquí
-    // Por ahora, el binding con [(ngModel)] ya actualiza searchTerm
+  filterProjects(): void {
+    this.filteredProjects = this.projects.filter(project => {
+      const matchesSearch = !this.searchTerm ||
+        project.name?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        project.code?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        project.description?.toLowerCase().includes(this.searchTerm.toLowerCase());
+
+      return matchesSearch;
+    });
+  }
+
+  onSearchChange(): void {
+    this.filterProjects();
+  }
+
+  getActiveProjectsCount(): number {
+    return this.filteredProjects.filter(p => p.status === 'Active').length;
+  }
+
+  getCompletedProjectsCount(): number {
+    return this.filteredProjects.filter(p => p.status === 'Completed').length;
+  }
+
+  getOngoingProjectsCount(): number {
+    return this.filteredProjects.filter(p => p.status === 'Ongoing').length;
   }
 
 }

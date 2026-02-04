@@ -1,0 +1,270 @@
+.project-form-container {
+  @apply mx-auto p-6;
+}
+
+/* Header */
+.form-header {
+  @apply mb-8 p-6 rounded-2xl;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.header-content {
+  @apply flex justify-between items-center;
+}
+
+.header-title {
+  @apply flex items-center gap-4;
+  color: white;
+}
+
+.header-title i {
+  @apply text-3xl;
+  color: #60a5fa;
+}
+
+.title {
+  @apply text-3xl font-bold text-white m-0;
+}
+
+.subtitle {
+  @apply text-sm mt-1;
+  color: #cbd5e1;
+}
+
+/* Form Content */
+.form-content {
+  @apply rounded-2xl shadow-xl p-8;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+/* Form Sections */
+.form-section {
+  @apply mb-8 pb-8;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+.form-section:last-of-type {
+  @apply mb-0 pb-0;
+  border-bottom: none;
+}
+
+.section-title {
+  @apply text-lg font-semibold mb-4;
+  color: #60a5fa;
+}
+
+/* Form Row */
+.form-row {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+.form-row.three-cols {
+  @apply grid-cols-1 md:grid-cols-3;
+}
+
+/* Form Groups */
+.form-group {
+  @apply mb-4;
+}
+
+.form-label {
+  @apply flex items-center text-sm font-semibold mb-2;
+  color: white;
+}
+
+.form-label i {
+  @apply text-blue-400;
+}
+
+/* Inputs */
+.form-input {
+  @apply w-full px-4 py-3 rounded-xl;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  @apply transition-all duration-200;
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  color: white;
+}
+
+.form-input::placeholder {
+  color: #94a3b8;
+}
+
+.form-input:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.form-input[type="date"] {
+  color-scheme: dark;
+}
+
+.form-textarea {
+  @apply w-full px-4 py-3 rounded-xl;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  @apply transition-all duration-200;
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  color: white;
+}
+
+.form-textarea::placeholder {
+  color: #94a3b8;
+}
+
+.form-textarea:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.error-text {
+  @apply text-red-500 text-xs mt-1 block;
+}
+
+/* Auto-generated badge */
+.auto-generated-badge {
+  @apply ml-2 px-2 py-0.5 text-xs rounded-full;
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+}
+
+.code-input {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.code-hint {
+  @apply text-xs mt-1 block;
+  color: #94a3b8;
+}
+
+/* Custom Select Styling */
+:host ::ng-deep .custom-select {
+  width: 100%;
+}
+
+:host ::ng-deep .custom-select .p-select,
+:host ::ng-deep .custom-select.p-select {
+  @apply w-full rounded-xl;
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 2px solid rgba(59, 130, 246, 0.3) !important;
+  min-height: 48px;
+}
+
+:host ::ng-deep .custom-select .p-select:hover,
+:host ::ng-deep .custom-select.p-select:hover {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+:host ::ng-deep .custom-select .p-select-label,
+:host ::ng-deep .custom-select .p-placeholder {
+  color: white !important;
+  padding: 0.75rem 1rem;
+}
+
+:host ::ng-deep .custom-select .p-select-dropdown,
+:host ::ng-deep .custom-select .p-select-trigger {
+  color: #94a3b8 !important;
+}
+
+:host ::ng-deep .p-select-overlay {
+  background: #1e293b !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+}
+
+:host ::ng-deep .p-select-option {
+  color: white !important;
+}
+
+:host ::ng-deep .p-select-option:hover,
+:host ::ng-deep .p-select-option.p-highlight {
+  background: rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Image Upload */
+.image-upload-container {
+  @apply flex items-center gap-6 p-6 rounded-xl border-2 border-dashed;
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.image-preview {
+  @apply relative w-24 h-24 rounded-xl overflow-hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.image-preview img {
+  @apply w-full h-full object-cover;
+}
+
+.remove-image-btn {
+  @apply absolute top-1 right-1 w-6 h-6 rounded-full;
+  @apply bg-red-500 text-white flex items-center justify-center;
+  @apply hover:bg-red-600 transition-colors duration-200;
+  @apply text-xs;
+}
+
+.image-placeholder {
+  @apply w-24 h-24 rounded-xl flex items-center justify-center;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  @apply text-white;
+}
+
+.image-upload-info {
+  @apply flex-1;
+}
+
+.image-upload-text {
+  @apply text-sm font-semibold mb-1;
+  color: white;
+}
+
+.image-upload-size {
+  @apply text-xs mb-3;
+  color: #cbd5e1;
+}
+
+.btn-upload {
+  @apply px-4 py-2 rounded-lg font-semibold text-sm;
+  @apply flex items-center gap-2;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  @apply text-white;
+  @apply hover:shadow-lg transform hover:-translate-y-0.5;
+  @apply transition-all duration-200;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none;
+}
+
+/* Action Buttons */
+.form-actions {
+  @apply flex justify-end gap-4 mt-8 pt-6 border-t;
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.btn-cancel {
+  @apply px-6 py-3 rounded-xl font-semibold text-sm;
+  @apply transition-all duration-200;
+  @apply flex items-center gap-2;
+  background: rgba(15, 23, 42, 0.5);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-cancel:hover {
+  background: rgba(15, 23, 42, 0.8);
+  color: white;
+}
+
+.btn-submit {
+  @apply px-6 py-3 rounded-xl font-semibold text-sm;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  @apply text-white shadow-lg;
+  @apply hover:shadow-xl transform hover:-translate-y-0.5;
+  @apply transition-all duration-200;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none;
+  @apply flex items-center gap-2;
+}
+
+input[type="file"] {
+  @apply hidden;
+}

@@ -24,6 +24,7 @@ export class ProjectListComponent implements OnInit, OnChanges, OnDestroy {
   loading: boolean = true
   error: string | null = null
   private projectsSubscription: Subscription = new Subscription()
+  private projectsChangedSubscription: Subscription | null = null
 
   constructor() {
 
@@ -33,6 +34,17 @@ export class ProjectListComponent implements OnInit, OnChanges, OnDestroy {
     if (this.workspace) {
       this.getProjectByWorkspaceId(this.workspace);
     }
+
+    // Suscribirse a cambios en los proyectos
+    this.projectsChangedSubscription = this.projectService.projects$.subscribe(projects => {
+      if (projects && projects.length > 0) {
+        // Solo actualizar si los proyectos son del workspace actual
+        const belongsToCurrentWorkspace = projects.some(p => p.workspaceId === this.workspace)
+        if (belongsToCurrentWorkspace) {
+          this.projects = projects
+        }
+      }
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -76,6 +88,9 @@ export class ProjectListComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     if (this.projectsSubscription) {
       this.projectsSubscription.unsubscribe();
+    }
+    if (this.projectsChangedSubscription) {
+      this.projectsChangedSubscription.unsubscribe();
     }
   }
 }

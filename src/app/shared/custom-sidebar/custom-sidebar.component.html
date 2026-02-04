@@ -54,7 +54,8 @@
       </span>
       <button
         class="add-button"
-        (click)="openModal()"
+        [routerLink]="['/pages/shared/project-form']"
+        [queryParams]="{ workspaceId: selectedWorkspaceId }"
         title="Create new project">
         <i class="pi pi-plus"></i>
       </button>
