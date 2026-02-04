@@ -28,12 +28,20 @@ export class ProjectsComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
   searchTerm: string = '';
+  currentWorkspaceId: string | null = null;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.getCurrentWorkspace();
     this.getProjects();
     this.getUsers();
+  }
+
+  private getCurrentWorkspace(): void {
+    const userId = sessionStorage.getItem('userId');
+    const storageKey = userId ? `workspace_${userId}` : 'selectedWorkspaceId';
+    this.currentWorkspaceId = sessionStorage.getItem(storageKey);
   }
 
   navigateToProjectForm() {
@@ -61,9 +69,14 @@ export class ProjectsComponent implements OnInit {
       tap({
         next: (projects: Project[] | null) => {
           if (projects) {
-            this.projects = projects;
-            this.filteredProjects = projects;
-            console.log('Projects loaded:', projects);
+            // Filtrar solo proyectos del workspace actual
+            const workspaceProjects = this.currentWorkspaceId
+              ? projects.filter(p => p.workspaceId === this.currentWorkspaceId)
+              : projects;
+
+            this.projects = workspaceProjects;
+            this.filteredProjects = workspaceProjects;
+            console.log('Projects loaded for workspace:', this.currentWorkspaceId, workspaceProjects);
           }
         },
         error: (err) => {
