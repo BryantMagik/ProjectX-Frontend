@@ -74,4 +74,22 @@ export class TaskService {
     }
     return of([]);
   }
+
+    getTaskTotalCount(): Observable<{ count: number }> {
+      return this.apiService.get<{ count: number }>(apiRoutes.task.metrics.total);
+    }
+
+    getTaskAssignedCount(): Observable<{ count: number }> {
+      return this.apiService.get<{ count: number }>(apiRoutes.task.metrics.assigned);
+    }
+
+    getTaskCompletedCount(): Observable<{ count: number }> {
+      return this.apiService.get<{ count: number }>(apiRoutes.task.metrics.completed);
+    }
+
+    getTaskOverdueCount(): Observable<{ count: number }> {
+      return this.apiService.get<{ count: number }>(apiRoutes.task.metrics.overdue);
+    }
 }
+
+

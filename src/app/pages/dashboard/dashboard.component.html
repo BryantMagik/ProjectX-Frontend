@@ -1,31 +1,71 @@
-<div class="bg-white shadow sm:rounded-lg select-none">
-  <div class="px-6 py-8 sm:p-12">
-    <p class="text-2xl font-bold text-gray-900">Dashboard</p>
-    <p class="">Monitor all of your projects and tasks here.</p>
-    <hr class="mt-6 p-2 border-dashed">
-    <div class="mt-8 border rounded-md flex flex-row overflow-auto max-w-full scrollbar-hide">
-      <app-project-card [title]="'Total Projects'" [count]="projects.length"></app-project-card>
-      <app-project-card [title]="'Total Tasks'" [count]="2"></app-project-card>
-      <app-project-card [title]="'Assigned Tasks'" [count]="3"></app-project-card>
-      <app-project-card [title]="'Completed Tasks'" [count]="4"></app-project-card>
-      <app-project-card [title]="'Overdue Tasks'" [count]="2"></app-project-card>
+<div class="dashboard-page">
+  <div class="dashboard-header">
+    <div class="header-info">
+      <h1 class="title">Panel de Control</h1>
+      <p class="subtitle">Estadísticas globales</p>
     </div>
-    <div class="flex flex-row">
-      <div class="mt-8 border">
-        Assigned Tasks
-      </div>
-      <div class="mt-8 border bg-gray-100">
-        <div>
-          Projects ({{projects.length}})
+    <button class="btn-primary" (click)="openModal()">
+      <i class="pi pi-plus"></i>
+      <span>Nuevo Proyecto</span>
+    </button>
+  </div>
 
-        </div>
-        <div class="">
-          <hr class="mt-6 p-2 border-dashed border-black">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3 class="card-label">Tareas Totales</h3>
+      <div class="chart-wrapper">
+        <div class="progress-ring total" style="--percent: 100; --accent-color: #3b82f6;">
+          <div class="ring-inner">
+            <span class="ring-data">{{ taskStats.total }}</span>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="stat-card">
+      <h3 class="card-label">Mis Asignaciones</h3>
+      <div class="chart-wrapper">
+        <div class="progress-ring" 
+             [style.--percent]="getPercentageValue(taskStats.assigned, taskStats.total)"
+             style="--accent-color: #60a5fa;">
+          <div class="ring-inner">
+            <span class="ring-data">{{ taskStats.assigned }}</span>
+            <span class="ring-percent">{{ getPercentage(taskStats.assigned, taskStats.total) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <h3 class="card-label">Completadas</h3>
+      <div class="chart-wrapper">
+        <div class="progress-ring" 
+             [style.--percent]="getPercentageValue(taskStats.completed, taskStats.total)"
+             style="--accent-color: #10b981;">
+          <div class="ring-inner">
+            <span class="ring-data">{{ taskStats.completed }}</span>
+            <span class="ring-percent">{{ getPercentage(taskStats.completed, taskStats.total) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card" [ngClass]="{'danger-active': taskStats.overdue > 0}">
+     <h3 class="card-label">Vencidas</h3>
+      <div class="chart-wrapper">
+        <div class="progress-ring" 
+            [style.--percent]="getPercentageValue(taskStats.overdue, taskStats.total)"
+            [style.--accent-color]="taskStats.overdue > 0 ? '#ef4444' : '#64748b'">
+          <div class="ring-inner">
+            <span class="ring-data" [style.color]="taskStats.overdue > 0 ? '#f87171' : 'white'">
+              {{ taskStats.overdue }}
+            </span>
+            <span class="ring-percent">{{ getPercentage(taskStats.overdue, taskStats.total) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </div>
-@if (showModal) {
-  <app-modal-create-project (close)="closeModal()"></app-modal-create-project>
-}

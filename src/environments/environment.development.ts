@@ -26,6 +26,12 @@ export const apiRoutes = {
     getById: `${environment.apiUrl}user/tasks/`,
     getTaskByProjectId: `${environment.apiUrl}tasks/project`,
     update: `${environment.apiUrl}tasks`,
+    metrics: {
+      total: `${environment.apiUrl}tasks/count/total`,
+      assigned: `${environment.apiUrl}tasks/count/assigned`,
+      completed: `${environment.apiUrl}tasks/count/completed`,
+      overdue: `${environment.apiUrl}tasks/count/overdue`,
+    }
   },
   subtask: {
     apiUrl: `${environment.apiUrl}subtasks`,
