@@ -60,4 +60,16 @@ export class TaskService {
     }
     return of([]);
   }
+
+  getTasks(): Observable<Task[]> {
+    return this.getTasksByIdWhereId();
+  }
+
+  updateTask(taskData: Partial<Task>, taskId: string): Observable<Task> {
+    const headers = this.getAuthHeaders()
+    if (headers) {
+      return this.apiService.patch<Task>(`${apiRoutes.task.update}/${taskId}`, taskData, { headers })
+    }
+    return of(taskData as Task);
+  }
 }

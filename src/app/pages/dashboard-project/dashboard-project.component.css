@@ -412,6 +412,12 @@
   font-size: 1.125rem;
 }
 
+/* Kanban View */
+.kanban-view {
+  padding: 0;
+  margin: 0;
+}
+
 /* Coming Soon */
 .coming-soon {
   display: flex;

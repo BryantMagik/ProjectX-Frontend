@@ -84,10 +84,11 @@
           <label for="task_type" class="form-label">Type</label>
           <select id="task_type" formControlName="task_type" class="form-select">
             <option value="">Select Type</option>
-            <option value="BUG">Bug</option>
             <option value="FEATURE">Feature</option>
-            <option value="TASK">Task</option>
+            <option value="BUG">Bug</option>
+            <option value="CHORE">Chore</option>
             <option value="IMPROVEMENT">Improvement</option>
+            <option value="HOTFIX">Hotfix</option>
           </select>
           @if (taskForm.get('task_type')?.invalid && taskForm.get('task_type')?.touched) {
             <span class="error-message">Type is required</span>
@@ -95,14 +96,16 @@
         </div>
 
         <div class="form-section">
-          <label for="task_status" class="form-label">Status <span class="required">*</span></label>
-          <select id="task_status" formControlName="task_status" class="form-select">
+          <label for="status" class="form-label">Status <span class="required">*</span></label>
+          <select id="status" formControlName="status" class="form-select">
             <option value="">Select Status</option>
-            <option value="PENDING">Pending</option>
-            <option value="ONGOING">Ongoing</option>
-            <option value="COMPLETED">Completed</option>
+            <option value="BACKLOG">Backlog</option>
+            <option value="TODO">To Do</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="REVIEW">Review</option>
+            <option value="DONE">Done</option>
           </select>
-          @if (taskForm.get('task_status')?.invalid && taskForm.get('task_status')?.touched) {
+          @if (taskForm.get('status')?.invalid && taskForm.get('status')?.touched) {
             <span class="error-message">Status is required</span>
           }
         </div>

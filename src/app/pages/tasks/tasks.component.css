@@ -4,6 +4,10 @@
   padding: 1.5rem;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* Header */
 .tasks-header {
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
@@ -225,6 +229,124 @@
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.8);
   margin: 0.25rem 0 0 0;
+}
+
+/* View Switcher Section */
+.view-switcher-section {
+  margin: 1.5rem 0;
+}
+
+.view-switcher-card {
+  background: rgba(30, 41, 59, 0.5);
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.view-switcher-card:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  background: rgba(30, 41, 59, 0.7);
+}
+
+.view-switcher-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.view-switcher-icon i {
+  font-size: 2rem;
+  color: #60a5fa;
+}
+
+.view-switcher-content {
+  flex: 1;
+}
+
+.view-switcher-content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 0.5rem 0;
+}
+
+.view-switcher-content p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.btn-kanban {
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-kanban:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+}
+
+.btn-kanban:active {
+  transform: translateY(0);
+}
+
+.btn-kanban i {
+  font-size: 1.1rem;
+}
+
+.kanban-back-section {
+  margin-bottom: 1.5rem;
+}
+
+.btn-back-list {
+  padding: 0.875rem 1.5rem;
+  background: rgba(30, 41, 59, 0.8);
+  color: white;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-back-list:hover {
+  background: rgba(30, 41, 59, 1);
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-back-list:active {
+  transform: translateY(0);
+}
+
+.btn-back-list i {
+  font-size: 1.1rem;
 }
 
 /* Tasks Grid */

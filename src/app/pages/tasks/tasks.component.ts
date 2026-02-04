@@ -7,12 +7,14 @@ import { tap } from 'rxjs';
 import { User } from '../../model/user.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TasksBoardComponent } from '../../shared/tasks-board/tasks-board.component';
 
 @Component({
     selector: 'app-tasks',
     imports: [
         CommonModule,
-        FormsModule
+        FormsModule,
+        TasksBoardComponent
     ],
     templateUrl: './tasks.component.html',
     styleUrl: './tasks.component.css',
@@ -28,6 +30,7 @@ export class TasksComponent implements OnInit {
   authors: User[] = [];
   error: string | null = null;
   loading: boolean = true;
+  showKanban: boolean = false;
   searchTerm: string = '';
   selectedStatus: string = 'all';
   selectedPriority: string = 'all';
@@ -132,5 +135,9 @@ export class TasksComponent implements OnInit {
 
   getHighPriorityTasksCount(): number {
     return this.tasks.filter(t => t.priority?.toLowerCase() === 'high').length;
+  }
+
+  toggleKanban(): void {
+    this.showKanban = !this.showKanban;
   }
 }

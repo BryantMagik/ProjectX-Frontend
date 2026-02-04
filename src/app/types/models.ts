@@ -22,17 +22,17 @@ export const PROYECTOVISIBILITY = [
 ]
 
 export const TASKSTYPE = [
+    { name: 'FEATURE', value: 'FEATURE' },
     { name: 'BUG', value: 'BUG' },
-    { name: 'FEATURE_REQUEST', value: 'FEATURE_REQUEST' },
-    { name: 'BACKLOG', value: 'BACKLOG' },
-    { name: 'TODO', value: 'TODO' },
-    { name: 'IN_PROGRESS', value: 'IN_PROGRESS' },
-    { name: 'IN_REVIEW', value: 'IN_REVIEW' },
-    { name: 'DONE', value: 'DONE' },
+    { name: 'CHORE', value: 'CHORE' },
+    { name: 'IMPROVEMENT', value: 'IMPROVEMENT' },
+    { name: 'HOTFIX', value: 'HOTFIX' },
 ]
 
 export const TASKSSTATUS = [
-    { name: 'PENDING', value: 'PENDING' },
-    { name: 'ONGOING', value: 'ONGOING' },
-    { name: 'COMPLETED', value: 'COMPLETED' },
+    { name: 'BACKLOG', value: 'BACKLOG' },
+    { name: 'TODO', value: 'TODO' },
+    { name: 'IN_PROGRESS', value: 'IN_PROGRESS' },
+    { name: 'REVIEW', value: 'REVIEW' },
+    { name: 'DONE', value: 'DONE' },
 ]

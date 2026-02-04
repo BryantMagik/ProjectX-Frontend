@@ -8,10 +8,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Task } from '../../model/task.interface';
 import { TaskService } from '../../service/task/task.service';
 import { SeverityTagComponent } from '../../service/severity/severity-tag.component';
+import { TasksBoardComponent } from '../../shared/tasks-board/tasks-board.component';
 
 @Component({
   selector: 'app-dashboard-project',
-  imports: [CommonModule, FormsModule, SeverityTagComponent],
+  imports: [CommonModule, FormsModule, SeverityTagComponent, TasksBoardComponent],
   templateUrl: './dashboard-project.component.html',
   styleUrl: './dashboard-project.component.css',
   standalone: true

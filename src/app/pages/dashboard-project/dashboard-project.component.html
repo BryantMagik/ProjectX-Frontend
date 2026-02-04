@@ -144,10 +144,8 @@
     }
 
     @if (currentView === 'kanban') {
-      <div class="coming-soon">
-        <i class="pi pi-th-large"></i>
-        <h3>Kanban Board</h3>
-        <p>Coming soon! Organize your tasks visually with drag-and-drop columns.</p>
+      <div class="kanban-view">
+        <app-tasks-board [projectId]="projectId"></app-tasks-board>
       </div>
     }
 

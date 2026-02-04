@@ -31,7 +31,7 @@ export class TasksFormComponent implements OnInit {
       description: ['', Validators.required],
       priority: ['', Validators.required],
       task_type: ['', Validators.required],
-      task_status: ['', Validators.required],
+      status: ['', Validators.required],
       projectId: ['', Validators.required],
       dueTime: ['']
     });
@@ -82,7 +82,7 @@ export class TasksFormComponent implements OnInit {
             description: task.description,
             priority: task.priority,
             task_type: task.task_type,
-            task_status: task.status,
+            status: task.status,
             projectId: task.projectId,
             dueTime: task.dueTime
           });
@@ -113,7 +113,7 @@ export class TasksFormComponent implements OnInit {
         description: formValue.description,
         priority: formValue.priority,
         task_type: formValue.task_type,
-        task_status: formValue.task_status,
+        status: formValue.status,
         dueTime: formValue.dueTime ? parseInt(formValue.dueTime) : undefined,
         projectId: formValue.projectId // Include projectId for service
       };
