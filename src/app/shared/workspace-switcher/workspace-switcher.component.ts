@@ -1,7 +1,7 @@
-import { Component, EventEmitter, HostListener, OnInit, Output, inject } from '@angular/core'
+import { Component, EventEmitter, HostListener, OnInit, OnDestroy, Output, inject } from '@angular/core'
 import { Workspace } from '../../model/workspace.interface'
 import { WorkspaceService } from '../../service/workspace/workspace.service'
-import { tap } from 'rxjs'
+import { tap, Subscription } from 'rxjs'
 import { FormsModule } from '@angular/forms'
 
 import { ActivatedRoute, Router } from '@angular/router'
@@ -13,10 +13,11 @@ import { ActivatedRoute, Router } from '@angular/router'
     templateUrl: './workspace-switcher.component.html',
     styleUrl: './workspace-switcher.component.css'
 })
-export class WorkspaceSwitcherComponent implements OnInit {
+export class WorkspaceSwitcherComponent implements OnInit, OnDestroy {
   private workspaceService = inject(WorkspaceService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private workspacesChangedSub: Subscription | null = null;
 
   @Output() workspaceSelected = new EventEmitter<string>()
 
@@ -51,6 +52,14 @@ export class WorkspaceSwitcherComponent implements OnInit {
   ngOnInit(): void {
     this.getWorkspaces()
     this.loadSelectedWorkspace()
+
+    this.workspacesChangedSub = this.workspaceService.workspacesChanged$.subscribe(() => {
+      this.getWorkspaces()
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.workspacesChangedSub?.unsubscribe()
   }
 
   private loadSelectedWorkspace(): void {

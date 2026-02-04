@@ -101,7 +101,8 @@ export class WorkspaceFormComponent implements OnInit {
         .subscribe({
           next: (response) => {
             console.log('Workspace creado con éxito', response);
-
+            this.workspaceService.notifyWorkspacesChanged();
+            this.workspaceForm.reset();
           },
           error: (err) => {
             console.log('Error al crear el workspace', err)
