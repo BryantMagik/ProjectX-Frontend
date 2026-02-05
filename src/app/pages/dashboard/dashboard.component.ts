@@ -1,17 +1,14 @@
 
-import { Component, Input, OnInit, inject } from '@angular/core';
-import { ProjectCardComponent } from "../../components/project-card/project-card.component";
+import { Component, OnInit, inject} from '@angular/core';
 import { Project } from '../../model/project.interface';
 import { ProjectService } from '../../features/projects/services/project.service';
 import { Subscription, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { ModalCreateProjectComponent } from "../../shared/modal-create-project/modal-create-project.component";
 import { TaskService } from '../../service/task/task.service';
-import { NgStyle,UpperCasePipe,NgClass } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { NgClass } from '@angular/common';
 @Component({
     selector: 'app-dashboard',
-    imports: [ProjectCardComponent, ModalCreateProjectComponent,NgStyle,UpperCasePipe,NgClass,RouterLink],
+    imports: [NgClass],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
     standalone: true

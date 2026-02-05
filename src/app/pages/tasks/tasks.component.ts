@@ -82,10 +82,12 @@ export class TasksComponent implements OnInit {
   }
 
   filterTasks(): void {
+    const search = this.searchTerm.toLowerCase();
+
     this.filteredTasks = this.tasks.filter(task => {
       const matchesSearch = !this.searchTerm ||
-        task.code?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        task.summary?.toLowerCase().includes(this.searchTerm.toLowerCase());
+        task.code?.toLowerCase().includes(search) ||
+        task.summary?.toLowerCase().includes(search);
 
       const matchesStatus = this.selectedStatus === 'all' || task.status === this.selectedStatus;
       const matchesPriority = this.selectedPriority === 'all' || task.priority === this.selectedPriority;
@@ -139,5 +141,10 @@ export class TasksComponent implements OnInit {
 
   toggleKanban(): void {
     this.showKanban = !this.showKanban;
+  }
+
+  
+  navigateToCreateTask() {
+    this.router.navigate(['/pages/tasks/shared/tasks-form']);
   }
 }

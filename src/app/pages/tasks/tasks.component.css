@@ -26,6 +26,18 @@
   gap: 1rem;
 }
 
+.btn-submit {
+  @apply px-6 py-3 rounded-xl font-semibold text-sm;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  @apply text-white shadow-lg flex items-center gap-2;
+  @apply hover:shadow-xl transform hover:-translate-y-0.5;
+  @apply transition-all duration-200;
+}
+
+.btn-submit i {
+  @apply text-white;
+}
+
 .header-title {
   display: flex;
   align-items: center;
