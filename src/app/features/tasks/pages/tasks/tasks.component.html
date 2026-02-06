@@ -1,39 +1,66 @@
-<div class="tasks-container">
-  <div class="tasks-header">
-    <div class="header-content">
-      <div class="header-title">
-        <i class="pi pi-check-square text-3xl"></i>
-        <div>
-          <h1 class="title">My Tasks</h1>
-          <p class="subtitle">Manage and track your assigned tasks</p>
+<section class="mytasks">
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">My Tasks</p>
+      <h1>Mis tareas</h1>
+      <p class="subtext">Prioriza, filtra y ejecuta. Todo en un solo lugar.</p>
+      <div class="hero-actions">
+        <button class="btn primary" (click)="navigateToCreateTask()">
+          <i class="pi pi-plus"></i>
+          Nueva tarea
+        </button>
+        <button class="btn ghost" (click)="toggleKanban()">
+          <i class="pi pi-th-large"></i>
+          {{ showKanban ? 'Ver lista' : 'Ver tablero' }}
+        </button>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="panel-row">
+        <div class="kpi">
+          <span class="kpi-label">Total</span>
+          <span class="kpi-value">{{ filteredTasks.length }}</span>
+          <span class="kpi-meta">Tareas visibles</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Activas</span>
+          <span class="kpi-value">{{ getActiveTasksCount() }}</span>
+          <span class="kpi-meta">En progreso</span>
         </div>
       </div>
-      <button class="btn-submit" (click)="navigateToCreateTask()">
-        <i class="pi pi-plus"></i>
-        New Task
-      </button>
+      <div class="panel-row">
+        <div class="kpi success">
+          <span class="kpi-label">Completadas</span>
+          <span class="kpi-value">{{ getCompletedTasksCount() }}</span>
+          <span class="kpi-meta">Finalizadas</span>
+        </div>
+        <div class="kpi danger">
+          <span class="kpi-label">Alta prioridad</span>
+          <span class="kpi-value">{{ getHighPriorityTasksCount() }}</span>
+          <span class="kpi-meta">Revisar hoy</span>
+        </div>
+      </div>
     </div>
-  </div>
+  </header>
 
-  <div class="filters-section">
+  <section class="filters panel">
     <div class="search-box">
       <i class="pi pi-search search-icon"></i>
       <input
         type="text"
         [(ngModel)]="searchTerm"
         (ngModelChange)="onSearchChange()"
-        placeholder="Search tasks by code or summary..."
+        placeholder="Buscar por código o resumen..."
         class="search-input"
       />
     </div>
-
     <div class="filter-group">
       <select
         [(ngModel)]="selectedStatus"
         (ngModelChange)="onStatusChange()"
         class="filter-select"
-        title="Filter by status">
-        <option value="all">All Status</option>
+        title="Filtrar por estado">
+        <option value="all">Todos los estados</option>
         <option value="Active">Active</option>
         <option value="Ongoing">Ongoing</option>
         <option value="Completed">Completed</option>
@@ -44,93 +71,83 @@
         [(ngModel)]="selectedPriority"
         (ngModelChange)="onPriorityChange()"
         class="filter-select"
-        title="Filter by priority">
-        <option value="all">All Priorities</option>
+        title="Filtrar por prioridad">
+        <option value="all">Todas las prioridades</option>
         <option value="high">High</option>
         <option value="medium">Medium</option>
         <option value="low">Low</option>
       </select>
     </div>
-  </div>
+  </section>
 
-  <div class="stats-cards">
-    <div class="stat-card">
-      <div class="stat-icon stat-total">
-        <i class="pi pi-list"></i>
+  <section class="stats-grid">
+    <article class="stat-card">
+      <div class="stat-header">
+        <h3>Total tareas</h3>
+        <span class="chip">Global</span>
       </div>
-      <div class="stat-info">
-        <p class="stat-value">{{ filteredTasks.length }}</p>
-        <p class="stat-label">Total Tasks</p>
+      <div class="ring" style="--accent: #3b82f6;" [style.--percent]="100">
+        <div class="ring-inner">
+          <span class="ring-data">{{ filteredTasks.length }}</span>
+          <span class="ring-percent">100%</span>
+        </div>
       </div>
-    </div>
+      <p class="stat-note">Visión del universo actual.</p>
+    </article>
 
-    <div class="stat-card">
-      <div class="stat-icon stat-active">
-        <i class="pi pi-clock"></i>
+    <article class="stat-card">
+      <div class="stat-header">
+        <h3>Activas</h3>
+        <span class="chip accent">En foco</span>
       </div>
-      <div class="stat-info">
-        <p class="stat-value">{{ getActiveTasksCount() }}</p>
-        <p class="stat-label">Active</p>
+      <div class="ring" style="--accent: #f59e0b;" [style.--percent]="getActiveTasksCount()">
+        <div class="ring-inner">
+          <span class="ring-data">{{ getActiveTasksCount() }}</span>
+          <span class="ring-percent">Ahora</span>
+        </div>
       </div>
-    </div>
+      <p class="stat-note">Tareas que requieren avance.</p>
+    </article>
 
-    <div class="stat-card">
-      <div class="stat-icon stat-completed">
-        <i class="pi pi-check-circle"></i>
+    <article class="stat-card">
+      <div class="stat-header">
+        <h3>Completadas</h3>
+        <span class="chip success">Salud</span>
       </div>
-      <div class="stat-info">
-        <p class="stat-value">{{ getCompletedTasksCount() }}</p>
-        <p class="stat-label">Completed</p>
+      <div class="ring" style="--accent: #10b981;" [style.--percent]="getCompletedTasksCount()">
+        <div class="ring-inner">
+          <span class="ring-data">{{ getCompletedTasksCount() }}</span>
+          <span class="ring-percent">Done</span>
+        </div>
       </div>
-    </div>
+      <p class="stat-note">Cierre de trabajo.</p>
+    </article>
 
-    <div class="stat-card">
-      <div class="stat-icon stat-high">
-        <i class="pi pi-exclamation-triangle"></i>
+    <article class="stat-card danger">
+      <div class="stat-header">
+        <h3>Alta prioridad</h3>
+        <span class="chip danger">Riesgo</span>
       </div>
-      <div class="stat-info">
-        <p class="stat-value">{{ getHighPriorityTasksCount() }}</p>
-        <p class="stat-label">High Priority</p>
+      <div class="ring" style="--accent: #ef4444;" [style.--percent]="getHighPriorityTasksCount()">
+        <div class="ring-inner">
+          <span class="ring-data">{{ getHighPriorityTasksCount() }}</span>
+          <span class="ring-percent">High</span>
+        </div>
       </div>
-    </div>
-  </div>
+      <p class="stat-note">Revisar bloqueos.</p>
+    </article>
+  </section>
 
-  <div class="view-switcher-section" [class.hidden]="showKanban">
-    <div class="view-switcher-card">
-      <div class="view-switcher-icon">
-        <i class="pi pi-th-large"></i>
-      </div>
-      <div class="view-switcher-content">
-        <h3>Kanban Board</h3>
-        <p>Organize your tasks visually with drag-and-drop columns.</p>
-      </div>
-      <button class="btn-kanban" (click)="toggleKanban()">
-        <i class="pi pi-th-large"></i>
-        Show Board
-      </button>
-    </div>
-  </div>
-
-  <div [class.hidden]="!showKanban">
-    <div class="kanban-back-section">
-      <button class="btn-back-list" (click)="toggleKanban()">
-        <i class="pi pi-arrow-left"></i>
-        Back to List
-      </button>
-    </div>
-    <app-tasks-board></app-tasks-board>
-  </div>
-
-  <div [class.hidden]="showKanban">
+  <section class="list-section" [class.hidden]="showKanban">
     @if (loading) {
-      <div class="loading-state">
+      <div class="state-card">
         <div class="spinner"></div>
-        <p>Loading your tasks...</p>
+        <p>Cargando tareas...</p>
       </div>
     }
 
     @if (error && !loading) {
-      <div class="error-state">
+      <div class="state-card error">
         <i class="pi pi-exclamation-circle"></i>
         <p>{{ error }}</p>
       </div>
@@ -138,28 +155,25 @@
 
     @if (!loading && !error) {
       @if (filteredTasks.length === 0) {
-        <div class="empty-state">
+        <div class="state-card">
           <i class="pi pi-inbox"></i>
-          <h3>No tasks found</h3>
-          <p>{{ searchTerm || selectedStatus !== 'all' || selectedPriority !== 'all' ? 'Try adjusting your filters' : 'Create your first task to get started' }}</p>
+          <h3>No hay tareas</h3>
+          <p>{{ searchTerm || selectedStatus !== 'all' || selectedPriority !== 'all' ? 'Ajusta tus filtros para ver resultados.' : 'Crea tu primera tarea para empezar.' }}</p>
         </div>
       } @else {
         <div class="tasks-grid">
           @for (task of filteredTasks; track task.id) {
-            <div class="task-card" (click)="navigateToTaskDetails(task.id)" title="View Task Details">
+            <div class="task-card" (click)="navigateToTaskDetails(task.id)" title="Ver detalles">
               <div class="task-header">
                 <span class="task-code">{{ task.code }}</span>
                 <span class="task-priority" [ngClass]="getPriorityClass(task.priority)">
                   {{ task.priority }}
                 </span>
               </div>
-
               <h3 class="task-title">{{ task.summary }}</h3>
-
               @if (task.description) {
                 <p class="task-description">{{ task.description }}</p>
               }
-
               <div class="task-footer">
                 <div class="task-meta">
                   <div class="meta-item">
@@ -176,5 +190,15 @@
         </div>
       }
     }
-  </div>
-</div>
+  </section>
+
+  <section class="board-section" [class.hidden]="!showKanban">
+    <div class="board-header">
+      <button class="btn ghost" (click)="toggleKanban()">
+        <i class="pi pi-arrow-left"></i>
+        Volver a lista
+      </button>
+    </div>
+    <app-tasks-board></app-tasks-board>
+  </section>
+</section>

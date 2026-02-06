@@ -1,77 +1,76 @@
-<div class="members-container">
-  <div class="members-header">
-    <div class="header-content">
-      <div class="header-title">
-        <i class="pi pi-users text-3xl"></i>
-        <div>
-          <h1 class="title">Workspace Members</h1>
-          <p class="subtitle">Manage your team and invitations</p>
+<section class="members">
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Workspace</p>
+      <h1>Members</h1>
+      <p class="subtext">Gestiona miembros, roles e invitaciones en un solo lugar.</p>
+      <div class="hero-actions">
+        <button (click)="openInviteModal()" class="btn primary">
+          <i class="pi pi-user-plus"></i>
+          Invitar miembros
+        </button>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="panel-row">
+        <div class="kpi">
+          <span class="kpi-label">Total</span>
+          <span class="kpi-value">{{ getMemberCount() }}</span>
+          <span class="kpi-meta">Miembros</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Owners</span>
+          <span class="kpi-value">{{ owners.length }}</span>
+          <span class="kpi-meta">Responsables</span>
         </div>
       </div>
-      <button (click)="openInviteModal()" class="btn-invite">
-        <i class="pi pi-user-plus mr-2"></i>
-        Invite Members
-      </button>
+      <div class="panel-row">
+        <div class="kpi success">
+          <span class="kpi-label">Invitaciones</span>
+          <span class="kpi-value">{{ getActiveInvitationsCount() }}</span>
+          <span class="kpi-meta">Activas</span>
+        </div>
+        <div class="kpi danger" *ngIf="invitations.length > 0; else noInvites">
+          <span class="kpi-label">Pendientes</span>
+          <span class="kpi-value">{{ invitations.length }}</span>
+          <span class="kpi-meta">En espera</span>
+        </div>
+        <ng-template #noInvites>
+          <div class="kpi">
+            <span class="kpi-label">Pendientes</span>
+            <span class="kpi-value">0</span>
+            <span class="kpi-meta">Sin pendientes</span>
+          </div>
+        </ng-template>
+      </div>
     </div>
-  </div>
+  </header>
 
   @if (loading) {
-    <div class="loading-container">
-      <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
-      <p class="text-slate-600 mt-4">Loading members...</p>
+    <div class="state-card">
+      <i class="pi pi-spin pi-spinner"></i>
+      <p>Cargando miembros...</p>
     </div>
   }
 
   @if (error) {
-    <div class="error-banner">
-      <i class="pi pi-exclamation-triangle mr-2"></i>
-      {{ error }}
+    <div class="state-card error">
+      <i class="pi pi-exclamation-triangle"></i>
+      <p>{{ error }}</p>
     </div>
   }
 
   @if (!loading && !error) {
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon">
-          <i class="pi pi-users"></i>
-        </div>
-        <div>
-          <p class="stat-label">Total Members</p>
-          <p class="stat-value">{{ getMemberCount() }}</p>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon">
-          <i class="pi pi-shield"></i>
-        </div>
-        <div>
-          <p class="stat-label">Owners</p>
-          <p class="stat-value">{{ owners.length }}</p>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon">
-          <i class="pi pi-envelope"></i>
-        </div>
-        <div>
-          <p class="stat-label">Active Invitations</p>
-          <p class="stat-value">{{ getActiveInvitationsCount() }}</p>
-        </div>
-      </div>
-    </div>
-
     @if (creator) {
-      <div class="section">
-        <h2 class="section-title">
-          <i class="pi pi-star-fill mr-2 text-yellow-400"></i>
-          Workspace Creator
-        </h2>
+      <section class="panel section">
+        <div class="panel-header">
+          <h2>Workspace Creator</h2>
+          <span class="chip accent">Owner</span>
+        </div>
         <div class="member-card creator-card">
           <div class="member-avatar">
             @if (creator.profile_picture) {
-              <img [src]="creator.profile_picture" alt="{{creator.first_name}} {{creator.last_name}}" title="{{creator.first_name}} {{creator.last_name}}"/>
+              <img [src]="creator.profile_picture" alt="{{creator.first_name}} {{creator.last_name}}" />
             } @else {
               <span>{{ creator.first_name[0] }}{{ creator.last_name[0] }}</span>
             }
@@ -82,21 +81,21 @@
           </div>
           <span class="badge badge-creator">Creator</span>
         </div>
-      </div>
+      </section>
     }
 
     @if (owners.length > 0) {
-      <div class="section">
-        <h2 class="section-title">
-          <i class="pi pi-shield mr-2 text-purple-400"></i>
-          Owners ({{ owners.length }})
-        </h2>
+      <section class="panel section">
+        <div class="panel-header">
+          <h2>Owners</h2>
+          <span class="chip">{{ owners.length }}</span>
+        </div>
         <div class="members-grid">
           @for (owner of owners; track owner.id) {
             <div class="member-card">
               <div class="member-avatar">
                 @if (owner.profile_picture) {
-                  <img [src]="owner.profile_picture" alt="{{owner.first_name}} {{owner.last_name}}" title="{{owner.first_name}} {{owner.last_name}}" />
+                  <img [src]="owner.profile_picture" alt="{{owner.first_name}} {{owner.last_name}}" />
                 } @else {
                   <span>{{ owner.first_name[0] }}{{ owner.last_name[0] }}</span>
                 }
@@ -111,8 +110,7 @@
                   <button
                     (click)="removeMember(owner.id, owner.first_name + ' ' + owner.last_name)"
                     class="btn-remove"
-                    title="Eliminar del workspace"
-                  >
+                    title="Eliminar del workspace">
                     <i class="pi pi-trash"></i>
                   </button>
                 }
@@ -120,21 +118,21 @@
             </div>
           }
         </div>
-      </div>
+      </section>
     }
 
     @if (members.length > 0) {
-      <div class="section">
-        <h2 class="section-title">
-          <i class="pi pi-users mr-2 text-blue-400"></i>
-          Members ({{ members.length }})
-        </h2>
+      <section class="panel section">
+        <div class="panel-header">
+          <h2>Members</h2>
+          <span class="chip">{{ members.length }}</span>
+        </div>
         <div class="members-grid">
           @for (member of members; track member.id) {
             <div class="member-card">
               <div class="member-avatar">
                 @if (member.profile_picture) {
-                  <img [src]="member.profile_picture" alt="{{member.first_name}} {{member.last_name}}" title="{{member.first_name}} {{member.last_name}}" />
+                  <img [src]="member.profile_picture" alt="{{member.first_name}} {{member.last_name}}" />
                 } @else {
                   <span>{{ member.first_name[0] }}{{ member.last_name[0] }}</span>
                 }
@@ -149,8 +147,7 @@
                   <button
                     (click)="removeMember(member.id, member.first_name + ' ' + member.last_name)"
                     class="btn-remove"
-                    title="Eliminar del workspace"
-                  >
+                    title="Eliminar del workspace">
                     <i class="pi pi-trash"></i>
                   </button>
                 }
@@ -158,20 +155,20 @@
             </div>
           }
         </div>
-      </div>
+      </section>
     }
 
     @if (invitations.length > 0) {
-      <div class="section">
-        <h2 class="section-title">
-          <i class="pi pi-link mr-2 text-green-400"></i>
-          Invitations ({{ invitations.length }})
-        </h2>
+      <section class="panel section">
+        <div class="panel-header">
+          <h2>Invitaciones</h2>
+          <span class="chip success">{{ invitations.length }}</span>
+        </div>
         <div class="invitations-list">
           @for (invitation of invitations; track invitation.id) {
             <div class="invitation-card" [class.invitation-inactive]="!isInvitationActive(invitation)">
               <div class="invitation-info">
-                <div class="flex items-center gap-2 mb-2">
+                <div class="invitation-header">
                   <span class="invitation-code">{{ invitation.code }}</span>
                   @if (isInvitationActive(invitation)) {
                     <span class="status-badge status-active">Active</span>
@@ -199,18 +196,17 @@
                 <button
                   (click)="deactivateInvitation(invitation.id)"
                   class="btn-deactivate"
-                  title="Deactivate invitation"
-                >
+                  title="Deactivate invitation">
                   <i class="pi pi-ban"></i>
                 </button>
               }
             </div>
           }
         </div>
-      </div>
+      </section>
     }
   }
-</div>
+</section>
 
 @if (showInviteModal) {
   <div class="modal-overlay" (click)="closeInviteModal()" (keydown.escape)="closeInviteModal()" role="dialog" aria-modal="true" aria-labelledby="modal-title">
