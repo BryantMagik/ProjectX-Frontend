@@ -3,12 +3,12 @@ import { Component, OnInit, inject} from '@angular/core';
 import { Project } from '../../../../core/models/project.interface';
 import { ProjectService } from '../../../projects/data-access/project.service';
 import { Subscription, tap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TaskService } from '../../../../service/task/task.service';
-import { NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 @Component({
     selector: 'app-dashboard',
-    imports: [NgClass],
+    imports: [CommonModule, RouterLink],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
     standalone: true
