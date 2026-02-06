@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommentsListComponentComponent } from '../../../comments/components/comments-list/comments-list-component.component';
-import { TaskService } from '../../data-access/task.service';
+import { TaskService } from '../../../../service/task/task.service';
 import { Task } from '../../../../core/models/task.interface';
 
 const TASK_PRIORITIES = ['high', 'medium', 'low'];
@@ -84,16 +84,19 @@ export class TasksDetailsComponent implements OnInit {
       return;
     }
     if (this.tasksFormular.valid) {
+      const rawValue = this.tasksFormular.getRawValue();
       const payload = {
-        name: this.tasksFormular.get('name')?.value,
-        summary: this.tasksFormular.get('summary')?.value,
-        description: this.tasksFormular.get('description')?.value,
-        priority: this.tasksFormular.get('priority')?.value,
-        task_type: this.tasksFormular.get('task_type')?.value,
-        status: this.tasksFormular.get('status')?.value,
-        dueTime: this.tasksFormular.get('dueTime')?.value
+        code: rawValue.code,
+        name: rawValue.name,
+        summary: rawValue.summary,
+        description: rawValue.description,
+        priority: rawValue.priority,
+        task_type: rawValue.task_type,
+        status: rawValue.status,
+        dueTime: rawValue.dueTime,
+        projectId: rawValue.projectId
       };
-      this.taskService.updateTask(payload, this.taskId).subscribe({
+      this.taskService.updateTask(this.taskId, payload).subscribe({
         next: (updated) => {
           this.task = { ...(this.task as Task), ...updated };
           this.isEditing = false;

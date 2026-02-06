@@ -1,9 +1,7 @@
-<div class="flex justify-center mt-12">
-  <button
-    class="inline-flex items-center px-12 py-2 text-sm font-medium rounded-md shadow-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-    (click)="navigateToAddComment()"
-    >
-    Agregar comentario
+<div class="comments-actions">
+  <button class="primary-button" type="button" (click)="navigateToAddComment()">
+    <i class="pi pi-plus"></i>
+    <span>Agregar comentario</span>
   </button>
 </div>
 @if (isLoading) {
