@@ -1,26 +1,31 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './components/auth/login/login.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { LayoutComponent } from './pages/layout/layout.component';
+import { HomeComponent } from './features/home/pages/home/home.component';
+import { LoginComponent } from './features/auth/pages/login/login.component';
+import { DashboardComponent } from './features/workspaces/pages/dashboard/dashboard.component';
+import { LayoutComponent } from './layouts/app-layout/layout.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ProjectsComponent } from './pages/projects/projects.component';
-import { IssuesComponent } from './pages/issues/issues.component';
-import { ProfilesComponent } from './pages/profiles/profiles.component';
-import { WorkspaceFormComponent } from './shared/workspace-form/workspace-form.component';
-import { ProjectFormComponent } from './shared/project-form/project-form.component';
-import { SettingsComponent } from './pages/settings-workspaces/settings-workspaces.component';
-import { WorkspaceComponent } from './pages/workspace/workspace.component';
-import { DashboardProjectComponent } from './pages/dashboard-project/dashboard-project.component';
-import { EditProjectComponent } from './subpages/edit-project/edit-project.component';
-import { TasksFormComponent } from './shared/tasks-form/tasks-form.component';
-import { TasksDetailsComponent } from './subpages/tasks-details/tasks-details.component';
-import { SubtasksFormComponent } from './shared/subtasks-form/subtasks-form.component';
-import { SubtasksDetailsComponent } from './subpages/subtasks-details/subtasks-details.component';
-import { TasksComponent } from './pages/tasks/tasks.component';
-import { WorkspaceMembersComponent } from './pages/workspace-members/workspace-members.component';
-import { JoinWorkspaceComponent } from './pages/join-workspace/join-workspace.component';
+import { ProjectsComponent } from './features/projects/pages/projects/projects.component';
+import { ProfilesComponent } from './features/profile/pages/profiles/profiles.component';
+import { WorkspaceFormComponent } from './features/workspaces/components/workspace-form/workspace-form.component';
+import { ProjectFormComponent } from './features/projects/components/project-form/project-form.component';
+import { SettingsComponent } from './features/workspaces/pages/settings-workspaces/settings-workspaces.component';
+import { WorkspaceComponent } from './features/workspaces/pages/workspace/workspace.component';
+import { DashboardProjectComponent } from './features/projects/pages/dashboard-project/dashboard-project.component';
+import { EditProjectComponent } from './features/projects/pages/edit-project/edit-project.component';
+import { TasksFormComponent } from './features/tasks/components/tasks-form/tasks-form.component';
+import { TasksComponent } from './features/tasks/pages/tasks/tasks.component';
+import { TasksDetailsComponent } from './features/tasks/pages/tasks-details/tasks-details.component';
+import { WorkspaceMembersComponent } from './features/workspaces/pages/workspace-members/workspace-members.component';
+import { JoinWorkspaceComponent } from './features/workspaces/pages/join-workspace/join-workspace.component';
+import { CommentsComponent } from './features/comments/pages/comments/comments.component';
+import { CommentsDetailsComponent } from './features/comments/pages/comments-details/comments-details.component';
+import { CommentsFormComponent } from './features/comments/components/comments-form/comments-form.component';
+import { IssuesComponent } from './features/issues/pages/issues/issues.component';
+import { IssuesDetailsComponent } from './features/issues/pages/issues-details/issues-details.component';
+import { IssuesFormComponent } from './features/issues/components/issues-form/issues-form.component';
+import { SubtasksComponent } from './features/subtasks/pages/subtasks/subtasks.component';
+import { SubtasksDetailsComponent } from './features/subtasks/pages/subtasks-details/subtasks-details.component';
 
 export const routes: Routes = [
     {
@@ -45,77 +50,112 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             {
-              path: 'pages/tasks',
-              title: 'Tasks',
-              component: TasksComponent,
+                path: 'projects',
+                title: 'Projects',
+                component: ProjectsComponent,
             },
             {
-                path: 'pages/profile',
-                title: 'Profile',
-                component: ProfilesComponent,
-            },
-            {
-                path: 'pages/shared/workspace-form',
-                title: 'Workspace Form',
-                component: WorkspaceFormComponent,
-            },
-            {
-                path: 'pages/shared/project-form',
-                title: 'Project Form',
+                path: 'projects/new',
+                title: 'New Project',
                 component: ProjectFormComponent,
             },
             {
-                path: 'pages/issues',
+                path: 'projects/:projectId/edit',
+                title: 'Edit Project',
+                component: EditProjectComponent,
+            },
+            {
+                path: 'projects/:projectId',
+                title: 'Project',
+                component: DashboardProjectComponent,
+            },
+            {
+                path: 'tasks',
+                title: 'Tasks',
+                component: TasksComponent,
+            },
+            {
+                path: 'tasks/new',
+                title: 'New Task',
+                component: TasksFormComponent,
+            },
+            {
+                path: 'tasks/:taskId/edit',
+                title: 'Edit Task',
+                component: TasksFormComponent,
+            },
+            {
+                path: 'tasks/:taskId',
+                title: 'Task Details',
+                component: TasksDetailsComponent,
+            },
+            {
+                path: 'comments',
+                title: 'Comments',
+                component: CommentsComponent,
+            },
+            {
+                path: 'comments/new',
+                title: 'New Comment',
+                component: CommentsFormComponent,
+            },
+            {
+                path: 'comments/:commentId',
+                title: 'Comment Details',
+                component: CommentsDetailsComponent,
+            },
+            {
+                path: 'issues',
                 title: 'Issues',
                 component: IssuesComponent,
             },
             {
-              path: 'pages/tasks/shared/tasks-form',
-              title: 'New Task',
-              component: TasksFormComponent,
+                path: 'issues/new',
+                title: 'New Issue',
+                component: IssuesFormComponent,
             },
             {
-              path: 'pages/tasks/shared/tasks-form/:id',
-              title: 'Edit Task',
-              component: TasksFormComponent,
+                path: 'issues/:issueId',
+                title: 'Issue Details',
+                component: IssuesDetailsComponent,
             },
             {
-              path: 'pages/tasks/subpages/tasks-details/:id',
-              title: 'Task Details',
-              component: TasksDetailsComponent,
+                path: 'subtasks',
+                title: 'Subtasks',
+                component: SubtasksComponent,
             },
             {
-                path: 'pages/projects',
-                title: 'projects',
-                component: ProjectsComponent
+                path: 'subtasks/:subtaskId',
+                title: 'Subtask Details',
+                component: SubtasksDetailsComponent,
             },
             {
-              path: 'pages/subtasks/shared/subtasks-form',
-              title: 'New Subtask',
-              component: SubtasksFormComponent,
+                path: 'profile',
+                title: 'Profile',
+                component: ProfilesComponent,
             },
             {
-              path: 'pages/subtasks/shared/subtasks-form/:id',
-              title: 'Edit Subtask',
-              component: SubtasksFormComponent,
+                path: 'workspaces/new',
+                title: 'New Workspace',
+                component: WorkspaceFormComponent,
             },
             {
-              path: 'pages/subtasks/subpages/subtasks-details/:id',
-              title: 'Subtask Details',
-              component: SubtasksDetailsComponent,
-            },
-            {
-                path: 'pages/:workspaceId',
+                path: 'workspaces/:workspaceId',
                 title: 'Workspace',
                 component: WorkspaceComponent,
                 children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'dashboard',
+                    },
                     {
                         path: 'dashboard',
                         title: 'Dashboard',
                         component: DashboardComponent,
                     },
                     {
-                        path: 'workspace',
+                        path: 'settings',
                         title: 'Settings',
                         component: SettingsComponent,
                     },
@@ -124,18 +164,7 @@ export const routes: Routes = [
                         title: 'Members',
                         component: WorkspaceMembersComponent,
                     },
-                    {
-                        path: ':projectId',
-                        title: 'Project',
-                        component: DashboardProjectComponent
-                    }
-                ]
-            },
-            {
-                path: 'pages/projects/subpages/edit-project/:projectId',
-                title: 'Edit Project',
-                component: EditProjectComponent,
-
+                ],
             },
         ]
     },

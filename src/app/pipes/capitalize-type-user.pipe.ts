@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { userTypeMap } from '../constants/user-type-items';
+import { userTypeMap } from '../shared/constants/user-type-items';
 
 @Pipe({
     name: 'capitalizeTypeUser',

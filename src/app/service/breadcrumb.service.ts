@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { Breadcrumb } from '../model/breadcrumb.interface';
+import { Breadcrumb } from '../core/models/breadcrumb.interface';
 
 @Injectable({
   providedIn: 'root'

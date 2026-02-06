@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Issue } from '../../model/issue.interface';
+import { Issue } from '../../core/models/issue.interface';
 import { ApiService } from '../../core/services/api.service';
 import { AuthService } from '../../core/services/auth.service';
 import { apiRoutes } from "../../../environments/environment";

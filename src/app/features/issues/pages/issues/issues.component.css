@@ -1,0 +1,34 @@
+.issues-page {
+  padding: 1.5rem;
+}
+
+.issues-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.issues-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.issues-header p {
+  margin: 0.25rem 0 0;
+  color: #6b7280;
+}
+
+.btn-new {
+  background: #2563eb;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+}
+
+.btn-new:hover {
+  background: #1d4ed8;
+}

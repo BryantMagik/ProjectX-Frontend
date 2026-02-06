@@ -2,7 +2,7 @@ import { Injectable, inject } from "@angular/core";
 import { ApiService } from "../../core/services/api.service";
 import { AuthService } from "../../core/services/auth.service";
 import { Observable, of } from "rxjs";
-import { Task } from "../../model/task.interface";
+import { Task } from "../../core/models/task.interface";
 import { HttpHeaders } from "@angular/common/http";
 import { apiRoutes } from '../../../environments/environment.development';
 
