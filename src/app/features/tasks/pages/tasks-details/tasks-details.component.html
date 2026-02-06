@@ -1,127 +1,127 @@
-<main class="flex-1">
-  <div class="max-w-7xl mx-auto py-12 sm:px-12 lg:px-20">
-    <div class="bg-white shadow sm:rounded-lg">
-      <div class="px-6 py-6 sm:p-12">
-        <h2 class="text-2xl leading-6 font-medium text-gray-900">Tasks details</h2>
-        <form>
-          @for (taskdetail of taskdetails; track taskdetail) {
-            <div class="mt-8 grid grid-cols-12 gap-4 grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label for="task-id" class="block text-sm font-medium text-gray-700">ID</label>
-                <input type="text" id="task-id" name="task-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.id" [readonly]="true">
-              </div>
-              <div>
-                <label for="task-code" class="block text-sm font-medium text-gray-700">Código</label>
-                <input type="text" id="task-code" name="task-code" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.code" [readonly]="true">
-              </div>
-              <div>
-                <label for="task-summary" class="block text-sm font-medium text-gray-700">Resumen</label>
-                <input type="text" id="task-summary" name="task-summary" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.summary" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
-              </div>
-              <div>
-                <label for="task-description" class="block text-sm font-medium text-gray-700">Descripción</label>
-                <textarea id="task-description" name="task-description" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" rows="4" [value]="taskdetail.description" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}"></textarea>
-              </div>
-              <div>
-                <label for="task-priority" class="block text-sm font-medium text-gray-700">Prioridad</label>
-                <!--<input type="text" id="task-priority" name="task-priority" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.priority" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">-->
-                @if (!isEditing) {
-                  <select id="task-priority" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                    formControlName="priority" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
-                    @for (priority of tasksPriority; track priority) {
-                      <option [value]="taskdetail?.priority">{{ taskdetail?.priority }}</option>
-                    }
-                  </select>
-                }
-                @if (isEditing) {
-                  <select id="task-priority" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                    formControlName="priority" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
-                    @for (priority of tasksPriority; track priority) {
-                      <option [value]="priority">{{ priority }}</option>
-                    }
-                  </select>
-                }
-              </div>
-              <div>
-                <label for="task-type" class="block text-sm font-medium text-gray-700">Tipo</label>
-                <!--<input type="text" id="task-type" name="task-type" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.type"[readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">-->
-                @if (!isEditing) {
-                  <select id="task-type" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                    formControlName="type" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
-                    @for (type of tasksType; track type) {
-                      <option [value]="taskdetail?.type">{{ taskdetail?.type }}</option>
-                    }
-                  </select>
-                }
-                @if (isEditing) {
-                  <select id="task-type" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                    formControlName="type" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
-                    @for (type of tasksType; track type) {
-                      <option [value]="type">{{ type }}</option>
-                    }
-                  </select>
-                }
-              </div>
-              <div>
-                <label for="task-status" class="block text-sm font-medium text-gray-700">Estado</label>
-                <!--<input type="text" id="task-status" name="task-status" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.status" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">-->
-                @if (!isEditing) {
-                  <select id="task-status" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                    formControlName="status" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
-                    @for (status of tasksStatus; track status) {
-                      <option [value]="taskdetail?.status">{{ taskdetail?.status }}</option>
-                    }
-                  </select>
-                }
-                @if (isEditing) {
-                  <select id="task-status" class="mt-1 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                    formControlName="status" [disabled]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
-                    @for (status of tasksStatus; track status) {
-                      <option [value]="status">{{ status }}</option>
-                    }
-                  </select>
-                }
-              </div>
-              <div>
-                <label for="task-project-id" class="block text-sm font-medium text-gray-700">ID del Proyecto</label>
-                <input type="text" id="task-project-id" name="task-project-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.project_id" [readonly]="true">
-              </div>
-              <div>
-                <label for="task-assigned-user-id" class="block text-sm font-medium text-gray-700">ID del Usuario Asignado</label>
-                <input type="text" id="task-assigned-user-id" name="task-assigned-user-id" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.assigned_user_id" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
-              </div>
-              <div>
-                <label for="task-estimation" class="block text-sm font-medium text-gray-700">Estimación</label>
-                <input type="text" id="task-estimation" name="task-estimation" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.estimation" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
-              </div>
-              <div>
-                <label for="task-due-date" class="block text-sm font-medium text-gray-700">Fecha de Vencimiento</label>
-                <input type="text" id="task-due-date" name="task-due-date" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" [value]="taskdetail.duedate" [readonly]="!isEditing" [ngClass]="{'bg-gray-200': isEditing}">
-              </div>
-              <!-- Action Buttons -->
-              <div>
-                <button type="button" (click)="toggleEdit()" class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  {{ isEditing ? 'Cancel' : 'Edit' }}
-                </button>
-              </div>
-              @if (isEditing) {
-                <div>
-                  <button type="submit" (click)="onSubmit()" class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Apply
-                  </button>
-                </div>
-              }
-            </div>
-          }
-        </form>
-        <div class="flex justify-between mt-12">
-          <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none   
-          focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Eliminar</button>
-          <button class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" (click)=" navigateToTasks()">volver</button>
+<div class="page-container">
+  <div class="header">
+    <div class="header-content">
+      <div class="header-title">
+        <i class="pi pi-check-square text-3xl icon-blue"></i>
+        <div>
+          <h1 class="title">Task Details</h1>
+          <p class="subtitle">View and edit task information</p>
         </div>
       </div>
-      <app-comments-list-component [taskId]="taskId"></app-comments-list-component>
+      <div class="header-actions">
+        <button class="ghost-button" type="button" (click)="navigateToTasks()">
+          <i class="pi pi-arrow-left"></i>
+          <span>Volver</span>
+        </button>
+        <button class="primary-button" type="button" (click)="toggleEdit()">
+          <i class="pi" [ngClass]="isEditing ? 'pi-times' : 'pi-pencil'"></i>
+          <span>{{ isEditing ? 'Cancelar' : 'Editar' }}</span>
+        </button>
+      </div>
     </div>
   </div>
-</main>
 
+  <div class="content-card">
+    @if (loading) {
+      <div class="state-card">
+        <i class="pi pi-spin pi-spinner"></i>
+        <p>Cargando tarea...</p>
+      </div>
+    } @else if (error) {
+      <div class="state-card error">
+        <i class="pi pi-exclamation-triangle"></i>
+        <p>{{ error }}</p>
+      </div>
+    } @else {
+      <form [formGroup]="tasksFormular" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <div class="form-section">
+            <label class="form-label" for="task-id">ID</label>
+            <input id="task-id" type="text" formControlName="id" class="form-input" readonly />
+          </div>
+          <div class="form-section">
+            <label class="form-label" for="task-code">Código</label>
+            <input id="task-code" type="text" formControlName="code" class="form-input" readonly />
+          </div>
+        </div>
+
+        <div class="form-section">
+          <label class="form-label" for="task-name">Nombre</label>
+          <input id="task-name" type="text" formControlName="name" class="form-input" placeholder="Nombre de la tarea" />
+        </div>
+
+        <div class="form-section">
+          <label class="form-label" for="task-summary">Resumen</label>
+          <input id="task-summary" type="text" formControlName="summary" class="form-input" placeholder="Resumen corto" />
+        </div>
+
+        <div class="form-section">
+          <label class="form-label" for="task-description">Descripción</label>
+          <textarea id="task-description" rows="4" formControlName="description" class="form-textarea" placeholder="Describe la tarea"></textarea>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-section">
+            <label class="form-label" for="task-priority">Prioridad</label>
+            <select id="task-priority" formControlName="priority" class="form-select">
+              @for (priority of tasksPriority; track priority) {
+                <option [value]="priority">{{ priority }}</option>
+              }
+            </select>
+          </div>
+          <div class="form-section">
+            <label class="form-label" for="task-type">Tipo</label>
+            <select id="task-type" formControlName="task_type" class="form-select">
+              @for (type of tasksType; track type) {
+                <option [value]="type">{{ type }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-section">
+            <label class="form-label" for="task-status">Estado</label>
+            <select id="task-status" formControlName="status" class="form-select">
+              @for (status of tasksStatus; track status) {
+                <option [value]="status">{{ status }}</option>
+              }
+            </select>
+          </div>
+          <div class="form-section">
+            <label class="form-label" for="task-project-id">Proyecto</label>
+            <input id="task-project-id" type="text" formControlName="projectId" class="form-input" readonly />
+          </div>
+        </div>
+
+        <div class="form-section">
+          <label class="form-label" for="task-due-date">Fecha de vencimiento</label>
+          <input id="task-due-date" type="date" formControlName="dueTime" class="form-input" />
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="cancel-button"
+            (click)="toggleEdit()"
+            [disabled]="!isEditing">
+            <i class="pi pi-times"></i>
+            <span>Cancelar</span>
+          </button>
+          <button
+            type="submit"
+            class="submit-button"
+            [disabled]="!isEditing || tasksFormular.invalid">
+            <i class="pi pi-check"></i>
+            <span>Guardar cambios</span>
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+
+  <div class="content-card">
+    <h3 class="section-title">Comentarios</h3>
+    <app-comments-list-component [taskId]="taskId"></app-comments-list-component>
+  </div>
+</div>

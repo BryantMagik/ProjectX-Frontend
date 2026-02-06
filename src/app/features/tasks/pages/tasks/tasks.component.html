@@ -5,7 +5,7 @@
       <h1>Mis tareas</h1>
       <p class="subtext">Prioriza, filtra y ejecuta. Todo en un solo lugar.</p>
       <div class="hero-actions">
-        <button class="btn primary" (click)="navigateToCreateTask()">
+        <button class="btn primary" (click)="openCreateTaskModal()">
           <i class="pi pi-plus"></i>
           Nueva tarea
         </button>
@@ -201,4 +201,36 @@
     </div>
     <app-tasks-board></app-tasks-board>
   </section>
+
+  @if (showProjectModal) {
+    <div class="modal-backdrop" (click)="closeCreateTaskModal()">
+      <div class="modal-card" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3>Selecciona un proyecto</h3>
+          <button class="btn ghost" type="button" (click)="closeCreateTaskModal()">
+            <i class="pi pi-times"></i>
+          </button>
+        </div>
+        <p class="modal-subtext">Elige el proyecto donde deseas crear la nueva tarea.</p>
+        <div class="modal-body">
+          <label class="modal-label" for="modalProjectSelect">Proyecto</label>
+          <select
+            id="modalProjectSelect"
+            class="filter-select"
+            [(ngModel)]="selectedProjectId">
+            <option [ngValue]="null">Selecciona un proyecto</option>
+            @for (project of projects; track project.id) {
+              <option [value]="project.id">{{ project.name }}</option>
+            }
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button class="btn ghost" type="button" (click)="closeCreateTaskModal()">Cancelar</button>
+          <button class="btn primary" type="button" (click)="confirmCreateTask()" [disabled]="!selectedProjectId">
+            Continuar
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 </section>

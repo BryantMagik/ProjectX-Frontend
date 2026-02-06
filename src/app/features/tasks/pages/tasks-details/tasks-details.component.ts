@@ -1,46 +1,18 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommentsListComponentComponent } from '../../../comments/components/comments-list/comments-list-component.component';
+import { TaskService } from '../../data-access/task.service';
+import { Task } from '../../../../core/models/task.interface';
 
-enum tasks_priority {
-  high = 'high',
-  medium = 'medium',
-  low = 'low'
-}
-enum tasks_type {
-  Bug = 'Bug',
-  Internal = 'Internal',
-  External = 'External',
-  Research = 'Research',
-  Software = 'Software',
-  user_story = 'user_story'
-}
-
-enum tasks_status {
-  Active = 'Active',
-  Inactive = 'Inactive',
-  Ongoing = 'Ongoing',
-  Completed = 'Completed'
-}
-export interface Taskdetail {
-  id: number;
-  code: string;
-  summary: string;
-  description: string;
-  priority: string;
-  type: string;
-  status: string;
-  project_id: number;
-  assigned_user_id: number;
-  estimation: string;
-  duedate: string;
-}
+const TASK_PRIORITIES = ['high', 'medium', 'low'];
+const TASK_TYPES = ['Bug', 'Internal', 'External', 'Research', 'Software', 'user_story'];
+const TASK_STATUSES = ['Active', 'Inactive', 'Ongoing', 'Completed'];
 
 @Component({
   selector: 'app-tasks-details',
-  imports: [CommonModule, NgClass, ReactiveFormsModule, CommentsListComponentComponent],
+  imports: [CommonModule, ReactiveFormsModule, CommentsListComponentComponent],
   templateUrl: './tasks-details.component.html',
   styleUrl: './tasks-details.component.css',
   standalone: true
@@ -48,31 +20,18 @@ export interface Taskdetail {
 export class TasksDetailsComponent implements OnInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private taskService = inject(TaskService);
 
+  tasksPriority = TASK_PRIORITIES;
+  tasksType = TASK_TYPES;
+  tasksStatus = TASK_STATUSES;
 
-  tasksPriority = Object.values(tasks_priority);
-  tasksType = Object.values(tasks_type);
-  tasksStatus = Object.values(tasks_status);
   taskId: string = '';
-
-
-  taskdetails: Taskdetail[] = [
-    {
-      id: 1,
-      code: 'PRJ001',
-      summary: 'Project Summary',
-      description: 'Description of the project',
-      priority: 'high',
-      type: 'Bug',
-      status: 'Ongoing',
-      project_id: 10,
-      assigned_user_id: 1001,
-      estimation: '5 days',
-      duedate: '2024-12-31'
-    }
-  ]
-
+  task: Task | null = null;
   isEditing = false;
+  loading = true;
+  error: string | null = null;
   tasksFormular: FormGroup;
 
   /** Inserted by Angular inject() migration for backwards compatibility */
@@ -80,45 +39,107 @@ export class TasksDetailsComponent implements OnInit {
   constructor() {
     this.tasksFormular = this.fb.group({
       id: [{ value: '', disabled: true }],
-      code: ['', [Validators.required, Validators.maxLength(10)]],
+      code: [{ value: '', disabled: true }, [Validators.required, Validators.maxLength(20)]],
+      name: ['', [Validators.required, Validators.maxLength(255)]],
       summary: ['', [Validators.required, Validators.maxLength(255)]],
       description: ['', [Validators.required, Validators.maxLength(10024)]],
       priority: ['', Validators.required],
-      type: ['', Validators.required],
+      task_type: ['', Validators.required],
       status: ['', Validators.required],
-      project_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      assigned_user_id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      estimation: ['', Validators.pattern('^[0-9]*$')],
-      due_date: ['']
+      projectId: [{ value: '', disabled: true }, [Validators.required]],
+      dueTime: ['']
     });
-
   }
 
   ngOnInit(): void {
+    this.taskId = this.route.snapshot.paramMap.get('taskId') || '';
+    if (this.taskId) {
+      this.loadTask(this.taskId);
+    } else {
+      this.loading = false;
+      this.error = 'Task id is missing.';
+    }
+    this.tasksFormular.disable();
   }
 
-  navigateToTasks() {
+  navigateToTasks(): void {
     this.router.navigate(['/tasks']);
   }
 
-  toggleEdit() {
+  toggleEdit(): void {
+    this.isEditing = !this.isEditing;
     if (this.isEditing) {
-      this.isEditing = false;
-      this.tasksFormular.disable();  // Deshabilitar los campos
+      this.tasksFormular.enable();
+      this.tasksFormular.get('code')?.disable();
+      this.tasksFormular.get('projectId')?.disable();
+      this.tasksFormular.get('id')?.disable();
     } else {
-      this.isEditing = true;
-      this.tasksFormular.enable();   // Habilitar los campos
+      this.resetForm();
+      this.tasksFormular.disable();
     }
   }
 
-  onSubmit() {
+  onSubmit(): void {
+    if (!this.taskId) {
+      return;
+    }
     if (this.tasksFormular.valid) {
-      console.log('Formulario enviado:', this.tasksFormular.value);
-    } else {
-      console.log('Formulario inválido, por favor revisa los campos.');
+      const payload = {
+        name: this.tasksFormular.get('name')?.value,
+        summary: this.tasksFormular.get('summary')?.value,
+        description: this.tasksFormular.get('description')?.value,
+        priority: this.tasksFormular.get('priority')?.value,
+        task_type: this.tasksFormular.get('task_type')?.value,
+        status: this.tasksFormular.get('status')?.value,
+        dueTime: this.tasksFormular.get('dueTime')?.value
+      };
+      this.taskService.updateTask(payload, this.taskId).subscribe({
+        next: (updated) => {
+          this.task = { ...(this.task as Task), ...updated };
+          this.isEditing = false;
+          this.tasksFormular.disable();
+        },
+        error: () => {
+          this.error = 'No se pudo actualizar la tarea.';
+        }
+      });
     }
-    this.isEditing = false;  // Deshabilitar edición tras enviar
-    this.tasksFormular.disable();  // Volver a deshabilitar los campos
   }
 
+  private loadTask(taskId: string): void {
+    this.taskService.getTasksById(taskId).subscribe({
+      next: (task) => {
+        if (task) {
+          this.task = task;
+          this.patchForm(task);
+        }
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+        this.error = 'No se pudo cargar la tarea.';
+      }
+    });
+  }
+
+  private patchForm(task: Task): void {
+    this.tasksFormular.patchValue({
+      id: task.id,
+      code: task.code,
+      name: task.name,
+      summary: task.summary,
+      description: task.description,
+      priority: task.priority,
+      task_type: task.task_type,
+      status: task.status,
+      projectId: task.projectId,
+      dueTime: task.dueTime ? task.dueTime.toString().slice(0, 10) : ''
+    });
+  }
+
+  private resetForm(): void {
+    if (this.task) {
+      this.patchForm(this.task);
+    }
+  }
 }

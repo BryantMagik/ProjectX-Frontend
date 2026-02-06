@@ -1,80 +1,159 @@
-<div class="project-form-container">
-  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="form-content">
-
-    <div class="form-section">
-      <h2 class="section-title">Task Identity</h2>
-      <div class="form-row">
-        @if (!hasProjectId) {
-          <div class="form-group">
-            <label class="form-label"><i class="pi pi-folder mr-2"></i>Project</label>
-            <select formControlName="projectId" class="form-input">
-              <option value="" disabled>Select a project...</option>
-              @for (project of projects; track project.id) {
-                <option [value]="project.id">{{ project.name }} ({{ project.code }})</option>
-              }
-            </select>
-          </div>
-        }
-
-        <div class="form-group">
-          <label class="form-label"><i class="pi pi-tag mr-2"></i>Task Code</label>
-          <input
-            type="text"
-            formControlName="code"
-            class="form-input font-mono text-blue-400"
-            readonly
-          >
+<div class="page-container">
+  <div class="header">
+    <div class="header-content">
+      <div class="header-title">
+        <i class="pi pi-check-square text-3xl icon-blue"></i>
+        <div>
+          <h1 class="title">{{isEditMode ? 'Edit Task' : 'Create New Task'}}</h1>
+          <p class="subtitle">{{isEditMode ? 'Update task details and assignment' : 'Add a new task to your project'}}</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="form-section">
-      <h2 class="section-title">Details & Scheduling</h2>
-
-      <div class="form-group">
-        <label class="form-label">Summary</label>
-        <input type="text" formControlName="summary" class="form-input" placeholder="What needs to be done?">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Description</label>
-        <textarea formControlName="description" class="form-textarea" rows="3" placeholder="Additional details..."></textarea>
-      </div>
-
-      <div class="form-row three-cols">
-        <div class="form-group">
-          <label class="form-label">Type</label>
-          <select formControlName="task_type" class="form-input">
-            <option value="FEATURE">Feature</option>
-            <option value="BUG">Bug</option>
-            <option value="CHORE">Chore</option>
-            <option value="IMPROVEMENT">Improvement</option>
-          </select>
+  <div class="content-card">
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="form-section">
+          <label for="name" class="form-label">Task Name <span class="required">*</span></label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            placeholder="Enter task name"
+            class="form-input" />
+          @if (taskForm.get('name')?.invalid && taskForm.get('name')?.touched) {
+            <span class="error-message">Task name is required (min 3 characters)</span>
+          }
         </div>
 
-        <div class="form-group">
-          <label class="form-label">Priority</label>
-          <select formControlName="priority" class="form-input">
+        <div class="form-section">
+          <label for="code" class="form-label">Task Code (Auto-generated)</label>
+          <input
+            type="text"
+            id="code"
+            formControlName="code"
+            placeholder="Auto-generated"
+            class="form-input"
+            readonly />
+        </div>
+      </div>
+
+      <div class="form-section">
+        <label for="description" class="form-label">Description <span class="required">*</span></label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="4"
+          placeholder="Describe the task in detail"
+          class="form-textarea"></textarea>
+        @if (taskForm.get('description')?.invalid && taskForm.get('description')?.touched) {
+          <span class="error-message">Description is required</span>
+        }
+      </div>
+
+      <div class="form-section">
+        <label for="summary" class="form-label">Summary <span class="required">*</span></label>
+        <input
+          type="text"
+          id="summary"
+          formControlName="summary"
+          placeholder="Brief summary of the task"
+          class="form-input" />
+        @if (taskForm.get('summary')?.invalid && taskForm.get('summary')?.touched) {
+          <span class="error-message">Summary is required</span>
+        }
+      </div>
+
+      <div class="form-grid-3">
+        <div class="form-section">
+          <label for="priority" class="form-label">Priority</label>
+          <select id="priority" formControlName="priority" class="form-select">
+            <option value="">Select Priority</option>
             <option value="LOW">Low</option>
             <option value="MEDIUM">Medium</option>
             <option value="HIGH">High</option>
             <option value="CRITICAL">Critical</option>
           </select>
+          @if (taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched) {
+            <span class="error-message">Priority is required</span>
+          }
         </div>
 
-        <div class="form-group">
-          <label class="form-label">Due Date</label>
-          <input type="date" formControlName="dueTime" class="form-input">
+        <div class="form-section">
+          <label for="task_type" class="form-label">Type</label>
+          <select id="task_type" formControlName="task_type" class="form-select">
+            <option value="">Select Type</option>
+            <option value="FEATURE">Feature</option>
+            <option value="BUG">Bug</option>
+            <option value="CHORE">Chore</option>
+            <option value="IMPROVEMENT">Improvement</option>
+            <option value="HOTFIX">Hotfix</option>
+          </select>
+          @if (taskForm.get('task_type')?.invalid && taskForm.get('task_type')?.touched) {
+            <span class="error-message">Type is required</span>
+          }
+        </div>
+
+        <div class="form-section">
+          <label for="status" class="form-label">Status <span class="required">*</span></label>
+          <select id="status" formControlName="status" class="form-select">
+            <option value="">Select Status</option>
+            <option value="BACKLOG">Backlog</option>
+            <option value="TODO">To Do</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="REVIEW">Review</option>
+            <option value="DONE">Done</option>
+          </select>
+          @if (taskForm.get('status')?.invalid && taskForm.get('status')?.touched) {
+            <span class="error-message">Status is required</span>
+          }
         </div>
       </div>
-    </div>
 
-    <div class="form-actions">
-      <button type="button" class="btn-cancel" (click)="cancel()">Cancel</button>
-      <button type="submit" class="btn-submit" [disabled]="taskForm.invalid || loading">
-        <i class="pi pi-check mr-2"></i>
-        {{ loading ? 'Saving...' : 'Create Task' }}
-      </button>
-    </div>
-  </form>
+      <div class="form-grid">
+        <div class="form-section">
+          <label for="dueTime" class="form-label">Due Date</label>
+          <input
+            type="date"
+            id="dueTime"
+            formControlName="dueTime"
+            class="form-input" />
+        </div>
+
+        <div class="form-section">
+          <label for="projectId" class="form-label">Project ID</label>
+          <input
+            type="text"
+            id="projectId"
+            formControlName="projectId"
+            placeholder="Project ID"
+            class="form-input"
+            readonly />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="button"
+          class="cancel-button"
+          (click)="onCancel()">
+          <i class="pi pi-times"></i>
+          <span>Cancel</span>
+        </button>
+        <button
+          type="submit"
+          class="submit-button"
+          [disabled]="taskForm.invalid || submitting">
+          @if (submitting) {
+            <i class="pi pi-spin pi-spinner"></i>
+            <span>{{isEditMode ? 'Updating...' : 'Creating...'}}</span>
+          } @else {
+            <i class="pi pi-check"></i>
+            <span>{{isEditMode ? 'Update Task' : 'Create Task'}}</span>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

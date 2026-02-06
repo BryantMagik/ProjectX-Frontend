@@ -8,6 +8,10 @@ import { User } from '../../../../core/models/user.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TasksBoardComponent } from '../../components/tasks-board/tasks-board.component';
+import { ProjectService } from '../../../projects/data-access/project.service';
+import { Project } from '../../../../core/models/project.interface';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-tasks',
@@ -23,23 +27,41 @@ import { TasksBoardComponent } from '../../components/tasks-board/tasks-board.co
 export class TasksComponent implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private taskService = inject(TaskService);
+  private projectService = inject(ProjectService);
 
   tasks: Task[] = [];
   filteredTasks: Task[] = [];
   authors: User[] = [];
+  projects: Project[] = [];
   error: string | null = null;
   loading: boolean = true;
   showKanban: boolean = false;
   searchTerm: string = '';
   selectedStatus: string = 'all';
   selectedPriority: string = 'all';
+  selectedProjectId: string | null = null;
+  projectId: string | null = null
+  project: Project | null = null
+  routeSub: Subscription | null = null
+  showProjectModal: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
     this.getTask();
     this.getUsers();
+    this.getProjects();
+    this.routeSub = this.route.paramMap.subscribe(params => {
+      this.projectId = params.get('projectId')
+      console.log('Route params - projectId:', this.projectId)
+      if (this.projectId) {
+        this.selectedProjectId = this.projectId;
+        this.getProjectById(this.projectId)
+      }
+    })
+
   }
 
 
@@ -144,7 +166,56 @@ export class TasksComponent implements OnInit {
   }
 
   
-  navigateToCreateTask() {
-    this.router.navigate(['/tasks/new']);
+  openCreateTaskModal(): void {
+    if (!this.selectedProjectId && this.projectId) {
+      this.selectedProjectId = this.projectId;
+    }
+    this.showProjectModal = true;
   }
+
+  closeCreateTaskModal(): void {
+    this.showProjectModal = false;
+  }
+
+  confirmCreateTask(): void {
+    const projectId = this.selectedProjectId || this.projectId;
+    console.log('navigateToNewTask called, projectId:', projectId);
+    if (projectId) {
+      this.showProjectModal = false;
+      this.router.navigate(['/tasks/new'], {
+        queryParams: { projectId }
+      });
+    } else {
+      console.warn('No projectId available');
+    }
+  }
+
+  private getProjects(): void {
+    this.projectService.getProjectByIdWhereId().pipe(
+      tap({
+        next: (projects: Project[] | null) => {
+          if (projects) {
+            this.projects = projects;
+          }
+        },
+        error: () => {
+          console.warn('Failed to load projects');
+        }
+      })
+    ).subscribe();
+  }
+
+   private getProjectById(projectId: string): void {
+      this.projectService.getProjectById(projectId).pipe(
+        tap({
+          next: (project: Project | null) => {
+            console.log(project)
+            this.project = project
+            this.loading = false
+          },
+          error: () => this.error = 'Failed to load projects',
+          complete: () => this.loading = false
+        })
+      ).subscribe()
+    }
 }

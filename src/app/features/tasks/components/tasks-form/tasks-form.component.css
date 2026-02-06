@@ -1,112 +1,220 @@
-/* tasks-form.component.css */
-
-.tasks-form-container {
-  @apply mx-auto p-6;
+.page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  min-height: 100vh;
 }
 
-/* Header con gradiente oscuro y bordes brillantes */
-.form-header {
-  @apply mb-8 p-6 rounded-2xl;
+/* Header */
+.header {
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
   border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
 
 .header-content {
-  @apply flex justify-between items-center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header-title {
-  @apply flex items-center gap-4;
-  color: white;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .header-title i {
-  @apply text-3xl;
+  font-size: 1.875rem;
+}
+
+.icon-blue {
   color: #60a5fa;
 }
 
 .title {
-  @apply text-3xl font-bold text-white m-0;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
 }
 
 .subtitle {
-  @apply text-sm mt-1;
+  font-size: 0.875rem;
   color: #cbd5e1;
+  margin: 0.25rem 0 0 0;
 }
 
-/* Cuerpo del Formulario - Efecto Cristal */
-.form-content {
-  @apply rounded-2xl shadow-xl p-8;
-  background: rgba(30, 41, 59, 0.5);
-  border: 1px solid rgba(59, 130, 246, 0.2);
+/* Content Card */
+.content-card {
+  background: rgba(15, 23, 42, 0.3);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  border: 1px solid rgba(59, 130, 246, 0.1);
 }
 
+/* Form Sections */
 .form-section {
-  @apply mb-8 pb-8;
-  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+  margin-bottom: 1.5rem;
 }
 
-.form-section:last-of-type {
-  @apply mb-0 pb-0;
-  border-bottom: none;
-}
-
-.section-title {
-  @apply text-lg font-semibold mb-4;
-  color: #60a5fa;
-}
-
-.form-row {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
-}
-
-/* Estilización de Inputs y Selects */
 .form-label {
-  @apply flex items-center text-sm font-semibold mb-2;
-  color: white;
-}
-
-.form-input, .form-textarea {
-  @apply w-full px-4 py-3 rounded-xl transition-all duration-200;
-  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
-  background: rgba(15, 23, 42, 0.8);
-  border: 2px solid rgba(59, 130, 246, 0.3);
-  color: white;
-}
-
-.form-input::placeholder, .form-textarea::placeholder {
-  color: #94a3b8;
-}
-
-.form-input:hover, .form-textarea:hover {
-  border-color: rgba(59, 130, 246, 0.5);
-}
-
-/* Botones de Acción */
-.form-actions {
-  @apply flex justify-end gap-4 mt-8 pt-6 border-t;
-  border-color: rgba(59, 130, 246, 0.2);
-}
-
-.btn-cancel {
-  @apply px-6 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 transition-all duration-200;
-  background: rgba(15, 23, 42, 0.5);
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
   color: #cbd5e1;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.5rem;
 }
 
-.btn-cancel:hover {
-  background: rgba(15, 23, 42, 0.8);
+.required {
+  color: #ef4444;
+  margin-left: 0.25rem;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #64748b;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-input[readonly] {
+  background: rgba(15, 23, 42, 0.7);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-select {
+  cursor: pointer;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.error-message {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #ef4444;
+}
+
+/* Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.cancel-button,
+.submit-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-button {
+  background: rgba(148, 163, 184, 0.1);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.cancel-button:hover {
+  background: rgba(148, 163, 184, 0.2);
+  border-color: #94a3b8;
+}
+
+.submit-button {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
   color: white;
 }
 
-.btn-submit {
-  @apply px-6 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 text-white shadow-lg;
-  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
-  @apply transition-all duration-200 transform hover:-translate-y-0.5;
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
 
-.btn-submit:disabled {
-  @apply opacity-50 cursor-not-allowed transform-none shadow-none;
+.submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .form-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 0.5rem;
+  }
+
+  .content-card {
+    padding: 1rem;
+  }
+
+  .form-grid,
+  .form-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .cancel-button,
+  .submit-button {
+    width: 100%;
+    justify-content: center;
+  }
 }

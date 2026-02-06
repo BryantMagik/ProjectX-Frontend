@@ -132,7 +132,7 @@
         <a class="link" [routerLink]="['/projects']">Ver todos</a>
       </div>
 
-      <div class="project-list" *ngIf="projects?.length; else emptyProjects">
+      <div class="project-list" *ngIf="projects.length; else emptyProjects">
         <div class="project-row" *ngFor="let project of projects | slice:0:5">
           <div class="project-main">
             <div class="project-code">{{ project.code }}</div>
