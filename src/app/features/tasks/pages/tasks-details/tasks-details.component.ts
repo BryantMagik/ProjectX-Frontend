@@ -6,9 +6,9 @@ import { CommentsListComponentComponent } from '../../../comments/components/com
 import { TaskService } from '../../../../service/task/task.service';
 import { Task } from '../../../../core/models/task.interface';
 
-const TASK_PRIORITIES = ['high', 'medium', 'low'];
-const TASK_TYPES = ['Bug', 'Internal', 'External', 'Research', 'Software', 'user_story'];
-const TASK_STATUSES = ['Active', 'Inactive', 'Ongoing', 'Completed'];
+const TASK_PRIORITIES = ['HIGH', 'MEDIUM', 'LOW', 'CRITICAL'];
+const TASK_TYPES = ['SOFTWARE', 'EXTERNAL', 'RESEARCH', 'INTERNAL'];
+const TASK_STATUSES = ['BACKLOG', 'TODO', 'IN_PROGRESS', 'DONE'];
 
 @Component({
   selector: 'app-tasks-details',
@@ -34,7 +34,7 @@ export class TasksDetailsComponent implements OnInit {
   error: string | null = null;
   tasksFormular: FormGroup;
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
+  
   constructor(...args: unknown[]);
   constructor() {
     this.tasksFormular = this.fb.group({
@@ -110,7 +110,7 @@ export class TasksDetailsComponent implements OnInit {
   }
 
   private loadTask(taskId: string): void {
-    this.taskService.getTasksById(taskId).subscribe({
+    this.taskService.getTasksPorId(taskId).subscribe({
       next: (task) => {
         if (task) {
           this.task = task;
@@ -128,15 +128,15 @@ export class TasksDetailsComponent implements OnInit {
   private patchForm(task: Task): void {
     this.tasksFormular.patchValue({
       id: task.id,
-      code: task.code,
-      name: task.name,
+      code: task.name,
+      name: task.summary,
       summary: task.summary,
       description: task.description,
       priority: task.priority,
       task_type: task.task_type,
       status: task.status,
       projectId: task.projectId,
-      dueTime: task.dueTime ? task.dueTime.toString().slice(0, 10) : ''
+      dueTime: ''
     });
   }
 

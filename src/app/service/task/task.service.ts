@@ -47,6 +47,14 @@ export class TaskService {
     return of(null);
   }
 
+  getTasksPorId(id: string): Observable<Task | null> {
+    const headers = this.getAuthHeaders()
+    if (headers) {
+      return this.apiService.get<Task>(`${apiRoutes.task.getPorId}/id/${id}`, { headers })
+    }
+    return of(null);
+  }
+
   getTaskByProjectId(projectId: string): Observable<Task[]> {
     const headers = this.getAuthHeaders()
     if (headers) {

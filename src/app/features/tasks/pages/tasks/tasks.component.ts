@@ -65,7 +65,7 @@ export class TasksComponent implements OnInit {
   }
 
 
-  navigateToTaskDetails(taskId: string) {
+  navigateToTaskDetails(taskId: string): void {
     this.router.navigate(['/tasks', taskId]);
   }
 

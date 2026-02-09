@@ -24,6 +24,7 @@ export const apiRoutes = {
     create: `${environment.apiUrl}tasks`,
     getOnlyOwn: `${environment.apiUrl}tasks/user/tasks/`,
     getById: `${environment.apiUrl}user/tasks/`,
+    getPorId: `${environment.apiUrl}tasks`,
     getTaskByProjectId: `${environment.apiUrl}tasks/project`,
     update: `${environment.apiUrl}tasks`,
     metrics: {
