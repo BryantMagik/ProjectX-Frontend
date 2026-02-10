@@ -6,9 +6,9 @@ import { CommentsListComponentComponent } from '../../../comments/components/com
 import { TaskService } from '../../../../service/task/task.service';
 import { Task } from '../../../../core/models/task.interface';
 
-const TASK_PRIORITIES = ['HIGH', 'MEDIUM', 'LOW', 'CRITICAL'];
-const TASK_TYPES = ['SOFTWARE', 'EXTERNAL', 'RESEARCH', 'INTERNAL'];
-const TASK_STATUSES = ['BACKLOG', 'TODO', 'IN_PROGRESS', 'DONE'];
+const TASK_PRIORITIES = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
+const TASK_TYPES = ['FEATURE', 'BUG', 'CHORE', 'IMPROVEMENT', 'HOTFIX'];
+const TASK_STATUSES = ['BACKLOG', 'TODO', 'IN_PROGRESS', 'REVIEW', 'DONE'];
 
 @Component({
   selector: 'app-tasks-details',
@@ -85,22 +85,26 @@ export class TasksDetailsComponent implements OnInit {
     }
     if (this.tasksFormular.valid) {
       const rawValue = this.tasksFormular.getRawValue();
+
+      const dateValue = rawValue.dueTime ? new Date(rawValue.dueTime) : null;
+      const timestamp = dateValue && !isNaN(dateValue.getTime()) ? dateValue.getTime() : 0;
+
       const payload = {
-        code: rawValue.code,
-        name: rawValue.name,
+        code: rawValue.name,
         summary: rawValue.summary,
         description: rawValue.description,
-        priority: rawValue.priority,
-        task_type: rawValue.task_type,
-        status: rawValue.status,
-        dueTime: rawValue.dueTime,
-        projectId: rawValue.projectId
+        priority: rawValue.priority ? { name: rawValue.priority } : {}, 
+        status: rawValue.status ? { name: rawValue.status } : {},
+        task_type: rawValue.task_type ? { name: rawValue.task_type } : {},
+        dueDate: rawValue.dueTime || '',
+        dueTime: timestamp
       };
-      this.taskService.updateTask(this.taskId, payload).subscribe({
+      this.taskService.actuaTask(this.taskId, payload).subscribe({
         next: (updated) => {
           this.task = { ...(this.task as Task), ...updated };
           this.isEditing = false;
           this.tasksFormular.disable();
+          this.patchForm(this.task);
         },
         error: () => {
           this.error = 'No se pudo actualizar la tarea.';
@@ -126,17 +130,24 @@ export class TasksDetailsComponent implements OnInit {
   }
 
   private patchForm(task: Task): void {
+    let formattedDate = '';
+      if (task.dueTime) {
+        const d = new Date(task.dueTime);
+        if (!isNaN(d.getTime())) {
+          formattedDate = d.toISOString().split('T')[0];
+        }
+      }
     this.tasksFormular.patchValue({
       id: task.id,
       code: task.name,
-      name: task.summary,
+      name: task.name,
       summary: task.summary,
       description: task.description,
-      priority: task.priority,
-      task_type: task.task_type,
-      status: task.status,
+      priority: typeof task.priority === 'object' ? (task.priority as any).name : task.priority,
+      task_type: typeof task.task_type === 'object' ? (task.task_type as any).name : task.task_type,
+      status: typeof task.status === 'object' ? (task.status as any).name : task.status,
       projectId: task.projectId,
-      dueTime: ''
+      dueTime: formattedDate
     });
   }
 

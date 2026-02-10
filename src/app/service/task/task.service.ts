@@ -75,6 +75,11 @@ export class TaskService {
     const headers = this.getAuthHeaders()
     return this.apiService.put<Task>(`${apiRoutes.task.update}/${taskId}`, taskData, { headers })
   }
+
+  actuaTask(taskId: string, taskData: any): Observable<Task> {
+    const headers = this.getAuthHeaders()
+    return this.apiService.patch<Task>(`${apiRoutes.task.update}/${taskId}`, taskData, { headers })
+  }
   getTasksByIdWhereId(): Observable<Task[]> {
     const headers = this.getAuthHeaders()
     if (headers) {
