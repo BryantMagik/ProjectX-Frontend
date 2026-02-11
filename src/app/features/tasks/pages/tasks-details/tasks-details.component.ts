@@ -86,18 +86,15 @@ export class TasksDetailsComponent implements OnInit {
     if (this.tasksFormular.valid) {
       const rawValue = this.tasksFormular.getRawValue();
 
-      const dateValue = rawValue.dueTime ? new Date(rawValue.dueTime) : null;
-      const timestamp = dateValue && !isNaN(dateValue.getTime()) ? dateValue.getTime() : 0;
 
       const payload = {
         code: rawValue.name,
         summary: rawValue.summary,
         description: rawValue.description,
-        priority: rawValue.priority ? { name: rawValue.priority } : {}, 
-        status: rawValue.status ? { name: rawValue.status } : {},
-        task_type: rawValue.task_type ? { name: rawValue.task_type } : {},
-        dueDate: rawValue.dueTime || '',
-        dueTime: timestamp
+        priority: rawValue.priority || undefined,
+        status: rawValue.status || undefined,
+        task_type: rawValue.task_type || undefined,
+        dueTime: rawValue.dueTime || undefined
       };
       this.taskService.actuaTask(this.taskId, payload).subscribe({
         next: (updated) => {
@@ -107,6 +104,7 @@ export class TasksDetailsComponent implements OnInit {
           this.patchForm(this.task);
         },
         error: () => {
+          console.log(this.task);
           this.error = 'No se pudo actualizar la tarea.';
         }
       });
@@ -130,13 +128,6 @@ export class TasksDetailsComponent implements OnInit {
   }
 
   private patchForm(task: Task): void {
-    let formattedDate = '';
-      if (task.dueTime) {
-        const d = new Date(task.dueTime);
-        if (!isNaN(d.getTime())) {
-          formattedDate = d.toISOString().split('T')[0];
-        }
-      }
     this.tasksFormular.patchValue({
       id: task.id,
       code: task.name,
@@ -147,7 +138,7 @@ export class TasksDetailsComponent implements OnInit {
       task_type: typeof task.task_type === 'object' ? (task.task_type as any).name : task.task_type,
       status: typeof task.status === 'object' ? (task.status as any).name : task.status,
       projectId: task.projectId,
-      dueTime: formattedDate
+      dueTime: task.dueTime ? task.dueTime.toString().slice(0, 10) : ''
     });
   }
 

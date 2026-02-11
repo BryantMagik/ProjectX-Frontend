@@ -115,7 +115,7 @@ export class TasksFormComponent implements OnInit{
         priority: formValue.priority,
         task_type: formValue.task_type,
         status: formValue.status,
-        dueTime: formValue.dueTime ? parseInt(formValue.dueTime) : undefined,
+        dueTime: formValue.dueTime,
         projectId: formValue.projectId // Include projectId for service
       };
 
