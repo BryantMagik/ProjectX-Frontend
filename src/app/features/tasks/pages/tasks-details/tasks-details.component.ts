@@ -84,7 +84,7 @@ export class TasksDetailsComponent implements OnInit {
       return;
     }
     if (this.tasksFormular.valid) {
-      const rawValue = this.tasksFormular.getRawValue();
+      const rawValue = this.tasksFormular.value
 
 
       const payload = {
@@ -127,6 +127,16 @@ export class TasksDetailsComponent implements OnInit {
     });
   }
 
+  private formatDate(date: any): string {
+  if (!date) return '';
+  const d = new Date(date);
+  // Validamos que sea una fecha válida antes de intentar transformarla
+  if (isNaN(d.getTime())) return '';
+  
+  // Extraemos YYYY-MM-DD
+  return d.toISOString().split('T')[0];
+}
+
   private patchForm(task: Task): void {
     this.tasksFormular.patchValue({
       id: task.id,
@@ -138,7 +148,7 @@ export class TasksDetailsComponent implements OnInit {
       task_type: typeof task.task_type === 'object' ? (task.task_type as any).name : task.task_type,
       status: typeof task.status === 'object' ? (task.status as any).name : task.status,
       projectId: task.projectId,
-      dueTime: task.dueTime ? task.dueTime.toString().slice(0, 10) : ''
+      dueTime: this.formatDate(task.dueTime)
     });
   }
 
