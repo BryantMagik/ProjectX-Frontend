@@ -1,11 +1,207 @@
 <section class="issues-page">
-  <header class="issues-header">
-    <div>
-      <h1>Issues</h1>
-      <p>Track and manage issues across your projects.</p>
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">My Issues</p>
+      <h1>Mis issues</h1>
+      <p class="subtext">Prioriza, filtra y resuelve incidencias en un solo lugar.</p>
+      <div class="hero-actions">
+        <a class="btn primary" [routerLink]="['/issues/new']">
+          <i class="pi pi-plus"></i>
+          Nuevo issue
+        </a>
+        <button class="btn ghost" (click)="toggleKanban()">
+          <i class="pi pi-th-large"></i>
+          {{ showKanban ? 'Ver lista' : 'Ver tablero' }}
+        </button>
+      </div>
     </div>
-    <a class="btn-new" [routerLink]="['/issues/new']">New Issue</a>
+    <div class="hero-panel">
+      <div class="panel-row">
+        <div class="kpi">
+          <span class="kpi-label">Total</span>
+          <span class="kpi-value">{{ filteredIssues.length }}</span>
+          <span class="kpi-meta">Issues visibles</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Activos</span>
+          <span class="kpi-value">{{ getActiveIssuesCount() }}</span>
+          <span class="kpi-meta">En progreso</span>
+        </div>
+      </div>
+      <div class="panel-row">
+        <div class="kpi success">
+          <span class="kpi-label">Completados</span>
+          <span class="kpi-value">{{ getCompletedIssuesCount() }}</span>
+          <span class="kpi-meta">Resueltos</span>
+        </div>
+        <div class="kpi danger">
+          <span class="kpi-label">Alta prioridad</span>
+          <span class="kpi-value">{{ getHighPriorityIssuesCount() }}</span>
+          <span class="kpi-meta">Revisar hoy</span>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <app-issues-board></app-issues-board>
+  <section class="filters panel">
+    <div class="search-box">
+      <i class="pi pi-search search-icon"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Buscar por codigo o resumen..."
+        class="search-input"
+      />
+    </div>
+    <div class="filter-group">
+      <select
+        [(ngModel)]="selectedStatus"
+        (ngModelChange)="onStatusChange()"
+        class="filter-select"
+        title="Filtrar por estado">
+        <option value="all">Todos los estados</option>
+        <option value="PENDING">PENDING</option>
+        <option value="ONGOING">ONGOING</option>
+        <option value="COMPLETED">COMPLETED</option>
+      </select>
+
+      <select
+        [(ngModel)]="selectedPriority"
+        (ngModelChange)="onPriorityChange()"
+        class="filter-select"
+        title="Filtrar por prioridad">
+        <option value="all">Todas las prioridades</option>
+        <option value="HIGH">HIGH</option>
+        <option value="MEDIUM">MEDIUM</option>
+        <option value="LOW">LOW</option>
+      </select>
+    </div>
+  </section>
+
+  <section class="stats-grid">
+    <article class="stat-card">
+      <div class="stat-header">
+        <h3>Total issues</h3>
+        <span class="chip">Global</span>
+      </div>
+      <div class="ring" style="--accent: #3b82f6;" [style.--percent]="100">
+        <div class="ring-inner">
+          <span class="ring-data">{{ filteredIssues.length }}</span>
+          <span class="ring-percent">100%</span>
+        </div>
+      </div>
+      <p class="stat-note">Vision general del backlog actual.</p>
+    </article>
+
+    <article class="stat-card">
+      <div class="stat-header">
+        <h3>Activos</h3>
+        <span class="chip accent">En foco</span>
+      </div>
+      <div class="ring" style="--accent: #f59e0b;" [style.--percent]="getActiveIssuesCount()">
+        <div class="ring-inner">
+          <span class="ring-data">{{ getActiveIssuesCount() }}</span>
+          <span class="ring-percent">Ahora</span>
+        </div>
+      </div>
+      <p class="stat-note">Issues que requieren seguimiento.</p>
+    </article>
+
+    <article class="stat-card">
+      <div class="stat-header">
+        <h3>Completados</h3>
+        <span class="chip success">Salud</span>
+      </div>
+      <div class="ring" style="--accent: #10b981;" [style.--percent]="getCompletedIssuesCount()">
+        <div class="ring-inner">
+          <span class="ring-data">{{ getCompletedIssuesCount() }}</span>
+          <span class="ring-percent">Done</span>
+        </div>
+      </div>
+      <p class="stat-note">Cierres recientes.</p>
+    </article>
+
+    <article class="stat-card danger">
+      <div class="stat-header">
+        <h3>Alta prioridad</h3>
+        <span class="chip danger">Riesgo</span>
+      </div>
+      <div class="ring" style="--accent: #ef4444;" [style.--percent]="getHighPriorityIssuesCount()">
+        <div class="ring-inner">
+          <span class="ring-data">{{ getHighPriorityIssuesCount() }}</span>
+          <span class="ring-percent">High</span>
+        </div>
+      </div>
+      <p class="stat-note">Revisar bloqueos.</p>
+    </article>
+  </section>
+
+  <section class="list-section" [class.hidden]="showKanban">
+    @if (loading) {
+      <div class="state-card">
+        <div class="spinner"></div>
+        <p>Cargando issues...</p>
+      </div>
+    }
+
+    @if (error && !loading) {
+      <div class="state-card error">
+        <i class="pi pi-exclamation-circle"></i>
+        <p>{{ error }}</p>
+      </div>
+    }
+
+    @if (!loading && !error) {
+      @if (filteredIssues.length === 0) {
+        <div class="state-card">
+          <i class="pi pi-inbox"></i>
+          <h3>No hay issues</h3>
+          <p>{{ searchTerm || selectedStatus !== 'all' || selectedPriority !== 'all' ? 'Ajusta tus filtros para ver resultados.' : 'Crea tu primer issue para empezar.' }}</p>
+        </div>
+      } @else {
+        <div class="tasks-grid">
+          @for (issue of filteredIssues; track issue.id) {
+            <div class="task-card" (click)="navigateToIssueDetails(issue.id)" title="Ver detalles">
+              <div class="task-header">
+                <span class="task-code">{{ issue.code }}</span>
+                <span class="task-priority" [ngClass]="getPriorityClass(issue.priority)">
+                  {{ issue.priority }}
+                </span>
+              </div>
+              <h3 class="task-title">{{ issue.summary }}</h3>
+              @if (issue.description) {
+                <p class="task-description">{{ issue.description }}</p>
+              }
+              <div class="task-footer">
+                <div class="task-meta">
+                  <div class="meta-item">
+                    <i class="pi pi-user"></i>
+                    <span>{{ issue.reporter?.first_name || 'Sin reporter' }}</span>
+                  </div>
+                  <div class="meta-item">
+                    <i class="pi pi-tag"></i>
+                    <span>{{ issue.type }}</span>
+                  </div>
+                </div>
+                <span class="task-status" [ngClass]="getStatusClass(issue.status)">
+                  {{ issue.status }}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+  </section>
+
+  <section class="board-section" [class.hidden]="!showKanban">
+    <div class="board-header">
+      <button class="btn ghost" (click)="toggleKanban()">
+        <i class="pi pi-arrow-left"></i>
+        Volver a lista
+      </button>
+    </div>
+    <app-issues-board></app-issues-board>
+  </section>
 </section>
