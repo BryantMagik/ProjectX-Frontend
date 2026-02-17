@@ -1,38 +1,281 @@
-.label-style {
-    @apply block text-sm font-medium text-gray-700;
+.issues-details-page {
+  --bg: #0f172a;
+  --panel: rgba(30, 41, 59, 0.7);
+  --panel-strong: #1e293b;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --accent: #3b82f6;
+  --accent-2: #6366f1;
+  color: var(--text);
+  min-height: 100vh;
+  padding: 2.5rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(300px, 1.2fr) minmax(260px, 1fr);
+  gap: 2rem;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 1.5rem;
+  padding: 2.25rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.hero-copy h1 {
+  margin: 0.6rem 0 0.4rem;
+  font-size: 2.2rem;
+  letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.subtext {
+  color: var(--muted);
+  max-width: 55ch;
+}
+
+.hero-actions {
+  margin-top: 1.3rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 0.9rem;
+  text-decoration: none;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(59, 130, 246, 0.35);
+}
+
+.btn.ghost {
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: var(--text);
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.hero-panel {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 1.2rem;
+  border: 1px solid rgba(59, 130, 246, 0.18);
+  padding: 1.3rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.kpi {
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 0.85rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  display: grid;
+  gap: 0.35rem;
+}
+
+.kpi-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.kpi-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.kpi-value.reporter {
+  font-size: 0.95rem;
+}
+
+.panel {
+  margin-top: 1.8rem;
+  background: var(--panel);
+  border-radius: 1.1rem;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  padding: 1.4rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.form-section {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-label {
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 0.7rem;
+  background: rgba(15, 23, 42, 0.55);
+  color: #f8fafc;
+  padding: 0.7rem 0.8rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.form-input.readonly {
+  opacity: 0.85;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.4rem;
+}
+
+.comments-title {
+  margin: 0 0 1rem;
+  font-size: 1.05rem;
+}
+
+.task-priority,
+.task-status {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.3rem 0.55rem;
+  border-radius: 0.4rem;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.priority-high {
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.priority-medium {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.priority-low {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.status-completed {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.status-active {
+  background: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.status-ongoing {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.state-card {
+  margin-top: 1.8rem;
+  background: rgba(30, 41, 59, 0.55);
+  border-radius: 1rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+}
+
+.state-card.error {
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #f87171;
+}
+
+.spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid rgba(59, 130, 246, 0.2);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 980px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .issues-details-page {
+    padding: 1.2rem;
   }
 
-
-  .input-style {
-    @apply mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md;
+  .hero {
+    padding: 1.5rem;
   }
 
-  .input-readonly {
-    @apply bg-gray-200;
+  .form-grid {
+    grid-template-columns: 1fr;
   }
-
-
-  .button-primary {
-    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
-  }
-
-
-  .form-container {
-    @apply mt-5 grid grid-cols-1 md:grid-cols-2 gap-4;
-  }
-
-  .table-container {
-    @apply max-w-7xl mx-auto py-6 sm:px-6 lg:px-8;
-  }
-
-  .card {
-    @apply bg-white shadow sm:rounded-lg;
-  }
-
-  .card-content {
-    @apply px-4 py-5 sm:p-6;
-  }
-
-  .heading {
-    @apply text-2xl leading-6 font-medium text-gray-900;
-  }
+}
