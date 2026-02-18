@@ -1,68 +1,111 @@
-<main class="flex-1">
-  <div class="main-container">
-    <!-- Issue Creation Section -->
-    <div class="card">
-      <div class="card-content">
-        <h2 class="heading">Crear Issue</h2>
-        <div class="mt-8">
-          <form [formGroup]="issueForm" (ngSubmit)="onSubmit()">
-            <div class="grid-form">
-              <div>
-                <label for="code" class="label-style">Código</label>
-                <input type="text" id="code" formControlName="code" class="input-style" />
-              </div>
-              <div>
-                <label for="type" class="label-style">Tipo</label>
-                <select id="type" formControlName="type" class="input-style">
-                  @for (type of issueTypes; track type) {
-                    <option [value]="type">{{ type }}</option>
-                  }
-                </select>
-              </div>
-              <div>
-                <label for="summary" class="label-style">Resumen</label>
-                <input type="text" id="summary" formControlName="summary" class="input-style" />
-              </div>
-              <div>
-                <label for="description" class="label-style">Descripción</label>
-                <textarea id="description" formControlName="description" class="input-style"></textarea>
-              </div>
-              <div>
-                <label for="priority" class="label-style">Prioridad</label>
-                <select id="priority" formControlName="priority" class="input-style">
-                  @for (priority of issuePriorities; track priority) {
-                    <option [value]="priority">{{ priority }}</option>
-                  }
-                </select>
-              </div>
-              <div>
-                <label for="projectId" class="label-style">ID de Proyecto</label>
-                <select id="projectId" formControlName="projectId" class="input-style">
-                  @for (project of projects; track project) {
-                    <option [value]="project.id">{{ project.name }}</option>
-                  }
-                </select>
-              </div>
-              <div>
-                <label for="status" class="label-style">Estado</label>
-                <select id="status" formControlName="status" class="input-style">
-                  @for (status of issueStatues; track status) {
-                    <option [value]="status">{{ status }}</option>
-                  }
-                </select>
-              </div>
-            </div>
-            <div class="mt-12">
-              <button type="submit" class="button-primary">Crear Issue</button>
-            </div>
-          </form>
-          <div class="mt-12 flex justify-end">
-            <button class="button-primary" (click)="navigateToIssues()">Volver</button>
-          </div>
-        </div>
+<section class="issues-form-page">
+  <p-toast></p-toast>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Issue Management</p>
+      <h1>Nuevo issue</h1>
+      <p class="subtext">
+        Registra incidencias con prioridad, estado y proyecto para mantener el flujo del equipo ordenado.
+      </p>
+      <div class="hero-actions">
+        <button class="btn ghost" type="button" (click)="navigateToIssues()">
+          <i class="pi pi-arrow-left"></i>
+          Volver a issues
+        </button>
       </div>
     </div>
-  </div>
-</main>
 
+    <div class="hero-panel">
+      <div class="kpi">
+        <span class="kpi-label">Proyectos</span>
+        <span class="kpi-value">{{ projects.length }}</span>
+        <span class="kpi-meta">Disponibles para asignar</span>
+      </div>
+      <div class="kpi success">
+        <span class="kpi-label">Estado inicial</span>
+        <span class="kpi-value">PENDING</span>
+        <span class="kpi-meta">Puedes cambiarlo al crear</span>
+      </div>
+    </div>
+  </header>
 
+  <section class="form-panel">
+    <form [formGroup]="issueForm" (ngSubmit)="onSubmit()" class="form-grid">
+      <div class="field">
+        <label for="code">Codigo</label>
+        <input id="code" type="text" formControlName="code" placeholder="ISS-001" />
+        @if (hasError('code', 'required')) {
+          <small class="error">El codigo es obligatorio.</small>
+        }
+        @if (hasError('code', 'maxlength')) {
+          <small class="error">El codigo no puede superar 10 caracteres.</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="type">Tipo</label>
+        <select id="type" formControlName="type">
+          @for (type of issueTypes; track type) {
+            <option [value]="type">{{ type }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field span-2">
+        <label for="summary">Resumen</label>
+        <input id="summary" type="text" formControlName="summary" placeholder="Describe el issue en una linea" />
+        @if (hasError('summary', 'required')) {
+          <small class="error">El resumen es obligatorio.</small>
+        }
+        @if (hasError('summary', 'maxlength')) {
+          <small class="error">El resumen no puede superar 1024 caracteres.</small>
+        }
+      </div>
+
+      <div class="field span-2">
+        <label for="description">Descripcion</label>
+        <textarea id="description" rows="4" formControlName="description" placeholder="Contexto, pasos para reproducir y resultado esperado"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="priority">Prioridad</label>
+        <select id="priority" formControlName="priority">
+          @for (priority of issuePriorities; track priority) {
+            <option [value]="priority">{{ priority }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="status">Estado</label>
+        <select id="status" formControlName="status">
+          @for (status of issueStatuses; track status) {
+            <option [value]="status">{{ status }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field span-2">
+        <label for="projectId">Proyecto</label>
+        <select id="projectId" formControlName="projectId">
+          <option value="">Selecciona un proyecto</option>
+          @for (project of projects; track project.id) {
+            <option [value]="project.id">{{ project.name }}</option>
+          }
+        </select>
+        @if (hasError('projectId', 'required')) {
+          <small class="error">Debes seleccionar un proyecto.</small>
+        }
+      </div>
+
+      <div class="actions span-2">
+        <button type="button" class="btn ghost" (click)="navigateToIssues()">Cancelar</button>
+        <button type="submit" class="btn primary" [disabled]="submitting">
+          <i class="pi" [ngClass]="submitting ? 'pi-spin pi-spinner' : 'pi-check'"></i>
+          {{ submitting ? 'Creando issue...' : 'Crear issue' }}
+        </button>
+      </div>
+    </form>
+  </section>
+</section>

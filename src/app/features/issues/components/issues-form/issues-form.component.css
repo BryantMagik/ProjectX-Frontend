@@ -1,38 +1,215 @@
-.label-style {
-    @apply block text-sm font-medium text-gray-700;
-  }
-  
-  
-  .input-style {
-    @apply mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md;
-  }
-  
- 
-  .button-primary {
-    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
-  }
-  
- 
-  .main-container {
-    @apply max-w-7xl mx-auto py-6 sm:px-6 lg:px-8;
-  }
-  
+.issues-form-page {
+  --bg: #0f172a;
+  --panel: rgba(30, 41, 59, 0.7);
+  --panel-strong: #1e293b;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --accent: #3b82f6;
+  --accent-2: #6366f1;
+  --success: #10b981;
+  --danger: #ef4444;
+  min-height: 100vh;
+  padding: 2.5rem;
+  color: var(--text);
+}
 
-  .card {
-    @apply bg-white shadow sm:rounded-lg;
-  }
-  
-  .card-content {
-    @apply px-4 py-5 sm:p-6;
-  }
-  
+.hero {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.2fr) minmax(280px, 1fr);
+  gap: 2rem;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 1.5rem;
+  padding: 2.25rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
 
-  .heading {
-    @apply text-2xl leading-6 font-medium text-gray-900;
+.hero-copy h1 {
+  margin: 0.6rem 0 0.4rem;
+  font-size: 2.2rem;
+  letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.subtext {
+  color: var(--muted);
+  max-width: 45ch;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+}
+
+.hero-panel {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 1.2rem;
+  border: 1px solid rgba(59, 130, 246, 0.18);
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.kpi {
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 1rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  display: grid;
+  row-gap: 0.35rem;
+}
+
+.kpi.success {
+  border-color: rgba(16, 185, 129, 0.45);
+  color: #bbf7d0;
+}
+
+.kpi-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.kpi-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.kpi-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.form-panel {
+  margin-top: 1.8rem;
+  background: var(--panel);
+  border-radius: 1.1rem;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  padding: 1.5rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.field label {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(59, 130, 246, 0.24);
+  border-radius: 0.6rem;
+  font-size: 0.9rem;
+  background: rgba(15, 23, 42, 0.5);
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.error {
+  color: #fca5a5;
+  font-size: 0.75rem;
+}
+
+.actions {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 0.9rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(59, 130, 246, 0.35);
+}
+
+.btn.ghost {
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: var(--text);
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
   }
-  
- 
-  .grid-form {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+@media (max-width: 768px) {
+  .issues-form-page {
+    padding: 1.2rem;
   }
-  
+
+  .hero {
+    padding: 1.6rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .span-2 {
+    grid-column: span 1;
+  }
+}
