@@ -17,8 +17,6 @@ export class CommentsComponent implements OnInit {
 
   comments: Comment[] = [];
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor(){}
 

@@ -12,8 +12,6 @@ import { LayoutComponent } from '../../../../layouts/app-layout/layout.component
 export class CommentsBoardComponent {
   private LayoutComponent = inject(LayoutComponent);
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
 
   constructor() {}

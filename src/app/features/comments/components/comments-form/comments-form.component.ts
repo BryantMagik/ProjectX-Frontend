@@ -23,9 +23,6 @@ export class CommentsFormComponent implements OnInit{
   isEditing = false;
   commentId: string | null = null;
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
   constructor() {}
 
   ngOnInit(): void {
