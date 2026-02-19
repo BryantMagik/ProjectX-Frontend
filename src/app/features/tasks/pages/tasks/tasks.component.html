@@ -163,7 +163,7 @@
       } @else {
         <div class="tasks-grid">
           @for (task of filteredTasks; track task.id) {
-            <div class="task-card" (click)="navigateToTaskDetails(task.id)" title="Ver detalles">
+            <button class="task-card" (click)="navigateToTaskDetails(task.id)" title="Ver detalles" type="button">
               <div class="task-header">
                 <span class="task-code">{{ task.code }}</span>
                 <span class="task-priority" [ngClass]="getPriorityClass(task.priority)">
@@ -185,7 +185,7 @@
                   {{ task.status }}
                 </span>
               </div>
-            </div>
+            </button>
           }
         </div>
       }
@@ -203,11 +203,11 @@
   </section>
 
   @if (showProjectModal) {
-    <div class="modal-backdrop" (click)="closeCreateTaskModal()">
-      <div class="modal-card" (click)="$event.stopPropagation()">
+    <div class="modal-backdrop" (click)="closeCreateTaskModal()" (keydown.escape)="closeCreateTaskModal()" role="presentation">
+      <div class="modal-card" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()" role="dialog" aria-modal="true" tabindex="0">
         <div class="modal-header">
           <h3>Selecciona un proyecto</h3>
-          <button class="btn ghost" type="button" (click)="closeCreateTaskModal()">
+          <button class="btn ghost" type="button" aria-label="Cerrar modal" (click)="closeCreateTaskModal()">
             <i class="pi pi-times"></i>
           </button>
         </div>
