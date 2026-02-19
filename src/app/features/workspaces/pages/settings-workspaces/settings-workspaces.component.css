@@ -10,10 +10,6 @@
   --danger: #ef4444;
   min-height: 100vh;
   padding: 2.5rem;
-  background:
-    radial-gradient(1100px 560px at 12% -10%, rgba(59, 130, 246, 0.18), transparent 60%),
-    radial-gradient(900px 520px at 100% 0%, rgba(99, 102, 241, 0.16), transparent 55%),
-    var(--bg);
   color: var(--text);
   font-family: inherit;
 }
