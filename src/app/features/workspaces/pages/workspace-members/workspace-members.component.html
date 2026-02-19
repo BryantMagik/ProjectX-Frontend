@@ -30,18 +30,20 @@
           <span class="kpi-value">{{ getActiveInvitationsCount() }}</span>
           <span class="kpi-meta">Activas</span>
         </div>
-        <div class="kpi danger" *ngIf="invitations.length > 0; else noInvites">
-          <span class="kpi-label">Pendientes</span>
-          <span class="kpi-value">{{ invitations.length }}</span>
-          <span class="kpi-meta">En espera</span>
-        </div>
-        <ng-template #noInvites>
+
+        @if (invitations.length > 0) {
+          <div class="kpi danger">
+            <span class="kpi-label">Pendientes</span>
+            <span class="kpi-value">{{ invitations.length }}</span>
+            <span class="kpi-meta">En espera</span>
+          </div>
+        } @else {
           <div class="kpi">
             <span class="kpi-label">Pendientes</span>
             <span class="kpi-value">0</span>
             <span class="kpi-meta">Sin pendientes</span>
           </div>
-        </ng-template>
+        }
       </div>
     </div>
   </header>

@@ -1,6 +1,5 @@
 <div class="navbar">
   <div class="navbar-container">
-    <!-- Logo móvil -->
     <div class="mobile-logo">
       <div class="mobile-logo-icon">
         <i class="pi pi-th-large text-white"></i>
@@ -8,9 +7,7 @@
       <h4 class="mobile-logo-text">ProjectX</h4>
     </div>
 
-    <!-- Navegación -->
     <nav class="navbar-content">
-      <!-- Breadcrumb o título con mejor diseño -->
       <div class="navbar-title">
         <div class="breadcrumb-container">
           <i class="pi pi-home breadcrumb-icon"></i>
@@ -18,41 +15,22 @@
         </div>
       </div>
 
-      <!-- Barra de búsqueda (opcional para desktop) -->
-      <div class="navbar-search hidden lg:flex">
-        <div class="search-wrapper">
-          <i class="pi pi-search search-icon"></i>
-          <input
-            type="text"
-            placeholder="Search projects, tasks..."
-            class="search-input"
-          />
-          <kbd class="search-kbd">Ctrl+K</kbd>
-        </div>
-      </div>
-
-      <!-- Acciones -->
       <div class="navbar-actions">
-        <!-- Botón de búsqueda móvil -->
         <button class="action-button lg:hidden" title="Search">
           <i class="pi pi-search"></i>
         </button>
 
-        <!-- Notificaciones -->
         <button class="action-button hidden md:flex" title="Notifications">
           <i class="pi pi-bell"></i>
           <span class="notification-badge">3</span>
         </button>
 
-        <!-- Settings -->
         <button class="action-button hidden md:flex" title="Settings">
           <i class="pi pi-cog"></i>
         </button>
 
-        <!-- Dropdown móvil -->
         <app-mobil-dropdown class="md:hidden"></app-mobil-dropdown>
 
-        <!-- Avatar -->
         <app-avatar-dropdown [user]="user"></app-avatar-dropdown>
       </div>
     </nav>

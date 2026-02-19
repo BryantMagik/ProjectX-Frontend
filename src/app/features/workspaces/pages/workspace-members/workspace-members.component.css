@@ -460,6 +460,7 @@
 .btn-done {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
   color: white;
+  border: 1px solid rgba(59, 130, 246, 0.5);
 }
 
 .link-display {
