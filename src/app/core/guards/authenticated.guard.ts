@@ -9,7 +9,6 @@ export class AdminGuard implements CanActivate {
     constructor(private authService: AuthService, private router: Router) { }
 
     canActivate(): boolean {
-        console.log('AuthGuard#canActivate Verificando si el usuario está autenticado');
         if (this.authService.isAuthenticated()) {
             return true;
         } else {

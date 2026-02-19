@@ -76,7 +76,6 @@ export class ProjectsComponent implements OnInit {
 
             this.projects = workspaceProjects;
             this.filteredProjects = workspaceProjects;
-            console.log('Projects loaded for workspace:', this.currentWorkspaceId, workspaceProjects);
           }
         },
         error: (err) => {
@@ -95,11 +94,9 @@ export class ProjectsComponent implements OnInit {
         next: (authors: User[] | null) => {
           if (authors) {
             this.authors = authors;
-            console.log('Authors loaded:', authors);
           }
         },
-        error: (err) => {
-          console.warn('Could not load users:', err);
+        error: () => {
           // No mostrar error si solo fallan los usuarios
         }
       })

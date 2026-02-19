@@ -44,7 +44,6 @@ export class LayoutComponent implements OnInit {
     this.loadUserProfile()
     this.route.paramMap.subscribe((params) => {
       this.workspaceId = params.get('workspaceId')
-      console.log('Workspace ID Layout:', this.workspaceId)
     })
   }
 

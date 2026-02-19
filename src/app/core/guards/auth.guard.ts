@@ -13,7 +13,6 @@ export class AuthGuard implements CanActivate {
     constructor() { }
 
     canActivate(): boolean {
-        console.log('AuthGuard#canActivate Verificando si el usuario está autenticado');
         if (this.authService.isAuthenticated()) {
             return true;
         } else {

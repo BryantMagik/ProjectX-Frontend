@@ -73,7 +73,6 @@ export class ProjectListComponent implements OnInit, OnChanges, OnDestroy {
         next: (projects: Project[] | null) => {
           if (projects) {
             this.projects = projects
-            console.log('Projects loaded for workspace:', workspaceId, projects)
           }
         },
         error: () => {

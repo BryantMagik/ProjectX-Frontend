@@ -64,8 +64,5 @@ export class CustomSidebarComponent implements OnInit {
     this.selectedWorkspaceSubject.next(workspaceId)
     this.router.navigate([`/workspaces/${workspaceId}/dashboard`])
     this.workspaceSelected.emit(workspaceId)
-
-    console.log('Workspace ID en Sidebar:', workspaceId);
-
   }
 }

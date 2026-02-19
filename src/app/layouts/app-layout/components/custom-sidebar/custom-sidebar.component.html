@@ -31,7 +31,7 @@
       <i class="pi pi-bars mr-2"></i>
       Menu
     </div>
-    @for (item of menuItems; track item) {
+    @for (item of menuItems; track item.route) {
       <a
         class="sidebar-menu-item"
         [routerLink]="item.route"
