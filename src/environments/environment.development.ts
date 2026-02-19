@@ -42,7 +42,8 @@ export const apiRoutes = {
   issue: {
     apiUrl: `${environment.apiUrl}issues`,
     getOnlyOwn: `${environment.apiUrl}issues/user/issues`,
-    getById: `${environment.apiUrl}issues/id`
+    getById: `${environment.apiUrl}issues/id`,
+    getLatestCode: `${environment.apiUrl}issues/latest-code`
   },
   comment: {
     apiUrl: `${environment.apiUrl}comments`,

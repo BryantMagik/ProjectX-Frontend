@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Issue } from '../../../core/models/issue.interface';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { apiRoutes } from "../../../../environments/environment";
+import { apiRoutes } from "../../../../environments/environment.development";
 
 
 
@@ -38,6 +38,10 @@ export class IssueService {
       return this.apiService.get<Issue[]>(`${apiRoutes.issue.apiUrl}`, { headers });
     }
     return of([]);
+  }
+
+  getLatestIssueCode(): Observable<{ code: string | null }> {
+    return this.apiService.get<{ code: string | null }>(apiRoutes.issue.getLatestCode);
   }
 
   getIssueById(id: string): Observable<Issue | null> {
