@@ -1,153 +1,148 @@
-<div class="projects-container">
-  <div class="projects-header">
-    <div class="header-content">
-      <div class="header-title">
-        <i class="pi pi-briefcase text-3xl"></i>
-        <div>
-          <h1 class="title">Projects</h1>
-          <p class="subtitle">Manage your workspace projects</p>
+<section class="projects">
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Workspace</p>
+      <h1>Projects</h1>
+      <p class="subtext">Manage projects, status, and team members from a centralized view.</p>
+      <div class="hero-actions">
+        <button class="btn primary" (click)="navigateToProjectForm()">
+          <i class="pi pi-plus"></i>
+          Create Project
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      <div class="panel-row">
+        <div class="kpi">
+          <p class="kpi-label">Total</p>
+          <p class="kpi-value">{{ filteredProjects.length }}</p>
+          <p class="kpi-meta">Projects</p>
+        </div>
+        <div class="kpi">
+          <p class="kpi-label">Active</p>
+          <p class="kpi-value">{{ getActiveProjectsCount() }}</p>
+          <p class="kpi-meta">In Development</p>
         </div>
       </div>
-      <button class="btn-primary" (click)="navigateToProjectForm()">
-        <i class="pi pi-plus"></i>
-        New Project
-      </button>
+      <div class="panel-row">
+        <div class="kpi success">
+          <p class="kpi-label">Completed</p>
+          <p class="kpi-value">{{ getCompletedProjectsCount() }}</p>
+          <p class="kpi-meta">Finished</p>
+        </div>
+        <div class="kpi">
+          <p class="kpi-label">Ongoing</p>
+          <p class="kpi-value">{{ getOngoingProjectsCount() }}</p>
+          <p class="kpi-meta">In Progress</p>
+        </div>
+      </div>
     </div>
-  </div>
+  </header>
 
-  <div class="filters-section">
+  <section class="panel section">
+    <div class="panel-header">
+      <h2>Project Directory</h2>
+      <span class="chip accent">{{ filteredProjects.length }}</span>
+    </div>
+
     <div class="search-box">
       <i class="pi pi-search search-icon"></i>
       <input
         type="text"
         [(ngModel)]="searchTerm"
         (ngModelChange)="onSearchChange()"
-        placeholder="Search projects by name, code, or description..."
+        placeholder="Search by name, code, or description..."
         class="search-input"
       />
     </div>
-  </div>
-
-  <div class="stats-cards">
-    <div class="stat-card">
-      <div class="stat-icon stat-total">
-        <i class="pi pi-list"></i>
-      </div>
-      <div class="stat-info">
-        <p class="stat-value">{{ filteredProjects.length }}</p>
-        <p class="stat-label">Total Projects</p>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-icon stat-active">
-        <i class="pi pi-clock"></i>
-      </div>
-      <div class="stat-info">
-        <p class="stat-value">{{ getActiveProjectsCount() }}</p>
-        <p class="stat-label">Active</p>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-icon stat-completed">
-        <i class="pi pi-check-circle"></i>
-      </div>
-      <div class="stat-info">
-        <p class="stat-value">{{ getCompletedProjectsCount() }}</p>
-        <p class="stat-label">Completed</p>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-icon stat-ongoing">
-        <i class="pi pi-sync"></i>
-      </div>
-      <div class="stat-info">
-        <p class="stat-value">{{ getOngoingProjectsCount() }}</p>
-        <p class="stat-label">Ongoing</p>
-      </div>
-    </div>
-  </div>
+  </section>
 
   @if (loading) {
-    <div class="loading-state">
-      <div class="spinner"></div>
+    <div class="state-card">
+      <i class="pi pi-spin pi-spinner"></i>
       <p>Loading projects...</p>
     </div>
   }
 
   @if (error && !loading) {
-    <div class="error-state">
+    <div class="state-card error">
       <i class="pi pi-exclamation-circle"></i>
       <p>{{ error }}</p>
     </div>
   }
 
   @if (!loading && !error) {
-    @if (filteredProjects.length === 0) {
-      <div class="empty-state">
-        <i class="pi pi-inbox"></i>
-        <h3>No projects found</h3>
-        <p>{{ searchTerm ? 'Try adjusting your search' : 'Create your first project to get started' }}</p>
+    <section class="panel section">
+      <div class="panel-header">
+        <h2>Available Projects</h2>
+        <span class="chip">{{ filteredProjects.length }}</span>
       </div>
-    } @else {
-      <div class="projects-grid">
-        @for (proj of filteredProjects; track proj.id) {
-          <div class="project-card" (click)="navigateToProject(proj.id)" title="View Project Details">
-            <div class="project-header">
-              @if (proj.image) {
-                <img [src]="proj.image" alt="{{proj.name}}" class="project-image">
-              } @else {
-                <div class="project-image-placeholder">
-                  <i class="pi pi-folder text-6xl"></i>
-                </div>
-              }
-              <div class="project-overlay">
-                <span class="project-code">{{ proj.code }}</span>
-              </div>
-            </div>
 
-            <div class="project-body">
-              <div class="project-title-row">
-                <h3 class="project-title">{{ proj.name }}</h3>
-                <span class="project-status" [ngClass]="'status-' + proj.status.toLowerCase()">
-                  {{ proj.status }}
-                </span>
-              </div>
-
-              @if (proj.description) {
-                <p class="project-description">{{ proj.description }}</p>
-              } @else {
-                <p class="project-description no-description">No description available</p>
-              }
-
-              <div class="project-tags">
-                <span class="project-tag tag-type">{{ proj.type }}</span>
-                @if (proj.visibility) {
-                  <span class="project-tag tag-visibility">
-                    <i class="pi" [ngClass]="proj.visibility === 'public' ? 'pi-eye' : 'pi-lock'"></i>
-                    {{ proj.visibility }}
-                  </span>
-                }
-              </div>
-
-              <div class="project-footer">
-                <div class="project-author">
-                  <div class="author-avatar">
-                    @if (proj.author.profile_picture) {
-                      <img [src]="proj.author.profile_picture" alt="{{proj.author.first_name}}">
-                    } @else {
-                      <span>{{ proj.author.first_name[0] || 'U' }}{{ proj.author.last_name[0] || '' }}</span>
-                    }
+      @if (filteredProjects.length === 0) {
+        <div class="state-card">
+          <i class="pi pi-inbox"></i>
+          <h3>No projects available</h3>
+          <p>{{ searchTerm ? 'No results found. Try adjusting your search criteria.' : 'No projects in this workspace yet. Create your first project to get started.' }}</p>
+        </div>
+      } @else {
+        <div class="projects-grid">
+          @for (proj of filteredProjects; track proj.id) {
+            <article class="project-card" (click)="navigateToProject(proj.id)" title="View project details">
+              <div class="project-header">
+                @if (proj.image) {
+                  <img [src]="proj.image" alt="{{ proj.name }}" class="project-image" />
+                } @else {
+                  <div class="project-image-placeholder">
+                    <i class="pi pi-folder text-md"></i>
                   </div>
-                  <span class="author-name">{{ proj.author.first_name || 'Unknown' }} {{ proj.author.last_name || '' }}</span>
+                }
+                <div class="project-overlay">
+                  <span class="project-code">{{ proj.code }}</span>
                 </div>
               </div>
-            </div>
-          </div>
-        }
-      </div>
-    }
+
+              <div class="project-body">
+                <div class="project-title-row">
+                  <h3 class="project-title">{{ proj.name }}</h3>
+                  <span class="project-status" [ngClass]="'status-' + (proj.status || 'inactive').toLowerCase()">
+                    {{ proj.status || 'Inactive' }}
+                  </span>
+                </div>
+
+                @if (proj.description) {
+                  <p class="project-description">{{ proj.description }}</p>
+                } @else {
+                  <p class="project-description no-description">No description available</p>
+                }
+
+                <div class="project-tags">
+                  <span class="project-tag tag-type">{{ proj.type || 'Uncategorized' }}</span>
+                  @if (proj.visibility) {
+                    <span class="project-tag tag-visibility">
+                      <i class="pi" [ngClass]="proj.visibility === 'public' ? 'pi-eye' : 'pi-lock'"></i>
+                      {{ proj.visibility === 'public' ? 'Public' : 'Private' }}
+                    </span>
+                  }
+                </div>
+
+                <div class="project-footer">
+                  <div class="project-author">
+                    <div class="author-avatar">
+                      @if (proj.author?.profile_picture) {
+                        <img [src]="proj.author?.profile_picture" alt="{{ proj.author?.first_name || 'User' }}" />
+                      } @else {
+                        <span>{{ proj.author?.first_name?.[0] || 'U' }}{{ proj.author?.last_name?.[0] || '' }}</span>
+                      }
+                    </div>
+                    <span class="author-name">{{ proj.author?.first_name || 'Unassigned' }} {{ proj.author?.last_name || '' }}</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </section>
   }
-</div>
+</section>

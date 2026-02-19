@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit {
             this.projects = projects
           }
         },
-        error: () => this.error = 'Failed to load projects',
+        error: () => this.error = 'Failed to load projects. Please try again.',
         complete: () => this.loading = false
       })
     ).subscribe()

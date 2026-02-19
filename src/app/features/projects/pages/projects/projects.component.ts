@@ -45,7 +45,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   navigateToProjectForm() {
-    // Obtener workspaceId de sessionStorage (mismo método que usa workspace-switcher)
+    // Get workspaceId from sessionStorage (same method used by workspace-switcher)
     const userId = sessionStorage.getItem('userId');
     const storageKey = userId ? `workspace_${userId}` : 'selectedWorkspaceId';
     const workspaceId = sessionStorage.getItem(storageKey);
@@ -69,7 +69,7 @@ export class ProjectsComponent implements OnInit {
       tap({
         next: (projects: Project[] | null) => {
           if (projects) {
-            // Filtrar solo proyectos del workspace actual
+            // Filter only projects from current workspace
             const workspaceProjects = this.currentWorkspaceId
               ? projects.filter(p => p.workspaceId === this.currentWorkspaceId)
               : projects;
@@ -80,7 +80,7 @@ export class ProjectsComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error loading projects:', err);
-          this.error = 'Failed to load projects';
+          this.error = 'Failed to load projects. Please try again.';
           this.loading = false;
         },
         complete: () => this.loading = false
@@ -97,7 +97,7 @@ export class ProjectsComponent implements OnInit {
           }
         },
         error: () => {
-          // No mostrar error si solo fallan los usuarios
+          // Don't show error if only users fail to load
         }
       })
     ).subscribe();

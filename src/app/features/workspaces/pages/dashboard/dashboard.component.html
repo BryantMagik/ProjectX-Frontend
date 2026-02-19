@@ -2,15 +2,15 @@
   <header class="hero">
     <div class="hero-copy">
       <p class="eyebrow">Workspace Overview</p>
-      <h1>Panel de Control</h1>
-      <p class="subtext">Visibilidad clara del progreso, salud del trabajo y próximos focos.</p>
+      <h1>Dashboard</h1>
+      <p class="subtext">Clear visibility of progress, work health, and upcoming priorities.</p>
       <div class="hero-actions">
         <a class="btn primary" [routerLink]="['/projects/new']">
           <i class="pi pi-plus"></i>
-          Nuevo Proyecto
+          New Project
         </a>
         <a class="btn ghost" [routerLink]="['/tasks']">
-          Ver tareas
+          View Tasks
         </a>
       </div>
     </div>
@@ -19,30 +19,30 @@
         <div class="kpi">
           <span class="kpi-label">Total</span>
           <span class="kpi-value">{{ taskStats.total }}</span>
-          <span class="kpi-meta">Tareas registradas</span>
+          <span class="kpi-meta">Registered tasks</span>
         </div>
         <div class="kpi">
-          <span class="kpi-label">Asignadas</span>
+          <span class="kpi-label">Assigned</span>
           <span class="kpi-value">{{ taskStats.assigned }}</span>
-          <span class="kpi-meta">{{ getPercentage(taskStats.assigned, taskStats.total) }} del total</span>
+          <span class="kpi-meta">{{ getPercentage(taskStats.assigned, taskStats.total) }} of total</span>
         </div>
       </div>
       <div class="panel-row">
         <div class="kpi">
-          <span class="kpi-label">Completadas</span>
+          <span class="kpi-label">Completed</span>
           <span class="kpi-value">{{ taskStats.completed }}</span>
-          <span class="kpi-meta">{{ getPercentage(taskStats.completed, taskStats.total) }} del total</span>
+          <span class="kpi-meta">{{ getPercentage(taskStats.completed, taskStats.total) }} of total</span>
         </div>
         <div class="kpi danger" *ngIf="taskStats.overdue > 0; else noOverdue">
-          <span class="kpi-label">Vencidas</span>
+          <span class="kpi-label">Overdue</span>
           <span class="kpi-value">{{ taskStats.overdue }}</span>
-          <span class="kpi-meta">Requieren atencion</span>
+          <span class="kpi-meta">Require attention</span>
         </div>
         <ng-template #noOverdue>
           <div class="kpi success">
-            <span class="kpi-label">Vencidas</span>
+            <span class="kpi-label">Overdue</span>
             <span class="kpi-value">0</span>
-            <span class="kpi-meta">Sin bloqueos</span>
+            <span class="kpi-meta">No blockers</span>
           </div>
         </ng-template>
       </div>
@@ -52,7 +52,7 @@
   <section class="stats-grid">
     <article class="stat-card">
       <div class="stat-header">
-        <h3>Tareas Totales</h3>
+        <h3>Total Tasks</h3>
         <span class="chip">Global</span>
       </div>
       <div class="ring" style="--accent: #0ea5a4;" [style.--percent]="100">
@@ -61,13 +61,13 @@
           <span class="ring-percent">100%</span>
         </div>
       </div>
-      <p class="stat-note">Vision completa de la carga del equipo.</p>
+      <p class="stat-note">Complete view of team workload.</p>
     </article>
 
     <article class="stat-card">
       <div class="stat-header">
-        <h3>Mis Asignaciones</h3>
-        <span class="chip accent">En foco</span>
+        <h3>My Assignments</h3>
+        <span class="chip accent">In Focus</span>
       </div>
       <div class="ring" style="--accent: #2563eb;" [style.--percent]="getPercentageValue(taskStats.assigned, taskStats.total)">
         <div class="ring-inner">
@@ -75,13 +75,13 @@
           <span class="ring-percent">{{ getPercentage(taskStats.assigned, taskStats.total) }}</span>
         </div>
       </div>
-      <p class="stat-note">Carga directa asignada a ti.</p>
+      <p class="stat-note">Direct workload assigned to you.</p>
     </article>
 
     <article class="stat-card">
       <div class="stat-header">
-        <h3>Completadas</h3>
-        <span class="chip success">Salud</span>
+        <h3>Completed</h3>
+        <span class="chip success">Health</span>
       </div>
       <div class="ring" style="--accent: #22c55e;" [style.--percent]="getPercentageValue(taskStats.completed, taskStats.total)">
         <div class="ring-inner">
@@ -89,13 +89,13 @@
           <span class="ring-percent">{{ getPercentage(taskStats.completed, taskStats.total) }}</span>
         </div>
       </div>
-      <p class="stat-note">Velocidad de cierre del equipo.</p>
+      <p class="stat-note">Team completion velocity.</p>
     </article>
 
     <article class="stat-card danger" *ngIf="taskStats.overdue > 0; else overdueEmpty">
       <div class="stat-header">
-        <h3>Vencidas</h3>
-        <span class="chip danger">Riesgo</span>
+        <h3>Overdue</h3>
+        <span class="chip danger">Risk</span>
       </div>
       <div class="ring" style="--accent: #ef4444;" [style.--percent]="getPercentageValue(taskStats.overdue, taskStats.total)">
         <div class="ring-inner">
@@ -103,13 +103,13 @@
           <span class="ring-percent">{{ getPercentage(taskStats.overdue, taskStats.total) }}</span>
         </div>
       </div>
-      <p class="stat-note">Prioriza resolver bloqueos.</p>
+      <p class="stat-note">Prioritize resolving blockers.</p>
     </article>
     <ng-template #overdueEmpty>
       <article class="stat-card muted">
         <div class="stat-header">
-          <h3>Vencidas</h3>
-          <span class="chip neutral">Estable</span>
+          <h3>Overdue</h3>
+          <span class="chip neutral">Stable</span>
         </div>
         <div class="ring" style="--accent: #94a3b8;" [style.--percent]="0">
           <div class="ring-inner">
@@ -117,7 +117,7 @@
             <span class="ring-percent">0%</span>
           </div>
         </div>
-        <p class="stat-note">Todo en tiempo, gran trabajo.</p>
+        <p class="stat-note">Everything on time, great work.</p>
       </article>
     </ng-template>
   </section>
@@ -126,10 +126,10 @@
     <article class="panel">
       <div class="panel-header">
         <div>
-          <h2>Proyectos activos</h2>
-          <p>Seguimiento rapido de los proyectos del workspace.</p>
+          <h2>Active Projects</h2>
+          <p>Quick tracking of workspace projects.</p>
         </div>
-        <a class="link" [routerLink]="['/projects']">Ver todos</a>
+        <a class="link" [routerLink]="['/projects']">View all</a>
       </div>
 
       <div class="project-list" *ngIf="projects.length; else emptyProjects">
@@ -148,8 +148,8 @@
       </div>
       <ng-template #emptyProjects>
         <div class="empty-state">
-          <p>Aun no hay proyectos en este workspace.</p>
-          <a class="btn ghost" [routerLink]="['/projects/new']">Crear proyecto</a>
+          <p>No projects in this workspace yet.</p>
+          <a class="btn ghost" [routerLink]="['/projects/new']">Create project</a>
         </div>
       </ng-template>
     </article>
@@ -157,25 +157,25 @@
     <article class="panel">
       <div class="panel-header">
         <div>
-          <h2>Insights rapidos</h2>
-          <p>Senales para decidir en minutos.</p>
+          <h2>Quick Insights</h2>
+          <p>Key signals to decide in minutes.</p>
         </div>
       </div>
       <div class="insights">
         <div class="insight">
-          <span class="insight-label">Eficiencia</span>
+          <span class="insight-label">Efficiency</span>
           <span class="insight-value">{{ getPercentage(taskStats.completed, taskStats.total) }}</span>
-          <span class="insight-meta">Tareas completadas</span>
+          <span class="insight-meta">Tasks completed</span>
         </div>
         <div class="insight">
-          <span class="insight-label">Carga</span>
+          <span class="insight-label">Workload</span>
           <span class="insight-value">{{ taskStats.assigned }}</span>
-          <span class="insight-meta">Asignadas a ti</span>
+          <span class="insight-meta">Assigned to you</span>
         </div>
         <div class="insight">
-          <span class="insight-label">Riesgo</span>
+          <span class="insight-label">Risk</span>
           <span class="insight-value">{{ taskStats.overdue }}</span>
-          <span class="insight-meta">Vencidas</span>
+          <span class="insight-meta">Overdue</span>
         </div>
       </div>
     </article>
