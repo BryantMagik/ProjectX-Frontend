@@ -50,6 +50,7 @@
             placeholder="Type a name to generate..."
             class="form-input code-input"
             readonly
+            title="Auto-generated project code"
           />
           <span class="code-hint">Based on project name (e.g., "Marketing" → MAR-001)</span>
         </div>
@@ -86,7 +87,8 @@
             optionLabel="name"
             optionValue="value"
             placeholder="Select type"
-            styleClass="w-full custom-select"
+            class="w-full custom-select"
+            title="Select project type"
           ></p-select>
           @if (projectForm.get('type')?.hasError('required') && projectForm.get('type')?.touched) {
             <span class="error-text">Type is required</span>
@@ -105,7 +107,8 @@
             optionLabel="name"
             optionValue="value"
             placeholder="Select status"
-            styleClass="w-full custom-select"
+            class="w-full custom-select"
+            title="Select project status"
           ></p-select>
         </div>
 
@@ -121,7 +124,7 @@
             optionLabel="name"
             optionValue="value"
             placeholder="Select visibility"
-            styleClass="w-full custom-select"
+            class="w-full custom-select"
           ></p-select>
         </div>
       </div>
@@ -174,7 +177,7 @@
           optionLabel="first_name"
           optionValue="id"
           placeholder="Select project lead"
-          styleClass="w-full custom-select"
+          class="w-full custom-select"
           [showClear]="true"
         >
           <ng-template pTemplate="selectedItem" let-selected>
@@ -220,7 +223,7 @@
               type="file"
               (change)="onFileSelected($event)"
               accept=".jpg, .jpeg, .png, .svg"
-              style="display: none;"
+              title="Select project image file"
             />
             <button
               type="button"

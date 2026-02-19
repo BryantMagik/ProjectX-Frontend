@@ -132,33 +132,38 @@ export class TasksComponent implements OnInit {
 
   getPriorityClass(priority: string): string {
     const priorityMap: { [key: string]: string } = {
-      'high': 'priority-high',
-      'medium': 'priority-medium',
-      'low': 'priority-low'
+      'critical': 'priority-critical',
+      'high':     'priority-high',
+      'medium':   'priority-medium',
+      'low':      'priority-low',
     };
     return priorityMap[priority?.toLowerCase()] || 'priority-low';
   }
 
   getStatusClass(status: string): string {
     const statusMap: { [key: string]: string } = {
-      'completed': 'status-completed',
-      'active': 'status-active',
-      'ongoing': 'status-ongoing',
-      'inactive': 'status-inactive'
+      'backlog':     'status-backlog',
+      'todo':        'status-todo',
+      'in_progress': 'status-in-progress',
+      'blocked':     'status-blocked',
+      'review':      'status-review',
+      'testing':     'status-testing',
+      'done':        'status-done',
+      'cancelled':   'status-cancelled',
     };
-    return statusMap[status?.toLowerCase()] || 'status-inactive';
+    return statusMap[status?.toLowerCase()] || 'status-backlog';
   }
 
   getActiveTasksCount(): number {
-    return this.tasks.filter(t => t.status === 'Active' || t.status === 'Ongoing').length;
+    return this.tasks.filter(t => t.status === 'IN_PROGRESS' || t.status === 'REVIEW' || t.status === 'TESTING').length;
   }
 
   getCompletedTasksCount(): number {
-    return this.tasks.filter(t => t.status === 'Completed').length;
+    return this.tasks.filter(t => t.status === 'DONE').length;
   }
 
   getHighPriorityTasksCount(): number {
-    return this.tasks.filter(t => t.priority?.toLowerCase() === 'high').length;
+    return this.tasks.filter(t => t.priority === 'HIGH' || t.priority === 'CRITICAL').length;
   }
 
   toggleKanban(): void {

@@ -62,6 +62,20 @@ export class ProjectListComponent implements OnInit, OnChanges, OnDestroy {
     this.router.navigate(['/projects', projectId])
   }
 
+  getStatusClass(status: string | null | undefined): string {
+    const normalizedStatus = (status || 'Inactive').toLowerCase();
+    switch (normalizedStatus) {
+      case 'active':
+        return 'status-active';
+      case 'completed':
+        return 'status-completed';
+      case 'ongoing':
+        return 'status-ongoing';
+      default:
+        return 'status-inactive';
+    }
+  }
+
   private getProjectByWorkspaceId(workspaceId: string): void {
     // Limpiar la suscripción anterior si existe
     if (this.projectsSubscription) {

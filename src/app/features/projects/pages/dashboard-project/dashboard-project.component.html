@@ -92,7 +92,23 @@
               <span>Create First Task</span>
             </button>
           </div>
+        } @else if (filteredTasks.length === 0) {
+          <div class="empty-state">
+            <i class="pi pi-search"></i>
+            <h3>No matches found</h3>
+            <p>Try another search term or clear the filters.</p>
+          </div>
         } @else {
+          <div class="tasks-summary">
+            <span class="summary-pill">
+              <i class="pi pi-list"></i>
+              {{ filteredTasks.length }} tasks
+            </span>
+            <span class="summary-pill">
+              <i class="pi pi-check-circle"></i>
+              {{ task.length }} total
+            </span>
+          </div>
           <div class="table-container">
             <table class="tasks-table">
               <thead>
@@ -105,7 +121,7 @@
                 </tr>
               </thead>
               <tbody>
-                @for (t of task; track t.id) {
+                @for (t of filteredTasks; track t.id) {
                   <tr class="task-row" (click)="navigateToTask(t.id)">
                     <td>
                       <div class="task-info">

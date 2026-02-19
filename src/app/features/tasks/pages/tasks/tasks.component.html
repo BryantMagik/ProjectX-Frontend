@@ -80,63 +80,6 @@
     </div>
   </section>
 
-  <section class="stats-grid">
-    <article class="stat-card">
-      <div class="stat-header">
-        <h3>Total tareas</h3>
-        <span class="chip">Global</span>
-      </div>
-      <div class="ring" style="--accent: #3b82f6;" [style.--percent]="100">
-        <div class="ring-inner">
-          <span class="ring-data">{{ filteredTasks.length }}</span>
-          <span class="ring-percent">100%</span>
-        </div>
-      </div>
-      <p class="stat-note">Visión del universo actual.</p>
-    </article>
-
-    <article class="stat-card">
-      <div class="stat-header">
-        <h3>Activas</h3>
-        <span class="chip accent">En foco</span>
-      </div>
-      <div class="ring" style="--accent: #f59e0b;" [style.--percent]="getActiveTasksCount()">
-        <div class="ring-inner">
-          <span class="ring-data">{{ getActiveTasksCount() }}</span>
-          <span class="ring-percent">Ahora</span>
-        </div>
-      </div>
-      <p class="stat-note">Tareas que requieren avance.</p>
-    </article>
-
-    <article class="stat-card">
-      <div class="stat-header">
-        <h3>Completadas</h3>
-        <span class="chip success">Salud</span>
-      </div>
-      <div class="ring" style="--accent: #10b981;" [style.--percent]="getCompletedTasksCount()">
-        <div class="ring-inner">
-          <span class="ring-data">{{ getCompletedTasksCount() }}</span>
-          <span class="ring-percent">Done</span>
-        </div>
-      </div>
-      <p class="stat-note">Cierre de trabajo.</p>
-    </article>
-
-    <article class="stat-card danger">
-      <div class="stat-header">
-        <h3>Alta prioridad</h3>
-        <span class="chip danger">Riesgo</span>
-      </div>
-      <div class="ring" style="--accent: #ef4444;" [style.--percent]="getHighPriorityTasksCount()">
-        <div class="ring-inner">
-          <span class="ring-data">{{ getHighPriorityTasksCount() }}</span>
-          <span class="ring-percent">High</span>
-        </div>
-      </div>
-      <p class="stat-note">Revisar bloqueos.</p>
-    </article>
-  </section>
 
   <section class="list-section" [class.hidden]="showKanban">
     @if (loading) {

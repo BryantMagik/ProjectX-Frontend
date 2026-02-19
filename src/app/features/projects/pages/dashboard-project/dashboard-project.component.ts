@@ -98,4 +98,19 @@ export class DashboardProjectComponent implements OnInit {
       })
     ).subscribe()
   }
+
+  get filteredTasks(): Task[] {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) {
+      return this.task;
+    }
+
+    return this.task.filter((t) =>
+      (t.name || '').toLowerCase().includes(term) ||
+      (t.code || '').toLowerCase().includes(term) ||
+      (t.status || '').toLowerCase().includes(term) ||
+      (t.priority || '').toLowerCase().includes(term) ||
+      (t.creator?.first_name || '').toLowerCase().includes(term)
+    );
+  }
 }

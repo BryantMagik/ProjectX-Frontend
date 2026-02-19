@@ -24,7 +24,7 @@ export interface Project {
     startDate?: string
     endDate?: string
     userId: string
-    author: User
+    author?: User
     lead?: User
     leadId?: string
     participants: Participant[];

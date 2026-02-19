@@ -1,38 +1,62 @@
 <div class="project-list">
+  <div class="list-header">
+    <span class="header-title">Projects</span>
+    @if (!loading && !error) {
+      <span class="header-count">{{ projects.length }}</span>
+    }
+  </div>
+
   @if (loading) {
     <div class="loading-state">
-      <i class="pi pi-spin pi-spinner text-blue-400 text-sm"></i>
-      <span class="text-slate-400 text-xs ml-2">Loading...</span>
+      <i class="pi pi-spin pi-spinner"></i>
+      <span>Loading projects...</span>
     </div>
   }
 
   @if (error) {
     <div class="error-state">
-      <i class="pi pi-exclamation-triangle text-red-400 text-xs"></i>
-      <span class="text-red-400 text-xs ml-2">Error loading projects</span>
+      <i class="pi pi-exclamation-triangle"></i>
+      <span>Error loading projects</span>
     </div>
   }
 
   @if (!loading && !error && projects.length === 0) {
     <div class="empty-state">
-      <span class="text-slate-400 text-xs">No projects yet</span>
+      <i class="pi pi-folder-open"></i>
+      <span>No projects yet</span>
     </div>
   }
 
   @if (!loading && !error && projects.length > 0) {
     @for (project of projects; track project.id) {
-      <div class="project-item" (click)="navigateToProject(project.id)" title="{{project.name}}" (keypress)="navigateToProject(project.id)" tabindex="0">
+      <div
+        class="project-item"
+        (click)="navigateToProject(project.id)"
+        (keydown.enter)="navigateToProject(project.id)"
+        (keydown.space)="navigateToProject(project.id)"
+        title="{{ project.name }}"
+        tabindex="0">
         @if (project.image) {
-          <img [src]="project.image" alt="{{project.name}}" title="{{project.name}}" class="project-avatar" />
+          <img [src]="project.image" alt="{{ project.name }}" title="{{ project.name }}" class="project-avatar" />
         } @else {
           <div class="project-avatar-placeholder">
             <span class="project-letter">{{ project.name[0] }}</span>
           </div>
         }
+
         <div class="project-info">
-          <span class="project-name">{{ project.name }}</span>
-          <span class="project-code">{{ project.code }}</span>
+          <div class="project-main-row">
+            <span class="project-name">{{ project.name }}</span>
+            <span [class]="'project-status ' + getStatusClass(project.status)">
+              {{ project.status || 'Inactive' }}
+            </span>
+          </div>
+          <div class="project-meta-row">
+            <span class="project-code">{{ project.code }}</span>
+            <span class="project-type">{{ project.type || 'General' }}</span>
+          </div>
         </div>
+
         <i class="pi pi-chevron-right project-arrow"></i>
       </div>
     }
