@@ -115,7 +115,7 @@ export class ProjectFormComponent implements OnInit {
     if (this.workspaceId) {
       this.workspaceService.getWorkspaceMembers(this.workspaceId).subscribe({
         next: (response) => {
-          this.workspaceMembers = response?.members?.map((m: any) => m.user) || []
+          this.workspaceMembers = response?.members?.map((m: any) => m.user).filter((u: any) => u != null) || []
         },
         error: (err) => {
           console.error('Error loading workspace members:', err)
@@ -200,8 +200,8 @@ export class ProjectFormComponent implements OnInit {
       // Solo agregar campos opcionales si tienen valor
       if (rawValue.description) projectData.description = rawValue.description
       if (rawValue.image) projectData.image = rawValue.image
-      if (rawValue.startDate) projectData.startDate = rawValue.startDate
-      if (rawValue.endDate) projectData.endDate = rawValue.endDate
+      if (rawValue.startDate) projectData.startDate = new Date(rawValue.startDate).toISOString()
+      if (rawValue.endDate) projectData.endDate = new Date(rawValue.endDate).toISOString()
       if (rawValue.leadId) projectData.leadId = rawValue.leadId
 
       console.log('Datos a enviar:', projectData)

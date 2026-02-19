@@ -36,7 +36,9 @@
                 id="image"
                 type="file"
                 (change)="onFileSelected($event)"
-                accept=".jpg, .jpeg, .png, .svg"                title="Select project image"                class="hidden" />
+                accept=".jpg, .jpeg, .png, .svg"
+                title="Select project image"
+                class="hidden" />
               <button
                 type="button"
                 class="upload-button"
@@ -81,36 +83,99 @@
           rows="4"
           placeholder="Describe your project"
           class="form-textarea"></textarea>
-        @if (projectForm.get('description')?.invalid && projectForm.get('description')?.touched) {
-          <span class="error-message">Description is required</span>
-        }
       </div>
 
-      <!-- Project Type and Status Grid -->
+      <!-- Project Type, Status and Visibility -->
       <div class="form-grid">
-        <!-- Project Type -->
         <div class="form-section">
           <label for="type" class="form-label">Project Type</label>
-          <select id="type" formControlName="type" class="form-select">
-            @for (type of projectTypes; track type.value) {
-              <option [value]="type.value">
-                {{ type.name }}
-              </option>
-            }
-          </select>
+          <p-select
+            id="type"
+            formControlName="type"
+            [options]="projectTypes"
+            optionLabel="name"
+            optionValue="value"
+            placeholder="Select type"
+            class="w-full custom-select"
+          ></p-select>
+          @if (projectForm.get('type')?.invalid && projectForm.get('type')?.touched) {
+            <span class="error-message">Type is required</span>
+          }
         </div>
 
-        <!-- Project Status -->
         <div class="form-section">
           <label for="status" class="form-label">Project Status</label>
-          <select id="status" formControlName="status" class="form-select">
-            @for (status of projectStatuses; track status.value) {
-              <option [value]="status.value">
-                {{ status.name }}
-              </option>
-            }
-          </select>
+          <p-select
+            id="status"
+            formControlName="status"
+            [options]="projectStatuses"
+            optionLabel="name"
+            optionValue="value"
+            placeholder="Select status"
+            class="w-full custom-select"
+          ></p-select>
+          @if (projectForm.get('status')?.invalid && projectForm.get('status')?.touched) {
+            <span class="error-message">Status is required</span>
+          }
         </div>
+
+        <div class="form-section">
+          <label for="visibility" class="form-label">Visibility</label>
+          <p-select
+            id="visibility"
+            formControlName="visibility"
+            [options]="projectVisibilities"
+            optionLabel="name"
+            optionValue="value"
+            placeholder="Select visibility"
+            class="w-full custom-select"
+          ></p-select>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="form-grid two-cols">
+        <div class="form-section">
+          <label for="startDate" class="form-label">Start Date (Optional)</label>
+          <input
+            type="date"
+            id="startDate"
+            formControlName="startDate"
+            class="form-input" />
+        </div>
+
+        <div class="form-section">
+          <label for="endDate" class="form-label">End Date (Optional)</label>
+          <input
+            type="date"
+            id="endDate"
+            formControlName="endDate"
+            class="form-input" />
+        </div>
+      </div>
+
+      <!-- Project Lead -->
+      <div class="form-section">
+        <label for="leadId" class="form-label">Project Lead (Optional)</label>
+        <p-select
+          id="leadId"
+          formControlName="leadId"
+          [options]="workspaceMembers"
+          optionLabel="first_name"
+          optionValue="id"
+          placeholder="Select project lead"
+          styleClass="w-full custom-select"
+          [showClear]="true"
+        >
+          <ng-template pTemplate="selectedItem" let-selected>
+            @if (selected) {
+              <span>{{ selected.first_name }} {{ selected.last_name }}</span>
+            }
+          </ng-template>
+          <ng-template pTemplate="item" let-member>
+            <span>{{ member.first_name }} {{ member.last_name }}</span>
+          </ng-template>
+        </p-select>
       </div>
 
       <!-- Form Actions -->

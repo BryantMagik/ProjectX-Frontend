@@ -78,13 +78,12 @@
 }
 
 .form-input,
-.form-textarea,
-.form-select {
+.form-textarea {
   width: 100%;
   padding: 0.75rem 1rem;
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 0.5rem;
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  border-radius: 0.75rem;
   color: white;
   font-size: 0.875rem;
   transition: all 0.3s ease;
@@ -92,19 +91,23 @@
 
 .form-input::placeholder,
 .form-textarea::placeholder {
-  color: #64748b;
+  color: #94a3b8;
+}
+
+.form-input:hover,
+.form-textarea:hover {
+  border-color: rgba(59, 130, 246, 0.5);
 }
 
 .form-input:focus,
-.form-textarea:focus,
-.form-select:focus {
+.form-textarea:focus {
   outline: none;
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.form-select {
-  cursor: pointer;
+.form-input[type="date"] {
+  color-scheme: dark;
 }
 
 .form-textarea {
@@ -119,12 +122,60 @@
   color: #ef4444;
 }
 
+/* Custom Select (PrimeNG p-select) */
+:host ::ng-deep .custom-select {
+  width: 100%;
+}
+
+:host ::ng-deep .custom-select .p-select,
+:host ::ng-deep .custom-select.p-select {
+  width: 100%;
+  border-radius: 0.75rem;
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 2px solid rgba(59, 130, 246, 0.3) !important;
+  min-height: 48px;
+}
+
+:host ::ng-deep .custom-select .p-select:hover,
+:host ::ng-deep .custom-select.p-select:hover {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+:host ::ng-deep .custom-select .p-select-label,
+:host ::ng-deep .custom-select .p-placeholder {
+  color: white !important;
+  padding: 0.75rem 1rem;
+}
+
+:host ::ng-deep .custom-select .p-select-dropdown,
+:host ::ng-deep .custom-select .p-select-trigger {
+  color: #94a3b8 !important;
+}
+
+:host ::ng-deep .p-select-overlay {
+  background: #1e293b !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+}
+
+:host ::ng-deep .p-select-option {
+  color: white !important;
+}
+
+:host ::ng-deep .p-select-option:hover,
+:host ::ng-deep .p-select-option.p-highlight {
+  background: rgba(59, 130, 246, 0.3) !important;
+}
+
 /* Form Grid */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   margin-bottom: 1.5rem;
+}
+
+.form-grid.two-cols {
+  grid-template-columns: repeat(2, 1fr);
 }
 
 /* Image Upload */
@@ -342,7 +393,8 @@
     padding: 1rem;
   }
 
-  .form-grid {
+  .form-grid,
+  .form-grid.two-cols {
     grid-template-columns: 1fr;
   }
 

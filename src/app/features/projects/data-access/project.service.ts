@@ -84,17 +84,12 @@ export class ProjectService {
       return of([])
     }
 
-  updateProject(newProject: Project, id: string): Observable<Project> {
+  updateProject(newProject: Partial<Project>, id: string): Observable<Project> {
     const headers = this.getAuthHeaders();
     if (headers) {
-      return this.apiService.patch<Project>(`${apiRoutes.project.update}/id/${id}`, newProject, { headers }).pipe(
-        catchError(error => {
-          console.error('Error al actualizar el proyecto:', error)
-          return of(newProject)
-        })
-      );
+      return this.apiService.patch<Project>(`${apiRoutes.project.update}/id/${id}`, newProject, { headers });
     }
-    return of(newProject)
+    return of(newProject as Project)
   }
 
 
