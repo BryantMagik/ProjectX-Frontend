@@ -36,10 +36,8 @@ export class IssuesFormComponent implements OnInit {
   issueStatuses = Object.values(IssueStatus);
   issuePriorities = Object.values(TaskPriority);
   projects: { id: string; name: string }[] = [];
-  reporterId: string | null = null;
 
   ngOnInit(): void {
-    this.reporterId = sessionStorage.getItem('userId');
     this.initializeForm();
     this.loadProjects();
     this.loadUsers();
@@ -55,7 +53,6 @@ export class IssuesFormComponent implements OnInit {
       description: [''],
       priority: ['', Validators.required],
       projectId: ['', Validators.required],
-      reporterId: [this.reporterId],
       status: ['', Validators.required],
       assignedTo: [[], Validators.required],
     });
