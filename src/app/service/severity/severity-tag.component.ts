@@ -15,8 +15,10 @@ export class SeverityTagComponent {
     @Input() type!: 'status' | 'priority' | 'type';
 
     getSeverity(): 'success' | 'info' | 'warn' | 'danger' | 'secondary' | 'contrast' | undefined {
+        const normalizedValue = (this.value || '').trim().toUpperCase();
+
         if (this.type === 'status') {
-            switch (this.value) {
+            switch (normalizedValue) {
                 case 'ONGOING':
                     return 'warn';
                 case 'ONWAIT':
@@ -29,18 +31,20 @@ export class SeverityTagComponent {
                     return undefined;
             }
         } else if (this.type === 'priority') {
-            switch (this.value) {
+            switch (normalizedValue) {
+                case 'CRITICAL':
+                    return 'danger';
                 case 'HIGH':
                     return 'danger';
                 case 'MEDIUM':
                     return 'warn';
                 case 'LOW':
-                    return 'success';
+                    return 'info';
                 default:
                     return undefined;
             }
         } else if (this.type === 'type') {
-            switch (this.value) {
+            switch (normalizedValue) {
                 case 'SOFTWARE':
                     return 'success';
                 case 'EXTERNAL':

@@ -9,6 +9,8 @@ import { Task } from '../../../../core/models/task.interface';
 import { TaskService } from '../../../../service/task/task.service';
 import { SeverityTagComponent } from '../../../../service/severity/severity-tag.component';
 import { TasksBoardComponent } from '../../../tasks/components/tasks-board/tasks-board.component';
+import { Issue } from '../../../../core/models/issue.interface';
+import { IssueService } from '../../../issues/data-access/issue.service';
 
 @Component({
   selector: 'app-dashboard-project',
@@ -20,6 +22,7 @@ import { TasksBoardComponent } from '../../../tasks/components/tasks-board/tasks
 export class DashboardProjectComponent implements OnInit {
   private projectService = inject(ProjectService);
   private taskService = inject(TaskService);
+  private issueService = inject(IssueService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -28,8 +31,11 @@ export class DashboardProjectComponent implements OnInit {
   workspaceId: string | null = null
   project: Project | null = null
   task: Task[] = []
+  issues: Issue[] = []
   loading: boolean = true
   error: string | null = null
+  issuesLoading: boolean = true
+  issuesError: string | null = null
   currentView: 'table' | 'kanban' | 'calendar' = 'table'
   searchTerm: string = ''
 
@@ -58,6 +64,12 @@ export class DashboardProjectComponent implements OnInit {
     }
   }
 
+  navigateToIssue(issueId?: string) {
+    if (issueId) {
+      this.router.navigate(['/issues', issueId]);
+    }
+  }
+
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe(params => {
       this.projectId = params.get('projectId')
@@ -65,6 +77,7 @@ export class DashboardProjectComponent implements OnInit {
       if (this.projectId) {
         this.getProjectById(this.projectId)
         this.getTaskByProjectId(this.projectId)
+        this.getIssuesByProjectId(this.projectId)
       }
     })
   }
@@ -99,6 +112,24 @@ export class DashboardProjectComponent implements OnInit {
     ).subscribe()
   }
 
+  private getIssuesByProjectId(projectId: string): void {
+    this.issuesLoading = true;
+    this.issuesError = null;
+
+    this.issueService.getAllIssues().pipe(
+      tap({
+        next: (issues: Issue[] | null) => {
+          this.issues = (issues || []).filter((issue) => issue.projectId === projectId);
+          this.issuesLoading = false;
+        },
+        error: () => {
+          this.issuesError = 'Failed to load issues';
+          this.issuesLoading = false;
+        }
+      })
+    ).subscribe();
+  }
+
   get filteredTasks(): Task[] {
     const term = this.searchTerm.trim().toLowerCase();
     if (!term) {
@@ -111,6 +142,21 @@ export class DashboardProjectComponent implements OnInit {
       (t.status || '').toLowerCase().includes(term) ||
       (t.priority || '').toLowerCase().includes(term) ||
       (t.creator?.first_name || '').toLowerCase().includes(term)
+    );
+  }
+
+  get filteredIssues(): Issue[] {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) {
+      return this.issues;
+    }
+
+    return this.issues.filter((issue) =>
+      (issue.summary || '').toLowerCase().includes(term) ||
+      (issue.code || '').toLowerCase().includes(term) ||
+      (issue.status || '').toLowerCase().includes(term) ||
+      (issue.priority || '').toLowerCase().includes(term) ||
+      (issue.reporter?.first_name || '').toLowerCase().includes(term)
     );
   }
 }

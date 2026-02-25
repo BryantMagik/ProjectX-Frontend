@@ -129,6 +129,10 @@
   transition: all 0.3s ease;
 }
 
+.form-multiselect {
+  min-height: 7rem;
+}
+
 .form-input::placeholder,
 .form-textarea::placeholder {
   color: #64748b;

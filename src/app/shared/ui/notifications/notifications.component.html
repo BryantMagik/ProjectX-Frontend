@@ -1,7 +1,59 @@
-<ul class="py-2">
-    <li><a  class="block px-6 py-2 text-sm text-gray-700 hover:bg-gray-100" >Projects notification</a></li>
-    <li><a  class="block px-6 py-2 text-sm text-gray-700 hover:bg-gray-100" >Tasks notification</a></li>
-    <li><a  class="block px-6 py-2 text-sm text-gray-700 hover:bg-gray-100" >Subtasks notification</a></li>
-    <li><a  class="block px-6 py-2 text-sm text-gray-700 hover:bg-gray-100" >Issues notification</a></li>
-    <li><a  class="block px-6 py-2 text-sm text-gray-700 hover:bg-gray-100" >Comments notification</a></li>
-</ul>
+<section class="notifications-panel">
+  <header class="panel-header">
+    <div>
+      <p class="eyebrow">Activity</p>
+      <h3>Notificaciones</h3>
+    </div>
+    @if (unreadCount > 0) {
+      <button type="button" class="mark-read-btn" (click)="onMarkAllRead()">Marcar todo como leido</button>
+    }
+  </header>
+
+  @if (loading) {
+    <div class="state">
+      <i class="pi pi-spin pi-spinner"></i>
+      <span>Cargando notificaciones...</span>
+    </div>
+  } @else if (error) {
+    <div class="state error">
+      <i class="pi pi-exclamation-triangle"></i>
+      <span>{{ error }}</span>
+    </div>
+  } @else if (notifications.length === 0) {
+    <div class="state empty">
+      <i class="pi pi-bell-slash"></i>
+      <span>No tienes notificaciones nuevas</span>
+    </div>
+  } @else {
+    <ul class="notifications-list">
+      @for (notification of notifications; track notification.id) {
+        <li>
+          <button
+            type="button"
+            class="notification-item"
+            [class.unread]="notification.unread"
+            (click)="onOpen(notification)">
+            <span class="dot" [class.hidden]="!notification.unread"></span>
+            <div class="item-content">
+              <div class="item-top">
+                <span class="item-title">
+                  <i class="pi" [ngClass]="notification.entityType === 'ISSUE' ? 'pi-exclamation-circle' : 'pi-check-square'"></i>
+                  {{ notification.taskCode }}
+                </span>
+                <span class="item-time">{{ notification.updatedAt | date: 'MMM d, HH:mm' }}</span>
+              </div>
+              <p class="item-body">
+                @if (notification.entityType === 'ISSUE') {
+                  Te asignaron el issue "{{ notification.taskSummary }}".
+                } @else {
+                  Te asignaron la tarea "{{ notification.taskSummary }}" en {{ notification.projectName }}.
+                }
+              </p>
+              <span class="item-meta">Asignado por {{ notification.assignedBy }}</span>
+            </div>
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</section>

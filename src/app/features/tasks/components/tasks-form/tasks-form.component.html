@@ -133,6 +133,25 @@
         </div>
       </div>
 
+      <div class="form-section">
+        <label for="assignedTo" class="form-label">Assigned Users</label>
+        @if (usersLoading) {
+          <div class="loading-users">
+            <i class="pi pi-spin pi-spinner"></i>
+            <span>Loading users...</span>
+          </div>
+        } @else {
+          <select id="assignedTo" formControlName="assignedTo" multiple class="form-multiselect">
+            @for (user of availableUsers; track user.id) {
+              <option [value]="user.id">
+                {{ user.first_name }} {{ user.last_name }} ({{ user.email }})
+              </option>
+            }
+          </select>
+          <small class="helper-text">Mantén presionado Ctrl (o Cmd en Mac) para seleccionar varios usuarios.</small>
+        }
+      </div>
+
       <div class="form-actions">
         <button
           type="button"

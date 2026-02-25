@@ -87,6 +87,44 @@
   transition: all 0.3s ease;
 }
 
+.form-multiselect {
+  width: 100%;
+  min-height: 7.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.form-multiselect:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-multiselect option {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.helper-text {
+  display: block;
+  margin-top: 0.5rem;
+  color: #94a3b8;
+  font-size: 0.75rem;
+}
+
+.loading-users {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #cbd5e1;
+  font-size: 0.82rem;
+}
+
 .form-input::placeholder,
 .form-textarea::placeholder {
   color: #64748b;

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommentsListComponentComponent } from '../../../comments/components/comments-list/comments-list-component.component';
 import { TaskService } from '../../../../service/task/task.service';
 import { Task } from '../../../../core/models/task.interface';
+import { UserService } from '../../../profile/data-access/user.service';
 
 const TASK_PRIORITIES = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
 const TASK_TYPES = ['FEATURE', 'BUG', 'CHORE', 'IMPROVEMENT', 'HOTFIX'];
@@ -22,6 +23,7 @@ export class TasksDetailsComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private taskService = inject(TaskService);
+  private userService = inject(UserService);
 
   tasksPriority = TASK_PRIORITIES;
   tasksType = TASK_TYPES;
@@ -33,6 +35,7 @@ export class TasksDetailsComponent implements OnInit {
   loading = true;
   error: string | null = null;
   tasksFormular: FormGroup;
+  availableAssigneds: { id: string; first_name: string; last_name: string }[] = [];
 
   
   constructor(...args: unknown[]);
@@ -47,11 +50,13 @@ export class TasksDetailsComponent implements OnInit {
       task_type: ['', Validators.required],
       status: ['', Validators.required],
       projectId: [{ value: '', disabled: true }, [Validators.required]],
-      dueTime: ['']
+      dueTime: [''],
+      assignedTo: [[]]
     });
   }
 
   ngOnInit(): void {
+    this.loadAssignableUsers();
     this.taskId = this.route.snapshot.paramMap.get('taskId') || '';
     if (this.taskId) {
       this.loadTask(this.taskId);
@@ -94,7 +99,8 @@ export class TasksDetailsComponent implements OnInit {
         priority: rawValue.priority || undefined,
         status: rawValue.status || undefined,
         task_type: rawValue.task_type || undefined,
-        dueTime: rawValue.dueTime || undefined
+        dueTime: rawValue.dueTime || undefined,
+        assignedTo: rawValue.assignedTo || []
       };
       this.taskService.actuaTask(this.taskId, payload).subscribe({
         next: (updated) => {
@@ -127,6 +133,21 @@ export class TasksDetailsComponent implements OnInit {
     });
   }
 
+  private loadAssignableUsers(): void {
+    this.userService.getAllUsers().subscribe({
+      next: (users) => {
+        this.availableAssigneds = (users || []).map((usr) => ({
+          id: usr.id,
+          first_name: usr.first_name,
+          last_name: usr.last_name,
+        }));
+      },
+      error: () => {
+        this.availableAssigneds = [];
+      },
+    });
+  }
+
   private formatDate(date: any): string {
   if (!date) return '';
   const d = new Date(date);
@@ -148,7 +169,8 @@ export class TasksDetailsComponent implements OnInit {
       task_type: typeof task.task_type === 'object' ? (task.task_type as any).name : task.task_type,
       status: typeof task.status === 'object' ? (task.status as any).name : task.status,
       projectId: task.projectId,
-      dueTime: this.formatDate(task.dueTime)
+      dueTime: this.formatDate(task.dueTime),
+      assignedTo: (task.users || []).map((usr) => usr.id)
     });
   }
 

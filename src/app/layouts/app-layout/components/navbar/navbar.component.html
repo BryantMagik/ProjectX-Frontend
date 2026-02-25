@@ -16,14 +16,36 @@
       </div>
 
       <div class="navbar-actions">
-        <button class="action-button lg:hidden" title="Search">
+        <!-- Botón que debemos---->
+        <!-- <button class="action-button lg:hidden" title="Search">
           <i class="pi pi-search"></i>
-        </button>
+        </button> -->
 
-        <button class="action-button hidden md:flex" title="Notifications">
-          <i class="pi pi-bell"></i>
-          <span class="notification-badge">3</span>
-        </button>
+        <div class="notifications-wrapper hidden md:block" (click)="$event.stopPropagation()">
+          <button
+            class="action-button notification-trigger"
+            title="Notifications"
+            type="button"
+            (click)="toggleNotifications($event)">
+            <i class="pi pi-bell"></i>
+            @if (unreadCount > 0) {
+              <span class="notification-badge">{{ unreadCount > 9 ? '9+' : unreadCount }}</span>
+            }
+          </button>
+
+          @if (isNotificationsOpen) {
+            <div class="notifications-popover">
+              <app-notifications
+                [notifications]="notifications"
+                [loading]="notificationsLoading"
+                [error]="notificationsError"
+                [unreadCount]="unreadCount"
+                (openNotification)="onOpenNotification($event)"
+                (markAllRead)="onMarkAllAsRead()">
+              </app-notifications>
+            </div>
+          }
+        </div>
 
         <button class="action-button hidden md:flex" title="Settings">
           <i class="pi pi-cog"></i>

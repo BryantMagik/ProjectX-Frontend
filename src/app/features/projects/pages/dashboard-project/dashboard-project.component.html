@@ -155,6 +155,78 @@
               </tbody>
             </table>
           </div>
+
+          <div class="issues-section">
+            <div class="issues-header">
+              <h3>Issues</h3>
+              <span class="summary-pill">
+                <i class="pi pi-exclamation-circle"></i>
+                {{ filteredIssues.length }} issues
+              </span>
+            </div>
+
+            @if (issuesLoading) {
+              <div class="inline-state">
+                <i class="pi pi-spin pi-spinner"></i>
+                <span>Loading issues...</span>
+              </div>
+            } @else if (issuesError) {
+              <div class="inline-state error">
+                <i class="pi pi-exclamation-triangle"></i>
+                <span>{{ issuesError }}</span>
+              </div>
+            } @else if (filteredIssues.length === 0) {
+              <div class="inline-state">
+                <i class="pi pi-info-circle"></i>
+                <span>No issues for this project</span>
+              </div>
+            } @else {
+              <div class="table-container">
+                <table class="tasks-table">
+                  <thead>
+                    <tr>
+                      <th>Issue</th>
+                      <th>Type</th>
+                      <th>Priority</th>
+                      <th>Status</th>
+                      <th>Reporter</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (issue of filteredIssues; track issue.id) {
+                      <tr class="task-row" (click)="navigateToIssue(issue.id)">
+                        <td>
+                          <div class="task-info">
+                            <span class="task-name">{{ issue.summary }}</span>
+                            <span class="task-code">{{ issue.code }}</span>
+                          </div>
+                        </td>
+                        <td>{{ issue.type }}</td>
+                        <td>
+                          <app-severity-tag [value]="issue.priority" [type]="'priority'"></app-severity-tag>
+                        </td>
+                        <td>
+                          <span class="status-badge issue-status-badge" [attr.data-status]="issue.status">{{ issue.status }}</span>
+                        </td>
+                        <td>
+                          <div class="assignee-info">
+                            @if (issue.reporter?.profile_picture) {
+                              <img [src]="issue.reporter?.profile_picture" alt="{{issue.reporter?.first_name}}" title="{{issue.reporter?.first_name}}" class="author-avatar" />
+                            } @else {
+                              <div class="author-avatar-placeholder">
+                                {{issue.reporter?.first_name?.[0] || 'U'}}
+                              </div>
+                            }
+                            <span>{{ issue.reporter?.first_name || 'Unassigned' }}</span>
+                          </div>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
+          </div>
         }
       </div>
     }
