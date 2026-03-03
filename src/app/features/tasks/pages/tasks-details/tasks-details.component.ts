@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommentsListComponentComponent } from '../../../comments/components/comments-list/comments-list-component.component';
 import { TaskService } from '../../../../service/task/task.service';
 import { Task } from '../../../../core/models/task.interface';
 import { UserService } from '../../../profile/data-access/user.service';
@@ -13,7 +12,7 @@ const TASK_STATUSES = ['BACKLOG', 'TODO', 'IN_PROGRESS', 'REVIEW', 'DONE'];
 
 @Component({
   selector: 'app-tasks-details',
-  imports: [CommonModule, ReactiveFormsModule, CommentsListComponentComponent],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './tasks-details.component.html',
   styleUrl: './tasks-details.component.css',
   standalone: true

@@ -3,7 +3,6 @@ import { CommonModule, NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { CommentsListComponentComponent } from '../../../comments/components/comments-list/comments-list-component.component';
 import { Assigneds, Issue, IssueStatus, IssueType, TaskPriority } from '../../../../core/models/issue.interface';
 import { User } from '../../../../core/models/user.interface';
 import { IssueService } from '../../data-access/issue.service';
@@ -12,7 +11,7 @@ import { UserService } from '../../../profile/data-access/user.service';
 @Component({
   selector: 'app-issues-details',
   standalone: true,
-  imports: [CommonModule, NgClass, ReactiveFormsModule, MultiSelectModule, CommentsListComponentComponent],
+  imports: [CommonModule, NgClass, ReactiveFormsModule, MultiSelectModule],
   templateUrl: './issues-details.component.html',
   styleUrl: './issues-details.component.css'
 })
