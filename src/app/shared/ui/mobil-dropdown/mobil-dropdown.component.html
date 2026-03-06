@@ -1,34 +1,34 @@
 <div>
   <button
-    class="p-2 text-gray-800 bg-gray-200 rounded-md shadow-md focus:outline-none md:hidden"
+    class="mobile-menu-toggle md:hidden"
     (click)="toggleDropdown()">
     <mat-icon>{{ isDropdownOpen ? 'close' : 'menu' }}</mat-icon>
   </button>
 
   <aside
-    class="fixed inset-y-0 left-0 z-40 h-full w-64 bg-white transform transition-transform duration-300 ease-in-out"
+    class="mobile-menu-panel fixed inset-y-0 left-0 z-40 h-full w-64 transform transition-transform duration-300 ease-in-out"
     [ngClass]="{ '-translate-x-full': !isDropdownOpen }">
     <div class="p-6">
-      <h6 class="text-base font-semibold text-gray-800">Menu</h6>
+      <h6 class="mobile-menu-title text-base font-semibold">Menu</h6>
     </div>
     <div class="m-6">
-      <hr class="mt-6 p-2 border-dashed">
-      <div class="flex items-center justify-between text-gray-500">
+      <hr class="mobile-divider mt-6 p-2 border-dashed">
+      <div class="mobile-section-header flex items-center justify-between">
         <a class="text-xs uppercase">Workspace</a>
         <i
-          class="pi pi-plus-circle text-xs uppercase rounded-full"
+          class="pi pi-plus-circle text-xs uppercase rounded-full mobile-section-action"
         [routerLink]="['/workspaces/new']"></i>
       </div>
       <app-workspace-switcher (workspaceSelected)="onWorkspaceSelected($event)"></app-workspace-switcher>
-      <hr class="mt-6 p-2 border-dashed">
+      <hr class="mobile-divider mt-6 p-2 border-dashed">
     </div>
     <div class="m-6">
       @for (item of menuItems; track item) {
         <a
-          class="flex items-center gap-6 py-2 px-6 hover:bg-blue-700 rounded-md hover:text-white transition-transform duration-300 mt-6 text-xs uppercase text-gray-500"
+          class="mobile-menu-link flex items-center gap-6 py-2 px-6 rounded-md transition-transform duration-300 mt-6 text-xs uppercase"
           mat-list-item
           [routerLink]="item.route"
-          routerLinkActive="bg-blue-800 text-white"
+          routerLinkActive="mobile-link-active"
           [routerLinkActiveOptions]="{ exact: true }">
           <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
           <span matListItemTitle>{{ item.label }}</span>
@@ -36,10 +36,10 @@
       }
     </div>
     <div class="m-6">
-      <hr class="mt-6 p-2 border-dashed">
-      <div class="flex items-center justify-between text-neutral-500">
+      <hr class="mobile-divider mt-6 p-2 border-dashed">
+      <div class="mobile-section-header flex items-center justify-between">
         <a class="text-xs uppercase">projects </a>
-        <i class="pi pi-plus-circle text-xs uppercase rounded-full" (click)="openModal()"></i>
+        <i class="pi pi-plus-circle text-xs uppercase rounded-full mobile-section-action" (click)="openModal()"></i>
       </div>
       <app-project-list [workspace]="selectedWorkspaceId"></app-project-list>
     </div>

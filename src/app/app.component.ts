@@ -16,6 +16,8 @@ export class AppComponent {
   title = 'ProjectX';
 
   constructor() {
+    this.applyMobileOsClass();
+
     this.primeng.theme.set({
         preset: Aura,
             options: {
@@ -27,4 +29,23 @@ export class AppComponent {
             }
         })
     }
+
+  private applyMobileOsClass(): void {
+    if (typeof navigator === 'undefined' || typeof document === 'undefined') {
+      return;
+    }
+
+    const userAgent = navigator.userAgent || navigator.vendor || '';
+    const isIOS = /iPad|iPhone|iPod/i.test(userAgent);
+    const isAndroid = /Android/i.test(userAgent);
+
+    if (isIOS) {
+      document.documentElement.setAttribute('data-mobile-os', 'ios');
+      return;
+    }
+
+    if (isAndroid) {
+      document.documentElement.setAttribute('data-mobile-os', 'android');
+    }
+  }
 }

@@ -8,3 +8,35 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html[data-mobile-os="ios"],
+html[data-mobile-os="android"] {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html[data-mobile-os="ios"] body,
+html[data-mobile-os="android"] body {
+  line-height: 1.5;
+  overflow-x: hidden;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+html[data-mobile-os="ios"] button,
+html[data-mobile-os="ios"] a,
+html[data-mobile-os="ios"] [role="button"],
+html[data-mobile-os="android"] button,
+html[data-mobile-os="android"] a,
+html[data-mobile-os="android"] [role="button"] {
+  min-height: 44px;
+}
+
+html[data-mobile-os="ios"] input,
+html[data-mobile-os="ios"] select,
+html[data-mobile-os="ios"] textarea,
+html[data-mobile-os="android"] input,
+html[data-mobile-os="android"] select,
+html[data-mobile-os="android"] textarea {
+  font-size: 16px;
+}
