@@ -35,7 +35,7 @@
       <div class="field">
         <label for="code">Codigo</label>
         <input id="code" type="text" formControlName="code" placeholder="Generando..." 
-    style="background-color: var(--surface-100); color: var(--text-color-secondary); font-weight: bold;" />
+         style="background-color: var(--surface-100); color: var(--text-color-secondary); font-weight: bold;" />
         <small class="info-text">Este código se genera automáticamente.</small>
       </div>
 
@@ -46,6 +46,7 @@
             <option [value]="type">{{ type }}</option>
           }
         </select>
+        <small class="info-text" style="visibility: hidden;">&nbsp;</small>
       </div>
 
       <div class="field span-2">
