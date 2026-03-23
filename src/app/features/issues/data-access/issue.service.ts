@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Issue } from '../../../core/models/issue.interface';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { apiRoutes } from "../../../../environments/environment.development";
+import { apiRoutes } from "../../../../environments/environment";
 
 
 

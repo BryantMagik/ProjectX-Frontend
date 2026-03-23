@@ -14,18 +14,25 @@ export const apiRoutes = {
   },
   project: {
     create: `${environment.apiUrl}project`,
-    getOnlyOwn: `${environment.apiUrl}project/user/projects/`,
+    getOnlyOwn: `${environment.apiUrl}project/user/projects`,
     getAll: `${environment.apiUrl}project/`,
-    getAllProjectsByWorkspaceId: `${environment.apiUrl}project`,
+    getAllProjectsByWorkspaceId: `${environment.apiUrl}project/workspace`,
     getById: `${environment.apiUrl}project/id`,
     update: `${environment.apiUrl}project`
   },
   task: {
+    create: `${environment.apiUrl}tasks`,
     getOnlyOwn: `${environment.apiUrl}tasks/user/tasks/`,
     getById: `${environment.apiUrl}user/tasks/`,
+    getPorId: `${environment.apiUrl}tasks`,
     getTaskByProjectId: `${environment.apiUrl}tasks/project`,
-    getAll: `${environment.apiUrl}tasks`,
     update: `${environment.apiUrl}tasks`,
+    metrics: {
+      total: `${environment.apiUrl}tasks/count/total`,
+      assigned: `${environment.apiUrl}tasks/count/assigned`,
+      completed: `${environment.apiUrl}tasks/count/completed`,
+      overdue: `${environment.apiUrl}tasks/count/overdue`,
+    }
   },
   subtask: {
     apiUrl: `${environment.apiUrl}subtasks`,
@@ -35,7 +42,8 @@ export const apiRoutes = {
   issue: {
     apiUrl: `${environment.apiUrl}issues`,
     getOnlyOwn: `${environment.apiUrl}issues/user/issues`,
-    getById: `${environment.apiUrl}issues/id`
+    getById: `${environment.apiUrl}issues/id`,
+    getLatestCode: `${environment.apiUrl}issues/latest-code`
   },
   comment: {
     apiUrl: `${environment.apiUrl}comments`,
@@ -47,6 +55,7 @@ export const apiRoutes = {
   workspace: {
     create: `${environment.apiUrl}workspace`,
     getAll: `${environment.apiUrl}workspace/`,
+    getOnlyOwn: `${environment.apiUrl}workspace/user/workspace`,
     getById: `${environment.apiUrl}workspace`,
     update: `${environment.apiUrl}workspace`,
     delete: `${environment.apiUrl}workspace`,
