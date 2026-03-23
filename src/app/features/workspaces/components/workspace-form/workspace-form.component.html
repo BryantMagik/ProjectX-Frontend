@@ -23,13 +23,16 @@
         formControlName="name"
         placeholder="Enter workspace name"
         class="form-input"
-        maxlength="30"
+        maxlength="50"
       />
       @if (workspaceForm.get('name')?.hasError('required') && workspaceForm.get('name')?.touched) {
         <span class="error-text">Workspace name is required</span>
       }
+      @if (workspaceForm.get('name')?.hasError('minlength') && workspaceForm.get('name')?.touched) {
+        <span class="error-text">Minimum 3 characters required</span>
+      }
       @if (workspaceForm.get('name')?.hasError('maxlength')) {
-        <span class="error-text">Maximum 30 characters allowed</span>
+        <span class="error-text">Maximum 50 characters allowed</span>
       }
     </div>
 

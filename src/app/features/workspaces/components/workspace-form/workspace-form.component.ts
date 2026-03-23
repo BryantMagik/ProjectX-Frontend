@@ -33,7 +33,7 @@ export class WorkspaceFormComponent implements OnInit {
   ngOnInit(): void {
     this.authorId = sessionStorage.getItem('userId');
     this.workspaceForm = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(30)]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       description: [''],
       image: [''],
     })
@@ -92,9 +92,10 @@ export class WorkspaceFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.workspaceForm.valid) {
+      const imageValue = this.workspaceForm.get('image')?.value;
       const workspaceData = {
         ...this.workspaceForm.value,
-        image: this.workspaceForm.get('image')?.value || null
+        image: imageValue || undefined
       }
       console.log('Datos a enviar:', workspaceData)
       this.workspaceService.postWorkspace(workspaceData)
