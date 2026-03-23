@@ -53,8 +53,12 @@ export class WorkspaceSwitcherComponent implements OnInit, OnDestroy {
     this.getWorkspaces()
     this.loadSelectedWorkspace()
 
-    this.workspacesChangedSub = this.workspaceService.workspacesChanged$.subscribe(() => {
-      this.getWorkspaces()
+    this.workspacesChangedSub = this.workspaceService.workspacesChanged$.subscribe((newWorkspaceId) => {
+      if (newWorkspaceId) {
+        this.selectedWorkspaceId = newWorkspaceId;
+        sessionStorage.setItem(this.getWorkspaceStorageKey(), newWorkspaceId);
+      }
+      this.getWorkspaces();
     })
   }
 

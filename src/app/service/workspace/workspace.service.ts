@@ -13,13 +13,13 @@ export class WorkspaceService {
     private apiService = inject(ApiService);
     private authService = inject(AuthService);
 
-    private workspacesChanged = new Subject<void>();
+    private workspacesChanged = new Subject<string | null>();
     workspacesChanged$ = this.workspacesChanged.asObservable();
 
     constructor() { }
 
-    notifyWorkspacesChanged(): void {
-        this.workspacesChanged.next();
+    notifyWorkspacesChanged(workspaceId?: string): void {
+        this.workspacesChanged.next(workspaceId ?? null);
     }
 
     private getAuthHeaders(): HttpHeaders {
