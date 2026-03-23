@@ -2,7 +2,7 @@ import { Component, OnInit, inject, ViewChild, ElementRef } from '@angular/core'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { User } from '../../../../core/models/user.interface'
 import { WorkspaceService } from '../../../../service/workspace/workspace.service'
-
+import { Router } from '@angular/router'
 import { CloudinaryService } from '../../../../core/services/cloudinary.service'
 import { CommonModule } from '@angular/common'
 
@@ -18,6 +18,7 @@ export class WorkspaceFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private workspaceService = inject(WorkspaceService);
   private cloudinaryService = inject(CloudinaryService);
+  private router = inject(Router);
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
@@ -33,7 +34,7 @@ export class WorkspaceFormComponent implements OnInit {
   ngOnInit(): void {
     this.authorId = sessionStorage.getItem('userId');
     this.workspaceForm = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(30)]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       description: [''],
       image: [''],
     })
@@ -92,20 +93,24 @@ export class WorkspaceFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.workspaceForm.valid) {
+      const imageValue = this.workspaceForm.get('image')?.value;
       const workspaceData = {
         ...this.workspaceForm.value,
-        image: this.workspaceForm.get('image')?.value || null
+        image: imageValue || undefined
       }
       console.log('Datos a enviar:', workspaceData)
       this.workspaceService.postWorkspace(workspaceData)
         .subscribe({
           next: (response) => {
-            console.log('Workspace creado con éxito', response);
-            this.workspaceService.notifyWorkspacesChanged();
+            const newWorkspaceId = (response as any)?.workspace?.id as string | undefined;
+            this.workspaceService.notifyWorkspacesChanged(newWorkspaceId);
             this.workspaceForm.reset();
+            if (newWorkspaceId) {
+              this.router.navigate(['/workspaces', newWorkspaceId, 'dashboard']);
+            }
           },
           error: (err) => {
-            console.log('Error al crear el workspace', err)
+            console.error('Error al crear el workspace', err)
           }
         })
     } else {
