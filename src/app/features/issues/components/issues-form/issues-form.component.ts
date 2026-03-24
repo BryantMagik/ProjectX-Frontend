@@ -141,6 +141,19 @@ export class IssuesFormComponent implements OnInit {
     });
   }
 
+  private loadAvailableProjects(): void {
+  this.projectService.getProjectsRequest().subscribe({
+    next: (projects) => {
+      // 'projects' ahora incluirá los de tu workspace gracias al cambio en el backend
+      this.projects = projects.map((p) => ({ 
+        id: p.id, 
+        name: p.name 
+      }));
+    },
+    error: () => this.showError('No se pudieron cargar los proyectos.')
+  });
+}
+
   onSubmit(): void {
     if (this.issueForm.invalid) {
       this.issueForm.markAllAsTouched();

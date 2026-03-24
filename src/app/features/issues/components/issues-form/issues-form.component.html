@@ -86,7 +86,7 @@
       <div class="field span-2">
         <label for="projectId">Proyecto</label>
         <select id="projectId" formControlName="projectId">
-          <option value="">Selecciona un proyecto</option>
+          <option value="" disabled selected>Selecciona un proyecto</option>
           @for (project of projects; track project.id) {
             <option [value]="project.id">{{ project.name }}</option>
           }
