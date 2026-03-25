@@ -98,11 +98,17 @@
 
       <div class="field span-2">
         <label for="assignedTo">Asignar a miembros del equipo</label>
-        <select id="assignedTo" formControlName="assignedTo" multiple class="form-control" style="height: 100px;">
-          @for (user of users; track user.id) {
-            <option [value]="user.id">{{ user.name }}</option>
-          }
-        </select>
+        <p-multiSelect
+          id="assignedTo"
+          formControlName="assignedTo"
+          [options]="users"
+          optionLabel="name" 
+          optionValue="id"
+          placeholder="Selecciona uno o más miembros"
+          display="chip"
+          [style]="{'width':'100%', 'background':'var(--panel-strong)', 'border-color':'rgba(59, 130, 246, 0.2)', 'color':'white'}"
+          appendTo="body">
+        </p-multiSelect>
         <small class="info-text">Mantén presionado Ctrl (o Cmd) para seleccionar varios usuarios.</small>
         @if (hasError('assignedTo', 'required')) {
           <small class="error">Debes asignar el issue al menos a una persona.</small>

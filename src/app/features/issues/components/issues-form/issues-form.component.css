@@ -198,6 +198,21 @@
   cursor: not-allowed;
 }
 
+:host ::v-deep .p-multiselect {
+    background: #1e293b !important;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: white;
+}
+
+:host ::v-deep .p-multiselect-label {
+    color: white;
+}
+
+:host ::v-deep .p-multiselect-panel {
+    background: #1e293b;
+    color: white;
+}
+
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;

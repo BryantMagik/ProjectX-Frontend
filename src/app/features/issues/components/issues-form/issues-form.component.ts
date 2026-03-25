@@ -10,11 +10,12 @@ import { Issue, IssueStatus, IssueType, TaskPriority } from '../../../../core/mo
 import { map } from 'rxjs';
 import { UserService } from '../../../../service/user/user.service';
 import { User } from '../../../../core/models/user.interface';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
   selector: 'app-issues-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ToastModule],
+  imports: [CommonModule, ReactiveFormsModule, ToastModule, MultiSelectModule],
   templateUrl: './issues-form.component.html',
   styleUrl: './issues-form.component.css',
   providers: [MessageService],
