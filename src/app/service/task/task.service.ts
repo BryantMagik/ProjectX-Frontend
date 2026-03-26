@@ -80,6 +80,12 @@ export class TaskService {
     const headers = this.getAuthHeaders()
     return this.apiService.patch<Task>(`${apiRoutes.task.update}/${taskId}`, taskData, { headers })
   }
+
+  deleteTask(taskId: string): Observable<void> {
+    const headers = this.getAuthHeaders()
+    return this.apiService.delete<void>(`${apiRoutes.task.update}/${taskId}`, { headers })
+  }
+
   getTasksByIdWhereId(): Observable<Task[]> {
     const headers = this.getAuthHeaders()
     if (headers) {

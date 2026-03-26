@@ -141,14 +141,17 @@
             <span>Loading users...</span>
           </div>
         } @else {
-          <select id="assignedTo" formControlName="assignedTo" multiple class="form-multiselect">
-            @for (user of availableUsers; track user.id) {
-              <option [value]="user.id">
-                {{ user.first_name }} {{ user.last_name }} ({{ user.email }})
-              </option>
-            }
-          </select>
-          <small class="helper-text">Mantén presionado Ctrl (o Cmd en Mac) para seleccionar varios usuarios.</small>
+          <p-multiSelect
+            id="assignedTo"
+            formControlName="assignedTo"
+            [options]="availableUsers"
+            optionLabel="fullName"
+            optionValue="id"
+            placeholder="Selecciona usuarios"
+            appendTo="body"
+            styleClass="multiselect">
+          </p-multiSelect>
+          <small class="helper-text">Selecciona uno o varios usuarios desde la lista.</small>
         }
       </div>
 

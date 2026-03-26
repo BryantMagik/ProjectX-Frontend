@@ -7,6 +7,7 @@ import { Assigneds, Issue, IssueStatus, IssueType, TaskPriority } from '../../..
 import { User } from '../../../../core/models/user.interface';
 import { IssueService } from '../../data-access/issue.service';
 import { UserService } from '../../../profile/data-access/user.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-issues-details',
@@ -21,13 +22,16 @@ export class IssuesDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private issueService = inject(IssueService);
   private userService = inject(UserService);
+  private authService = inject(AuthService);
 
   issue: Issue | null = null;
   issueId: string | null = null;
   availableAssigneds: { id: string; first_name: string }[] = [];
   isEditing = false;
+  showDeleteModal = false;
   loading = true;
   saving = false;
+  deleting = false;
   error: string | null = null;
 
   issuesFormular: FormGroup = this.fb.group({
@@ -64,6 +68,10 @@ export class IssuesDetailsComponent implements OnInit {
     this.router.navigate(['/issues']);
   }
 
+  get isAdmin(): boolean {
+    return this.authService.getRole() === 'ADMIN';
+  }
+
   toggleEdit(): void {
     if (!this.issue) {
       return;
@@ -78,6 +86,43 @@ export class IssuesDetailsComponent implements OnInit {
       this.patchForm(this.issue);
       this.issuesFormular.disable();
     }
+  }
+
+  openDeleteModal(): void {
+    if (!this.issue || !this.isAdmin) {
+      return;
+    }
+
+    this.showDeleteModal = true;
+  }
+
+  closeDeleteModal(): void {
+    if (this.deleting) {
+      return;
+    }
+
+    this.showDeleteModal = false;
+  }
+
+  confirmDelete(): void {
+    if (!this.issueId || !this.isAdmin) {
+      return;
+    }
+
+    this.deleting = true;
+    this.error = null;
+
+    this.issueService.deleteIssue(this.issueId).subscribe({
+      next: () => {
+        this.deleting = false;
+        this.showDeleteModal = false;
+        this.navigateToIssues();
+      },
+      error: () => {
+        this.deleting = false;
+        this.error = 'No se pudo eliminar el issue.';
+      }
+    });
   }
 
   onSubmit(): void {

@@ -2,13 +2,14 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { User } from '../../../../core/models/user.interface';
 import { UserService } from '../../../profile/data-access/user.service';
 import { TaskService } from '../../../../service/task/task.service';
 
 @Component({
   selector: 'app-tasks-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MultiSelectModule],
   templateUrl: './tasks-form.component.html',
   styleUrl: './tasks-form.component.css',
   standalone: true,
@@ -25,7 +26,7 @@ export class TasksFormComponent implements OnInit {
   isEditMode = false;
   submitting = false;
   usersLoading = false;
-  availableUsers: User[] = [];
+  availableUsers: { id: string; fullName: string }[] = [];
 
   constructor() {
     this.taskForm = this.fb.group({
@@ -71,7 +72,10 @@ export class TasksFormComponent implements OnInit {
     this.usersLoading = true;
     this.userService.getAllUsers().subscribe({
       next: (users) => {
-        this.availableUsers = users || [];
+        this.availableUsers = (users || []).map((user: User) => ({
+          id: user.id,
+          fullName: `${user.first_name} ${user.last_name}`.trim(),
+        }));
         this.usersLoading = false;
       },
       error: () => {

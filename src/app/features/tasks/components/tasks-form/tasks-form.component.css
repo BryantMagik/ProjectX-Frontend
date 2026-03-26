@@ -6,7 +6,6 @@
   min-height: 100vh;
 }
 
-/* Header */
 .header {
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   border-radius: 0.75rem;
@@ -48,7 +47,6 @@
   margin: 0.25rem 0 0 0;
 }
 
-/* Content Card */
 .content-card {
   background: rgba(15, 23, 42, 0.3);
   border-radius: 0.75rem;
@@ -56,7 +54,6 @@
   border: 1px solid rgba(59, 130, 246, 0.1);
 }
 
-/* Form Sections */
 .form-section {
   margin-bottom: 1.5rem;
 }
@@ -85,29 +82,6 @@
   color: white;
   font-size: 0.875rem;
   transition: all 0.3s ease;
-}
-
-.form-multiselect {
-  width: 100%;
-  min-height: 7.5rem;
-  padding: 0.75rem 1rem;
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 0.5rem;
-  color: white;
-  font-size: 0.875rem;
-  transition: all 0.3s ease;
-}
-
-.form-multiselect:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.form-multiselect option {
-  background: #0f172a;
-  color: #e2e8f0;
 }
 
 .helper-text {
@@ -160,7 +134,6 @@
   color: #ef4444;
 }
 
-/* Form Grid */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -175,7 +148,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* Form Actions */
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -225,7 +197,59 @@
   cursor: not-allowed;
 }
 
-/* Responsive */
+:host ::ng-deep .multiselect.p-multiselect {
+  width: 100%;
+  min-height: 2.9rem;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 0.7rem;
+  color: #f8fafc;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+:host ::ng-deep .multiselect.p-multiselect:not(.p-disabled):hover {
+  border-color: rgba(96, 165, 250, 0.55);
+}
+
+:host ::ng-deep .multiselect.p-multiselect.p-focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+:host ::ng-deep .multiselect .p-multiselect-label {
+  color: #f8fafc;
+  padding: 0.7rem 0.8rem;
+}
+
+:host ::ng-deep .multiselect .p-multiselect-label.p-placeholder {
+  color: #94a3b8;
+}
+
+:host ::ng-deep .multiselect .p-multiselect-trigger {
+  color: #cbd5e1;
+  width: 2.8rem;
+}
+
+:host ::ng-deep .p-multiselect-panel {
+  background: #1e293b;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #f8fafc;
+}
+
+:host ::ng-deep .p-multiselect-panel .p-multiselect-header {
+  background: rgba(15, 23, 42, 0.92);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+:host ::ng-deep .p-multiselect-panel .p-multiselect-item {
+  color: #f8fafc;
+}
+
+:host ::ng-deep .p-multiselect-panel .p-multiselect-item.p-highlight {
+  background: rgba(59, 130, 246, 0.18);
+  color: #bfdbfe;
+}
+
 @media (max-width: 1024px) {
   .form-grid-3 {
     grid-template-columns: repeat(2, 1fr);

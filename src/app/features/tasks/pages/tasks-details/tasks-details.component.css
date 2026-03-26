@@ -53,10 +53,17 @@
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.admin-actions {
+  display: grid;
+  gap: 0.75rem;
 }
 
 .primary-button,
-.ghost-button {
+.ghost-button,
+.danger-button {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -74,7 +81,7 @@
   color: white;
 }
 
-.primary-button:hover {
+.primary-button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
@@ -85,9 +92,20 @@
   border: 1px solid rgba(148, 163, 184, 0.3);
 }
 
-.ghost-button:hover {
+.ghost-button:hover:not(:disabled) {
   background: rgba(148, 163, 184, 0.2);
   border-color: #94a3b8;
+}
+
+.danger-button {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: white;
+  box-shadow: 0 8px 22px rgba(220, 38, 38, 0.3);
+}
+
+.danger-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(220, 38, 38, 0.35);
 }
 
 .content-card {
@@ -127,10 +145,6 @@
   color: white;
   font-size: 0.875rem;
   transition: all 0.3s ease;
-}
-
-.form-multiselect {
-  min-height: 7rem;
 }
 
 .form-input::placeholder,
@@ -203,7 +217,10 @@
 }
 
 .submit-button:disabled,
-.cancel-button:disabled {
+.cancel-button:disabled,
+.danger-button:disabled,
+.ghost-button:disabled,
+.primary-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -224,6 +241,116 @@
   color: #fca5a5;
 }
 
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.72);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  width: min(460px, 100%);
+  background: rgba(30, 41, 59, 0.98);
+  border-radius: 1.2rem;
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.4rem;
+  border-bottom: 1px solid rgba(239, 68, 68, 0.18);
+  background: linear-gradient(135deg, rgba(127, 29, 29, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+}
+
+.modal-title {
+  font-size: 1.05rem;
+  color: white;
+  margin: 0;
+}
+
+.modal-body {
+  padding: 1.3rem 1.4rem 0.8rem;
+  color: #e2e8f0;
+}
+
+.modal-entity {
+  margin: 0.6rem 0 0;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.modal-warning {
+  color: #fca5a5;
+  font-size: 0.9rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 0 1.4rem 1.4rem;
+}
+
+:host ::ng-deep .multiselect.p-multiselect {
+  width: 100%;
+  min-height: 2.9rem;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 0.7rem;
+  color: #f8fafc;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+:host ::ng-deep .multiselect.p-multiselect:not(.p-disabled):hover {
+  border-color: rgba(96, 165, 250, 0.55);
+}
+
+:host ::ng-deep .multiselect.p-multiselect.p-focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+:host ::ng-deep .multiselect .p-multiselect-label {
+  color: #f8fafc;
+  padding: 0.7rem 0.8rem;
+}
+
+:host ::ng-deep .multiselect .p-multiselect-label.p-placeholder {
+  color: #94a3b8;
+}
+
+:host ::ng-deep .multiselect .p-multiselect-trigger {
+  color: #cbd5e1;
+  width: 2.8rem;
+}
+
+:host ::ng-deep .p-multiselect-panel {
+  background: #1e293b;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #f8fafc;
+}
+
+:host ::ng-deep .p-multiselect-panel .p-multiselect-header {
+  background: rgba(15, 23, 42, 0.92);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+:host ::ng-deep .p-multiselect-panel .p-multiselect-item {
+  color: #f8fafc;
+}
+
+:host ::ng-deep .p-multiselect-panel .p-multiselect-item.p-highlight {
+  background: rgba(59, 130, 246, 0.18);
+  color: #bfdbfe;
+}
+
 @media (max-width: 768px) {
   .page-container {
     padding: 0.5rem;
@@ -237,7 +364,8 @@
     grid-template-columns: 1fr;
   }
 
-  .form-actions {
+  .form-actions,
+  .modal-actions {
     flex-direction: column;
   }
 

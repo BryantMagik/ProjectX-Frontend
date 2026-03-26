@@ -3,22 +3,30 @@
     <div class="hero-copy">
       <p class="eyebrow">Issue details</p>
       <h1>{{ issue?.summary || 'Detalle de issue' }}</h1>
-      <p class="subtext">Consulta y actualiza la información del issue seleccionado desde la vista de issues.</p>
+      <p class="subtext">Consulta y actualiza la informacion del issue seleccionado desde la vista de issues.</p>
       <div class="hero-actions">
         <button class="btn ghost" type="button" (click)="navigateToIssues()">
           <i class="pi pi-arrow-left"></i>
           Volver
         </button>
-        <button class="btn primary" type="button" (click)="toggleEdit()" [disabled]="!issue || loading">
-          <i class="pi" [ngClass]="isEditing ? 'pi-times' : 'pi-pencil'"></i>
-          {{ isEditing ? 'Cancelar edición' : 'Editar issue' }}
-        </button>
+        <div class="admin-actions">
+          <button class="btn primary" type="button" (click)="toggleEdit()" [disabled]="!issue || loading">
+            <i class="pi" [ngClass]="isEditing ? 'pi-times' : 'pi-pencil'"></i>
+            {{ isEditing ? 'Cancelar edicion' : 'Editar issue' }}
+          </button>
+          @if (isAdmin) {
+            <button class="btn danger" type="button" (click)="openDeleteModal()" [disabled]="!issue || loading || deleting">
+              <i class="pi pi-trash"></i>
+              Eliminar issue
+            </button>
+          }
+        </div>
       </div>
     </div>
 
     <div class="hero-panel">
       <div class="kpi">
-        <span class="kpi-label">Código</span>
+        <span class="kpi-label">Codigo</span>
         <span class="kpi-value">{{ issue?.code || '-' }}</span>
       </div>
       <div class="kpi">
@@ -50,7 +58,7 @@
     <section class="panel">
       <form [formGroup]="issuesFormular" (ngSubmit)="onSubmit()" class="form-grid">
         <div class="form-section">
-          <label class="form-label" for="issue-code">Código</label>
+          <label class="form-label" for="issue-code">Codigo</label>
           <input id="issue-code" type="text" class="form-input readonly" formControlName="code" readonly />
         </div>
 
@@ -69,7 +77,7 @@
         </div>
 
         <div class="form-section full-width">
-          <label class="form-label" for="issue-description">Descripción</label>
+          <label class="form-label" for="issue-description">Descripcion</label>
           <textarea id="issue-description" rows="4" class="form-textarea" formControlName="description"></textarea>
         </div>
 
@@ -119,6 +127,27 @@
         </div>
       </form>
     </section>
-
   }
 </section>
+
+@if (showDeleteModal && issue) {
+  <div class="modal-overlay" (click)="closeDeleteModal()" role="dialog" aria-modal="true" aria-labelledby="delete-issue-title">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title" id="delete-issue-title">Eliminar issue</h3>
+      </div>
+      <div class="modal-body">
+        <p>¿Deseas eliminar este issue?</p>
+        <p class="modal-entity">{{ issue.summary }}</p>
+        <p class="modal-warning">Esta accion no se puede deshacer.</p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn ghost" type="button" (click)="closeDeleteModal()" [disabled]="deleting">No</button>
+        <button class="btn danger" type="button" (click)="confirmDelete()" [disabled]="deleting">
+          <i class="pi" [ngClass]="deleting ? 'pi-spin pi-spinner' : 'pi-trash'"></i>
+          {{ deleting ? 'Eliminando...' : 'Si, eliminar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

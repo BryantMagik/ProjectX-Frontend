@@ -13,10 +13,18 @@
           <i class="pi pi-arrow-left"></i>
           <span>Volver</span>
         </button>
-        <button class="primary-button" type="button" (click)="toggleEdit()">
-          <i class="pi" [ngClass]="isEditing ? 'pi-times' : 'pi-pencil'"></i>
-          <span>{{ isEditing ? 'Cancelar' : 'Editar' }}</span>
-        </button>
+        <div class="admin-actions">
+          <button class="primary-button" type="button" (click)="toggleEdit()">
+            <i class="pi" [ngClass]="isEditing ? 'pi-times' : 'pi-pencil'"></i>
+            <span>{{ isEditing ? 'Cancelar' : 'Editar' }}</span>
+          </button>
+          @if (isAdmin) {
+            <button class="danger-button" type="button" (click)="openDeleteModal()" [disabled]="loading || deleting || !task">
+              <i class="pi pi-trash"></i>
+              <span>Eliminar task</span>
+            </button>
+          }
+        </div>
       </div>
     </div>
   </div>
@@ -40,7 +48,7 @@
             <input id="task-id" type="text" formControlName="id" class="form-input" readonly />
           </div>
           <div class="form-section">
-            <label class="form-label" for="task-code">Código</label>
+            <label class="form-label" for="task-code">Codigo</label>
             <input id="task-code" type="text" formControlName="code" class="form-input" readonly />
           </div>
         </div>
@@ -56,7 +64,7 @@
         </div>
 
         <div class="form-section">
-          <label class="form-label" for="task-description">Descripción</label>
+          <label class="form-label" for="task-description">Descripcion</label>
           <textarea id="task-description" rows="4" formControlName="description" class="form-textarea" placeholder="Describe la tarea"></textarea>
         </div>
 
@@ -101,11 +109,16 @@
 
         <div class="form-section">
           <label class="form-label" for="task-assigned">Asignados</label>
-          <select id="task-assigned" formControlName="assignedTo" class="form-select form-multiselect" multiple>
-            @for (assigned of availableAssigneds; track assigned.id) {
-              <option [value]="assigned.id">{{ assigned.first_name }} {{ assigned.last_name }}</option>
-            }
-          </select>
+          <p-multiSelect
+            id="task-assigned"
+            formControlName="assignedTo"
+            [options]="availableAssigneds"
+            optionLabel="fullName"
+            optionValue="id"
+            placeholder="Selecciona usuarios"
+            appendTo="body"
+            styleClass="multiselect">
+          </p-multiSelect>
         </div>
 
         <div class="form-actions">
@@ -128,5 +141,26 @@
       </form>
     }
   </div>
-
 </div>
+
+@if (showDeleteModal && task) {
+  <div class="modal-overlay" (click)="closeDeleteModal()" role="dialog" aria-modal="true" aria-labelledby="delete-task-title">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title" id="delete-task-title">Eliminar task</h3>
+      </div>
+      <div class="modal-body">
+        <p>¿Deseas eliminar esta task?</p>
+        <p class="modal-entity">{{ task.summary }}</p>
+        <p class="modal-warning">Esta accion no se puede deshacer.</p>
+      </div>
+      <div class="modal-actions">
+        <button class="ghost-button" type="button" (click)="closeDeleteModal()" [disabled]="deleting">No</button>
+        <button class="danger-button" type="button" (click)="confirmDelete()" [disabled]="deleting">
+          <i class="pi" [ngClass]="deleting ? 'pi-spin pi-spinner' : 'pi-trash'"></i>
+          <span>{{ deleting ? 'Eliminando...' : 'Si, eliminar' }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+}

@@ -2,9 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { TaskService } from '../../../../service/task/task.service';
 import { Task } from '../../../../core/models/task.interface';
 import { UserService } from '../../../profile/data-access/user.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 const TASK_PRIORITIES = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
 const TASK_TYPES = ['FEATURE', 'BUG', 'CHORE', 'IMPROVEMENT', 'HOTFIX'];
@@ -12,7 +14,7 @@ const TASK_STATUSES = ['BACKLOG', 'TODO', 'IN_PROGRESS', 'REVIEW', 'DONE'];
 
 @Component({
   selector: 'app-tasks-details',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MultiSelectModule],
   templateUrl: './tasks-details.component.html',
   styleUrl: './tasks-details.component.css',
   standalone: true
@@ -23,6 +25,7 @@ export class TasksDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private taskService = inject(TaskService);
   private userService = inject(UserService);
+  private authService = inject(AuthService);
 
   tasksPriority = TASK_PRIORITIES;
   tasksType = TASK_TYPES;
@@ -31,10 +34,12 @@ export class TasksDetailsComponent implements OnInit {
   taskId: string = '';
   task: Task | null = null;
   isEditing = false;
+  showDeleteModal = false;
   loading = true;
+  deleting = false;
   error: string | null = null;
   tasksFormular: FormGroup;
-  availableAssigneds: { id: string; first_name: string; last_name: string }[] = [];
+  availableAssigneds: { id: string; fullName: string }[] = [];
 
   
   constructor(...args: unknown[]);
@@ -70,6 +75,10 @@ export class TasksDetailsComponent implements OnInit {
     this.router.navigate(['/tasks']);
   }
 
+  get isAdmin(): boolean {
+    return this.authService.getRole() === 'ADMIN';
+  }
+
   toggleEdit(): void {
     this.isEditing = !this.isEditing;
     if (this.isEditing) {
@@ -81,6 +90,43 @@ export class TasksDetailsComponent implements OnInit {
       this.resetForm();
       this.tasksFormular.disable();
     }
+  }
+
+  openDeleteModal(): void {
+    if (!this.task || !this.isAdmin) {
+      return;
+    }
+
+    this.showDeleteModal = true;
+  }
+
+  closeDeleteModal(): void {
+    if (this.deleting) {
+      return;
+    }
+
+    this.showDeleteModal = false;
+  }
+
+  confirmDelete(): void {
+    if (!this.taskId || !this.isAdmin) {
+      return;
+    }
+
+    this.deleting = true;
+    this.error = null;
+
+    this.taskService.deleteTask(this.taskId).subscribe({
+      next: () => {
+        this.deleting = false;
+        this.showDeleteModal = false;
+        this.navigateToTasks();
+      },
+      error: () => {
+        this.deleting = false;
+        this.error = 'No se pudo eliminar la tarea.';
+      }
+    });
   }
 
   onSubmit(): void {
@@ -137,8 +183,7 @@ export class TasksDetailsComponent implements OnInit {
       next: (users) => {
         this.availableAssigneds = (users || []).map((usr) => ({
           id: usr.id,
-          first_name: usr.first_name,
-          last_name: usr.last_name,
+          fullName: `${usr.first_name} ${usr.last_name}`.trim(),
         }));
       },
       error: () => {
