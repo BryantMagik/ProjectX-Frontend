@@ -12,7 +12,16 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideRouter(routes),
-    provideTanStackQuery(new QueryClient(), withDevtools()),
+    provideTanStackQuery(new QueryClient({
+      defaultOptions: {
+        queries: {
+          staleTime: 1000 * 60,      // 1 minuto antes de considerar dato viejo
+          gcTime: 1000 * 60 * 5,     // 5 minutos en caché sin observadores
+          retry: 1,
+          refetchOnWindowFocus: false,
+        },
+      },
+    }), withDevtools()),
     MessageService,
     providePrimeNG({
       theme: {

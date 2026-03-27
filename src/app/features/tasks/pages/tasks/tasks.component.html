@@ -106,24 +106,43 @@
       } @else {
         <div class="tasks-grid">
           @for (task of filteredTasks; track task.id) {
-            <button class="task-card" (click)="navigateToTaskDetails(task.id)" title="Ver detalles" type="button">
+            <button
+              class="task-card"
+              [ngClass]="getPriorityBorderClass(task.priority)"
+              (click)="navigateToTaskDetails(task.id)"
+              title="Ver detalles"
+              type="button">
+
+              <!-- Code + priority -->
               <div class="task-header">
                 <span class="task-code">{{ task.code }}</span>
                 <span class="task-priority" [ngClass]="getPriorityClass(task.priority)">
+                  <span class="priority-dot"></span>
                   {{ task.priority }}
                 </span>
               </div>
+
+              <!-- Title -->
               <h3 class="task-title">{{ task.summary }}</h3>
+
+              <!-- Description -->
               @if (task.description) {
                 <p class="task-description">{{ task.description }}</p>
               }
+
+              <!-- Footer -->
               <div class="task-footer">
-                <div class="task-meta">
-                  <div class="meta-item">
-                    <i class="pi pi-user"></i>
-                    <span>{{ task.creator.first_name || 'Unassigned' }}</span>
-                  </div>
+                <!-- Assignee -->
+                <div class="task-assignee">
+                  @if (task.creator.profile_picture) {
+                    <img [src]="task.creator.profile_picture" [alt]="task.creator.first_name" class="avatar-img">
+                  } @else {
+                    <span class="avatar-initials">{{ task.creator.first_name[0] }}{{ task.creator.last_name[0] }}</span>
+                  }
+                  <span class="assignee-name">{{ task.creator.first_name || 'Unassigned' }}</span>
                 </div>
+
+                <!-- Status badge -->
                 <span class="task-status" [ngClass]="getStatusClass(task.status)">
                   {{ task.status }}
                 </span>

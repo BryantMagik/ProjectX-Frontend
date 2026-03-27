@@ -1,226 +1,152 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, effect, computed } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TaskService } from '../../data-access/task.service';
 import { UserService } from '../../../profile/data-access/user.service';
 import { Task } from '../../../../core/models/task.interface';
-import { tap } from 'rxjs';
-import { User } from '../../../../core/models/user.interface';
+import { Project } from '../../../../core/models/project.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TasksBoardComponent } from '../../components/tasks-board/tasks-board.component';
 import { ProjectService } from '../../../projects/data-access/project.service';
-import { Project } from '../../../../core/models/project.interface';
-import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { injectQuery } from '@tanstack/angular-query-experimental';
+import { firstValueFrom } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-tasks',
-    imports: [
-        CommonModule,
-        FormsModule,
-        TasksBoardComponent
-    ],
+    imports: [CommonModule, FormsModule, TasksBoardComponent],
     templateUrl: './tasks.component.html',
     styleUrl: './tasks.component.css',
-    standalone:true
+    standalone: true
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent {
   private userService = inject(UserService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private taskService = inject(TaskService);
   private projectService = inject(ProjectService);
 
-  tasks: Task[] = [];
+  private params = toSignal(this.route.paramMap);
+  projectId = computed(() => this.params()?.get('projectId') ?? null);
+
+  // UI state
   filteredTasks: Task[] = [];
-  authors: User[] = [];
-  projects: Project[] = [];
-  error: string | null = null;
-  loading: boolean = true;
-  showKanban: boolean = false;
-  searchTerm: string = '';
-  selectedStatus: string = 'all';
-  selectedPriority: string = 'all';
+  searchTerm = '';
+  selectedStatus = 'all';
+  selectedPriority = 'all';
   selectedProjectId: string | null = null;
-  projectId: string | null = null
-  project: Project | null = null
-  routeSub: Subscription | null = null
-  showProjectModal: boolean = false;
+  showKanban = false;
+  showProjectModal = false;
 
-  constructor() { }
+  tasksQuery = injectQuery(() => ({
+    queryKey: ['tasks', 'own'],
+    queryFn: () => firstValueFrom(this.taskService.getTasksByIdWhereId()),
+  }));
 
-  ngOnInit(): void {
-    this.getTask();
-    this.getUsers();
-    this.getProjects();
-    this.routeSub = this.route.paramMap.subscribe(params => {
-      this.projectId = params.get('projectId')
-      console.log('Route params - projectId:', this.projectId)
-      if (this.projectId) {
-        this.selectedProjectId = this.projectId;
-        this.getProjectById(this.projectId)
-      }
-    })
+  usersQuery = injectQuery(() => ({
+    queryKey: ['users'],
+    queryFn: () => firstValueFrom(this.userService.getAllUsers()),
+  }));
 
+  projectsQuery = injectQuery(() => ({
+    queryKey: ['projects', 'own'],
+    queryFn: () => firstValueFrom(this.projectService.getProjectByIdWhereId()),
+  }));
+
+  projectQuery = injectQuery(() => ({
+    queryKey: ['projects', this.projectId()],
+    queryFn: () => firstValueFrom(this.projectService.getProjectById(this.projectId()!)),
+    enabled: !!this.projectId(),
+  }));
+
+  get loading(): boolean { return this.tasksQuery.isPending(); }
+  get error(): string | null { return this.tasksQuery.isError() ? 'Failed to load tasks' : null; }
+  get projects(): Project[] { return (this.projectsQuery.data() ?? []) as Project[]; }
+
+  constructor() {
+    effect(() => {
+      const tasks = this.tasksQuery.data();
+      if (tasks) this.applyFilters(tasks);
+    });
+
+    effect(() => {
+      const pid = this.projectId();
+      if (pid) this.selectedProjectId = pid;
+    });
   }
-
 
   navigateToTaskDetails(taskId: string): void {
     this.router.navigate(['/tasks', taskId]);
   }
 
-  private getTask(): void {
-    this.taskService.getTasksByIdWhereId().pipe(
-      tap({
-        next: (task: Task[] | null) => {
-          if (task) {
-            this.tasks = task;
-            this.filteredTasks = task;
-            console.log(this.tasks);
-          }
-        },
-        error: () => this.error = 'Failed to load tasks',
-        complete: () => this.loading = false
-      })
-    ).subscribe();
-  }
-
-  private getUsers(): void {
-    this.userService.getAllUsers().pipe(
-      tap({
-        next: (authors: User[] | null) => {
-          if(authors){
-            this.authors = authors;
-            console.log("Authors", authors);
-          }
-        },
-        error: (err) => {
-          console.warn('Could not load users:', err);
-          // No mostrar error si solo fallan los usuarios
-          // this.error = 'Failed to load users';
-        }
-      })
-    ).subscribe();
-  }
-
-  filterTasks(): void {
+  private applyFilters(tasks: Task[]): void {
     const search = this.searchTerm.toLowerCase();
-
-    this.filteredTasks = this.tasks.filter(task => {
+    this.filteredTasks = tasks.filter(task => {
       const matchesSearch = !this.searchTerm ||
         task.code?.toLowerCase().includes(search) ||
         task.summary?.toLowerCase().includes(search);
-
       const matchesStatus = this.selectedStatus === 'all' || task.status === this.selectedStatus;
       const matchesPriority = this.selectedPriority === 'all' || task.priority === this.selectedPriority;
-
       return matchesSearch && matchesStatus && matchesPriority;
     });
   }
 
-  onSearchChange(): void {
-    this.filterTasks();
-  }
-
-  onStatusChange(): void {
-    this.filterTasks();
-  }
-
-  onPriorityChange(): void {
-    this.filterTasks();
-  }
+  onSearchChange(): void { this.applyFilters(this.tasksQuery.data() ?? []); }
+  onStatusChange(): void { this.applyFilters(this.tasksQuery.data() ?? []); }
+  onPriorityChange(): void { this.applyFilters(this.tasksQuery.data() ?? []); }
 
   getPriorityClass(priority: string): string {
-    const priorityMap: { [key: string]: string } = {
-      'critical': 'priority-critical',
-      'high':     'priority-high',
-      'medium':   'priority-medium',
-      'low':      'priority-low',
+    const map: Record<string, string> = {
+      'critical': 'priority-critical', 'high': 'priority-high',
+      'medium': 'priority-medium', 'low': 'priority-low',
     };
-    return priorityMap[priority?.toLowerCase()] || 'priority-low';
+    return map[priority?.toLowerCase()] || 'priority-low';
+  }
+
+  getPriorityBorderClass(priority: string): string {
+    const map: Record<string, string> = {
+      'critical': 'border-critical', 'high': 'border-high',
+      'medium': 'border-medium', 'low': 'border-low',
+    };
+    return map[priority?.toLowerCase()] || 'border-low';
   }
 
   getStatusClass(status: string): string {
-    const statusMap: { [key: string]: string } = {
-      'backlog':     'status-backlog',
-      'todo':        'status-todo',
-      'in_progress': 'status-in-progress',
-      'blocked':     'status-blocked',
-      'review':      'status-review',
-      'testing':     'status-testing',
-      'done':        'status-done',
-      'cancelled':   'status-cancelled',
+    const map: Record<string, string> = {
+      'backlog': 'status-backlog', 'todo': 'status-todo',
+      'in_progress': 'status-in-progress', 'blocked': 'status-blocked',
+      'review': 'status-review', 'testing': 'status-testing',
+      'done': 'status-done', 'cancelled': 'status-cancelled',
     };
-    return statusMap[status?.toLowerCase()] || 'status-backlog';
+    return map[status?.toLowerCase()] || 'status-backlog';
   }
 
   getActiveTasksCount(): number {
-    return this.tasks.filter(t => t.status === 'IN_PROGRESS' || t.status === 'REVIEW' || t.status === 'TESTING').length;
+    return (this.tasksQuery.data() ?? []).filter(t =>
+      t.status === 'IN_PROGRESS' || t.status === 'REVIEW' || t.status === 'TESTING'
+    ).length;
   }
 
   getCompletedTasksCount(): number {
-    return this.tasks.filter(t => t.status === 'DONE').length;
+    return (this.tasksQuery.data() ?? []).filter(t => t.status === 'DONE').length;
   }
 
   getHighPriorityTasksCount(): number {
-    return this.tasks.filter(t => t.priority === 'HIGH' || t.priority === 'CRITICAL').length;
+    return (this.tasksQuery.data() ?? []).filter(t =>
+      t.priority === 'HIGH' || t.priority === 'CRITICAL'
+    ).length;
   }
 
-  toggleKanban(): void {
-    this.showKanban = !this.showKanban;
-  }
+  toggleKanban(): void { this.showKanban = !this.showKanban; }
 
-  
-  openCreateTaskModal(): void {
-    if (!this.selectedProjectId && this.projectId) {
-      this.selectedProjectId = this.projectId;
-    }
-    this.showProjectModal = true;
-  }
-
-  closeCreateTaskModal(): void {
-    this.showProjectModal = false;
-  }
+  openCreateTaskModal(): void { this.showProjectModal = true; }
+  closeCreateTaskModal(): void { this.showProjectModal = false; }
 
   confirmCreateTask(): void {
-    const projectId = this.selectedProjectId || this.projectId;
-    console.log('navigateToNewTask called, projectId:', projectId);
+    const projectId = this.selectedProjectId || this.projectId();
     if (projectId) {
       this.showProjectModal = false;
-      this.router.navigate(['/tasks/new'], {
-        queryParams: { projectId }
-      });
-    } else {
-      console.warn('No projectId available');
+      this.router.navigate(['/tasks/new'], { queryParams: { projectId } });
     }
   }
-
-  private getProjects(): void {
-    this.projectService.getProjectByIdWhereId().pipe(
-      tap({
-        next: (projects: Project[] | null) => {
-          if (projects) {
-            this.projects = projects;
-          }
-        },
-        error: () => {
-          console.warn('Failed to load projects');
-        }
-      })
-    ).subscribe();
-  }
-
-   private getProjectById(projectId: string): void {
-      this.projectService.getProjectById(projectId).pipe(
-        tap({
-          next: (project: Project | null) => {
-            console.log(project)
-            this.project = project
-            this.loading = false
-          },
-          error: () => this.error = 'Failed to load projects',
-          complete: () => this.loading = false
-        })
-      ).subscribe()
-    }
 }
