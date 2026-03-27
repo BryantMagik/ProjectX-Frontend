@@ -1,10 +1,11 @@
-import { Component, EventEmitter, HostListener, OnInit, OnDestroy, Output, inject } from '@angular/core'
-import { Workspace } from '../../../../core/models/workspace.interface'
+import { Component, EventEmitter, HostListener, OnInit, Output, inject, computed, effect } from '@angular/core'
 import { WorkspaceService } from '../../../../service/workspace/workspace.service'
-import { tap, Subscription } from 'rxjs'
+import { Workspace } from '../../../../core/models/workspace.interface'
 import { FormsModule } from '@angular/forms'
-
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
+import { injectQuery } from '@tanstack/angular-query-experimental'
+import { firstValueFrom } from 'rxjs'
+import { WorkspaceStore } from '../../../../core/services/workspace.store'
 
 @Component({
     selector: 'app-workspace-switcher',
@@ -13,125 +14,61 @@ import { ActivatedRoute, Router } from '@angular/router'
     templateUrl: './workspace-switcher.component.html',
     styleUrl: './workspace-switcher.component.css'
 })
-export class WorkspaceSwitcherComponent implements OnInit, OnDestroy {
+export class WorkspaceSwitcherComponent implements OnInit {
   private workspaceService = inject(WorkspaceService);
-  private router = inject(Router);
+  private workspaceStore = inject(WorkspaceStore);
   private route = inject(ActivatedRoute);
-  private workspacesChangedSub: Subscription | null = null;
 
-  @Output() workspaceSelected = new EventEmitter<string>()
+  @Output() workspaceSelected = new EventEmitter<string>();
 
-  workspaces: Workspace[] = []
-  error: string | null = null
-  loading: boolean = true
-  selectedWorkspaceId: string | null = null
-  selectedWorkspace: Workspace | null = null
-  dropdownOpen: boolean = false
+  dropdownOpen = false;
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
+  workspacesQuery = injectQuery(() => ({
+    queryKey: ['workspaces'],
+    queryFn: () => firstValueFrom(this.workspaceService.getAllWorkspace()),
+  }));
 
-  constructor() { }
+  workspaces = computed(() => this.workspacesQuery.data() ?? []);
+  selectedWorkspace = computed<Workspace | null>(() => {
+    const id = this.workspaceStore.selectedId();
+    return this.workspaces().find(w => w.id === id) ?? null;
+  });
+  loading = this.workspacesQuery.isPending;
+  error = computed(() => this.workspacesQuery.isError() ? 'Failed to load workspaces' : null);
 
-  private getWorkspaceStorageKey(): string {
-    const userId = sessionStorage.getItem('userId')
-    return userId ? `workspace_${userId}` : 'selectedWorkspaceId'
-  }
-
-  selectWorkspace(workspace: Workspace): void {
-    this.selectedWorkspace = workspace
-    this.selectedWorkspaceId = workspace.id
-    this.dropdownOpen = false
-
-    // Guardar en sessionStorage vinculado al usuario
-    sessionStorage.setItem(this.getWorkspaceStorageKey(), workspace.id)
-
-    this.workspaceSelected.emit(this.selectedWorkspaceId!)
+  constructor() {
+    // Auto-select first workspace once list loads if nothing is selected
+    effect(() => {
+      const list = this.workspacesQuery.data();
+      if (list && list.length > 0 && !this.workspaceStore.selectedId()) {
+        this.selectWorkspace(list[0]);
+      }
+    });
   }
 
   ngOnInit(): void {
-    this.getWorkspaces()
-    this.loadSelectedWorkspace()
-
-    this.workspacesChangedSub = this.workspaceService.workspacesChanged$.subscribe((newWorkspaceId) => {
-      if (newWorkspaceId) {
-        this.selectedWorkspaceId = newWorkspaceId;
-        sessionStorage.setItem(this.getWorkspaceStorageKey(), newWorkspaceId);
-      }
-      this.getWorkspaces();
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.workspacesChangedSub?.unsubscribe()
-  }
-
-  private loadSelectedWorkspace(): void {
-    // Intentar obtener el workspace de la URL primero
     this.route.paramMap.subscribe(params => {
-      const workspaceIdFromUrl = params.get('workspaceId')
+      const workspaceIdFromUrl = params.get('workspaceId');
       if (workspaceIdFromUrl) {
-        this.selectedWorkspaceId = workspaceIdFromUrl
-        sessionStorage.setItem(this.getWorkspaceStorageKey(), workspaceIdFromUrl)
+        this.workspaceStore.select(workspaceIdFromUrl);
+        this.workspaceSelected.emit(workspaceIdFromUrl);
       } else {
-        // Si no hay en la URL, intentar obtener de sessionStorage del usuario actual
-        const savedWorkspaceId = sessionStorage.getItem(this.getWorkspaceStorageKey())
-        if (savedWorkspaceId) {
-          this.selectedWorkspaceId = savedWorkspaceId
+        const savedId = this.workspaceStore.selectedId();
+        if (savedId) {
+          this.workspaceSelected.emit(savedId);
         }
       }
-
-      // Buscar el workspace completo si tenemos un ID
-      if (this.selectedWorkspaceId && this.workspaces.length > 0) {
-        this.selectedWorkspace = this.workspaces.find(w => w.id === this.selectedWorkspaceId) || null
-        if (this.selectedWorkspace) {
-          this.workspaceSelected.emit(this.selectedWorkspaceId)
-        } else {
-          // El workspace no existe en la lista del usuario, limpiar
-          sessionStorage.removeItem(this.getWorkspaceStorageKey())
-          this.selectedWorkspaceId = null
-          this.router.navigate(['/projects'])
-        }
-      }
-    })
+    });
   }
 
-  private getWorkspaces(): void {
-    this.workspaceService.getAllWorkspace().pipe(
-      tap({
-        next: (workspace: Workspace[] | null) => {
-          if (workspace) {
-            this.workspaces = workspace
-            // Después de cargar los workspaces, intentar seleccionar el guardado
-            this.restoreSelectedWorkspace()
-          }
-        },
-        error: () => this.error = 'Failed to load workspaces',
-        complete: () => this.loading = false
-      })
-    ).subscribe()
-  }
-
-  private restoreSelectedWorkspace(): void {
-    if (this.selectedWorkspaceId && this.workspaces.length > 0) {
-      this.selectedWorkspace = this.workspaces.find(w => w.id === this.selectedWorkspaceId) || null
-      if (this.selectedWorkspace) {
-        this.workspaceSelected.emit(this.selectedWorkspaceId)
-      } else {
-        // El workspace guardado ya no existe, limpiar sessionStorage
-        sessionStorage.removeItem(this.getWorkspaceStorageKey())
-        this.selectedWorkspaceId = null
-        // Redirigir al dashboard principal
-        this.router.navigate(['/projects'])
-      }
-    } else if (this.workspaces.length > 0 && !this.selectedWorkspaceId) {
-      // Si no hay workspace seleccionado pero hay workspaces disponibles, seleccionar el primero
-      this.selectWorkspace(this.workspaces[0])
-    }
+  selectWorkspace(workspace: Workspace): void {
+    this.workspaceStore.select(workspace.id);
+    this.dropdownOpen = false;
+    this.workspaceSelected.emit(workspace.id);
   }
 
   @HostListener('document:click', ['$event'])
-  onClick(event: MouseEvent) {
+  onClick(event: MouseEvent): void {
     const clickedInside = event.target instanceof HTMLElement && event.target.closest('.workspace-switcher');
     if (!clickedInside) {
       this.dropdownOpen = false;

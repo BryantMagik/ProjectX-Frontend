@@ -1,8 +1,10 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { injectMutation } from '@tanstack/angular-query-experimental';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,9 +21,7 @@ export class LoginComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  isLoading = signal(false);
   showPassword = signal(false);
-  errorMessage = signal<string | undefined>(undefined);
   private returnUrl: string = '/projects';
 
   validatorForm = new FormGroup({
@@ -29,8 +29,18 @@ export class LoginComponent implements OnInit {
     passwordValidator: new FormControl('', [Validators.required])
   });
 
+  loginMutation = injectMutation(() => ({
+    mutationFn: (credentials: { email: string; password: string }) =>
+      firstValueFrom(this.authService.login(credentials.email, credentials.password)),
+    onSuccess: () => this.router.navigateByUrl(this.returnUrl),
+  }));
+
+  isLoading = this.loginMutation.isPending;
+  errorMessage = computed(() =>
+    this.loginMutation.isError() ? 'Invalid credentials. Please try again.' : undefined
+  );
+
   ngOnInit(): void {
-    // Capturar returnUrl si existe
     this.route.queryParams.subscribe(params => {
       if (params['returnUrl']) {
         this.returnUrl = params['returnUrl'];
@@ -40,21 +50,8 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if (this.validatorForm.valid) {
-      this.isLoading.set(true);
       const { emailValidator, passwordValidator } = this.validatorForm.value;
-
-      this.authService.login(emailValidator!, passwordValidator!).subscribe({
-        next: (_response) => {
-          this.isLoading.set(false);
-          this.router.navigateByUrl(this.returnUrl);
-        },
-        error: (_err) => {
-          this.isLoading.set(false);
-          this.errorMessage.set('Invalid credentials. Please try again.');
-        }
-      });
-    } else {
-      this.errorMessage.set('Please fill in all required fields!');
+      this.loginMutation.mutate({ email: emailValidator!, password: passwordValidator! });
     }
   }
 

@@ -3,7 +3,7 @@ import { ApiService } from "../../core/services/api.service";
 import { AuthService } from "../../core/services/auth.service";
 import { HttpHeaders } from "@angular/common/http";
 import { Workspace } from "../../core/models/workspace.interface";
-import { Observable, of, Subject } from "rxjs";
+import { Observable, of } from "rxjs";
 import { apiRoutes } from "../../../environments/environment";
 
 @Injectable({
@@ -13,14 +13,7 @@ export class WorkspaceService {
     private apiService = inject(ApiService);
     private authService = inject(AuthService);
 
-    private workspacesChanged = new Subject<string | null>();
-    workspacesChanged$ = this.workspacesChanged.asObservable();
-
     constructor() { }
-
-    notifyWorkspacesChanged(workspaceId?: string): void {
-        this.workspacesChanged.next(workspaceId ?? null);
-    }
 
     private getAuthHeaders(): HttpHeaders {
         let headers = new HttpHeaders()

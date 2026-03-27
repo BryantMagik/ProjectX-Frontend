@@ -5,6 +5,7 @@ import { Task } from '../../../../core/models/task.interface';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { WorkspaceStore } from '../../../../core/services/workspace.store';
 
 interface KanbanColumn {
   id: string;
@@ -24,13 +25,17 @@ interface KanbanColumn {
 export class TasksBoardComponent implements OnInit {
   private taskService = inject(TaskService);
   private router = inject(Router);
+  private workspaceStore = inject(WorkspaceStore);
 
   @Input() projectId?: string | null;
 
   tasks: Task[] = [];
   loading: boolean = true;
   error: string | null = null;
-  currentWorkspaceId: string | null = null;
+
+  get currentWorkspaceId(): string | null {
+    return this.workspaceStore.selectedId();
+  }
 
   columns: KanbanColumn[] = [
     { id: 'backlog', title: 'Backlog', status: 'BACKLOG', tasks: [], color: '#64748b' },
@@ -41,14 +46,7 @@ export class TasksBoardComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.getCurrentWorkspace();
     this.getTasks();
-  }
-
-  private getCurrentWorkspace(): void {
-    const userId = sessionStorage.getItem('userId');
-    const storageKey = userId ? `workspace_${userId}` : 'selectedWorkspaceId';
-    this.currentWorkspaceId = sessionStorage.getItem(storageKey);
   }
 
   private getTasks(): void {

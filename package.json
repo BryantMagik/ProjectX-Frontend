@@ -29,6 +29,7 @@
     "@ng-icons/feather-icons": "^33.0.0",
     "@ng-icons/heroicons": "^33.0.0",
     "@primeng/themes": "^21.0.4",
+    "@tanstack/angular-query-experimental": "^5.95.2",
     "http-proxy-middleware": "^3.0.5",
     "primeicons": "^7.0.0",
     "primeng": "^21.1.1",

@@ -1,17 +1,17 @@
 <div class="workspace-switcher">
   <button class="workspace-button"
     (click)="dropdownOpen = !dropdownOpen">
-    @if (selectedWorkspace) {
-      @if (selectedWorkspace.image) {
-        <img [src]="selectedWorkspace.image" alt="Workspace Icon"
+    @if (selectedWorkspace()) {
+      @if (selectedWorkspace()!.image) {
+        <img [src]="selectedWorkspace()!.image" alt="Workspace Icon"
           class="workspace-avatar" />
       }
-      @if (!selectedWorkspace.image) {
+      @if (!selectedWorkspace()!.image) {
         <div class="workspace-avatar-placeholder">
-          <span class="avatar-letter">{{ selectedWorkspace.name[0] }}</span>
+          <span class="avatar-letter">{{ selectedWorkspace()!.name[0] }}</span>
         </div>
       }
-      <span class="workspace-name">{{ selectedWorkspace.name }}</span>
+      <span class="workspace-name">{{ selectedWorkspace()!.name }}</span>
       <i class="pi pi-chevron-down ml-auto text-slate-400"></i>
     } @else {
       <span class="workspace-empty">Select workspace</span>
@@ -20,8 +20,9 @@
 
   @if (dropdownOpen) {
     <div class="workspace-dropdown">
-      @for (workspace of workspaces; track workspace) {
-        <div (click)="selectWorkspace(workspace)"
+      @for (workspace of workspaces(); track workspace.id) {
+        <button (click)="selectWorkspace(workspace)"
+          (keyup.enter)="selectWorkspace(workspace)"
           class="workspace-item">
           @if (workspace.image) {
             <img [src]="workspace.image" alt="Workspace Icon" class="workspace-item-avatar" />
@@ -31,10 +32,10 @@
             </div>
           }
           <span class="workspace-item-name">{{ workspace.name }}</span>
-          @if (workspace === selectedWorkspace) {
+          @if (workspace.id === selectedWorkspace()?.id) {
             <i class="pi pi-check ml-auto text-blue-400"></i>
           }
-        </div>
+        </button>
       }
     </div>
   }

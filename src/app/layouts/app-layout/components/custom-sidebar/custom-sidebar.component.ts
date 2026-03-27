@@ -1,13 +1,12 @@
 
-import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject, computed} from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink, RouterModule } from '@angular/router';
-import { MenuItem } from '../../../../core/models/menu.interface';
 import { WorkspaceSwitcherComponent } from '../../../../features/workspaces/components/workspace-switcher/workspace-switcher.component';
 import { createMenuItems } from '../../../../shared/constants/menu-items';
-import { BehaviorSubject } from 'rxjs';
 import { ProjectListComponent } from '../../../../features/projects/components/project-list/project-list.component';
+import { WorkspaceStore } from '../../../../core/services/workspace.store';
 
 @Component({
   selector: 'app-custom-sidebar',
@@ -15,54 +14,26 @@ import { ProjectListComponent } from '../../../../features/projects/components/p
   templateUrl: './custom-sidebar.component.html',
   styleUrl: './custom-sidebar.component.css',
   standalone: true
-
 })
-export class CustomSidebarComponent implements OnInit {
+export class CustomSidebarComponent {
   private router = inject(Router);
+  private workspaceStore = inject(WorkspaceStore);
 
+  @Output() workspaceSelected = new EventEmitter<string>();
+  @Output() openModalEvent = new EventEmitter<void>();
 
-  @Output() workspaceSelected = new EventEmitter<string>()
-  @Output() openModalEvent = new EventEmitter<void>()
-  selectedWorkspaceId: string | null = null
+  selectedWorkspaceId = this.workspaceStore.selectedId;
+  menuItems = computed(() => {
+    const id = this.workspaceStore.selectedId();
+    return id ? createMenuItems(id) : [];
+  });
 
-  private selectedWorkspaceSubject = new BehaviorSubject<string | null>(null)
-  selectedWorkspaceId$ = this.selectedWorkspaceSubject.asObservable()
-  menuItems: MenuItem[] = [];
-
-
-  constructor() {
-
-  }
-
-  private getWorkspaceStorageKey(): string {
-    const userId = sessionStorage.getItem('userId')
-    return userId ? `workspace_${userId}` : 'selectedWorkspaceId'
-  }
-
-  ngOnInit(): void {
-    // Intentar recuperar el workspace guardado del usuario actual
-    const savedWorkspaceId = sessionStorage.getItem(this.getWorkspaceStorageKey())
-    if (savedWorkspaceId) {
-      this.selectedWorkspaceId = savedWorkspaceId
-      this.selectedWorkspaceSubject.next(savedWorkspaceId)
-    }
-
-    this.selectedWorkspaceId$.subscribe(workspaceId => {
-      if (workspaceId) {
-        this.menuItems = createMenuItems(workspaceId);
-      }
-    })
-  }
-
-
-  openModal() {
-    this.openModalEvent.emit()
+  openModal(): void {
+    this.openModalEvent.emit();
   }
 
   onWorkspaceSelected(workspaceId: string): void {
-    this.selectedWorkspaceId = workspaceId
-    this.selectedWorkspaceSubject.next(workspaceId)
-    this.router.navigate([`/workspaces/${workspaceId}/dashboard`])
-    this.workspaceSelected.emit(workspaceId)
+    this.router.navigate([`/workspaces/${workspaceId}/dashboard`]);
+    this.workspaceSelected.emit(workspaceId);
   }
 }

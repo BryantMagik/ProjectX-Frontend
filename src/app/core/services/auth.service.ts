@@ -3,6 +3,7 @@ import { ApiService } from './api.service';
 import { Router } from '@angular/router';
 import { Observable, tap, catchError, throwError, BehaviorSubject } from 'rxjs';
 import { apiRoutes } from '../../../environments/environment';
+import { WorkspaceStore } from './workspace.store';
 
 interface AuthResponse {
   accessToken: string;
@@ -21,6 +22,7 @@ interface RefreshTokenResponse {
 export class AuthService {
   private apiService = inject(ApiService);
   private router = inject(Router);
+  private workspaceStore = inject(WorkspaceStore);
 
   private readonly ACCESS_TOKEN_KEY = 'accessToken';
   private readonly REFRESH_TOKEN_KEY = 'refreshToken';
@@ -136,6 +138,7 @@ export class AuthService {
 
     this.clearTokens();
     this.clearUserData();
+    this.workspaceStore.clear();
     this.router.navigate(['/login']);
   }
 
@@ -163,12 +166,6 @@ export class AuthService {
   }
 
   private clearUserData(): void {
-    // Limpiar workspace guardado del usuario
-    const userId = this.getId();
-    if (userId) {
-      sessionStorage.removeItem(`workspace_${userId}`);
-    }
-    // También limpiar la key genérica por si acaso
-    sessionStorage.removeItem('selectedWorkspaceId');
+    // El workspace se limpia en WorkspaceStore.clear()
   }
 }
