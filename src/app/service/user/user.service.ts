@@ -13,10 +13,6 @@ export class UserService {
   private apiService = inject(ApiService);
   private authService = inject(AuthService);
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-
   constructor() { }
 
   profile(token: string): Observable<User> {
