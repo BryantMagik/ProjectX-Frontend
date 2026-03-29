@@ -23,9 +23,6 @@ export class AvatarDropdownComponent {
 
   @Input() user: User | null = null
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
   constructor() { }
 
   onLogout(): void {
