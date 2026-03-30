@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
+import { noAuthGuard } from './core/guards/no-auth.guard';
 import { HomeComponent } from './features/home/pages/home/home.component';
 import { LoginComponent } from './features/auth/pages/login/login.component';
 import { DashboardComponent } from './features/workspaces/pages/dashboard/dashboard.component';
@@ -38,6 +39,7 @@ export const routes: Routes = [
         path: 'login',
         title: 'Login',
         component: LoginComponent,
+        canActivate: [noAuthGuard]
     },
     {
         path: 'join-workspace',

@@ -31,7 +31,7 @@
       <i class="pi pi-bars mr-2"></i>
       Menu
     </div>
-    @for (item of menuItems; track item.route) {
+    @for (item of menuItems(); track item.label) {
       <a
         class="sidebar-menu-item"
         [routerLink]="item.route"
@@ -60,6 +60,6 @@
         <i class="pi pi-plus"></i>
       </button>
     </div>
-    <app-project-list [workspace]="selectedWorkspaceId"></app-project-list>
+    <app-project-list [workspace]="selectedWorkspaceId()"></app-project-list>
   </div>
 </aside>

@@ -6,7 +6,6 @@ import { Router, RouterModule } from '@angular/router'
 import { AvatarModule } from 'primeng/avatar';
 import { FormsModule } from '@angular/forms'
 import { AvatarDropdownComponent } from '../../../../shared/ui/avatar-dropdown/avatar-dropdown.component';
-import { MobilDropdownComponent } from '../../../../shared/ui/mobil-dropdown/mobil-dropdown.component'
 import { NotificationsComponent } from '../../../../shared/ui/notifications/notifications.component';
 import { NotificationService } from '../../../../core/services/notification.service';
 import { Subscription } from 'rxjs';
@@ -14,7 +13,7 @@ import { TaskAssignmentNotification } from '../../../../core/models/notification
 
 @Component({
     selector: 'app-navbar',
-    imports: [AvatarModule, RouterModule, BreadcrumbModule, FormsModule, AvatarDropdownComponent, MobilDropdownComponent, NotificationsComponent],
+    imports: [AvatarModule, RouterModule, BreadcrumbModule, FormsModule, AvatarDropdownComponent, NotificationsComponent],
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.css',
     standalone:true

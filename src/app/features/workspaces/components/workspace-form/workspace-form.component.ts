@@ -5,6 +5,9 @@ import { WorkspaceService } from '../../../../service/workspace/workspace.servic
 import { Router } from '@angular/router'
 import { CloudinaryService } from '../../../../core/services/cloudinary.service'
 import { CommonModule } from '@angular/common'
+import { injectMutation, injectQueryClient } from '@tanstack/angular-query-experimental'
+import { firstValueFrom } from 'rxjs'
+import { WorkspaceStore } from '../../../../core/services/workspace.store'
 
 @Component({
     selector: 'app-workspace-form',
@@ -19,6 +22,8 @@ export class WorkspaceFormComponent implements OnInit {
   private workspaceService = inject(WorkspaceService);
   private cloudinaryService = inject(CloudinaryService);
   private router = inject(Router);
+  private queryClient = injectQueryClient();
+  private workspaceStore = inject(WorkspaceStore);
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
@@ -27,6 +32,18 @@ export class WorkspaceFormComponent implements OnInit {
   authorId: string | null = null
   isUploading = false
 
+  createWorkspaceMutation = injectMutation(() => ({
+    mutationFn: (workspaceData: any) => firstValueFrom(this.workspaceService.postWorkspace(workspaceData)),
+    onSuccess: (response: any) => {
+      const newWorkspaceId = response?.workspace?.id as string | undefined;
+      this.queryClient.invalidateQueries({ queryKey: ['workspaces'] });
+      this.workspaceForm.reset();
+      if (newWorkspaceId) {
+        this.workspaceStore.select(newWorkspaceId);
+        this.router.navigate(['/workspaces', newWorkspaceId, 'dashboard']);
+      }
+    },
+  }));
 
   constructor() { }
 
@@ -97,24 +114,8 @@ export class WorkspaceFormComponent implements OnInit {
       const workspaceData = {
         ...this.workspaceForm.value,
         image: imageValue || undefined
-      }
-      console.log('Datos a enviar:', workspaceData)
-      this.workspaceService.postWorkspace(workspaceData)
-        .subscribe({
-          next: (response) => {
-            const newWorkspaceId = (response as any)?.workspace?.id as string | undefined;
-            this.workspaceService.notifyWorkspacesChanged(newWorkspaceId);
-            this.workspaceForm.reset();
-            if (newWorkspaceId) {
-              this.router.navigate(['/workspaces', newWorkspaceId, 'dashboard']);
-            }
-          },
-          error: (err) => {
-            console.error('Error al crear el workspace', err)
-          }
-        })
-    } else {
-      console.log('formulario inválido')
+      };
+      this.createWorkspaceMutation.mutate(workspaceData);
     }
   }
 }

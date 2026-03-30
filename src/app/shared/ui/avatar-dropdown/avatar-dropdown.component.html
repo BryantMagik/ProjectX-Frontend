@@ -1,12 +1,16 @@
 @if (user) {
   <div
     class="avatar-dropdown-container"
-    (click)="toggleDropdown()">
+    tabindex="0"
+    role="button"
+    (click)="toggleDropdown()"
+    (keydown.enter)="toggleDropdown()"
+    (keydown.space)="toggleDropdown()">
     <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle"
       class="avatar-image">
     </p-avatar>
     <div class="user-info hidden md:flex">
-      <span class="user-name">{{user.first_name}} {{user.last_name}}</span>
+      <span class="user-name capitalize">{{user.first_name}} {{user.last_name}}</span>
       <span class="user-role">
         {{ user.type_user ? userTypeMap[user.type_user] : 'Unknown' }}
       </span>
@@ -14,7 +18,10 @@
     <i class="pi pi-angle-down dropdown-icon"></i>
     <div [ngClass]="{'dropdown-visible': dropdownVisible, 'dropdown-hidden': !dropdownVisible}"
       class="dropdown-menu"
-      (click)="$event.stopPropagation()">
+      tabindex="0"
+      (click)="$event.stopPropagation()"
+      (keydown.enter)="$event.stopPropagation()"
+      (keydown.space)="$event.stopPropagation()">
       @for (option of menuItems(); track option) {
         <a class="dropdown-item"
           mat-list-item (click)="selectOption(option.label)"

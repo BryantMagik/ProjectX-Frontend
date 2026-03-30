@@ -7,6 +7,7 @@ import { Project } from '../../../../core/models/project.interface';
 import { Router } from '@angular/router';
 import { User } from '../../../../core/models/user.interface';
 import { UserService } from '../../../profile/data-access/user.service';
+import { WorkspaceStore } from '../../../../core/services/workspace.store';
 
 @Component({
     selector: 'app-projects',
@@ -21,6 +22,7 @@ export class ProjectsComponent implements OnInit {
   private userService = inject(UserService);
   private projectsService = inject(ProjectService);
   private router = inject(Router);
+  private workspaceStore = inject(WorkspaceStore);
 
   projects: Project[] = [];
   filteredProjects: Project[] = [];
@@ -28,34 +30,23 @@ export class ProjectsComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
   searchTerm: string = '';
-  currentWorkspaceId: string | null = null;
+
+  get currentWorkspaceId(): string | null {
+    return this.workspaceStore.selectedId();
+  }
 
   constructor() { }
 
   ngOnInit(): void {
-    this.getCurrentWorkspace();
     this.getProjects();
     this.getUsers();
   }
 
-  private getCurrentWorkspace(): void {
-    const userId = sessionStorage.getItem('userId');
-    const storageKey = userId ? `workspace_${userId}` : 'selectedWorkspaceId';
-    this.currentWorkspaceId = sessionStorage.getItem(storageKey);
-  }
-
-  navigateToProjectForm() {
-    // Get workspaceId from sessionStorage (same method used by workspace-switcher)
-    const userId = sessionStorage.getItem('userId');
-    const storageKey = userId ? `workspace_${userId}` : 'selectedWorkspaceId';
-    const workspaceId = sessionStorage.getItem(storageKey);
-
+  navigateToProjectForm(): void {
+    const workspaceId = this.workspaceStore.selectedId();
     if (workspaceId) {
-      this.router.navigate(['/projects/new'], {
-        queryParams: { workspaceId }
-      });
+      this.router.navigate(['/projects/new'], { queryParams: { workspaceId } });
     } else {
-      console.error('No workspace selected');
       this.router.navigate(['/projects/new']);
     }
   }

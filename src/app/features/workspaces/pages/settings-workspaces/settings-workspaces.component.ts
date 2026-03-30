@@ -7,6 +7,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common'
 import { CloudinaryService } from '../../../../core/services/cloudinary.service'
 import { ModalDeleteWorkspaceComponent } from '../../components/modal-delete-workspace/modal-delete-workspace.component'
+import { injectQueryClient } from '@tanstack/angular-query-experimental'
+import { WorkspaceStore } from '../../../../core/services/workspace.store'
 
 @Component({
     selector: 'app-settings',
@@ -21,6 +23,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private workspaceService = inject(WorkspaceService);
   private cloudinaryService = inject(CloudinaryService);
+  private queryClient = injectQueryClient();
+  private workspaceStore = inject(WorkspaceStore);
 
   workspaceForm!: FormGroup
   workspaceId: string | null = null
@@ -172,8 +176,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.workspaceService.deleteWorkspace(workspaceId).pipe(
       tap({
         next: () => {
+          if (this.workspaceStore.selectedId() === workspaceId) {
+            this.workspaceStore.clear();
+          }
+          this.queryClient.setQueryData<Workspace[]>(['workspaces'], (old) =>
+            (old ?? []).filter(w => w.id !== workspaceId)
+          );
+          this.queryClient.invalidateQueries({ queryKey: ['workspaces'] });
           this.successMessage = 'Workspace deleted successfully. Redirecting...'
-          // Redirect to workspaces list or home after 2 seconds
           setTimeout(() => {
             this.router.navigate(['/projects'])
           }, 2000)

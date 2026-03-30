@@ -42,8 +42,8 @@
             [id]="column.id"
             [cdkDropListData]="column.tasks"
             [cdkDropListConnectedTo]="getConnectedLists(column.id)"
-            (cdkDropListDropped)="drop($event, column)">
-
+            (cdkDropListDropped)="drop($event, column)"
+          >
             @if (column.tasks.length === 0) {
               <div class="empty-column">
                 <i class="pi pi-inbox"></i>
@@ -52,15 +52,30 @@
             }
 
             @for (task of column.tasks; track task.id) {
-              <div class="task-card" cdkDrag>
+              <div
+                class="task-card"
+                cdkDrag
+                [ngClass]="getPriorityBorderClass(task.priority)"
+              >
                 <div class="drag-handle" cdkDragHandle>
-                  <i class="pi pi-bars"></i>
+                  <i class="pi pi-grip-vertical"></i>
                 </div>
 
-                <div class="task-content" (click)="navigateToTask(task.id)">
+                <div
+                  class="task-content"
+                  role="button"
+                  tabindex="0"
+                  (click)="navigateToTask(task.id)"
+                  (keydown.enter)="navigateToTask(task.id)"
+                  (keydown.space)="navigateToTask(task.id)"
+                >
                   <div class="task-header">
                     <span class="task-code">{{ task.code }}</span>
-                    <span class="task-priority" [ngClass]="getPriorityColor(task.priority)">
+                    <span
+                      class="task-priority"
+                      [ngClass]="getPriorityColor(task.priority)"
+                    >
+                      <span class="priority-dot"></span>
                       {{ task.priority }}
                     </span>
                   </div>
@@ -72,32 +87,42 @@
                   }
 
                   <div class="task-footer">
-                    <div class="task-meta">
-                      @if (task.dueTime) {
-                        <span class="task-due">
-                          <i class="pi pi-calendar"></i>
-                          {{ task.dueTime | date: 'MMM d' }}
-                        </span>
-                      }
-                      @if (task.task_type) {
-                        <span class="task-type">
-                          <i class="pi pi-tag"></i>
-                          {{ task.task_type }}
-                        </span>
-                      }
-                    </div>
-
                     @if (task.creator) {
                       <div class="task-assignee">
                         @if (task.creator.profile_picture) {
-                          <img [src]="task.creator.profile_picture" alt="{{ task.creator.first_name }}">
+                          <img
+                            [src]="task.creator.profile_picture"
+                            [alt]="task.creator.first_name"
+                            class="avatar-img"
+                          />
                         } @else {
                           <span class="avatar-initials">
-                            {{ task.creator.first_name[0] }}{{ task.creator.last_name[0] }}
+                            {{ task.creator.first_name[0]
+                            }}{{ task.creator.last_name[0] }}
                           </span>
                         }
+                        <span class="assignee-name">{{
+                          task.creator.first_name
+                        }}</span>
                       </div>
+                    } @else {
+                      <div></div>
                     }
+
+                    <div class="task-meta">
+                      @if (task.dueTime) {
+                        <span class="task-chip">
+                          <i class="pi pi-calendar"></i>
+                          {{ task.dueTime | date: "MMM d" }}
+                        </span>
+                      }
+                      <span
+                        class="status-badge"
+                        [ngClass]="getStatusClass(task.status)"
+                      >
+                        {{ task.status }}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
