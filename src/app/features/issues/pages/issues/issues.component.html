@@ -60,6 +60,7 @@
         (ngModelChange)="onStatusChange()"
         class="filter-select"
         title="Filtrar por estado">
+        <option value="ACTIVE">Activos: ONGOING y PENDING</option>
         <option value="all">Todos los estados</option>
         <option value="PENDING">PENDING</option>
         <option value="ONGOING">ONGOING</option>
@@ -157,45 +158,40 @@
         <div class="state-card">
           <i class="pi pi-inbox"></i>
           <h3>No hay issues</h3>
-          <p>{{ searchTerm || selectedStatus !== 'all' || selectedPriority !== 'all' ? 'Ajusta tus filtros para ver resultados.' : 'Crea tu primer issue para empezar.' }}</p>
+          <p>{{ searchTerm || selectedStatus !== 'ACTIVE' || selectedPriority !== 'all' ? 'Ajusta tus filtros para ver resultados.' : 'Crea tu primer issue para empezar.' }}</p>
         </div>
       } @else {
         <div class="issues-grid">
           @for (issue of filteredIssues; track issue.id) {
-            <button class="issue-card" (click)="navigateToIssueDetails(issue.id)" title="Ver detalles" type="button">
-              <div class="issue-card-top">
+            <button
+              class="issue-card"
+              [ngClass]="getPriorityBorderClass(issue.priority)"
+              (click)="navigateToIssueDetails(issue.id)"
+              title="Ver detalles"
+              type="button">
+              <div class="issue-header">
                 <span class="issue-code">{{ issue.code }}</span>
                 <span class="issue-priority" [ngClass]="getPriorityClass(issue.priority)">
+                  <span class="priority-dot"></span>
                   {{ issue.priority }}
                 </span>
               </div>
-              <div class="issue-card-body">
-                <div class="issue-title-block">
-                  <span class="issue-type-badge">{{ issue.type || 'General' }}</span>
-                  <h3 class="issue-title">{{ issue.summary }}</h3>
-                </div>
-                @if (issue.description) {
-                  <p class="issue-description">{{ issue.description }}</p>
-                } @else {
-                  <p class="issue-description issue-description-empty">Sin descripcion disponible.</p>
-                }
-              </div>
-              <div class="issue-card-bottom">
-                <div class="issue-meta-grid">
-                  <div class="issue-meta-item">
-                    <i class="pi pi-user"></i>
-                    <div>
-                      <span class="issue-meta-label">Reporter</span>
-                      <span class="issue-meta-value">{{ issue.reporter?.first_name || 'Sin reporter' }}</span>
-                    </div>
-                  </div>
-                  <div class="issue-meta-item">
-                    <i class="pi pi-flag"></i>
-                    <div>
-                      <span class="issue-meta-label">Estado</span>
-                      <span class="issue-meta-value">{{ issue.status }}</span>
-                    </div>
-                  </div>
+
+              <span class="issue-type-badge">{{ issue.type || 'General' }}</span>
+              <h3 class="issue-title">{{ issue.summary }}</h3>
+
+              @if (issue.description) {
+                <p class="issue-description">{{ issue.description }}</p>
+              }
+
+              <div class="issue-footer">
+                <div class="issue-reporter">
+                  @if (issue.reporter?.profile_picture) {
+                    <img [src]="issue.reporter?.profile_picture" [alt]="issue.reporter?.first_name || 'Reporter'" class="avatar-img">
+                  } @else {
+                    <span class="avatar-initials">{{ getReporterInitials(issue) }}</span>
+                  }
+                  <span class="reporter-name">{{ issue.reporter?.first_name || 'Sin reporter' }}</span>
                 </div>
                 <span class="issue-status" [ngClass]="getStatusClass(issue.status)">
                   {{ issue.status }}

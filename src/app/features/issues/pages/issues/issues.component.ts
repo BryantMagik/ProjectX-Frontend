@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IssuesBoardComponent } from '../../components/issues-board/issues-board.component';
 import { IssueService } from '../../data-access/issue.service';
 import { Issue } from '../../../../core/models/issue.interface';
-import { tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'app-issues',
@@ -24,7 +24,7 @@ export class IssuesComponent implements OnInit {
   loading: boolean = true;
   showKanban: boolean = false;
   searchTerm: string = '';
-  selectedStatus: string = 'all';
+  selectedStatus: string = 'ACTIVE';
   selectedPriority: string = 'all';
 
   ngOnInit(): void {
@@ -33,15 +33,15 @@ export class IssuesComponent implements OnInit {
 
   private getIssues(): void {
     this.issueService.getAllIssues().pipe(
+      finalize(() => this.loading = false),
       tap({
         next: (issues: Issue[] | null) => {
           if (issues) {
             this.issues = issues;
-            this.filteredIssues = issues;
+            this.filterIssues();
           }
         },
         error: () => this.error = 'Failed to load issues',
-        complete: () => this.loading = false
       })
     ).subscribe();
   }
@@ -62,7 +62,10 @@ export class IssuesComponent implements OnInit {
         issue.summary?.toLowerCase().includes(search) ||
         issue.description?.toLowerCase().includes(search);
 
-      const matchesStatus = this.selectedStatus === 'all' || issue.status === this.selectedStatus;
+      const matchesStatus =
+        this.selectedStatus === 'all' ||
+        (this.selectedStatus === 'ACTIVE' && (issue.status === 'PENDING' || issue.status === 'ONGOING')) ||
+        issue.status === this.selectedStatus;
       const matchesPriority = this.selectedPriority === 'all' || issue.priority === this.selectedPriority;
 
       return matchesSearch && matchesStatus && matchesPriority;
@@ -90,6 +93,15 @@ export class IssuesComponent implements OnInit {
     return priorityMap[priority?.toLowerCase()] || 'priority-low';
   }
 
+  getPriorityBorderClass(priority: string): string {
+    const priorityMap: { [key: string]: string } = {
+      'high': 'border-high',
+      'medium': 'border-medium',
+      'low': 'border-low'
+    };
+    return priorityMap[priority?.toLowerCase()] || 'border-low';
+  }
+
   getStatusClass(status: string): string {
     const statusMap: { [key: string]: string } = {
       'pending': 'status-active',
@@ -108,7 +120,16 @@ export class IssuesComponent implements OnInit {
   }
 
   getHighPriorityIssuesCount(): number {
-    return this.issues.filter(issue => issue.priority?.toLowerCase() === 'high').length;
+    return this.issues.filter(issue =>
+      issue.priority?.toLowerCase() === 'high' &&
+      issue.status !== 'COMPLETED'
+    ).length;
+  }
+
+  getReporterInitials(issue: Issue): string {
+    const first = issue.reporter?.first_name?.[0] ?? '';
+    const last = issue.reporter?.last_name?.[0] ?? '';
+    return `${first}${last}`.trim().toUpperCase() || '?';
   }
 
   toggleKanban(): void {
