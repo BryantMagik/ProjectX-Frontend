@@ -160,35 +160,48 @@
           <p>{{ searchTerm || selectedStatus !== 'all' || selectedPriority !== 'all' ? 'Ajusta tus filtros para ver resultados.' : 'Crea tu primer issue para empezar.' }}</p>
         </div>
       } @else {
-        <div class="tasks-grid">
+        <div class="issues-grid">
           @for (issue of filteredIssues; track issue.id) {
-            <div class="task-card" (click)="navigateToIssueDetails(issue.id)" title="Ver detalles">
-              <div class="task-header">
-                <span class="task-code">{{ issue.code }}</span>
-                <span class="task-priority" [ngClass]="getPriorityClass(issue.priority)">
+            <button class="issue-card" (click)="navigateToIssueDetails(issue.id)" title="Ver detalles" type="button">
+              <div class="issue-card-top">
+                <span class="issue-code">{{ issue.code }}</span>
+                <span class="issue-priority" [ngClass]="getPriorityClass(issue.priority)">
                   {{ issue.priority }}
                 </span>
               </div>
-              <h3 class="task-title">{{ issue.summary }}</h3>
-              @if (issue.description) {
-                <p class="task-description">{{ issue.description }}</p>
-              }
-              <div class="task-footer">
-                <div class="task-meta">
-                  <div class="meta-item">
+              <div class="issue-card-body">
+                <div class="issue-title-block">
+                  <span class="issue-type-badge">{{ issue.type || 'General' }}</span>
+                  <h3 class="issue-title">{{ issue.summary }}</h3>
+                </div>
+                @if (issue.description) {
+                  <p class="issue-description">{{ issue.description }}</p>
+                } @else {
+                  <p class="issue-description issue-description-empty">Sin descripcion disponible.</p>
+                }
+              </div>
+              <div class="issue-card-bottom">
+                <div class="issue-meta-grid">
+                  <div class="issue-meta-item">
                     <i class="pi pi-user"></i>
-                    <span>{{ issue.reporter?.first_name || 'Sin reporter' }}</span>
+                    <div>
+                      <span class="issue-meta-label">Reporter</span>
+                      <span class="issue-meta-value">{{ issue.reporter?.first_name || 'Sin reporter' }}</span>
+                    </div>
                   </div>
-                  <div class="meta-item">
-                    <i class="pi pi-tag"></i>
-                    <span>{{ issue.type }}</span>
+                  <div class="issue-meta-item">
+                    <i class="pi pi-flag"></i>
+                    <div>
+                      <span class="issue-meta-label">Estado</span>
+                      <span class="issue-meta-value">{{ issue.status }}</span>
+                    </div>
                   </div>
                 </div>
-                <span class="task-status" [ngClass]="getStatusClass(issue.status)">
+                <span class="issue-status" [ngClass]="getStatusClass(issue.status)">
                   {{ issue.status }}
                 </span>
               </div>
-            </div>
+            </button>
           }
         </div>
       }
