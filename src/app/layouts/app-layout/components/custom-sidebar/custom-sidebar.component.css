@@ -23,7 +23,13 @@
 
 @media (max-width: 768px) {
   .sidebar {
-    @apply hidden;
+    @apply block;
+    width: min(18rem, 82vw);
+    transform: translateX(-100%);
+  }
+
+  .sidebar.sidebar-mobile-open {
+    transform: translateX(0);
   }
 }
 

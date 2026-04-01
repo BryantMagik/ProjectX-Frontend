@@ -1,7 +1,21 @@
 <div class="layout-container">
-  <app-custom-sidebar (openModalEvent)="openModal()"
-  (workspaceSelected)="onWorkspaceSelected($event)"></app-custom-sidebar>
-  <app-navbar [user]="user"></app-navbar>
+  @if (isMobileSidebarOpen) {
+    <button
+      class="sidebar-backdrop"
+      type="button"
+      aria-label="Cerrar menu lateral"
+      (click)="closeMobileSidebar()">
+    </button>
+  }
+
+  <app-custom-sidebar
+    [isMobileOpen]="isMobileSidebarOpen"
+    (closeSidebar)="closeMobileSidebar()"
+    (openModalEvent)="openModal()"
+    (workspaceSelected)="onWorkspaceSelected($event)"></app-custom-sidebar>
+  <app-navbar
+    [user]="user"
+    (mobileSidebarToggle)="toggleMobileSidebar()"></app-navbar>
   <main class="main-content">
     <router-outlet></router-outlet>
   </main>

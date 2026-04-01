@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, inject, computed} from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, computed} from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink, RouterModule } from '@angular/router';
@@ -19,8 +19,10 @@ export class CustomSidebarComponent {
   private router = inject(Router);
   private workspaceStore = inject(WorkspaceStore);
 
+  @Input() isMobileOpen = false;
   @Output() workspaceSelected = new EventEmitter<string>();
   @Output() openModalEvent = new EventEmitter<void>();
+  @Output() closeSidebar = new EventEmitter<void>();
 
   selectedWorkspaceId = this.workspaceStore.selectedId;
   menuItems = computed(() => {
@@ -30,10 +32,16 @@ export class CustomSidebarComponent {
 
   openModal(): void {
     this.openModalEvent.emit();
+    this.closeSidebar.emit();
   }
 
   onWorkspaceSelected(workspaceId: string): void {
     this.router.navigate([`/workspaces/${workspaceId}/dashboard`]);
     this.workspaceSelected.emit(workspaceId);
+    this.closeSidebar.emit();
+  }
+
+  onSidebarAction(): void {
+    this.closeSidebar.emit();
   }
 }

@@ -4,6 +4,11 @@
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
 
+.sidebar-backdrop {
+  @apply fixed inset-0 z-40 border-0 p-0;
+  background: rgba(15, 23, 42, 0.55);
+}
+
 /* Área de contenido principal */
 .main-content {
   @apply p-6 xl:ml-72 mt-16 overflow-auto;

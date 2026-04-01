@@ -1,11 +1,15 @@
 <div class="navbar">
   <div class="navbar-container">
-    <div class="mobile-logo">
+    <button
+      class="mobile-logo"
+      type="button"
+      aria-label="Abrir menu lateral"
+      (click)="toggleMobileSidebar()">
       <div class="mobile-logo-icon">
         <i class="pi pi-th-large text-white"></i>
       </div>
-      <h4 class="mobile-logo-text">ProjectX</h4>
-    </div>
+      <h4 class="mobile-logo-text">GYOM</h4>
+    </button>
 
     <nav class="navbar-content">
       <div class="navbar-title">
@@ -51,7 +55,7 @@
           <i class="pi pi-cog"></i>
         </button>
 
-<app-avatar-dropdown [user]="user"></app-avatar-dropdown>
+        <app-avatar-dropdown [user]="user"></app-avatar-dropdown>
       </div>
     </nav>
   </div>

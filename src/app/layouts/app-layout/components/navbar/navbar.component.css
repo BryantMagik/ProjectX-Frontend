@@ -13,6 +13,12 @@
 .mobile-logo {
   @apply flex items-center gap-3;
   @apply md:hidden absolute left-4 top-1/2 transform -translate-y-1/2;
+  @apply bg-transparent border-0 p-0 cursor-pointer;
+}
+
+.mobile-logo:focus-visible {
+  @apply outline-none rounded-lg;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.35);
 }
 
 .mobile-logo-icon {
@@ -179,6 +185,7 @@
 
   .navbar-actions {
     @apply gap-1;
+    max-width: calc(100% - 8.5rem);
   }
 
   .action-button {

@@ -1,4 +1,4 @@
-<aside class="sidebar">
+<aside class="sidebar" [class.sidebar-mobile-open]="isMobileOpen">
   <div class="sidebar-header">
     <div class="sidebar-logo">
       <div class="logo-icon">
@@ -17,6 +17,7 @@
       <button
         class="add-button"
         [routerLink]="['/workspaces/new']"
+        (click)="onSidebarAction()"
         title="Create new workspace">
         <i class="pi pi-plus"></i>
       </button>
@@ -35,6 +36,7 @@
       <a
         class="sidebar-menu-item"
         [routerLink]="item.route"
+        (click)="onSidebarAction()"
         routerLinkActive="sidebar-menu-item-active"
         [routerLinkActiveOptions]="{ exact: true }"
         >
@@ -56,6 +58,7 @@
         class="add-button"
         [routerLink]="['/projects/new']"
         [queryParams]="{ workspaceId: selectedWorkspaceId }"
+        (click)="onSidebarAction()"
         title="Create new project">
         <i class="pi pi-plus"></i>
       </button>

@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnDestroy, OnInit, inject } from '@angular/core'
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, inject } from '@angular/core'
 
 import { User } from '../../../../core/models/user.interface'
 import { BreadcrumbModule } from 'primeng/breadcrumb'
@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   error: string | null = null
 
   @Input() user: User | null = null
+  @Output() mobileSidebarToggle = new EventEmitter<void>();
 
   notifications: TaskAssignmentNotification[] = [];
   notificationsLoading = false;
@@ -77,6 +78,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onMarkAllAsRead(): void {
     this.notificationService.markAllAsRead();
+  }
+
+  toggleMobileSidebar(): void {
+    this.mobileSidebarToggle.emit();
   }
 
   get unreadCount(): number {

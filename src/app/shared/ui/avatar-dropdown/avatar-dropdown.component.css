@@ -84,3 +84,22 @@
 .dropdown-item-text {
   @apply text-sm font-medium;
 }
+
+@media (max-width: 768px) {
+  .avatar-dropdown-container {
+    @apply px-2 py-1.5 rounded-full;
+    min-width: auto;
+  }
+
+  .dropdown-icon {
+    @apply hidden;
+  }
+
+  .avatar-image {
+    transform: scale(0.92);
+  }
+
+  .dropdown-menu {
+    width: min(12rem, calc(100vw - 1.5rem));
+  }
+}

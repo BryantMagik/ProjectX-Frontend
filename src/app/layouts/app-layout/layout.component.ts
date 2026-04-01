@@ -26,6 +26,7 @@ export class LayoutComponent implements OnInit {
   user: User | null = null;
   showModal = false;
   workspaceId: string | null = null
+  isMobileSidebarOpen = false;
 
   constructor() { }
 
@@ -38,6 +39,15 @@ export class LayoutComponent implements OnInit {
 
   onWorkspaceSelected(workspaceId: string) {
     this.workspaceId = workspaceId
+    this.closeMobileSidebar();
+  }
+
+  toggleMobileSidebar(): void {
+    this.isMobileSidebarOpen = !this.isMobileSidebarOpen;
+  }
+
+  closeMobileSidebar(): void {
+    this.isMobileSidebarOpen = false;
   }
 
   ngOnInit() {
