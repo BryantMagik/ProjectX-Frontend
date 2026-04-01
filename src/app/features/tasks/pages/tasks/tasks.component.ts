@@ -20,6 +20,17 @@ import { toSignal } from '@angular/core/rxjs-interop';
     standalone: true
 })
 export class TasksComponent {
+  private readonly defaultStatusFilter = 'OPEN';
+  readonly statusOptions = [
+    { value: 'all', label: 'Todos los estados' },
+    { value: 'OPEN', label: 'TODO + IN_PROGRESS' },
+    { value: 'BACKLOG', label: 'BACKLOG' },
+    { value: 'TODO', label: 'TODO' },
+    { value: 'IN_PROGRESS', label: 'IN_PROGRESS' },
+    { value: 'REVIEW', label: 'REVIEW' },
+    { value: 'DONE', label: 'DONE' },
+  ];
+
   private userService = inject(UserService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -32,7 +43,7 @@ export class TasksComponent {
   // UI state
   filteredTasks: Task[] = [];
   searchTerm = '';
-  selectedStatus = 'all';
+  selectedStatus = this.defaultStatusFilter;
   selectedPriority = 'all';
   selectedProjectId: string | null = null;
   showKanban = false;
@@ -82,11 +93,20 @@ export class TasksComponent {
   private applyFilters(tasks: Task[]): void {
     const search = this.searchTerm.toLowerCase();
     this.filteredTasks = tasks.filter(task => {
+      const normalizedStatus = this.normalizeValue(task.status);
+      const normalizedPriority = this.normalizeValue(task.priority);
       const matchesSearch = !this.searchTerm ||
         task.code?.toLowerCase().includes(search) ||
         task.summary?.toLowerCase().includes(search);
-      const matchesStatus = this.selectedStatus === 'all' || task.status === this.selectedStatus;
-      const matchesPriority = this.selectedPriority === 'all' || task.priority === this.selectedPriority;
+      const matchesStatus =
+        this.selectedStatus === 'all' ||
+        (this.selectedStatus === this.defaultStatusFilter &&
+          ['TODO', 'IN_PROGRESS'].includes(normalizedStatus)) ||
+        normalizedStatus === this.selectedStatus;
+      const matchesPriority =
+        this.selectedPriority === 'all' ||
+        normalizedPriority === this.normalizeValue(this.selectedPriority);
+
       return matchesSearch && matchesStatus && matchesPriority;
     });
   }
@@ -123,18 +143,23 @@ export class TasksComponent {
 
   getActiveTasksCount(): number {
     return (this.tasksQuery.data() ?? []).filter(t =>
-      t.status === 'IN_PROGRESS' || t.status === 'REVIEW' || t.status === 'TESTING'
+      ['IN_PROGRESS', 'REVIEW', 'TESTING'].includes(this.normalizeValue(t.status))
     ).length;
   }
 
   getCompletedTasksCount(): number {
-    return (this.tasksQuery.data() ?? []).filter(t => t.status === 'DONE').length;
+    return (this.tasksQuery.data() ?? []).filter(t => this.normalizeValue(t.status) === 'DONE').length;
   }
 
   getHighPriorityTasksCount(): number {
     return (this.tasksQuery.data() ?? []).filter(t =>
-      t.priority === 'HIGH' || t.priority === 'CRITICAL'
+      ['HIGH', 'CRITICAL'].includes(this.normalizeValue(t.priority)) &&
+      this.normalizeValue(t.status) !== 'DONE'
     ).length;
+  }
+
+  private normalizeValue(value: string | null | undefined): string {
+    return (value ?? '').trim().toUpperCase();
   }
 
   toggleKanban(): void { this.showKanban = !this.showKanban; }

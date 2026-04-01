@@ -60,11 +60,9 @@
         (ngModelChange)="onStatusChange()"
         class="filter-select"
         title="Filtrar por estado">
-        <option value="all">Todos los estados</option>
-        <option value="Active">Active</option>
-        <option value="Ongoing">Ongoing</option>
-        <option value="Completed">Completed</option>
-        <option value="Inactive">Inactive</option>
+        @for (statusOption of statusOptions; track statusOption.value) {
+          <option [value]="statusOption.value">{{ statusOption.label }}</option>
+        }
       </select>
 
       <select
