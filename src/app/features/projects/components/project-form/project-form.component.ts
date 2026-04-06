@@ -45,10 +45,14 @@ export class ProjectFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.workspaceId = params['workspaceId'] || sessionStorage.getItem(this.getWorkspaceStorageKey())
-      if (this.workspaceId) {
-        this.loadWorkspaceMembers()
-        this.loadProjectCount()
+      const idFromUrl = params['workspaceId'];
+      this.workspaceId = (typeof idFromUrl === 'string') ? idFromUrl : sessionStorage.getItem(this.getWorkspaceStorageKey());
+
+      if (this.workspaceId && typeof this.workspaceId === 'string') {
+        this.loadWorkspaceMembers();
+        this.loadProjectCount();
+      } else {
+        console.error('Workspace ID no encontrado o no es un string válido');
       }
     })
 
@@ -187,15 +191,16 @@ export class ProjectFormComponent implements OnInit {
       return
     }
 
-    if (this.projectForm.valid && this.workspaceId) {
-      // Limpiar datos - solo enviar campos con valor
-      const projectData: any = {
-        code: rawValue.code,
-        name: rawValue.name,
-        type: rawValue.type,
-        status: rawValue.status || 'ONGOING',
-        visibility: rawValue.visibility || 'PRIVATE',
-      }
+    if (this.projectForm.valid && typeof this.workspaceId === 'string') {
+    
+    // Limpiar datos - solo enviar campos con valor
+    const projectData: any = {
+      code: rawValue.code,
+      name: rawValue.name,
+      type: rawValue.type,
+      status: rawValue.status || 'ONGOING',
+      visibility: rawValue.visibility || 'PRIVATE',
+    };
 
       // Solo agregar campos opcionales si tienen valor
       if (rawValue.description) projectData.description = rawValue.description
