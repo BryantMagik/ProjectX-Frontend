@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { TasksDetailsComponent } from './tasks-details.component';
-import { TaskService } from '../../../../service/task/task.service';
+import { TaskService } from '../../data-access/task.service';
 import { UserService } from '../../../profile/data-access/user.service';
 
 class MockTaskService {

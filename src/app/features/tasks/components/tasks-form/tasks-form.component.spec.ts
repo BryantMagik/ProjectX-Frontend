@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { TasksFormComponent } from './tasks-form.component';
-import { TaskService } from '../../../../service/task/task.service';
+import { TaskService } from '../../data-access/task.service';
 import { UserService } from '../../../profile/data-access/user.service';
 
 class MockTaskService {

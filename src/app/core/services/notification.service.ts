@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, Subscription, interval } from 'rxjs';
 import { TaskAssignmentNotification } from '../models/notification.interface';
-import { TaskService } from '../../service/task/task.service';
+import { TaskService } from '../../features/tasks/data-access/task.service';
 import { Task } from '../models/task.interface';
 import { AuthService } from './auth.service';
 import { IssueService } from '../../features/issues/data-access/issue.service';
@@ -57,7 +57,7 @@ export class NotificationService implements OnDestroy {
     this.errorSubject.next(null);
 
     forkJoin({
-      tasks: this.taskService.getTasksRequest(),
+      tasks: this.taskService.getTasks(),
       issues: this.issueService.getAllIssues()
     }).subscribe({
       next: ({ tasks, issues }: { tasks: Task[] | null; issues: Issue[] | null }) => {

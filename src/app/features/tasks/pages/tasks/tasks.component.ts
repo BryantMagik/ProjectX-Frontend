@@ -1,4 +1,4 @@
-import { Component, inject, effect, computed } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TaskService } from '../../data-access/task.service';
 import { UserService } from '../../../profile/data-access/user.service';
@@ -32,18 +32,17 @@ export class TasksComponent {
     { value: 'DONE', label: 'DONE' },
   ];
 
-  private userService = inject(UserService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private taskService = inject(TaskService);
   private projectService = inject(ProjectService);
+  private userService = inject(UserService);
   private workspaceStore = inject(WorkspaceStore);
 
   private params = toSignal(this.route.paramMap);
   projectId = computed(() => this.params()?.get('projectId') ?? null);
 
   // UI state
-  filteredTasks: Task[] = [];
   searchTerm = '';
   selectedStatus = this.defaultStatusFilter;
   selectedPriority = 'all';
@@ -53,7 +52,7 @@ export class TasksComponent {
 
   tasksQuery = injectQuery(() => ({
     queryKey: ['tasks', 'own'],
-    queryFn: () => firstValueFrom(this.taskService.getTasksByIdWhereId()),
+    queryFn: () => firstValueFrom(this.taskService.getTasks()),
   }));
 
   usersQuery = injectQuery(() => ({
@@ -63,7 +62,7 @@ export class TasksComponent {
 
   projectsQuery = injectQuery(() => ({
     queryKey: ['projects', 'workspace', this.workspaceStore.selectedId()],
-    queryFn: () => firstValueFrom(this.projectService.getProjectByIdWhereId(this.workspaceStore.selectedId()!)),
+    queryFn: () => firstValueFrom(this.projectService.getProjectByWorkspaceId(this.workspaceStore.selectedId()!)),
     enabled: !!this.workspaceStore.selectedId(),
   }));
 
@@ -77,25 +76,10 @@ export class TasksComponent {
   get error(): string | null { return this.tasksQuery.isError() ? 'Failed to load tasks' : null; }
   get projects(): Project[] { return (this.projectsQuery.data() ?? []) as Project[]; }
 
-  constructor() {
-    effect(() => {
-      const tasks = this.tasksQuery.data();
-      if (tasks) this.applyFilters(tasks);
-    });
-
-    effect(() => {
-      const pid = this.projectId();
-      if (pid) this.selectedProjectId = pid;
-    });
-  }
-
-  navigateToTaskDetails(taskId: string): void {
-    this.router.navigate(['/tasks', taskId]);
-  }
-
-  private applyFilters(tasks: Task[]): void {
+  get filteredTasks(): Task[] {
+    const tasks = this.tasksQuery.data() ?? [];
     const search = this.searchTerm.toLowerCase();
-    this.filteredTasks = tasks.filter(task => {
+    return tasks.filter(task => {
       const normalizedStatus = this.normalizeValue(task.status);
       const normalizedPriority = this.normalizeValue(task.priority);
       const matchesSearch = !this.searchTerm ||
@@ -109,14 +93,17 @@ export class TasksComponent {
       const matchesPriority =
         this.selectedPriority === 'all' ||
         normalizedPriority === this.normalizeValue(this.selectedPriority);
-
       return matchesSearch && matchesStatus && matchesPriority;
     });
   }
 
-  onSearchChange(): void { this.applyFilters(this.tasksQuery.data() ?? []); }
-  onStatusChange(): void { this.applyFilters(this.tasksQuery.data() ?? []); }
-  onPriorityChange(): void { this.applyFilters(this.tasksQuery.data() ?? []); }
+  navigateToTaskDetails(taskId: string): void {
+    this.router.navigate(['/tasks', taskId]);
+  }
+
+  onSearchChange(): void {}
+  onStatusChange(): void {}
+  onPriorityChange(): void {}
 
   getPriorityClass(priority: string): string {
     const map: Record<string, string> = {
@@ -171,10 +158,10 @@ export class TasksComponent {
   closeCreateTaskModal(): void { this.showProjectModal = false; }
 
   confirmCreateTask(): void {
-    const projectId = this.selectedProjectId || this.projectId();
-    if (projectId) {
+    const pid = this.selectedProjectId || this.projectId();
+    if (pid) {
       this.showProjectModal = false;
-      this.router.navigate(['/tasks/new'], { queryParams: { projectId } });
+      this.router.navigate(['/tasks/new'], { queryParams: { projectId: pid } });
     }
   }
 }

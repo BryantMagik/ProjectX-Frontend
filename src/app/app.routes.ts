@@ -1,150 +1,124 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { noAuthGuard } from './core/guards/no-auth.guard';
-import { HomeComponent } from './features/home/pages/home/home.component';
-import { LoginComponent } from './features/auth/pages/login/login.component';
-import { DashboardComponent } from './features/workspaces/pages/dashboard/dashboard.component';
-import { LayoutComponent } from './layouts/app-layout/layout.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ProjectsComponent } from './features/projects/pages/projects/projects.component';
-import { ProfilesComponent } from './features/profile/pages/profiles/profiles.component';
-import { WorkspaceFormComponent } from './features/workspaces/components/workspace-form/workspace-form.component';
-import { ProjectFormComponent } from './features/projects/components/project-form/project-form.component';
-import { SettingsComponent } from './features/workspaces/pages/settings-workspaces/settings-workspaces.component';
-import { WorkspaceComponent } from './features/workspaces/pages/workspace/workspace.component';
-import { DashboardProjectComponent } from './features/projects/pages/dashboard-project/dashboard-project.component';
-import { EditProjectComponent } from './features/projects/pages/edit-project/edit-project.component';
-import { TasksFormComponent } from './features/tasks/components/tasks-form/tasks-form.component';
-import { TasksComponent } from './features/tasks/pages/tasks/tasks.component';
-import { TasksDetailsComponent } from './features/tasks/pages/tasks-details/tasks-details.component';
-import { WorkspaceMembersComponent } from './features/workspaces/pages/workspace-members/workspace-members.component';
-import { JoinWorkspaceComponent } from './features/workspaces/pages/join-workspace/join-workspace.component';
-import { CommentsComponent } from './features/comments/pages/comments/comments.component';
-import { CommentsDetailsComponent } from './features/comments/pages/comments-details/comments-details.component';
-import { CommentsFormComponent } from './features/comments/components/comments-form/comments-form.component';
-import { IssuesComponent } from './features/issues/pages/issues/issues.component';
-import { IssuesDetailsComponent } from './features/issues/pages/issues-details/issues-details.component';
-import { IssuesFormComponent } from './features/issues/components/issues-form/issues-form.component';
-import { SubtasksComponent } from './features/subtasks/pages/subtasks/subtasks.component';
-import { SubtasksDetailsComponent } from './features/subtasks/pages/subtasks-details/subtasks-details.component';
 
 export const routes: Routes = [
     {
         path: '',
-        component: HomeComponent,
+        loadComponent: () => import('./features/home/pages/home/home.component').then(m => m.HomeComponent),
         pathMatch: 'full',
         title: 'Home',
     },
     {
         path: 'login',
         title: 'Login',
-        component: LoginComponent,
+        loadComponent: () => import('./features/auth/pages/login/login.component').then(m => m.LoginComponent),
         canActivate: [noAuthGuard]
     },
     {
         path: 'join-workspace',
         title: 'Join Workspace',
-        component: JoinWorkspaceComponent,
+        loadComponent: () => import('./features/workspaces/pages/join-workspace/join-workspace.component').then(m => m.JoinWorkspaceComponent),
     },
     {
         path: '',
-        component: LayoutComponent,
+        loadComponent: () => import('./layouts/app-layout/layout.component').then(m => m.LayoutComponent),
         canActivate: [AuthGuard],
         children: [
             {
                 path: 'projects',
                 title: 'Projects',
-                component: ProjectsComponent,
+                loadComponent: () => import('./features/projects/pages/projects/projects.component').then(m => m.ProjectsComponent),
             },
             {
                 path: 'projects/new',
                 title: 'New Project',
-                component: ProjectFormComponent,
+                loadComponent: () => import('./features/projects/components/project-form/project-form.component').then(m => m.ProjectFormComponent),
             },
             {
                 path: 'projects/:projectId/edit',
                 title: 'Edit Project',
-                component: EditProjectComponent,
+                loadComponent: () => import('./features/projects/pages/edit-project/edit-project.component').then(m => m.EditProjectComponent),
             },
             {
                 path: 'projects/:projectId',
                 title: 'Project',
-                component: DashboardProjectComponent,
+                loadComponent: () => import('./features/projects/pages/dashboard-project/dashboard-project.component').then(m => m.DashboardProjectComponent),
             },
             {
                 path: 'tasks',
                 title: 'Tasks',
-                component: TasksComponent,
+                loadComponent: () => import('./features/tasks/pages/tasks/tasks.component').then(m => m.TasksComponent),
             },
             {
                 path: 'tasks/new',
                 title: 'New Task',
-                component: TasksFormComponent,
+                loadComponent: () => import('./features/tasks/components/tasks-form/tasks-form.component').then(m => m.TasksFormComponent),
             },
             {
                 path: 'tasks/:taskId/edit',
                 title: 'Edit Task',
-                component: TasksFormComponent,
+                loadComponent: () => import('./features/tasks/components/tasks-form/tasks-form.component').then(m => m.TasksFormComponent),
             },
             {
                 path: 'tasks/:taskId',
                 title: 'Task Details',
-                component: TasksDetailsComponent,
+                loadComponent: () => import('./features/tasks/pages/tasks-details/tasks-details.component').then(m => m.TasksDetailsComponent),
             },
             {
                 path: 'comments',
                 title: 'Comments',
-                component: CommentsComponent,
+                loadComponent: () => import('./features/comments/pages/comments/comments.component').then(m => m.CommentsComponent),
             },
             {
                 path: 'comments/new',
                 title: 'New Comment',
-                component: CommentsFormComponent,
+                loadComponent: () => import('./features/comments/components/comments-form/comments-form.component').then(m => m.CommentsFormComponent),
             },
             {
                 path: 'comments/:commentId',
                 title: 'Comment Details',
-                component: CommentsDetailsComponent,
+                loadComponent: () => import('./features/comments/pages/comments-details/comments-details.component').then(m => m.CommentsDetailsComponent),
             },
             {
                 path: 'issues',
                 title: 'Issues',
-                component: IssuesComponent,
+                loadComponent: () => import('./features/issues/pages/issues/issues.component').then(m => m.IssuesComponent),
             },
             {
                 path: 'issues/new',
                 title: 'New Issue',
-                component: IssuesFormComponent,
+                loadComponent: () => import('./features/issues/components/issues-form/issues-form.component').then(m => m.IssuesFormComponent),
             },
             {
                 path: 'issues/:issueId',
                 title: 'Issue Details',
-                component: IssuesDetailsComponent,
+                loadComponent: () => import('./features/issues/pages/issues-details/issues-details.component').then(m => m.IssuesDetailsComponent),
             },
             {
                 path: 'subtasks',
                 title: 'Subtasks',
-                component: SubtasksComponent,
+                loadComponent: () => import('./features/subtasks/pages/subtasks/subtasks.component').then(m => m.SubtasksComponent),
             },
             {
                 path: 'subtasks/:subtaskId',
                 title: 'Subtask Details',
-                component: SubtasksDetailsComponent,
+                loadComponent: () => import('./features/subtasks/pages/subtasks-details/subtasks-details.component').then(m => m.SubtasksDetailsComponent),
             },
             {
                 path: 'profile',
                 title: 'Profile',
-                component: ProfilesComponent,
+                loadComponent: () => import('./features/profile/pages/profiles/profiles.component').then(m => m.ProfilesComponent),
             },
             {
                 path: 'workspaces/new',
                 title: 'New Workspace',
-                component: WorkspaceFormComponent,
+                loadComponent: () => import('./features/workspaces/components/workspace-form/workspace-form.component').then(m => m.WorkspaceFormComponent),
             },
             {
                 path: 'workspaces/:workspaceId',
                 title: 'Workspace',
-                component: WorkspaceComponent,
+                loadComponent: () => import('./features/workspaces/pages/workspace/workspace.component').then(m => m.WorkspaceComponent),
                 children: [
                     {
                         path: '',
@@ -154,17 +128,17 @@ export const routes: Routes = [
                     {
                         path: 'dashboard',
                         title: 'Dashboard',
-                        component: DashboardComponent,
+                        loadComponent: () => import('./features/workspaces/pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
                     },
                     {
                         path: 'settings',
                         title: 'Settings',
-                        component: SettingsComponent,
+                        loadComponent: () => import('./features/workspaces/pages/settings-workspaces/settings-workspaces.component').then(m => m.SettingsComponent),
                     },
                     {
                         path: 'members',
                         title: 'Members',
-                        component: WorkspaceMembersComponent,
+                        loadComponent: () => import('./features/workspaces/pages/workspace-members/workspace-members.component').then(m => m.WorkspaceMembersComponent),
                     },
                 ],
             },
@@ -172,6 +146,6 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        component: PageNotFoundComponent
+        loadComponent: () => import('./page-not-found/page-not-found.component').then(m => m.PageNotFoundComponent),
     }
 ];

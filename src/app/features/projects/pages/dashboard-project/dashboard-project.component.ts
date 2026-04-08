@@ -6,7 +6,7 @@ import { Subscription, tap } from 'rxjs';
 import { Project } from '../../../../core/models/project.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Task } from '../../../../core/models/task.interface';
-import { TaskService } from '../../../../service/task/task.service';
+import { TaskService } from '../../../tasks/data-access/task.service';
 import { SeverityTagComponent } from '../../../../service/severity/severity-tag.component';
 import { TasksBoardComponent } from '../../../tasks/components/tasks-board/tasks-board.component';
 import { Issue } from '../../../../core/models/issue.interface';

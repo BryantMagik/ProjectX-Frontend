@@ -5,10 +5,10 @@ import { Router, RouterLink } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { IssueService } from '../../data-access/issue.service';
-import { ProjectService } from '../../../../service/project/project.service';
+import { ProjectService } from '../../../projects/data-access/project.service';
 import { Issue, IssueStatus, IssueType, TaskPriority } from '../../../../core/models/issue.interface';
 import { map } from 'rxjs';
-import { UserService } from '../../../../service/user/user.service';
+import { UserService } from '../../../profile/data-access/user.service';
 import { User } from '../../../../core/models/user.interface';
 import { MultiSelectModule } from 'primeng/multiselect';
 
@@ -60,7 +60,7 @@ export class IssuesFormComponent implements OnInit {
   }
 
   private loadOwnProjects(): void {
-    this.projectService.getProjectsRequest().subscribe({
+    this.projectService.getUserProjects().subscribe({
       next: (projects) => {
         this.projects = projects.map(p => ({ id: p.id, name: p.name }));
       },
@@ -129,7 +129,7 @@ export class IssuesFormComponent implements OnInit {
   
 
   private loadProjects(): void {
-    this.projectService.getProjectsRequest().subscribe({
+    this.projectService.getUserProjects().subscribe({
       next: (projects) => {
         this.projects = projects.map((project) => ({ 
           id: project.id, 
@@ -143,7 +143,7 @@ export class IssuesFormComponent implements OnInit {
   }
 
   private loadAvailableProjects(): void {
-  this.projectService.getProjectsRequest().subscribe({
+  this.projectService.getUserProjects().subscribe({
     next: (projects) => {
       // 'projects' ahora incluirá los de tu workspace gracias al cambio en el backend
       this.projects = projects.map((p) => ({ 

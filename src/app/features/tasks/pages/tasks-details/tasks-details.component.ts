@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { TaskService } from '../../../../service/task/task.service';
+import { TaskService } from '../../data-access/task.service';
 import { Task } from '../../../../core/models/task.interface';
 import { UserService } from '../../../profile/data-access/user.service';
 import { AuthService } from '../../../../core/services/auth.service';

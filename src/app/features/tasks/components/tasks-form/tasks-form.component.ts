@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MultiSelectModule } from 'primeng/multiselect';
 import { User } from '../../../../core/models/user.interface';
 import { UserService } from '../../../profile/data-access/user.service';
-import { TaskService } from '../../../../service/task/task.service';
+import { TaskService } from '../../data-access/task.service';
 
 @Component({
   selector: 'app-tasks-form',

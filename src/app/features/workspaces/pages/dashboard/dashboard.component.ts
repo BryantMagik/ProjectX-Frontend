@@ -4,7 +4,7 @@ import { Project } from '../../../../core/models/project.interface';
 import { ProjectService } from '../../../projects/data-access/project.service';
 import { Subscription, tap } from 'rxjs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { TaskService } from '../../../../service/task/task.service';
+import { TaskService } from '../../../tasks/data-access/task.service';
 import { CommonModule } from '@angular/common';
 @Component({
     selector: 'app-dashboard',
