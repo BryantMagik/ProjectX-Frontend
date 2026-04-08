@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TasksBoardComponent } from '../../components/tasks-board/tasks-board.component';
 import { ProjectService } from '../../../projects/data-access/project.service';
+import { WorkspaceStore } from '../../../../core/services/workspace.store';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { firstValueFrom } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -36,6 +37,7 @@ export class TasksComponent {
   private route = inject(ActivatedRoute);
   private taskService = inject(TaskService);
   private projectService = inject(ProjectService);
+  private workspaceStore = inject(WorkspaceStore);
 
   private params = toSignal(this.route.paramMap);
   projectId = computed(() => this.params()?.get('projectId') ?? null);
@@ -60,8 +62,9 @@ export class TasksComponent {
   }));
 
   projectsQuery = injectQuery(() => ({
-    queryKey: ['projects', 'own'],
-    queryFn: () => firstValueFrom(this.projectService.getProjectByIdWhereId()),
+    queryKey: ['projects', 'workspace', this.workspaceStore.selectedId()],
+    queryFn: () => firstValueFrom(this.projectService.getProjectByIdWhereId(this.workspaceStore.selectedId()!)),
+    enabled: !!this.workspaceStore.selectedId(),
   }));
 
   projectQuery = injectQuery(() => ({

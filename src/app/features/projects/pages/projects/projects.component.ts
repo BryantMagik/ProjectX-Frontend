@@ -38,7 +38,10 @@ export class ProjectsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.getProjects();
+    const workspaceId = this.currentWorkspaceId;
+    if (workspaceId) {
+      this.getProjectByWorkspaceId(workspaceId);
+    }
     this.getUsers();
   }
 
@@ -55,23 +58,18 @@ export class ProjectsComponent implements OnInit {
     this.router.navigate(['/projects', projectId]);
   }
 
-  private getProjects(): void {
-    this.projectsService.getProjectByIdWhereId().pipe(
+  private getProjectByWorkspaceId(workspaceId: string): void {
+    this.projectsService.getProjectByWorkspaceId(workspaceId).pipe(
       tap({
         next: (projects: Project[] | null) => {
           if (projects) {
-            // Filter only projects from current workspace
-            const workspaceProjects = this.currentWorkspaceId
-              ? projects.filter(p => p.workspaceId === this.currentWorkspaceId)
-              : projects;
-
-            this.projects = workspaceProjects;
-            this.filteredProjects = workspaceProjects;
+            this.projects = projects;
+            this.filteredProjects = projects;
           }
         },
         error: (err) => {
-          console.error('Error loading projects:', err);
-          this.error = 'Failed to load projects. Please try again.';
+          console.error('Error loading projects by workspace:', err);
+          this.error = 'Failed to load projects for the workspace. Please try again.';
           this.loading = false;
         },
         complete: () => this.loading = false
